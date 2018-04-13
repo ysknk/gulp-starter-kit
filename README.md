@@ -18,16 +18,16 @@ node.js
 
 ## Install
 
-    cd _app/bin/
+    cd _app/
     npm install
     node install.js
 
-    cd ../config/
+    cd ../_app/config/
     npm install
 
 ## Usage
 
-    cd _app/bin/
+    cd _app/
     gulp
     gulp build
     gulp watch
