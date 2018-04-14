@@ -37,6 +37,12 @@ class Html extends TaskMaster {
     });
   }
 
+  /**
+   * setFileData
+   *
+   * @param {object} file gulp object
+   * @returns {object} page data
+   */
   setFileData(file) {
     let meta = require(this.task.data.meta);
     let filepath = plugins.util.getReplaceDir(file.relative);
@@ -73,10 +79,6 @@ class Html extends TaskMaster {
     });
 
     this.deleteChild(data);
-
-    // console.log('-------')
-    // console.log(filepath)
-    // console.log(data)
 
     // set assets path
     (() => {

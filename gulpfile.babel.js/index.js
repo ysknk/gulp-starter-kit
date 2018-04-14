@@ -160,7 +160,7 @@ _.each(tasks, (task, name) => {
 });
 
 _.each(types, (array, key) => {
-  if(key === 'watch') {
+  if(key === 'watch' || key === def) {
     gulp.task(key, gulp.series('serv', () => {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
