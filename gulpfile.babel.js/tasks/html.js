@@ -74,9 +74,9 @@ class Html extends TaskMaster {
       }else{
         if(isSet) {
           if(data[confname]) {
-            let olddata = _.merge({}, data);
+            let fulldata = _.merge({}, data);
             let nochild = _.merge({}, this.deleteChild(data));
-            data = _.merge({}, nochild, olddata[confname]);
+            data = _.merge({}, nochild, fulldata[confname]);
           }
         }else{
           data = _.merge({}, data, meta[confname]);
