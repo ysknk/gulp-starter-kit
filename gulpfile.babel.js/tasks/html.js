@@ -54,6 +54,13 @@ class Html extends TaskMaster {
     let section = filepath.split('/');
     let isSet = false;
 
+    let common = {};
+    _.each(meta, (val, key) => {
+      if(!key.match(/^[\/|\$]/)) {
+        common[key] = val;
+      }
+    });
+
     _.each(section, (name, i) => {
       let confname = '';
       let filesplit = name.split(/(.*)(?:\.([^.]+$))/);
@@ -67,9 +74,9 @@ class Html extends TaskMaster {
       }else{
         if(isSet) {
           if(data[confname]) {
-            let indata = _.merge({}, data);
+            let olddata = _.merge({}, data);
             let nochild = _.merge({}, this.deleteChild(data));
-            data = _.merge({}, nochild, indata[confname]);
+            data = _.merge({}, nochild, olddata[confname]);
           }
         }else{
           data = _.merge({}, data, meta[confname]);
@@ -78,6 +85,7 @@ class Html extends TaskMaster {
       }
     });
 
+    data = _.merge({}, common, data);
     this.deleteChild(data);
 
     // set assets path

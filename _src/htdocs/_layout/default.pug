@@ -3,12 +3,16 @@ html(lang="ja")
   head
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
-    //- if config.local.title
-    //-   title!= config.local.title
-    //- if config.local.description
-    //-   meta(name="description" content!=config.local.description)
-    //- if config.local.keywords
-    //-   meta(name="keywords" content!=config.local.keywords)
+    if title
+      title!= title
+    if description
+      meta(name="description" content!=description)
+    if keywords
+      meta(name="keywords" content!=keywords)
+
+    link(href=assets_path + '/js/style.css' rel="stylesheet")
+
+    script(src=assets_path + '/js/index.js')
 
   body
     // #wrapper

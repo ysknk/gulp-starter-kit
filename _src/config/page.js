@@ -1,6 +1,10 @@
 module.exports = {
   // /^\// -> directory
   // /^$/ -> file
+  title: 'common title',
+  description: 'common description',
+  keywords: 'common keywords',
+
   '$index': {
     title: 'index title',
     description: 'index description',
