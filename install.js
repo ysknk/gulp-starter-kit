@@ -1,10 +1,12 @@
 const fs = require('fs-extra');
 const readline = require('readline');
 
-let src_dir = './_src/';
-let dest_dir = '../_src/';
+const path = {
+  src: './_src/',
+  dest: '../_src/'
+};
 
-let message = {
+const message = {
   complete: '\nInstall complete!',
   cancel: '\nInstall canceled...'
 };
@@ -12,7 +14,7 @@ let message = {
 const rli = readline.createInterface(process.stdin, process.stdout);
 
 console.log([
-  '\n---- Directory -> ' + dest_dir + ' ----',
+  '\n---- Directory -> ' + path.dest + ' ----',
   'You may be overwriting it.',
   'Do you want to overwrite?',
   '',
@@ -35,7 +37,7 @@ rli.on('line', function(cmd) {
   // yes
   }else if(cmd.match(/^1$/ig)) {
     // copy
-    fs.copy(src_dir, dest_dir, {
+    fs.copy(path.src, path.dest, {
       clobber: true
     }, (err) => {
       if (err) return console.error(err);
@@ -46,7 +48,7 @@ rli.on('line', function(cmd) {
   // no
   }else if(cmd.match(/^2$/ig)) {
     // copy
-    fs.copy(src_dir, dest_dir, {
+    fs.copy(path.src, path.dest, {
       clobber: false
     }, (err) => {
       if (err) return console.error(err);
