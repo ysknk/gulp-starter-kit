@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
 (() => {
-  const TEST = 'test';
+  const TEST = 'lib';
   console.log(TEST);
 })();

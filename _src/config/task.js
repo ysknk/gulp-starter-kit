@@ -1,6 +1,10 @@
-// options -> ../gulpfile.babel.js/task.js
+// options -> /_app/gulpfile.babel.js/task.js
 
 module.exports = {
+
+  /* common */
+  common: {
+  },
 
   /* serv @browserSync */
   serv: {
@@ -25,5 +29,8 @@ module.exports = {
   /* copy */
   copy: { // other filetype
   }
+
+  /* custom */
+  //custom: {}
 
 };

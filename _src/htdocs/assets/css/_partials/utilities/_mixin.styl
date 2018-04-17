@@ -1,0 +1,39 @@
+clearfix()
+  &:after
+    display block
+    clear both
+    height 0
+    visibility hidden
+    content ""
+
+percent(num, maxnum, unit = '%')
+  unit((((num / maxnum) * 1000) / 10), unit)
+
+font_size(size, def = DEFAULT_FONT_SIZE)
+  font-size ceil(percentage(size, def))
+
+letter_spacing(size)
+  letter-spacing (size / 1000)em
+
+rollover(def = .7)
+  transition opacity .2s ease-in-out
+  img
+    box-shadow #000 0 0 0
+  &:hover
+    opacity(def)
+    //.ua-not-pc&
+    //  opacity(1)
+
+break_word()
+  word-wrap break-word
+  overflow-wrap break-word
+
+// ex:margin: 10px - lh(14, 1.5) 第二引数はem指定
+lh(fontsize, lineheight)
+  (((fontsize * lineheight) - fontsize) / 2)
+
+hidden_text()
+  text-indent 100%
+  white-space nowrap
+  overflow hidden
+  line-height 1

@@ -25,7 +25,10 @@ module.exports = class TaskMaster {
     this.task = {
       name: options.name,
       types: options.types,
-      data: config && config[options.name]
+      data: config && _.merge({},
+        config['common'] || {},
+        config[options.name] || {}
+      )
     };
 
     if(!config || !this.task.name) return;
@@ -40,20 +43,33 @@ module.exports = class TaskMaster {
   init() {}
 
   /**
+   * proc
+   * watch or build
+   *
+   * @param {object} stream gulp object
+   * @param {function} done set complete
+   */
+  proc(stream, done) {
+    done && done();
+  }
+
+  /**
    * setTask
    */
   setTask() {
-    let defaultTask = this.task.types[0];
+    let defaultTask = this.task.types && this.task.types.length ?
+      this.task.types[0] : 'proc';
+    let src = this.task.data.src || '**/*';
 
     // default task
     gulp.task(this.task.name, (done) => {
-      this[defaultTask](gulp.src(this.task.data.src, {since: gulp.lastRun(this.task.name)}), done);
+      this[defaultTask](gulp.src(src, {since: gulp.lastRun(this.task.name)}), done);
     });
 
     // watch task
     gulp.task(this.task.name + ':watch', () => {
       plugins.util.setIsWatch(true);
-      let watcher = gulp.watch(this.task.data.src, gulp.parallel(this.task.name));
+      let watcher = gulp.watch(src, gulp.parallel(this.task.name));
       this.setDeleteWatcher(watcher, this.task.data);
     });
 
@@ -61,7 +77,7 @@ module.exports = class TaskMaster {
     _.each(this.task.types, (type, i) => {
       if(!this[type]) return;
       gulp.task(this.task.name + ':' + type, (done) => {
-        this[type](gulp.src(this.task.data.src, {since: gulp.lastRun(this.task.name)}), done);
+        this[type](gulp.src(src, {since: gulp.lastRun(this.task.name)}), done);
       });
     });
   }
@@ -138,7 +154,25 @@ module.exports = class TaskMaster {
    * @returns {boolean}
    */
   isMinify() {
-    return argv.min || this.task.data.minify;
+    if(argv.min || this.task.data.minify) {
+      this.task.data.options.mode = 'production';
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  /**
+   * ignoreFilter
+   *
+   * @param {object} file vinly object
+   * @returns {boolean}
+   */
+  ignoreFilter(file) {
+    let htdocs = path.relative(this.task.data.htdocsdir, file.path);
+    let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative));
+    let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
+    return isDirectoryIgnore && isFileIgnore;
   }
 
 };

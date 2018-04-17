@@ -1,0 +1,37 @@
+doctype html
+
+include ../utilities/variable
+include ../utilities/mixin
+
+html(lang=lang)
+  head
+    include default_head
+
+  body(class!=page_name)
+    // #wrapper
+    #wrapper
+      != '\n'
+
+      // header
+      header
+        block header
+          p header
+      // /header
+      != '\n'
+
+      // main
+      main(role="main")
+        article
+          block content
+            p content
+      // /main
+      != '\n'
+
+      // footer
+      footer
+        block footer
+          p footer
+      // /footer
+      != '\n'
+
+    // /#wrapper

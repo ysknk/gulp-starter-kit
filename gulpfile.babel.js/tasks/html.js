@@ -1,6 +1,6 @@
 'use strict';
 
-import TaskMaster from '../taskMaster'
+import TaskMaster from '../taskMaster';
 
 /**
  * Set Const Variables
@@ -8,7 +8,7 @@ import TaskMaster from '../taskMaster'
 const config = global[define.ns];
 const task = {
   name: 'html',
-  types: ['build', 'lint']// **:watch function [0]
+  types: ['build', 'lint']// **:watch function [0] || 'proc'
 };
 
 /**
@@ -22,7 +22,21 @@ class Html extends TaskMaster {
   /**
    * init
    */
-  // init() {}
+  init() {
+    let htdocsdir = {
+      basedir: this.task.data.htdocsdir
+    };
+
+    this.task.data.options = _.merge({},
+      htdocsdir,
+      this.task.data.options
+    );
+
+    this.task.data.inheritance_options = _.merge({},
+      htdocsdir,
+      this.task.data.inheritance_options
+    );
+  }
 
   /**
    * deleteChild
@@ -126,12 +140,7 @@ class Html extends TaskMaster {
       //find files that depend on the files that have changed
       .pipe($.pugInheritance(this.task.data.inheritance_options))
       //filter out partials (folders and files starting with "_" )
-      .pipe($.filter((file) => {
-        let htdocs = path.relative(define.path.htdocs, file.path);
-        let isFileIgnore = !/^_/.test(file.relative);
-        let isDirectoryIgnore = !/\/_/.test(htdocs);
-        return isDirectoryIgnore && isFileIgnore;
-      }))
+      .pipe($.filter((file) => {return this.ignoreFilter(file);}))
 
       .pipe($.data((file) => {
         return this.setFileData(file);
@@ -150,7 +159,7 @@ class Html extends TaskMaster {
 
       .pipe(this.serv());
 
-    done();
+    done && done();
   }
 
   /**
@@ -162,10 +171,25 @@ class Html extends TaskMaster {
   lint(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
+
+      .pipe($.filter((file) => {
+        let htdocs = path.relative(define.path.htdocs, file.path);
+        let isFileIgnore = !/^_/.test(file.relative);
+        let isDirectoryIgnore = !/\/_/.test(htdocs);
+        return isDirectoryIgnore && isFileIgnore;
+      }))
+
+      .pipe($.data((file) => {
+        return this.setFileData(file);
+      }))
       .pipe($.pug(this.task.data.options))
+
+      .pipe($.size(this.sizeOptions()))
+
       .pipe($.htmlhint(this.task.data.lint_options))
       .pipe($.htmlhint.reporter());
-    done();
+
+    done && done();
   }
 
   /**
@@ -173,6 +197,6 @@ class Html extends TaskMaster {
    */
   // setTask() {}
 
-};
+}
 
 module.exports = new Html(task);

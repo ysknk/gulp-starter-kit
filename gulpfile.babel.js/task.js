@@ -1,25 +1,33 @@
 import nib from 'nib';
 import autoprefixer from 'autoprefixer-stylus';
+import import_tree from 'stylus-import-tree';
 
 import pngquant from 'imagemin-pngquant';
 import mozjpeg from 'imagemin-mozjpeg';
 
-import uglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
 
-const convert = {
-  linefeedcode: 'LF',// CRLF || LF || CR
-  encode: {
-    to: 'utf8'// https://github.com/ashtuchkin/iconv-lite#supported-encodings
-  }
-};
-
-// development | production
-const mode = 'development';
-const lint = false;
-const minify = false;
-
 module.exports = {
+
+  /* common set */
+  common: {
+    lint: false,// true || gulp --lint
+    minify: false,// true || gulp --min
+
+    convert: {
+      linefeedcode: 'LF',// CRLF || LF || CR
+      encode: {
+        to: 'utf8'// https://github.com/ashtuchkin/iconv-lite#supported-encodings
+      }
+    },
+
+    options: {
+      // development | production || none
+      mode: 'development'
+    },
+
+    htdocsdir: define.path.htdocs
+  },
 
   /* serv @browserSync */
   serv: {
@@ -38,15 +46,13 @@ module.exports = {
     src: define.path.src('pug', 'all'),
     dist: define.path.dist,
     extension: '.html',
+
     options: {
-      basedir: define.path.htdocs,
       pretty: true
     },
     inheritance_options: {
-      basedir: define.path.htdocs,
       skip: 'node_modules'
     },
-    minify,
     // ex: https://github.com/kangax/html-minifier/
     minify_options: {
       empty: true,
@@ -57,9 +63,7 @@ module.exports = {
       quotes: true,
       loose: false
     },
-    convert,
 
-    lint,
     // ex: https://github.com/yaniswang/HTMLHint/wiki/Rules
     lint_options: {
       'tagname-lowercase': true,
@@ -82,17 +86,21 @@ module.exports = {
 
   /* css @stylus */
   css: {
-    src: define.path.src('styl'),
+    //src: define.path.src('styl'),
+    src: define.path.src('styl', 'all'),
     dist: define.path.dist,
     extension: '.css',
+
     options: {
       import: ['nib'],
+      define: {
+        import_tree: import_tree
+      },
       use: [
         nib(),
         autoprefixer(['last 2 versions', 'ie 8', 'ie 9', 'ios >= 7', 'android >= 2.3'])
       ]
     },
-    minify,
     // ex: https://github.com/jakubpawlowicz/clean-css
     minify_options: {
       compatibility: 'ie9',
@@ -103,10 +111,8 @@ module.exports = {
       }
     },
     comb_options: './node_modules/csscomb/config/zen.json',
-    convert,
     serv: 'stream',// stream or reload(default: reload)
 
-    lint,
     // ex: https://github.com/CSSLint/csslint/wiki/Rules
     lint_options: {
       'display-property-grouping': true,
@@ -138,8 +144,6 @@ module.exports = {
     dist: define.path.dist,
     extension: '.js',
     options: {
-      mode,
-
       performance: {
         hints: false
       },
@@ -176,24 +180,13 @@ module.exports = {
         new licenseInfoWebpackPlugin({
           glob: '{LICENSE,license,License}*'
         })
-      ],
-      optimization: {
-        minimizer:
-          argv.min || mode === 'production' ? [
-            new uglifyJsPlugin({
-              uglifyOptions: {
-                output: {comments: /^\**!|@preserve|@license|@cc_on/}
-              },
-            }),
-          ] : [],
-      }
+      ]
     },
-    minify,// true => mode = 'production'
     // ex: https://github.com/mishoo/UglifyJS2#minify-options
-    // minify_options: {},
-    convert,
+    minify_options: {
+      output: {comments: /^\**!|@preserve|@license|@cc_on/}
+    },
 
-    lint,
     // ex: http://eslint.org/docs/rules/
     lint_options: {
       parser: 'babel-eslint',
@@ -213,7 +206,8 @@ module.exports = {
         '$',
         '_'
       ]
-    }
+    }//,
+    // lint_report_type: './node_modules/eslint/lib/formatters/codeframe',
   },
 
   /* img @imagemin */

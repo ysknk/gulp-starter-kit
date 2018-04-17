@@ -1,6 +1,6 @@
 'use strict';
 
-import TaskMaster from '../taskMaster'
+import TaskMaster from '../taskMaster';
 
 /**
  * Set Const Variables
@@ -8,7 +8,7 @@ import TaskMaster from '../taskMaster'
 const config = global[define.ns];
 const task = {
   name: 'copy',
-  types: ['build']// **:watch function [0]
+  types: ['build']// **:watch function [0] || 'proc'
 };
 
 /**
@@ -44,7 +44,8 @@ class Copy extends TaskMaster {
       .pipe(plugins.log())
 
       .pipe(this.serv());
-    done();
+
+    done && done();
   }
 
   /**
@@ -52,6 +53,6 @@ class Copy extends TaskMaster {
    */
   // setTask() {}
 
-};
+}
 
 module.exports = new Copy(task);

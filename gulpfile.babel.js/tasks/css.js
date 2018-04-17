@@ -1,6 +1,6 @@
 'use strict';
 
-import TaskMaster from '../taskMaster'
+import TaskMaster from '../taskMaster';
 
 /**
  * Set Const Variables
@@ -8,7 +8,7 @@ import TaskMaster from '../taskMaster'
 const config = global[define.ns];
 const task = {
   name: 'css',
-  types: ['build', 'lint']// **:watch function [0]
+  types: ['build', 'lint']// **:watch function [0] || 'proc'
 };
 
 /**
@@ -34,11 +34,13 @@ class Css extends TaskMaster {
   build(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
-        extension: this.task.data.extension
-      })))
+      // .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
+      //   extension: this.task.data.extension
+      // })))
       .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
       .pipe($.if(plugins.util.getIsWatch(), $.progeny()))
+      //filter out partials (folders and files starting with "_" )
+      .pipe($.filter((file) => {return this.ignoreFilter(file);}))
 
       .pipe($.stylus(this.task.data.options))
       .pipe($.csscomb(this.task.data.comb_options))
@@ -55,7 +57,8 @@ class Css extends TaskMaster {
       .pipe($.if(this.isLint(), $.csslint.formatter()))
 
       .pipe(this.serv());
-    done();
+
+    done && done();
   }
 
   /**
@@ -67,10 +70,18 @@ class Css extends TaskMaster {
   lint(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
+
       .pipe($.stylus(this.task.data.options))
+      .pipe($.csscomb(this.task.data.comb_options))
+
+      .pipe(plugins.useful(this.task.data.convert))
+
+      .pipe($.size(this.sizeOptions()))
+
       .pipe($.csslint(this.task.data.lint_options))
       .pipe($.csslint.formatter());
-    done();
+
+    done && done();
   }
 
   /**
@@ -78,6 +89,6 @@ class Css extends TaskMaster {
    */
   // setTask() {}
 
-};
+}
 
 module.exports = new Css(task);

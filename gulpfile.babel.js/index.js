@@ -119,7 +119,6 @@ if(!plugins.util.checkFile(baseConfigPath)) {
 if(!plugins.util.checkFile(localConfigPath)) {
   plugins.util.createFile(localConfigPath, configBody);
 }
-
 // [{}, base, local] config merge
 plugins.util.setGlobalVars(define.ns, _.merge({},
   require('./' + taskfile),
@@ -135,10 +134,10 @@ plugins.util.setRequireDir([
   tasksDir
 ].join('/'));
 
-plugins.util.setRequireDir([
+plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
   define.path.config,
   tasksDir
-].join(''));
+].join('')) + '/'));
 
 /**
  * set all common tasks
@@ -169,9 +168,10 @@ _.each(types, (array, key) => {
         let split = string.split(':');
         let taskname = split[0];
         let serv = 'serv:' + (config[taskname].serv || 'reload');
+        let src = config[taskname].src || '**/*';
 
         if(config && config[taskname]) {
-          let watcher = gulp.watch(config[taskname].src, gulp.series(taskname, serv));
+          let watcher = gulp.watch(src, gulp.series(taskname, serv));
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
         }
       });

@@ -1,6 +1,6 @@
 'use strict';
 
-import TaskMaster from '../taskMaster'
+import TaskMaster from '../taskMaster';
 
 /**
  * Set Const Variables
@@ -8,7 +8,7 @@ import TaskMaster from '../taskMaster'
 const config = global[define.ns];
 const task = {
   name: 'serv',
-  types: ['open', 'reload', 'stream']// **:watch function [0]
+  types: ['open', 'reload', 'stream']// **:watch function [0] || 'proc'
 };
 
 /**
@@ -34,6 +34,7 @@ class Serv extends TaskMaster {
     }
 
     browserSync.init(this.task.data.options);
+
     done && done();
   }
 
@@ -43,6 +44,7 @@ class Serv extends TaskMaster {
    */
   reload(done) {
     browserSync.reload();
+
     done && done();
   }
 
@@ -52,6 +54,7 @@ class Serv extends TaskMaster {
    */
   stream(done) {
     browserSync.stream();
+
     done && done();
   }
 
@@ -75,6 +78,6 @@ class Serv extends TaskMaster {
     });
   }
 
-};
+}
 
 module.exports = new Serv(task);
