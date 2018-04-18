@@ -45,19 +45,19 @@ class Html extends TaskMaster {
    */
   deleteChild(data) {
     _.each(data, (obj, key) => {
-      if(key.match(/^[$|\/]/)) {
+      if(key.match(/^[\/|\$]/)) {
         delete data[key];
       }
     });
   }
 
   /**
-   * setFileData
+   * setCurrentData
    *
    * @param {object} file gulp object
    * @returns {object} page data
    */
-  setFileData(file) {
+  setCurrentData(file) {
     let meta = require(this.task.data.meta);
     let filepath = plugins.util.getReplaceDir(file.relative);
     let data = {};
@@ -137,13 +137,16 @@ class Html extends TaskMaster {
       })))
       .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
 
-      //find files that depend on the files that have changed
       .pipe($.pugInheritance(this.task.data.inheritance_options))
-      //filter out partials (folders and files starting with "_" )
-      .pipe($.filter((file) => {return this.ignoreFilter(file);}))
+      .pipe($.filter((file) => {
+        let htdocs = path.relative(this.task.data.htdocsdir, file.path);
+        let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative));
+        let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
+        return isDirectoryIgnore && isFileIgnore;
+      }))
 
       .pipe($.data((file) => {
-        return this.setFileData(file);
+        return this.setCurrentData(file);
       }))
       .pipe($.pug(this.task.data.options))
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
@@ -180,7 +183,7 @@ class Html extends TaskMaster {
       }))
 
       .pipe($.data((file) => {
-        return this.setFileData(file);
+        return this.setCurrentData(file);
       }))
       .pipe($.pug(this.task.data.options))
 

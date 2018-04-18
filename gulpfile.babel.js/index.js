@@ -46,14 +46,15 @@ const define = {
     config: srcDir + 'config/',
     htdocs: srcDir + 'htdocs/',
 
-    src: (extension, type) => {
-      return type && type == 'all' ? [
+    src: (extension) => {
+      return [
         srcDir + 'htdocs/**/*.' + extension
-      ] : [
-        srcDir + 'htdocs/**/[^_]*.' + extension,
-        '!' + srcDir + 'htdocs/_**/*'
       ];
     },
+    ignore: [
+      'htdocs/_**/*',
+      'htdocs/**/_*'
+    ].map((val) => {return '!' + srcDir + val;}),
     dist: distDir
   }
 };
@@ -119,6 +120,7 @@ if(!plugins.util.checkFile(baseConfigPath)) {
 if(!plugins.util.checkFile(localConfigPath)) {
   plugins.util.createFile(localConfigPath, configBody);
 }
+
 // [{}, base, local] config merge
 plugins.util.setGlobalVars(define.ns, _.merge({},
   require('./' + taskfile),
@@ -147,7 +149,7 @@ let taskMaster = require('./taskMaster');
 let tasks = gulp._registry._tasks;
 let def = 'default';
 let types = {};
-let taskmaster = new taskMaster()
+let taskmaster = new taskMaster();
 
 _.each(tasks, (task, name) => {
   let split = name.split(':');
@@ -168,7 +170,8 @@ _.each(types, (array, key) => {
         let split = string.split(':');
         let taskname = split[0];
         let serv = 'serv:' + (config[taskname].serv || 'reload');
-        let src = config[taskname].src || '**/*';
+        let src = taskmaster.getSrc(config[taskname].src);
+        if(taskname === 'serv') return;
 
         if(config && config[taskname]) {
           let watcher = gulp.watch(src, gulp.series(taskname, serv));

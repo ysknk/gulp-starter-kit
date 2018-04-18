@@ -59,11 +59,14 @@ module.exports = class TaskMaster {
   setTask() {
     let defaultTask = this.task.types && this.task.types.length ?
       this.task.types[0] : 'proc';
-    let src = this.task.data.src || '**/*';
+    let src = this.getSrc();
+    let ignore = this.getIgnore();
 
     // default task
     gulp.task(this.task.name, (done) => {
-      this[defaultTask](gulp.src(src, {since: gulp.lastRun(this.task.name)}), done);
+      let mergeSrc = [...src, ...ignore];
+      // this[defaultTask](gulp.src(mergeSrc, {since: gulp.lastRun(this.task.name)}), done);
+      this[defaultTask](gulp.src(mergeSrc), done);
     });
 
     // watch task
@@ -77,9 +80,31 @@ module.exports = class TaskMaster {
     _.each(this.task.types, (type, i) => {
       if(!this[type]) return;
       gulp.task(this.task.name + ':' + type, (done) => {
-        this[type](gulp.src(src, {since: gulp.lastRun(this.task.name)}), done);
+        let mergeSrc = [...src, ...ignore];
+        // this[type](gulp.src(mergeSrc, {since: gulp.lastRun(this.task.name)}), done);
+        this[type](gulp.src(mergeSrc), done);
       });
     });
+  }
+
+  /**
+   * getSrc
+   *
+   * @param {array} src
+   * @returns {array} src
+   */
+  getSrc(src) {
+    return src || (this.task && this.task.data.src) || ['**/*'];
+  }
+
+  /**
+   * getIgnore
+   *
+   * @param {array} ignore
+   * @returns {array} ignore
+   */
+  getIgnore(ignore) {
+    return ignore || (this.task && this.task.data.ignore) || [];
   }
 
   /**
@@ -144,7 +169,18 @@ module.exports = class TaskMaster {
    * @returns {boolean}
    */
   isLint() {
-    return argv.lint || this.task.data.lint;
+    return argv.lint || this.task.data.lint || false;
+  }
+
+  /**
+   * isNo
+   * do not open the browser
+   * gulp --no
+   *
+   * @returns {boolean}
+   */
+  isNo() {
+    return argv.no || this.task.data.no || false;
   }
 
   /**
@@ -160,19 +196,6 @@ module.exports = class TaskMaster {
     }else{
       return false;
     }
-  }
-
-  /**
-   * ignoreFilter
-   *
-   * @param {object} file vinly object
-   * @returns {boolean}
-   */
-  ignoreFilter(file) {
-    let htdocs = path.relative(this.task.data.htdocsdir, file.path);
-    let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative));
-    let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
-    return isDirectoryIgnore && isFileIgnore;
   }
 
 };

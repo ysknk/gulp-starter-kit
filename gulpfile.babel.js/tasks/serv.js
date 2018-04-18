@@ -29,11 +29,11 @@ class Serv extends TaskMaster {
    * @param {function} done set complete
    */
   open(done) {
-    if(argv.no) {
+    if(this.isNo()) {
       this.task.data.options.open = false;
     }
 
-    browserSync.init(this.task.data.options);
+    browserSync.init(this.task.data.options, () => {});
 
     done && done();
   }

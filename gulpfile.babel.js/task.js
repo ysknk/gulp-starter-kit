@@ -14,6 +14,8 @@ module.exports = {
     lint: false,// true || gulp --lint
     minify: false,// true || gulp --min
 
+    ignore: define.path.ignore,
+
     convert: {
       linefeedcode: 'LF',// CRLF || LF || CR
       encode: {
@@ -31,6 +33,7 @@ module.exports = {
 
   /* serv @browserSync */
   serv: {
+    src: [define.path.dist],
     options: {
       notify: false,
       open: 'local',// argv.no = false(ex: gulp watch --no)
@@ -43,7 +46,8 @@ module.exports = {
 
   /* html @pug */
   html: {
-    src: define.path.src('pug', 'all'),
+    // src: define.path.src('pug', 'all'),
+    src: define.path.src('pug'),
     dist: define.path.dist,
     extension: '.html',
 
@@ -86,8 +90,8 @@ module.exports = {
 
   /* css @stylus */
   css: {
-    //src: define.path.src('styl'),
-    src: define.path.src('styl', 'all'),
+    src: define.path.src('styl'),
+    // src: define.path.src('styl', 'all'),
     dist: define.path.dist,
     extension: '.css',
 
@@ -98,12 +102,12 @@ module.exports = {
       },
       use: [
         nib(),
-        autoprefixer(['last 2 versions', 'ie 8', 'ie 9', 'ios >= 7', 'android >= 2.3'])
+        autoprefixer(['last 2 versions', 'ie 10', 'ios >= 8', 'android >= 5'])
       ]
     },
     // ex: https://github.com/jakubpawlowicz/clean-css
     minify_options: {
-      compatibility: 'ie9',
+      compatibility: 'ie10',
       format: {
         breaks: {
           afterComment: true
