@@ -67,19 +67,20 @@ class Js extends TaskMaster {
 
       .pipe($.if(this.isLint(), $.eslint(this.task.data.lint_options)))
       .pipe($.if(this.isLint(), $.eslint.format(this.task.data.lint_report_type || '', process.stdout)))
+      .pipe($.if(this.isLint(), $.eslint.results((results) => {console.log();})))
+      .pipe($.if(this.isLint(), $.eslint.failAfterError()))
 
       .pipe(webpackStream(this.task.data.options, webpack))
 
       .pipe(plugins.useful(this.task.data.convert))
-      .pipe($.if(plugins.util.getIsWatch(), $.remember(this.task.name)))
       .pipe(gulp.dest(this.task.data.dist))
 
-      // .pipe($.size(this.sizeOptions()))
+      .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
 
-      .pipe(this.serv());
+      .pipe(this.serv())
 
-    done && done();
+      .on('finish', () => {done && done();});
   }
 
   /**
@@ -96,59 +97,63 @@ class Js extends TaskMaster {
         return path.relative.replace(/\.[^\.]+$/, '');
       }))
 
-      .pipe($.size(this.sizeOptions()))
-
       .pipe($.eslint(this.task.data.lint_options))
-      .pipe($.eslint.format(this.task.data.lint_report_type || '', process.stdout));
-      // .pipe($.eslint.result((results) => {this.lintResult(results)}));
+      .pipe($.eslint.format(this.task.data.lint_report_type || '', process.stdout))
+      .pipe($.eslint.results((results) => {console.log();}))
+      .pipe($.eslint.failAfterError())
 
-    done && done();
+      .on('finish', () => {done && done();});
+      // .pipe($.eslint.result((results) => {this.lintResult(results)}));
   }
 
-//   lintResult(results) {
-//     var results = results || [];
-//     console.log(results)
-//
-//     var summary = _.reduce(results, function(seq, current) {
-//       _.each(current.messages, function(msg) {
-//         var logMessage = {
-//           filePath: current.filePath,
-//           ruleId: msg.ruleId,
-//           message: msg.message,
-//           line: msg.line,
-//           column: msg.column,
-//           source: msg.source
-//         };
-//
-//         if(msg.severity === 1) {
-//           logMessage.type = 'warning';
-//           seq.warnings.push(logMessage);
-//         }
-//         if(msg.severity === 2) {
-//           logMessage.type = 'error';
-//           seq.errors.push(logMessage);
-//         }
-//       });
-//       return seq;
-//     }, {
-//       errors: [],
-//       warnings: []
-//     });
-//
-// console.log(summary)
-//     if(summary.errors.length || summary.warnings.length) {
-//       var lines = summary.errors.concat(summary.warnings).map(function(msg) {
-//         return '\n' + msg.type + ' ' + msg.ruleId + '\n  ' + msg.filePath + ':' + msg.line + ':' + msg.column;
-//       }).join('\n');
-//
-// console.log(lines + '\n')
-//       return lines + '\n';
-//     }
-//   }
+  // /**
+  //  * lintResult
+  //  * @param {object} results
+  //  */
+  // lintResult(results) {
+  //   var results = results || [];
+  //   console.log(results)
+  //
+  //   var summary = _.reduce(results, function(seq, current) {
+  //     _.each(current.messages, function(msg) {
+  //       var logMessage = {
+  //         filePath: current.filePath,
+  //         ruleId: msg.ruleId,
+  //         message: msg.message,
+  //         line: msg.line,
+  //         column: msg.column,
+  //         source: msg.source
+  //       };
+  //
+  //       if(msg.severity === 1) {
+  //         logMessage.type = 'warning';
+  //         seq.warnings.push(logMessage);
+  //       }
+  //       if(msg.severity === 2) {
+  //         logMessage.type = 'error';
+  //         seq.errors.push(logMessage);
+  //       }
+  //     });
+  //     return seq;
+  //   }, {
+  //     errors: [],
+  //     warnings: []
+  //   });
+  //
+  // console.log(summary)
+  //   if(summary.errors.length || summary.warnings.length) {
+  //     var lines = summary.errors.concat(summary.warnings).map(function(msg) {
+  //       return '\n' + msg.type + ' ' + msg.ruleId + '\n  ' + msg.filePath + ':' + msg.line + ':' + msg.column;
+  //     }).join('\n');
+  //
+  // console.log(lines + '\n')
+  //     return lines + '\n';
+  //   }
+  // }
 
-  /**
-   * setTask
-   */
+  // /**
+  //  * setTask
+  //  */
   // setTask() {
   //   let defaultTask = this.task.types[0];
   //

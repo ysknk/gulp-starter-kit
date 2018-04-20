@@ -39,7 +39,8 @@ class Custom extends TaskMaster {
   //     .pipe(gulp.dest(this.task.data.dist))
   //     .pipe($.size(this.sizeOptions()))
   //     .pipe(plugins.log())
-  //     .pipe(this.serv());
+  //     .pipe(this.serv())
+  //    .on('finish', () => {done && done();});
   // }
 
   /**
@@ -60,6 +61,6 @@ class Custom extends TaskMaster {
    */
   // setTask() {}
 
-};
+}
 
 module.exports = new Custom(task);

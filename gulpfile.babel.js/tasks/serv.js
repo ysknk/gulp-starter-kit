@@ -33,9 +33,9 @@ class Serv extends TaskMaster {
       this.task.data.options.open = false;
     }
 
-    browserSync.init(this.task.data.options, () => {});
-
-    done && done();
+    browserSync.init(this.task.data.options, () => {
+      done && done();
+    });
   }
 
   /**

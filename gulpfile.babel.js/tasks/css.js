@@ -49,11 +49,11 @@ class Css extends TaskMaster {
       .pipe(plugins.log())
 
       .pipe($.if(this.isLint(), $.csslint(this.task.data.lint_options)))
-      .pipe($.if(this.isLint(), $.csslint.formatter()))
+      .pipe($.if(this.isLint(), $.csslint.formatter(this.task.data.lint_report_type || '')))
 
-      .pipe(this.serv());
+      .pipe(this.serv())
 
-    done && done();
+      .on('finish', () => {done && done();});
   }
 
   /**
@@ -71,12 +71,10 @@ class Css extends TaskMaster {
 
       .pipe(plugins.useful(this.task.data.convert))
 
-      .pipe($.size(this.sizeOptions()))
-
       .pipe($.csslint(this.task.data.lint_options))
-      .pipe($.csslint.formatter());
+      .pipe($.csslint.formatter(this.task.data.lint_report_type || ''))
 
-    done && done();
+      .on('finish', () => {done && done();});
   }
 
   /**

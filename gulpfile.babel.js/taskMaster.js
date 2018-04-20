@@ -44,7 +44,7 @@ module.exports = class TaskMaster {
 
   /**
    * proc
-   * watch or build
+   * if(!task.type.length) watch or build
    *
    * @param {object} stream gulp object
    * @param {function} done set complete
@@ -191,7 +191,9 @@ module.exports = class TaskMaster {
    */
   isMinify() {
     if(argv.min || this.task.data.minify) {
-      this.task.data.options.mode = 'production';
+      if(this.task.data.options && this.task.data.options.mode) {
+        this.task.data.options.mode = 'production';
+      }
       return true;
     }else{
       return false;

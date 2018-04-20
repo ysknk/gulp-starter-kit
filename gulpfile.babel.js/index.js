@@ -180,7 +180,7 @@ _.each(types, (array, key) => {
       });
     }));
   }else{
-    gulp.task(key, gulp.series.apply(gulp, array));
+    gulp.task(key, gulp.parallel.apply(gulp, array));
   }
 });
 

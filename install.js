@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const readline = require('readline');
+const colors = require('ansi-colors');
 
 const path = {
   src: './_src/',
@@ -14,7 +15,7 @@ const message = {
 const rli = readline.createInterface(process.stdin, process.stdout);
 
 console.log([
-  '\n---- Directory -> ' + path.dest + ' ----',
+  colors.magenta('\n---- Directory -> ' + path.dest + ' ----'),
   'You may be overwriting it.',
   'Do you want to overwrite?',
   '',
@@ -34,7 +35,7 @@ rli.on('line', function(cmd) {
   if(!cmd){
     rli.setPrompt('> ');
 
-  // yes
+  // yes(overwrite)
   }else if(cmd.match(/^1$/ig)) {
     // copy
     fs.copy(path.src, path.dest, {
@@ -45,7 +46,7 @@ rli.on('line', function(cmd) {
     });
     rli.close();
 
-  // no
+  // yes
   }else if(cmd.match(/^2$/ig)) {
     // copy
     fs.copy(path.src, path.dest, {

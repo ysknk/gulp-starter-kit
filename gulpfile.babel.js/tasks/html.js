@@ -158,11 +158,11 @@ class Html extends TaskMaster {
       .pipe(plugins.log())
 
       .pipe($.if(this.isLint(), $.htmlhint(this.task.data.lint_options)))
-      .pipe($.if(this.isLint(), $.htmlhint.reporter()))
+      .pipe($.if(this.isLint(), $.htmlhint.reporter(this.task.data.lint_report_type || path)))
 
-      .pipe(this.serv());
+      .pipe(this.serv())
 
-    done && done();
+      .on('finish', () => {done && done();});
   }
 
   /**
@@ -187,12 +187,10 @@ class Html extends TaskMaster {
       }))
       .pipe($.pug(this.task.data.options))
 
-      .pipe($.size(this.sizeOptions()))
-
       .pipe($.htmlhint(this.task.data.lint_options))
-      .pipe($.htmlhint.reporter());
+      .pipe($.htmlhint.reporter(this.task.data.lint_report_type || path))
 
-    done && done();
+      .on('finish', () => {done && done();});
   }
 
   /**

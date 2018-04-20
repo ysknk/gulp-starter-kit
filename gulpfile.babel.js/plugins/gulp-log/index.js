@@ -41,7 +41,8 @@ module.exports = (options) => {
       message: relative,
       sound: false,
       wait: false,
-      timeout: 1
+      timeout: 1,
+      type: 'info'
     });
 
     if(opts.logMessage) {

@@ -43,9 +43,9 @@ class Copy extends TaskMaster {
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
 
-      .pipe(this.serv());
+      .pipe(this.serv())
 
-    done && done();
+      .on('finish', () => {done && done();});
   }
 
   /**

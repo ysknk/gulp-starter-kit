@@ -18,6 +18,10 @@ module.exports = {
 
     convert: {
       linefeedcode: 'LF',// CRLF || LF || CR
+
+      replace: [],// [{from: '', to: ''}]
+      find: [],// ['a', 'b']
+
       encode: {
         to: 'utf8'// https://github.com/ashtuchkin/iconv-lite#supported-encodings
       }
@@ -57,6 +61,7 @@ module.exports = {
     inheritance_options: {
       skip: 'node_modules'
     },
+
     // ex: https://github.com/kangax/html-minifier/
     minify_options: {
       empty: true,
@@ -83,6 +88,8 @@ module.exports = {
       'inline-style-disabled': true,
       'alt-require': true
     },
+    lint_report_type: '',
+
     meta: '../../' + define.path.config + 'page',// relative path -> tasks/html.js
     assets_path: '/assets/',//base absolute path
     path_type: 'relative'// relative | absolute
@@ -102,9 +109,10 @@ module.exports = {
       },
       use: [
         nib(),
-        autoprefixer(['last 2 versions', 'ie 10', 'ios >= 8', 'android >= 5'])
+        autoprefixer(['last 2 versions', '> 2%'])
       ]
     },
+
     // ex: https://github.com/jakubpawlowicz/clean-css
     minify_options: {
       compatibility: 'ie10',
@@ -139,7 +147,8 @@ module.exports = {
       'font-sizes': false,
       'floats': false,
       'text-indent': false
-    }
+    },
+    lint_report_type: 'compact',
   },
 
   /* js @webpack */
@@ -150,6 +159,12 @@ module.exports = {
     options: {
       performance: {
         hints: false
+      },
+
+      stats: {
+        assets: false,
+        builtAt: false,
+        entrypoints: false
       },
 
       resolve: {
@@ -186,6 +201,7 @@ module.exports = {
         })
       ]
     },
+
     // ex: https://github.com/mishoo/UglifyJS2#minify-options
     minify_options: {
       output: {comments: /^\**!|@preserve|@license|@cc_on/}
@@ -210,8 +226,9 @@ module.exports = {
         '$',
         '_'
       ]
-    }//,
+    },
     // lint_report_type: './node_modules/eslint/lib/formatters/codeframe',
+    lint_report_type: 'compact'
   },
 
   /* img @imagemin */
