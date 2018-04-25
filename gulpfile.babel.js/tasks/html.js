@@ -139,10 +139,7 @@ class Html extends TaskMaster {
 
       .pipe($.pugInheritance(this.task.data.inheritance_options))
       .pipe($.filter((file) => {
-        let htdocs = path.relative(this.task.data.htdocsdir, file.path);
-        let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative));
-        let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
-        return isDirectoryIgnore && isFileIgnore;
+        return this.ignoreFilter(file);
       }))
 
       .pipe($.data((file) => {
@@ -201,3 +198,4 @@ class Html extends TaskMaster {
 }
 
 module.exports = new Html(task);
+

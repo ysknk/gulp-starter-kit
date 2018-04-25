@@ -8,18 +8,29 @@ import mozjpeg from 'imagemin-mozjpeg';
 import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
 
 module.exports = {
+  /* run flg */
+  tasks: {
+    html: true,
+    css: true,
+    js: true,
+    img: true,
+    copy: true,
+    serv: true
+  },
 
   /* common set */
   common: {
     lint: false,// true || gulp --lint
     minify: false,// true || gulp --min
 
-    ignore: define.path.ignore,
+    ignore: define.path.ignore(),
 
     convert: {
       linefeedcode: 'LF',// CRLF || LF || CR
 
-      replace: [],// [{from: '', to: ''}]
+      replace: [// [{from: '', to: ''}]
+        {from: '〜', to: '～'}
+      ],
       find: [],// ['a', 'b']
 
       encode: {
@@ -186,7 +197,7 @@ module.exports = {
               options: {
                 presets: [
                   ['@babel/preset-env', {modules: false, useBuiltIns: 'usage'}],
-                  '@babel/preset-stage-0'
+                  ['@babel/preset-stage-0', {decoratorsLegacy: true}]
                 ],
                 plugins: ['@babel/plugin-transform-runtime']
               }
@@ -263,3 +274,4 @@ module.exports = {
   }
 
 };
+

@@ -61,13 +61,14 @@ module.exports = (options) => {
     let replace = opts.replace;
     let find = opts.find;
 
+    let matchList = [];
+
     // trim head line
     if(opts.trimheadline) {
       contents = contents.replace(/^(\r\n|\n\r|\n|\r)/, '');
     }
 
     if(replace && replace.length || find && find.length) {
-      fancyLog('- ' + colors.blue(filename));
       // replace
       if(replace.length) {
         _.each(replace, (content) => {
@@ -75,7 +76,7 @@ module.exports = (options) => {
           let isMatch = contents.match(ex);
           if(isMatch) {
             contents = contents.replace(ex, content.to);
-            fancyLog([
+            matchList.push([
               colors.yellow([
                 '  replace*' + isMatch.length,
                 '"' + content.from + '"',
@@ -93,13 +94,21 @@ module.exports = (options) => {
           let ex = new RegExp('(' + content + ')', 'g');
           let isMatch = contents.match(ex);
           if(isMatch) {
-            fancyLog([
+            matchList.push([
               colors.yellow([
                 '  find*' + isMatch.length,
                 '"' + content + '"'
               ].join(' '))
             ].join(' '));
           }
+        });
+      }
+
+      // show match logs
+      if(matchList.length) {
+        fancyLog('- ' + colors.blue(filename));
+        _.each(matchList, (list) => {
+          fancyLog(list);
         });
       }
     }
@@ -132,3 +141,4 @@ module.exports = (options) => {
     cb(null, chunks);
   });
 };
+

@@ -31,7 +31,9 @@ module.exports = class TaskMaster {
       )
     };
 
-    if(!config || !this.task.name) return;
+    if(!config ||
+      !this.task.name ||
+        !this.isTask()) return;
 
     this.init();
     this.setTask();
@@ -61,11 +63,10 @@ module.exports = class TaskMaster {
       this.task.types[0] : 'proc';
     let src = this.getSrc();
     let ignore = this.getIgnore();
+    let mergeSrc = [...src, ...ignore];
 
     // default task
     gulp.task(this.task.name, (done) => {
-      let mergeSrc = [...src, ...ignore];
-      // this[defaultTask](gulp.src(mergeSrc, {since: gulp.lastRun(this.task.name)}), done);
       this[defaultTask](gulp.src(mergeSrc), done);
     });
 
@@ -80,8 +81,6 @@ module.exports = class TaskMaster {
     _.each(this.task.types, (type, i) => {
       if(!this[type]) return;
       gulp.task(this.task.name + ':' + type, (done) => {
-        let mergeSrc = [...src, ...ignore];
-        // this[type](gulp.src(mergeSrc, {since: gulp.lastRun(this.task.name)}), done);
         this[type](gulp.src(mergeSrc), done);
       });
     });
@@ -200,4 +199,28 @@ module.exports = class TaskMaster {
     }
   }
 
+  /**
+   * isTask
+   *
+   * @param {string} name=this.task.name task name
+   * @returns {object}
+   */
+  isTask(name = this.task.name) {
+    return config.tasks[name];
+  }
+
+  /**
+   * ignoreFilter
+   *
+   * @param {object} file gulp object
+   * @returns {boolean}
+   */
+  ignoreFilter(file) {
+    let htdocs = path.relative(this.task.data.htdocsdir, file.path);
+    let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative));
+    let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
+    return isDirectoryIgnore && isFileIgnore;
+  }
+
 };
+

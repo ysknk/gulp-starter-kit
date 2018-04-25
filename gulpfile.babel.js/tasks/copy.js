@@ -35,9 +35,6 @@ class Copy extends TaskMaster {
     stream
       .pipe($.plumber(this.errorMessage()))
       .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist)))
-      .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
-
-      .pipe($.if(plugins.util.getIsWatch(), $.remember(this.task.name)))
       .pipe(gulp.dest(this.task.data.dist))
 
       .pipe($.size(this.sizeOptions()))
@@ -56,3 +53,4 @@ class Copy extends TaskMaster {
 }
 
 module.exports = new Copy(task);
+

@@ -19,11 +19,7 @@ node.js
 ## Install
 
     cd _app/
-    npm install
     node install.js
-
-    cd ../_app/config/
-    npm install
 
 ## Usage
 

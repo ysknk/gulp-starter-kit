@@ -64,3 +64,4 @@ class Custom extends TaskMaster {
 }
 
 module.exports = new Custom(task);
+

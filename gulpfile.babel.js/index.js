@@ -46,18 +46,38 @@ const define = {
     config: srcDir + 'config/',
     htdocs: srcDir + 'htdocs/',
 
-    src: (extension) => {
+    src: (ext) => {
       return [
-        srcDir + 'htdocs/**/*.' + extension
+        srcDir + 'htdocs/**/*.' + ext
       ];
     },
-    ignore: [
-      'htdocs/_**/*',
-      'htdocs/**/_*'
-    ].map((val) => {return '!' + srcDir + val;}),
+    ignore: (ext) => {
+      ext = ext ? ('.' + ext) : '';
+      return [
+        'htdocs/**/_*',
+        'htdocs/**/_**/*',
+        'htdocs/_**/*'
+      ].map((val) => {
+        return '!' + srcDir + val + ext;
+      });
+    },
     dist: distDir
   }
 };
+
+// const glob = require("glob")
+// function find(pattern, ignore) {
+//   glob(pattern, {ignore: ignore}, function (err, files) {
+//     if(err) {
+//       console.log(err);
+//     }
+//     console.log(pattern);
+//     console.log(files);
+//   });
+// }
+// find(srcDir + 'htdocs/**/*.styl', [
+//   srcDir + 'htdocs/**/_*.styl'
+// ]);
 
 // please not overwrite variables
 const globalVars = {
@@ -148,8 +168,12 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
 let taskMaster = require('./taskMaster');
 let tasks = gulp._registry._tasks;
 let def = 'default';
+let empty = 'empty';
 let types = {};
 let taskmaster = new taskMaster();
+let isServ = taskmaster.isTask('serv');
+
+gulp.task(empty, (done) => {done();});
 
 _.each(tasks, (task, name) => {
   let split = name.split(':');
@@ -162,19 +186,20 @@ _.each(tasks, (task, name) => {
 
 _.each(types, (array, key) => {
   if(key === 'watch' || key === def) {
-    gulp.task(key, gulp.series('serv', function all() {
+    gulp.task(key, gulp.series(isServ ? 'serv' : empty, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
 
       _.each(array, (string) => {
         let split = string.split(':');
         let taskname = split[0];
-        let serv = 'serv:' + (config[taskname].serv || 'reload');
-        let src = taskmaster.getSrc(config[taskname].src);
-        if(taskname === 'serv') return;
+        let serv = 'serv:' + (config[taskname] && config[taskname].serv || 'reload');
+        let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
+
+        if(taskname === 'serv' || taskname === empty) return;
 
         if(config && config[taskname]) {
-          let watcher = gulp.watch(src, gulp.series(taskname, serv));
+          let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : empty));
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
         }
       });

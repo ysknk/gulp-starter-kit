@@ -34,7 +34,7 @@ class Img extends TaskMaster {
   build(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.newer(this.task.data.dist)))
+      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist)))
 
       .pipe($.imagemin(this.task.data.plugins, this.task.data.options))
 
@@ -56,3 +56,4 @@ class Img extends TaskMaster {
 }
 
 module.exports = new Img(task);
+
