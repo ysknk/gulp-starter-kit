@@ -14,21 +14,21 @@ import uglifyJsPlugin from 'uglifyjs-webpack-plugin';
 const config = global[define.ns];
 const task = {
   name: 'js',
-  types: ['build', 'lint']// **:watch function [0] || 'proc'
+  types: ['build', 'lint']// **:watch function [0] || 'procedure'
 };
 
 /**
  * Js
  */
 class Js extends TaskMaster {
-  constructor(options) {
-    super(options);
+  constructor(opts_) {
+    super(opts_);
   }
 
   /**
-   * init
+   * initialize
    */
-  // init() {}
+  // initialize() {}
 
   /**
    * build
@@ -56,10 +56,13 @@ class Js extends TaskMaster {
 
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
-        extension: this.task.data.extension
-      })))
-      .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
+      .pipe($.filter((file) => {
+        return this.ignoreFilter(file);
+      }))
+      // .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
+      //   extension: this.task.data.extension
+      // })))
+      // .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
 
       .pipe(named((path) => {
         return path.relative.replace(/\.[^\.]+$/, '');

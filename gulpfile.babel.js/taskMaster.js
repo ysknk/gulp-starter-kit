@@ -18,16 +18,16 @@ let task = {
  * Task
  */
 module.exports = class TaskMaster {
-  constructor(options) {
-    if(!options) return;
-    options = _.merge({}, task, options);
+  constructor(opts_) {
+    if(!opts_) return;
+    opts_ = _.merge({}, task, opts_);
 
     this.task = {
-      name: options.name,
-      types: options.types,
+      name: opts_.name,
+      types: opts_.types,
       data: config && _.merge({},
         config['common'] || {},
-        config[options.name] || {}
+        config[opts_.name] || {}
       )
     };
 
@@ -35,23 +35,23 @@ module.exports = class TaskMaster {
       !this.task.name ||
         !this.isTask()) return;
 
-    this.init();
+    this.initialize();
     this.setTask();
   }
 
   /**
-   * init
+   * initialize
    */
-  init() {}
+  initialize() {}
 
   /**
-   * proc
+   * procedure
    * if(!task.type.length) watch or build
    *
    * @param {object} stream gulp object
    * @param {function} done set complete
    */
-  proc(stream, done) {
+  procedure(stream, done) {
     done && done();
   }
 
@@ -60,7 +60,7 @@ module.exports = class TaskMaster {
    */
   setTask() {
     let defaultTask = this.task.types && this.task.types.length ?
-      this.task.types[0] : 'proc';
+      this.task.types[0] : 'procedure';
     let src = this.getSrc();
     let ignore = this.getIgnore();
     let mergeSrc = [...src, ...ignore];

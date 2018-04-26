@@ -11,8 +11,8 @@ const text = {
 };
 const defaultEncode = 'utf8';
 
-module.exports = (options) => {
-  let opts = _.merge({}, {
+module.exports = (opts_) => {
+  opts_ = _.merge({}, {
     trimheadline: true,
     linefeedcode: 'LF',
 
@@ -24,14 +24,14 @@ module.exports = (options) => {
       to: defaultEncode,
       iconv: iconv
     }
-  }, options);
+  }, opts_);
 
-  if(!opts.encode.from) {
-    opts.encode.from = defaultEncode;
+  if(!opts_.encode.from) {
+    opts_.encode.from = defaultEncode;
   }
 
-  if(!opts.encode.iconv) {
-    opts.encode.iconv = iconv ?
+  if(!opts_.encode.iconv) {
+    opts_.encode.iconv = iconv ?
       iconv : {decode: {}, encode: {}};
   }
 
@@ -52,19 +52,19 @@ module.exports = (options) => {
       return cb(new pluginError(pluginName, text.stream));
     }
 
-    let encodeFrom = opts.encode.from;
-    let encodeTo = opts.encode.to;
+    let encodeFrom = opts_.encode.from;
+    let encodeTo = opts_.encode.to;
 
     let filename = chunks.relative;
     let contents = chunks.contents.toString(encodeFrom);
 
-    let replace = opts.replace;
-    let find = opts.find;
+    let replace = opts_.replace;
+    let find = opts_.find;
 
     let matchList = [];
 
     // trim head line
-    if(opts.trimheadline) {
+    if(opts_.trimheadline) {
       contents = contents.replace(/^(\r\n|\n\r|\n|\r)/, '');
     }
 
@@ -117,11 +117,11 @@ module.exports = (options) => {
     let code = new RegExp('(\n|\r\n|\r)', 'g');
     let change = '';
 
-    if(opts.linefeedcode.match(/^CRLF$/i)) {
+    if(opts_.linefeedcode.match(/^CRLF$/i)) {
       change = '\r\n';
-    }else if(opts.linefeedcode.match(/^CR$/i)) {
+    }else if(opts_.linefeedcode.match(/^CR$/i)) {
       change = '\r';
-    }else if(opts.linefeedcode.match(/^LF$/i)) {
+    }else if(opts_.linefeedcode.match(/^LF$/i)) {
       change = '\n';
     }else{
       // default
@@ -133,8 +133,8 @@ module.exports = (options) => {
     // encode
     if(encodeTo != defaultEncode ||
       encodeFrom != defaultEncode) {
-      let content = iconv.decode(chunks.contents, encodeFrom, opts.encode.iconv.decode);
-      chunks.contents = iconv.encode(content, encodeTo, opts.encode.iconv.encode);
+      let content = iconv.decode(chunks.contents, encodeFrom, opts_.encode.iconv.decode);
+      chunks.contents = iconv.encode(content, encodeTo, opts_.encode.iconv.encode);
       chunks.contents = new Buffer(chunks.contents);
     }
 

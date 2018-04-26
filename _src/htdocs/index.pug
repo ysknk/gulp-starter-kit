@@ -5,3 +5,8 @@ block content
   p テスト
   p テスト
   p 〜
+  p#scroll1(style="margin-bottom:1000px;"): a(href="#scroll2")
+    | scroll1
+    span test
+  p#scroll2(style="margin-bottom:1000px;"): a(href="#scroll1") scroll2 test
+  p#scroll3(style="margin-bottom:1000px;"): a(href="#top") scroll3 test

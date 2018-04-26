@@ -8,11 +8,11 @@ const text = {
   'title': pluginName
 };
 
-module.exports = (options) => {
-  let opts = _.merge({}, {
+module.exports = (opts_) => {
+  opts_ = _.merge({}, {
     title: '',
     logMessage: false
-  }, options);
+  }, opts_);
 
   /**
    * through.obj
@@ -36,8 +36,8 @@ module.exports = (options) => {
     let result = text.publish + path;
 
     notifier.notify({
-      title: opts.title ?
-        (text.title + ': ' + opts.title) : text.title,
+      title: opts_.title ?
+        (text.title + ': ' + opts_.title) : text.title,
       message: relative,
       sound: false,
       wait: false,
@@ -45,7 +45,7 @@ module.exports = (options) => {
       type: 'info'
     });
 
-    if(opts.logMessage) {
+    if(opts_.logMessage) {
       fancyLog(result);
     }
     cb(null, chunks);

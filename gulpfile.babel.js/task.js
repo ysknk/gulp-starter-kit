@@ -175,7 +175,8 @@ module.exports = {
       stats: {
         assets: false,
         builtAt: false,
-        entrypoints: false
+        entrypoints: false,
+        errors: false
       },
 
       resolve: {

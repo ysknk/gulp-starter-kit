@@ -8,21 +8,21 @@ import TaskMaster from '../taskMaster';
 const config = global[define.ns];
 const task = {
   name: 'copy',
-  types: ['build']// **:watch function [0] || 'proc'
+  types: ['build']// **:watch function [0] || 'procedure'
 };
 
 /**
  * Copy
  */
 class Copy extends TaskMaster {
-  constructor(options) {
-    super(options);
+  constructor(opts_) {
+    super(opts_);
   }
 
   /**
-   * init
+   * initialize
    */
-  // init() {}
+  // initialize() {}
 
   /**
    * build

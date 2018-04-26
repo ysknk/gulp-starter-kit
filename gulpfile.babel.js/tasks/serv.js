@@ -8,21 +8,21 @@ import TaskMaster from '../taskMaster';
 const config = global[define.ns];
 const task = {
   name: 'serv',
-  types: ['open', 'reload', 'stream']// **:watch function [0] || 'proc'
+  types: ['open', 'reload', 'stream']// **:watch function [0] || 'procedure'
 };
 
 /**
  * Serv
  */
 class Serv extends TaskMaster {
-  constructor(options) {
-    super(options);
+  constructor(opts_) {
+    super(opts_);
   }
 
   /**
-   * init
+   * initialize
    */
-  // init() {}
+  // initialize() {}
 
   /**
    * open
