@@ -10,7 +10,7 @@ import smoothScroll from './_classes/smoothScroll';
   if(!win.lib) win.lib = {};
   win.lib.scroll = new smoothScroll();
   win.addEventListener('load', () => {
-    win.lib.scroll.urlScroll();
+    win.lib.scroll.locationHref();
   }, false);
 
 })(window, document);

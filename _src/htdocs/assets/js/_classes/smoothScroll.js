@@ -52,9 +52,9 @@ export default ((win, doc) => {
     }
 
     /**
-     * urlScroll
+     * locationHref
      */
-    urlScroll() {
+    locationHref() {
       let hash = this.getHash(location.href);
       if(!hash) return;
 
@@ -115,7 +115,7 @@ export default ((win, doc) => {
       };
 
       if(scrollPos.y == elemPos.y) {
-        cb && cb();
+        _.isFunction(cb) && cb();
         return;
       }
 
@@ -126,7 +126,7 @@ export default ((win, doc) => {
         easing: this.easing,
         update: () => win.scroll(0, scrollPos.y),
         complete: () => {
-          cb && cb();
+          _.isFunction(cb) && cb();
         }
       });
     }
