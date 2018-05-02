@@ -34,12 +34,6 @@ class Css extends TaskMaster {
   build(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
-      // .pipe($.ignore.exclude(this.task.data.ignore))
-
-      // .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
-      // .pipe($.filter((file) => {
-      //   return this.ignoreFilter(file);
-      // }))
 
       .pipe($.stylus(this.task.data.options))
       .pipe($.csscomb(this.task.data.comb_options))
