@@ -58,7 +58,7 @@ const define = {
         'htdocs/**/_**/*',
         'htdocs/_**/*'
       ].map((val) => {
-        return '!' + srcDir + val + ext;
+        return srcDir + val + ext;
       });
     },
     dist: distDir

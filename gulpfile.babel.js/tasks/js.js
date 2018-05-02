@@ -56,9 +56,6 @@ class Js extends TaskMaster {
 
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.filter((file) => {
-        return this.ignoreFilter(file);
-      }))
       // .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
       //   extension: this.task.data.extension
       // })))

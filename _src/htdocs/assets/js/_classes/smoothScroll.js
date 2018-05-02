@@ -14,9 +14,9 @@ export default ((win, doc) => {
       if(!(this instanceof SmoothScroll)) {
         return new SmoothScroll(opts_);
       }
-      this.target = 'A';
-      this.initHash = 'top';
-      this.excludeName = 'no-scroll';
+      this.elem = 'a';
+      this.topHash = 'top';
+      this.excludeClassName = 'no-scroll';
       this.easing = 'easeInOutQuart';
       this.duration = 500;
 
@@ -33,21 +33,26 @@ export default ((win, doc) => {
 
       // click to scroll
       doc.addEventListener('click', (e) => {
-        let elem = e.target.closest(this.target);// delegate
+        let elem = e.target.closest(this.elem);// delegate
+        let href = '';
+        let target = '';
+        let hash = '';
+
         if(!elem || e.target === doc) return;
 
-        let href = elem.getAttribute('href');
-        let target = doc.querySelector(href);
-        let hash = this.getHash(href);
-
-        if(!hash || elem.classList.contains(this.excludeName)) return;
-
-        if(elem.closest(this.target) && hash) {
-          if(e) e.preventDefault();
-          this.goto((hash === '#' + this.initHash) ?
-            html : target);
+        try {
+          href = elem.getAttribute('href');
+          target = doc.querySelector(href);
+          hash = this.getHash(href);
+        }catch(e) {
+          return;
         }
 
+        if(!hash || elem.classList.contains(this.excludeClassName)) return;
+
+        if(e) e.preventDefault();
+        this.goto((hash === '#' + this.topHash) ?
+          html : target);
       });
     }
 
@@ -114,12 +119,15 @@ export default ((win, doc) => {
         y: window.pageYOffset
       };
 
+      _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
+
       if(scrollPos.y == elemPos.y) {
         _.isFunction(cb) && cb();
+        _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         return;
       }
 
-      lib.anime({
+      $.fn.anime({
         targets: scrollPos,
         y: elemPos.y,
         duration: this.duration,
@@ -127,9 +135,24 @@ export default ((win, doc) => {
         update: () => win.scroll(0, scrollPos.y),
         complete: () => {
           _.isFunction(cb) && cb();
+          _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         }
       });
     }
+
+    /**
+     * onBeforeScroll
+     *
+     * @param {object} obj class object
+     */
+    onBeforeScroll(obj) {}
+
+    /**
+     * onAfterScroll
+     *
+     * @param {object} obj class object
+     */
+    onAfterScroll(obj) {}
 
   };
 

@@ -1,0 +1,8 @@
+extends /_partials/layouts/default
+
+block content
+  p#scroll1(style="padding-bottom:1000px;background:#ccc;"): a(href="#scroll2")
+    | scroll1
+    span test
+  p#scroll2(style="padding-bottom:1000px;background:#999;"): a(href="#scroll1") scroll2 test
+  p#scroll3: a(href="#top") scroll3 test

@@ -103,7 +103,14 @@ module.exports = class TaskMaster {
    * @returns {array} ignore
    */
   getIgnore(ignore) {
-    return ignore || (this.task && this.task.data.ignore) || [];
+    let data = ignore || (this.task && this.task.data.ignore) || [];
+
+    if(data.length) {
+      return _.map(data, (val) => {
+        return '!' + path.resolve(val);
+      });
+    }
+    return data;
   }
 
   /**

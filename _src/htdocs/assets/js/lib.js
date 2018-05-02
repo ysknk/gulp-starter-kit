@@ -7,10 +7,14 @@ import axios from 'axios';
 import anime from 'animejs';
 import _ from 'lodash';
 
+const NS = '$';
+
 ((win, doc) => {
 
-  if(!win.lib) win.lib = {};
-  _.extend(win.lib, {
+  if(!win[NS]) win[NS] = {};
+  if(!win[NS].fn) win[NS].fn = {};
+
+  _.extend(win[NS].fn, {
     ua,
     axios,
     anime,

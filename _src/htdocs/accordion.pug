@@ -1,0 +1,14 @@
+extends /_partials/layouts/default
+
+block content
+  p.is-open(data-accr=`#content0`): a(href="javascript:void(0)" style="display:block;padding:1em;background:#ccc;")
+    != `btn0`
+  div(id=`content0`)
+    div(style="padding-bottom:10em;")
+      p!= `content0`
+  -for(var i = 1; 4 > i; i++)
+    p(data-accr=`#content${i}`): a(href="javascript:void(0)" style="display:block;padding:1em;background:#ccc;")
+      != `btn${i}`
+    div(id=`content${i}`)
+      div(style="padding-bottom:10em;")
+        p!= `content${i}`
