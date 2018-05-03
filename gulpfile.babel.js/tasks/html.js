@@ -138,6 +138,9 @@ class Html extends TaskMaster {
       .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
 
       .pipe($.pugInheritance(this.task.data.inheritance_options))
+      .pipe($.filter((file) => {
+        return this.ignoreFilter(file);
+      }))
 
       .pipe($.data((file) => {
         return this.setCurrentData(file);
@@ -168,6 +171,10 @@ class Html extends TaskMaster {
   lint(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
+
+      .pipe($.filter((file) => {
+        return this.ignoreFilter(file);
+      }))
 
       .pipe($.data((file) => {
         return this.setCurrentData(file);
