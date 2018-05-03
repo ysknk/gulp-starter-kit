@@ -169,13 +169,6 @@ class Html extends TaskMaster {
     stream
       .pipe($.plumber(this.errorMessage()))
 
-      .pipe($.filter((file) => {
-        let htdocs = path.relative(define.path.htdocs, file.path);
-        let isFileIgnore = !/^_/.test(file.relative);
-        let isDirectoryIgnore = !/\/_/.test(htdocs);
-        return isDirectoryIgnore && isFileIgnore;
-      }))
-
       .pipe($.data((file) => {
         return this.setCurrentData(file);
       }))
