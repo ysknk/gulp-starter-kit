@@ -55,8 +55,7 @@ const define = {
       ext = ext ? ('.' + ext) : '';
       return [
         'htdocs/**/_*',
-        'htdocs/**/_**/*',
-        'htdocs/_**/*'
+        'htdocs/**/_**/**/*'
       ].map((val) => {
         return srcDir + val + ext;
       });

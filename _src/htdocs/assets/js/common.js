@@ -1,7 +1,7 @@
 'use strict';
 
-import smoothScroll from './_partials/_classes/smoothScroll';
-import accordion from './_partials/_classes/accordion';
+import smoothScroll from './_partials/classes/smoothScroll';
+import accordion from './_partials/classes/accordion';
 
 const NS = '$';
 
