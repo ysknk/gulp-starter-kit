@@ -56,10 +56,6 @@ class Js extends TaskMaster {
 
     stream
       .pipe($.plumber(this.errorMessage()))
-      // .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
-      //   extension: this.task.data.extension
-      // })))
-      // .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
 
       .pipe(named((path) => {
         return path.relative.replace(/\.[^\.]+$/, '');
@@ -105,77 +101,6 @@ class Js extends TaskMaster {
       .on('finish', () => {done && done();});
       // .pipe($.eslint.result((results) => {this.lintResult(results)}));
   }
-
-  // /**
-  //  * lintResult
-  //  * @param {object} results
-  //  */
-  // lintResult(results) {
-  //   var results = results || [];
-  //   console.log(results)
-  //
-  //   var summary = _.reduce(results, function(seq, current) {
-  //     _.each(current.messages, function(msg) {
-  //       var logMessage = {
-  //         filePath: current.filePath,
-  //         ruleId: msg.ruleId,
-  //         message: msg.message,
-  //         line: msg.line,
-  //         column: msg.column,
-  //         source: msg.source
-  //       };
-  //
-  //       if(msg.severity === 1) {
-  //         logMessage.type = 'warning';
-  //         seq.warnings.push(logMessage);
-  //       }
-  //       if(msg.severity === 2) {
-  //         logMessage.type = 'error';
-  //         seq.errors.push(logMessage);
-  //       }
-  //     });
-  //     return seq;
-  //   }, {
-  //     errors: [],
-  //     warnings: []
-  //   });
-  //
-  // console.log(summary)
-  //   if(summary.errors.length || summary.warnings.length) {
-  //     var lines = summary.errors.concat(summary.warnings).map(function(msg) {
-  //       return '\n' + msg.type + ' ' + msg.ruleId + '\n  ' + msg.filePath + ':' + msg.line + ':' + msg.column;
-  //     }).join('\n');
-  //
-  // console.log(lines + '\n')
-  //     return lines + '\n';
-  //   }
-  // }
-
-  // /**
-  //  * setTask
-  //  */
-  // setTask() {
-  //   let defaultTask = this.task.types[0];
-  //
-  //   // default task
-  //   gulp.task(this.task.name, (done) => {
-  //     this[defaultTask](gulp.src(this.task.data.src), done);
-  //   });
-  //
-  //   // watch task
-  //   gulp.task(this.task.name + ':watch', (done) => {
-  //     plugins.util.setIsWatch(true);
-  //     this[defaultTask](gulp.src(this.task.data.src), done);
-  //   });
-  //
-  //   // other types task
-  //   _.each(this.task.types, (type, i) => {
-  //     if(!this[type]) return;
-  //     gulp.task(this.task.name + ':' + type, (done) => {
-  //       this[type](gulp.src(this.task.data.src), done);
-  //     });
-  //   });
-  // }
 
 }
 

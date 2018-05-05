@@ -1,6 +1,6 @@
 'use strict';
 
-import closest from './_polyfill/closest';
+import closest from './_partials/_polyfill/closest';
 
 import ua from 'ua-parser-js';
 import axios from 'axios';
