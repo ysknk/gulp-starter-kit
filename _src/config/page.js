@@ -76,6 +76,16 @@ module.exports = {
         keywords: 'test test test keywords',
       }
     }
+  },
+
+  '/mock': {
+    '$ajax': {
+      title: 'mock ajax title',
+      description: 'mock ajax description',
+      keywords: 'mock ajax keywords',
+      js: [...head.js, 'pages/ajax.js']
+    },
   }
+
 };
 

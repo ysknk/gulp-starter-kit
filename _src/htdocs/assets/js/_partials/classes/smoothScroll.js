@@ -1,3 +1,5 @@
+import anime from 'animejs';
+
 export default ((win, doc) => {
 
   /**
@@ -127,7 +129,7 @@ export default ((win, doc) => {
         return;
       }
 
-      $.fn.anime({
+      anime({
         targets: scrollPos,
         y: elemPos.y,
         duration: this.duration,

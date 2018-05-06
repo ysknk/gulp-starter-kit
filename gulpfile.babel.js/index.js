@@ -64,20 +64,6 @@ const define = {
   }
 };
 
-// const glob = require("glob")
-// function find(pattern, ignore) {
-//   glob(pattern, {ignore: ignore}, function (err, files) {
-//     if(err) {
-//       console.log(err);
-//     }
-//     console.log(pattern);
-//     console.log(files);
-//   });
-// }
-// find(srcDir + 'htdocs/**/*.styl', [
-//   srcDir + 'htdocs/**/_*.styl'
-// ]);
-
 // please not overwrite variables
 const globalVars = {
   gulp,

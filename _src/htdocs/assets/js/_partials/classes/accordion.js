@@ -1,3 +1,5 @@
+import anime from 'animejs';
+
 export default ((win, doc) => {
 
   /**
@@ -70,7 +72,7 @@ export default ((win, doc) => {
       _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
 
       _.each(contents, (content) => {
-        $.fn.anime.remove(content);
+        anime.remove(content);
 
         content.classList.add(this.openClassName);
 
@@ -82,7 +84,7 @@ export default ((win, doc) => {
         content.style.overflow = 'hidden';
         content.style.height = oldHeight;
 
-        $.fn.anime({
+        anime({
           targets: content,
           height: [oldHeight, maxHeight],
           duration: this.duration,
@@ -109,12 +111,12 @@ export default ((win, doc) => {
       _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
 
       _.each(contents, (content) => {
-        $.fn.anime.remove(content);
+        anime.remove(content);
 
         content.classList.remove(this.openClassName);
         content.style.overflow = 'hidden';
 
-        $.fn.anime({
+        anime({
           targets: contents,
           height: '0',
           duration: this.duration,
