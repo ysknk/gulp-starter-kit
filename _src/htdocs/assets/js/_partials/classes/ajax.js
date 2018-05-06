@@ -127,7 +127,7 @@ export default ((win, doc) => {
      *
      * @param {function} resolve promise
      * @param {function} reject promise
-     * @param {object} response object
+     * @param {object} error object
      * @param {object} obj class object
      * @returns {object} promise
      */
