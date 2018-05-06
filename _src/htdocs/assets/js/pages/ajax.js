@@ -4,7 +4,7 @@
 
   // common settings please to common.js
   $.fn.ajax.onSuccess = (resolve, reject, responce, that) => {
-    console.log('after:', responce);
+    console.log('common:', responce);
     console.log(this, that);
     return resolve();
   };
