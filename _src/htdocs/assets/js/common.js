@@ -15,6 +15,12 @@ const NS = '$';
   if(!win[NS].fn) win[NS].fn = {};
 
   $.fn.ajax = new ajax();
+  $.fn.ajax.onSuccess = (resolve, reject, responce, that) => {
+    return resolve();
+  };
+  $.fn.ajax.onFailure = (resolve, reject, responce, that) => {
+    return resolve();
+  };
 
   $.fn.scroll = new smoothScroll();
   win.addEventListener('load', (e) => {

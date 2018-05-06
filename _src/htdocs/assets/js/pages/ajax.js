@@ -2,14 +2,6 @@
 
 ((win, doc) => {
 
-  // common settings please to common.js
-  $.fn.ajax.onSuccess = (resolve, reject, responce, that) => {
-    console.log('common:', responce);
-    console.log(this, that);
-    return resolve();
-  };
-
-  // local settings
   let html = document.querySelector('html');
 
   $.fn.ajax.set(html, {
