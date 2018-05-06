@@ -1,8 +1,8 @@
 'use strict';
 
+import ajax from './_partials/classes/ajax';
 import smoothScroll from './_partials/classes/smoothScroll';
 import accordion from './_partials/classes/accordion';
-import ajax from './_partials/classes/ajax';
 
 const NS = '$';
 
