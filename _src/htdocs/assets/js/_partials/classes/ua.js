@@ -21,13 +21,13 @@ export default ((win, doc) => {
 
       _.isObject(opts_) && _.extend(this, opts_);
 
-      this.initialize();
+      // this.initialize();
     }
 
     /**
      * initialize
      */
-    initialize() {}
+    // initialize() {}
 
     /**
      * isMobile
@@ -53,7 +53,7 @@ export default ((win, doc) => {
      * @returns {boolean}
      */
     isTablet() {
-      return this.getDevice().type &&
+      return this.isMobile() &&
         this.getDevice().type.match(/^tablet$/i) ? true : false;
     }
 
