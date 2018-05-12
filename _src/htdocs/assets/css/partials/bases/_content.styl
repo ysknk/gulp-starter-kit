@@ -1,5 +1,5 @@
 body
-  font-size (FONT_SIZE_DEFAULT)px
+  font-size (fpc)px
   font-family FONT_FAMILY
   line-height 1.5
   -webkit-font-smoothing antialiased
@@ -18,12 +18,15 @@ body
       color FONT_COLOR_LINK
 
 // fontsize
-@media all and (max-width: (wmin)px)
-  body
-    font-size (fmin)px
 for i in (1..FONT_SIZE_SPLIT)
   diff = wmin + (((wsp - wmin) / FONT_SIZE_SPLIT)  * i);
-  @media all and (max-width: (diff)px)
+  @media all and (min-width: (diff)px)
     body
-      font-size ((diff / wmin) * fmin)px
-
+      font-size ceil(((diff / wmin) * fmin))px
+diff = ((wsp - wmin) / FONT_SIZE_SPLIT);
+@media all and (max-width: (wmin + diff)px)
+  body
+    font-size (fmin)px
+@media all and (min-width: (wsp + 1)px)
+  body
+    font-size (fpc)px
