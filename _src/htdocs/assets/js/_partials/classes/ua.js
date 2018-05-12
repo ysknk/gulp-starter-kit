@@ -30,30 +30,30 @@ export default ((win, doc) => {
     // initialize() {}
 
     /**
-     * isMobile
+     * isSp
      *
      * @returns {boolean}
      */
-    isMobile() {
+    isSp() {
       return this.getDevice().type ? true : false;
     }
 
     /**
-     * isDesktop
+     * isPc
      *
      * @returns {boolean}
      */
-    isDesktop() {
-      return !this.isMobile();
+    isPc() {
+      return !this.isSp();
     }
 
     /**
-     * isTablet
+     * isTab
      *
      * @returns {boolean}
      */
-    isTablet() {
-      return this.isMobile() &&
+    isTab() {
+      return this.isSp() &&
         this.getDevice().type.match(/^tablet$/i) ? true : false;
     }
 

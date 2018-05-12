@@ -18,14 +18,14 @@ const NS = '$';
 
   // ua
   $.fn.ua = new ua();
-  if($.fn.ua.isDesktop()) {
-    html.classList.add('ua-desktop');
+  if($.fn.ua.isPc()) {
+    html.classList.add('ua-pc');
   }
-  if($.fn.ua.isMobile()) {
-    html.classList.add('ua-mobile');
+  if($.fn.ua.isSp()) {
+    html.classList.add('ua-sp');
   }
-  if($.fn.ua.isTablet()) {
-    html.classList.add('ua-tablet');
+  if($.fn.ua.isTab()) {
+    html.classList.add('ua-tab');
   }
 
   // ajax

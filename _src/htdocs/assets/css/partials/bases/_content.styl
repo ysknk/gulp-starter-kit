@@ -1,13 +1,13 @@
 body
-  font-size (DEFAULT_FONT_SIZE)px
+  font-size (FONT_SIZE_DEFAULT)px
   font-family FONT_FAMILY
   line-height 1.5
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   -webkit-text-size-adjust 100%
-  color DEFAULT_FONT_COLOR
+  color FONT_COLOR_DEFAULT
   a
-    color LINK_FONT_COLOR
+    color FONT_COLOR_LINK
     text-decoration none
     &:hover
       text-decoration underline
@@ -15,4 +15,15 @@ body
     &:active
     &:visited
     &:focus
-      color LINK_FONT_COLOR
+      color FONT_COLOR_LINK
+
+// fontsize
+@media all and (max-width: (wmin)px)
+  body
+    font-size (fmin)px
+for i in (1..FONT_SIZE_SPLIT)
+  diff = wmin + (((wsp - wmin) / FONT_SIZE_SPLIT)  * i);
+  @media all and (max-width: (diff)px)
+    body
+      font-size ((diff / wmin) * fmin)px
+

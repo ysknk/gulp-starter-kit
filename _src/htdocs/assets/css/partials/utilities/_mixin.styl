@@ -9,20 +9,20 @@ clearfix()
 percent(num, maxnum, unit = '%')
   unit((((num / maxnum) * 1000) / 10), unit)
 
-font_size(size, def = DEFAULT_FONT_SIZE)
+font_size(size, def = FONT_SIZE_DEFAULT)
   font-size ceil(percentage(size, def))
 
 letter_spacing(size)
   letter-spacing (size / 1000)em
 
-rollover(def = .7)
-  transition opacity .2s ease-in-out
-  img
-    box-shadow #000 0 0 0
-  &:hover
-    opacity(def)
-    //.ua-not-pc&
-    //  opacity(1)
+rollover(type = 'opacity', def = .7)
+  if type == 'opacity'
+    transition opacity .2s ease-in-out
+    img
+      box-shadow #000 0 0 0
+    {upc} &
+      &:hover
+        opacity(def)
 
 break_word()
   word-wrap break-word
@@ -37,3 +37,11 @@ hidden_text()
   white-space nowrap
   overflow hidden
   line-height 1
+
+break_point(type)
+  if type == 'sp'
+    @media screen and (max-width: wsp)
+      {block}
+  if type == 'pc'
+    @media screen and (min-width: (wsp + 1))
+      {block}
