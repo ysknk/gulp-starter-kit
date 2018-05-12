@@ -16,10 +16,10 @@ export default ((win, doc) => {
       if(!(this instanceof Accordion)) {
         return new Accordion(opts_);
       }
-      this.elem = 'data-accr';
+      this.dataAttr = 'data-accr';
       this.openClassName = 'is-open';
       this.easing = 'easeInOutQuart';
-      this.duration = 500;
+      this.duration = 300;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -32,15 +32,15 @@ export default ((win, doc) => {
     initialize() {
       // click to open or close
       doc.addEventListener('click', (e) => {
-        let elem = e.target.closest('[' + this.elem + ']');// delegate
+        let elem = e.target.closest('[' + this.dataAttr + ']');// delegate
         if(!elem || e.target === doc) return;
 
-        let data = elem.getAttribute(this.elem);
+        let data = elem.getAttribute(this.dataAttr);
         let contents = doc.querySelectorAll(data);
 
         this[this.hasOpen(elem) ?
           'close' : 'open'](elem, contents);
-      });
+      }, false);
     }
 
     /**
@@ -48,10 +48,10 @@ export default ((win, doc) => {
      */
     readyClose() {
       // close
-      let elems = doc.querySelectorAll('[' + this.elem + ']');
+      let elems = doc.querySelectorAll('[' + this.dataAttr + ']');
       _.each(elems, (elem) => {
         if(!this.hasOpen(elem)) {
-          let data = elem.getAttribute(this.elem);
+          let data = elem.getAttribute(this.dataAttr);
           let contents = doc.querySelectorAll(data);
           _.each(contents, (content) => {
             content.style.overflow = 'hidden';

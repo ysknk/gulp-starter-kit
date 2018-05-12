@@ -20,7 +20,7 @@ export default ((win, doc) => {
       this.topHash = 'top';
       this.excludeClassName = 'no-scroll';
       this.easing = 'easeInOutQuart';
-      this.duration = 500;
+      this.duration = 300;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -55,7 +55,7 @@ export default ((win, doc) => {
         if(e) e.preventDefault();
         this.goto((hash === '#' + this.topHash) ?
           html : target);
-      });
+      }, false);
     }
 
     /**
@@ -91,6 +91,18 @@ export default ((win, doc) => {
         hash = last.match(/#(.+)/)[1];
         return '#' + hash;
       }
+    }
+
+    /**
+     * updateUrlHash
+     *
+     * @param {string} hash element src
+     */
+    updateUrlHash(hash) {
+      if(typeof win === 'undefined' ||
+        typeof win.history === 'undefined' ||
+          typeof win.history.pushState === 'undefined') return;
+      win.history.pushState({}, '', hash ? '#' + hash : '');
     }
 
     /**
@@ -140,6 +152,8 @@ export default ((win, doc) => {
           _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         }
       });
+
+      this.updateUrlHash(elem.id);
     }
 
     /**

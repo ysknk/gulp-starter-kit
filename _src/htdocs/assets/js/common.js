@@ -4,6 +4,7 @@ import ua from './_partials/classes/ua';
 import ajax from './_partials/classes/ajax';
 import smoothScroll from './_partials/classes/smoothScroll';
 import accordion from './_partials/classes/accordion';
+import pageShare from './_partials/classes/pageShare';
 
 const NS = '$';
 
@@ -38,14 +39,20 @@ const NS = '$';
 
   // scroll
   $.fn.scroll = new smoothScroll();
+
+  // accordion
+  $.fn.accordion = new accordion();
+
+  // pageShare
+  $.fn.pageShare = new pageShare();
+
+  doc.addEventListener("DOMContentLoaded", (e) => {
+    $.fn.accordion.readyClose();
+  }, false);
+
   win.addEventListener('load', (e) => {
     $.fn.scroll.locationHref();
   }, false);
 
-  // accordion
-  $.fn.accordion = new accordion();
-  doc.addEventListener("DOMContentLoaded", (e) => {
-    $.fn.accordion.readyClose();
-  }, false);
 
 })(window, document);
