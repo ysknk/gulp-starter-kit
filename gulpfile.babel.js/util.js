@@ -3,6 +3,7 @@
 import requireDir from 'require-dir';
 import fancyLog from 'fancy-log';
 import colors from 'ansi-colors';
+import os from 'os';
 
 /**
  * Util
@@ -139,6 +140,15 @@ class Util {
     }else{
       return filename.split(/\.(?=[^.]+$)/);
     }
+  }
+
+  /**
+   * isWin
+   *
+   * @returns {boolean}
+   */
+  isWin() {
+    return os.platform().match(/^win/) ? true : false;
   }
 
 }

@@ -107,7 +107,8 @@ module.exports = class TaskMaster {
 
     if(data.length) {
       return _.map(data, (val) => {
-        return '!' + path.resolve(val);
+        return '!' + (plugins.util.isWin() ?
+          val : path.resolve(val));
       });
     }
     return data;
