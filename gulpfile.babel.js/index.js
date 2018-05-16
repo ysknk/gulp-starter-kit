@@ -23,9 +23,13 @@ import _ from 'lodash';
 
 import util from './util';
 
+import childProcess from 'child_process';
+
 /**
  * set const variables
  */
+const {spawn} = childProcess;
+
 const browserSync = bs.create();
 
 const gulpfile = 'gulpfile.babel.js';
@@ -171,6 +175,9 @@ _.each(tasks, (task, name) => {
 
 _.each(types, (array, key) => {
   if(key === 'watch' || key === def) {
+
+    if(key === def) key = 'start';
+
     gulp.task(key, gulp.series(isServ ? 'serv' : empty, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
@@ -189,6 +196,22 @@ _.each(types, (array, key) => {
         }
       });
     }));
+
+    // gulp restart
+    if(key === 'start') {
+      gulp.task(def, () => {
+        let startProcess;
+        let param = (process.argv && process.argv.slice(2)) || [];
+
+        function restart() {
+          gulp.watch('./' + gulpfile + '/**/*', gulp.series(restart));
+          if(startProcess) startProcess.kill();
+          startProcess = spawn('gulp', [key, ...param], {stdio: 'inherit'});
+        }
+        restart();
+      });
+    }
+
   }else{
     gulp.task(key, gulp.parallel.apply(gulp, array));
   }
