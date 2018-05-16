@@ -204,7 +204,12 @@ _.each(types, (array, key) => {
         let param = (process.argv && process.argv.slice(2)) || [];
 
         function restart() {
-          gulp.watch('./' + gulpfile + '/**/*', gulp.series(restart));
+          gulp.watch([
+            './' + gulpfile + '/**/*',
+            define.path.config,
+            '!' + define.path.config + 'node_modules/'
+          ], gulp.series(restart));
+
           if(startProcess) startProcess.kill();
           startProcess = spawn('gulp', [key, ...param], {stdio: 'inherit'});
         }
