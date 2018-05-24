@@ -78,9 +78,15 @@ rollover(type = 'opacity', def = .7)
     transition opacity .2s ease-in-out
     img
       box-shadow #000 0 0 0
+    &:link,
+    &:visited,
+    &:active,
+    &:focus
+      text-decoration none
     {upc} &
       &:hover
         opacity def
+        text-decoration none
 
   else if type == 'underline'
     text-decoration none
