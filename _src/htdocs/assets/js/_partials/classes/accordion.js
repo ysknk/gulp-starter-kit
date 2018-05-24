@@ -44,9 +44,9 @@ export default ((win, doc) => {
     }
 
     /**
-     * readyClose
+     * setClose
      */
-    readyClose() {
+    setClose() {
       // close
       let elems = doc.querySelectorAll('[' + this.dataAttr + ']');
       _.each(elems, (elem) => {

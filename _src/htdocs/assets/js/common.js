@@ -1,6 +1,7 @@
 'use strict';
 
 import ua from './_partials/classes/ua';
+import mediaQuery from './_partials/classes/mediaQuery';
 import ajax from './_partials/classes/ajax';
 import smoothScroll from './_partials/classes/smoothScroll';
 import accordion from './_partials/classes/accordion';
@@ -28,6 +29,9 @@ const NS = '$';
     html.classList.add('ua-tab');
   }
 
+  // mediaquery
+  $.fn.mediaQuery = new mediaQuery();
+
   // ajax
   $.fn.ajax = new ajax();
   $.fn.ajax.onSuccess = (resolve, reject, responce, that) => {
@@ -47,12 +51,16 @@ const NS = '$';
   $.fn.pageShare = new pageShare();
 
   doc.addEventListener("DOMContentLoaded", (e) => {
-    $.fn.accordion.readyClose();
+    $.fn.mediaQuery.check();
+    $.fn.accordion.setClose();
   }, false);
 
   win.addEventListener('load', (e) => {
     $.fn.scroll.locationHref();
   }, false);
 
+  win.addEventListener('resize', (e) => {
+    $.fn.mediaQuery.check();
+  }, false);
 
 })(window, document);

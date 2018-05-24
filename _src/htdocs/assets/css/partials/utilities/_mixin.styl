@@ -1,3 +1,35 @@
+font_face(name, type, weight, style, hasType = false)
+  @font-face
+    if(hasType)
+      font-family name + '-' + type
+    else
+      font-family name
+
+    src url('../webfont/' + name + (type ? '-' + type : '') + '.eot')
+    src url('../webfont/' + name + (type ? '-' + type : '') + '.eot?#iefix') format('embedded-opentype'),
+      url('../webfont/' + name + (type ? '-' + type : '') + '.woff2') format('woff2'),
+      url('../webfont/' + name + (type ? '-' + type : '') + '.woff') format('woff'),
+      url('../webfont/' + name + (type ? '-' + type : '') + '.ttf') format('truetype')
+
+    if weight
+      font-weight weight
+    if style
+      font-style style
+
+font_icon(name, type)
+  overflow hidden
+  display inline-block
+  font-family name
+  content type
+  line-height 1
+  speak none
+  font-weight normal
+  font-style normal
+  font-variant normal
+  text-transform none
+  text-rendering auto
+  vertical-align middle
+
 clearfix()
   &:after
     display block
@@ -15,21 +47,12 @@ font_size(size, def = FONT_SIZE_DEFAULT)
 letter_spacing(size)
   letter-spacing (size / 1000)em
 
-rollover(type = 'opacity', def = .7)
-  if type == 'opacity'
-    transition opacity .2s ease-in-out
-    img
-      box-shadow #000 0 0 0
-    {upc} &
-      &:hover
-        opacity(def)
-
 break_word()
   word-wrap break-word
   overflow-wrap break-word
 
-// ex:margin: 10px - lh(14, 1.5) 第二引数はem指定
-lh(fontsize, lineheight)
+// ex:margin: 10px - line_height(14, 1.5) 第二引数はem指定
+line_height(fontsize, lineheight)
   (((fontsize * lineheight) - fontsize) / 2)
 
 hidden_text()
@@ -38,10 +61,70 @@ hidden_text()
   overflow hidden
   line-height 1
 
-break_point(type)
-  if type == 'sp'
-    @media screen and (max-width: wsp)
+break_point(type, css = false)
+  if css
+    if type == 'sp'
+      @media screen and (max-width: wsp)
+        {block}
+    if type == 'pc'
+      @media screen and (min-width: (wsp + 1))
+        {block}
+  else
+    {LAYOUT}{type} &
       {block}
-  if type == 'pc'
-    @media screen and (min-width: (wsp + 1))
-      {block}
+
+rollover(type = 'opacity', def = .7)
+  if type == 'opacity'
+    transition opacity .2s ease-in-out
+    img
+      box-shadow #000 0 0 0
+    {upc} &
+      &:hover
+        opacity def
+
+  else if type == 'underline'
+    text-decoration none
+    &:link,
+    &:visited,
+    &:active,
+    &:focus
+      text-decoration none
+    {upc} &
+      &:hover
+        text-decoration underline
+
+  else if type == 'background1'
+    transition background-color .1s linear
+    text-decoration none
+    &:link,
+    &:visited,
+    &:active,
+    &:focus
+    &:hover
+      text-decoration none
+    {upc} &
+      &:hover
+        background-color #e6ebf1
+
+  else if type == 'none'
+    text-decoration underline
+    &:link,
+    &:visited,
+    &:active,
+    &:focus
+      text-decoration underline
+    {upc} &
+      &:hover
+        text-decoration none
+
+  else if type == 'false'
+    text-decoration none
+    &:link,
+    &:visited,
+    &:active,
+    &:focus
+      text-decoration none
+      // border-bottom 1px solid LINK_COLOR
+    {upc} &
+      &:hover
+        text-decoration none
