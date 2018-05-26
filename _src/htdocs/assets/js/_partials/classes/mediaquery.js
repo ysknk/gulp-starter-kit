@@ -53,7 +53,8 @@ export default ((win, doc) => {
      * check
      */
     check() {
-      let width = this.getWinWidth();
+      let width = this.getWidth();
+      let beforePoint = this.getCurrentPoint() || undefined;
 
       _.each(this.point, (point, i) => {
         // minがなければmax以下全て
@@ -84,9 +85,11 @@ export default ((win, doc) => {
       });
 
       let currentPoint = this.getCurrentPoint();
-      if(currentPoint) {
+      if(!beforePoint && currentPoint ||
+        beforePoint.config.name != currentPoint.config.name) {
         this.html.classList.add(currentPoint.config.name);
         this.setImgSrc(currentPoint);
+        _.isFunction(this.onChange) && this.onChange(this);
       }
     }
 
@@ -113,12 +116,12 @@ export default ((win, doc) => {
     }
 
     /**
-     * getWinWidth
+     * getWidth
      *
      * @returns {number} window width
      */
-    getWinWidth() {
-      return win.innerWidth;
+    getWidth() {
+      return this.html.getBoundingClientRect().width;
     }
 
     /**
@@ -139,6 +142,12 @@ export default ((win, doc) => {
       this.currentPoint = config;
     }
 
+    /**
+     * onChange
+     *
+     * @param {object} obj class object
+     */
+    onChange(obj) {}
   }
 
 })(window, document);

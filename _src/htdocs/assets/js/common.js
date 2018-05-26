@@ -19,10 +19,12 @@ const NS = '$';
 
   // ua
   $.fn.ua = new ua();
+
+  // html class
   if($.fn.ua.isPc()) {
     html.classList.add('ua-pc');
   }
-  if($.fn.ua.isSp()) {
+  if($.fn.ua.isSp() && !$.fn.ua.isTab()) {
     html.classList.add('ua-sp');
   }
   if($.fn.ua.isTab()) {
@@ -34,10 +36,10 @@ const NS = '$';
 
   // ajax
   $.fn.ajax = new ajax();
-  $.fn.ajax.onSuccess = (resolve, reject, responce, that) => {
+  $.fn.ajax.onSuccess = (resolve, reject, responce, obj) => {
     return resolve();
   };
-  $.fn.ajax.onFailure = (resolve, reject, responce, that) => {
+  $.fn.ajax.onFailure = (resolve, reject, responce, obj) => {
     return resolve();
   };
 
