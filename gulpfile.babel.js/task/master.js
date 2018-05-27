@@ -143,7 +143,7 @@ module.exports = class TaskMaster {
    */
   serv() {
     return (this.task.data.serv === 'stream') ?
-      browserSync[this.task.data.serv]() : $.empty();
+      browserSync[this.task.data.serv]() : plugins.empty();
   }
 
   /**

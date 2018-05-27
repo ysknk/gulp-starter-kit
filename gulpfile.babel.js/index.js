@@ -26,6 +26,7 @@ import _ from 'lodash';
 
 import util from './util';
 
+import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
 
@@ -99,6 +100,7 @@ const globalVars = {
 
   plugins: {
     util,
+    empty,
     log,
     useful
   }
@@ -162,29 +164,31 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
  */
 let taskMaster = require('./task/master');
 let tasks = gulp._registry._tasks;
-let def = 'default';
-let empty = 'empty';
+let defaultName = 'default';
+let emptyName = 'empty';
 let types = {};
 let taskmaster = new taskMaster();
 let isServ = taskmaster.isTask('serv');
 
-gulp.task(empty, (done) => {done();});
+// empty
+gulp.task(emptyName, (done) => {done();});
 
+// build, watch
 _.each(tasks, (task, name) => {
   let split = name.split(':');
   let taskname = split[0];
-  let type = split.length > 1 ? split[1] : def;
+  let type = split.length > 1 ? split[1] : defaultName;
 
   if(!types[type]) types[type] = [];
   types[type].push(name);
 });
 
 _.each(types, (array, key) => {
-  if(key === 'watch' || key === def) {
+  if(key === 'watch' || key === defaultName) {
 
-    if(key === def) key = 'start';
+    if(key === defaultName) key = 'start';
 
-    gulp.task(key, gulp.series(isServ ? 'serv' : empty, function all() {
+    gulp.task(key, gulp.series(isServ ? 'serv' : emptyName, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
 
@@ -194,10 +198,10 @@ _.each(types, (array, key) => {
         let serv = 'serv:' + (config[taskname] && config[taskname].serv || 'reload');
         let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
 
-        if(taskname === 'serv' || taskname === empty) return;
+        if(taskname === 'serv' || taskname === emptyName) return;
 
         if(config && config[taskname]) {
-          let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : empty));
+          let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : emptyName));
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
         }
       });
@@ -205,7 +209,7 @@ _.each(types, (array, key) => {
 
     // gulp restart
     if(key === 'start') {
-      gulp.task(def, () => {
+      gulp.task(defaultName, () => {
         let startProcess;
         let param = (process.argv && process.argv.slice(2)) || [];
 
