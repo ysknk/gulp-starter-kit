@@ -1,7 +1,9 @@
 'use strict';
 
 // @author ysknk
-const pluginName = 'log';
+import defaultPug from 'pug';
+
+const pluginName = 'pug';
 const text = {
   'stream': 'Stream not supported',
   'publish': 'Publish >>> ',
@@ -9,10 +11,10 @@ const text = {
 };
 
 module.exports = (opts_) => {
-  opts_ = _.merge({}, {
-    title: '',
-    logMessage: false
-  }, opts_);
+  opts_ = _.merge({}, opts_);
+  opts_.data = _.merge(opts_.data || {}, opts_.locals || {});
+
+  let pug = opts_.pug || opts_.jade || defaultPug;
 
   let transformStream = new Transform({objectMode: true});
 
@@ -27,27 +29,27 @@ module.exports = (opts_) => {
       callback(null, file);
     }
 
-    if(file.isStream()) {
+    if(file.isStream()){
       return callback(new pluginError(pluginName, text.stream));
     }
 
     if(file.isBuffer()) {
-      let relative = file.relative.replace(/\\/g, '/');
-      let path = colors.bold(colors.magenta(relative));
-      let result = text.publish + path;
+      let data = _.merge({}, opts_.data, file.data || {});
+      opts_.filename = file.path;
+      file.path = replaceExt(file.path, opts_.client ? '.js' : '.html');
 
-      notifier.notify({
-        title: opts_.title ?
-          (text.title + ': ' + opts_.title) : text.title,
-        message: relative,
-        sound: false,
-        wait: false,
-        timeout: 1,
-        type: 'info'
-      });
+      try {
+        let compiled;
+        let contents = String(file.contents);
 
-      if(opts_.logMessage) {
-        fancyLog(result);
+        if(opts_.client) {
+          compiled = pug.compileClient(contents, opts_);
+        }else{
+          compiled = pug.compile(contents, opts_)(data);
+        }
+        file.contents = new Buffer(compiled);
+      }catch(e) {
+        return callback(new pluginError(pluginName, e));
       }
     }
 

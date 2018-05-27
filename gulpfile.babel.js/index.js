@@ -17,6 +17,7 @@ import notifier from 'node-notifier';
 import fancyLog from 'fancy-log';
 import colors from 'ansi-colors';
 import pluginError from 'plugin-error';
+import replaceExt from 'replace-ext';
 
 import bs from 'browser-sync';
 import minimist from 'minimist';
@@ -87,6 +88,7 @@ const globalVars = {
   fancyLog,
   colors,
   pluginError,
+  replaceExt,
 
   browserSync,
   argv,

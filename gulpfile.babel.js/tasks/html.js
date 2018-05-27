@@ -1,6 +1,7 @@
 'use strict';
 
 import TaskMaster from '../task/master';
+import pug from '../plugins/pug/';
 
 /**
  * Set Const Variables
@@ -145,7 +146,7 @@ class Html extends TaskMaster {
       .pipe($.data((file) => {
         return this.setCurrentData(file);
       }))
-      .pipe($.pug(this.task.data.options))
+      .pipe(pug(this.task.data.options))
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
 
       .pipe(plugins.useful(this.task.data.convert))
@@ -179,7 +180,7 @@ class Html extends TaskMaster {
       .pipe($.data((file) => {
         return this.setCurrentData(file);
       }))
-      .pipe($.pug(this.task.data.options))
+      .pipe(pug(this.task.data.options))
 
       .pipe($.htmlhint(this.task.data.lint_options))
       .pipe($.htmlhint.reporter(this.task.data.lint_report_type || path))
