@@ -181,8 +181,8 @@ module.exports = {
 
       resolve: {
         modules: [
-          path.resolve(__dirname, '../node_modules'),
-          path.resolve(__dirname, '../' + define.path.config + 'node_modules'),
+          path.resolve(__dirname, '../../node_modules'),
+          path.resolve(__dirname, '../../' + define.path.config + 'node_modules'),
           'node_modules'
         ],
         extensions: ['.js', '.jsx', '.json', '.vue']

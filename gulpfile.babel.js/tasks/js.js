@@ -1,6 +1,6 @@
 'use strict';
 
-import TaskMaster from '../taskMaster';
+import TaskMaster from '../task/master';
 
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';

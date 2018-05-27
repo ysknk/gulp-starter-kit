@@ -1,6 +1,6 @@
 'use strict';
 
-import TaskMaster from '../taskMaster';
+import TaskMaster from '../task/master';
 
 /**
  * Set Const Variables

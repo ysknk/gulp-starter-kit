@@ -5,12 +5,14 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 
 import requireDir from 'require-dir';
 
+import stream from 'stream';
+import childProcess from 'child_process';
+
 import fs from 'fs-extra';
 import path from 'path';
 import del from 'del';
 
 import notifier from 'node-notifier';
-import through from 'through2';
 
 import fancyLog from 'fancy-log';
 import colors from 'ansi-colors';
@@ -23,11 +25,13 @@ import _ from 'lodash';
 
 import util from './util';
 
-import childProcess from 'child_process';
+import log from './plugins/log/';
+import useful from './plugins/useful/';
 
 /**
  * set const variables
  */
+const {Transform} = stream;
 const {spawn} = childProcess;
 
 const browserSync = bs.create();
@@ -77,7 +81,7 @@ const globalVars = {
   del,
 
   notifier,
-  through,
+  Transform,
 
   requireDir,
   fancyLog,
@@ -93,8 +97,8 @@ const globalVars = {
 
   plugins: {
     util,
-    log: require('./plugins/gulp-log/'),
-    useful: require('./plugins/gulp-useful/')
+    log,
+    useful
   }
 };
 
@@ -108,7 +112,7 @@ _.each(globalVars, (obj, key) => {
 /**
  * set tasks variables
  */
-let taskfile = 'task.js';
+let taskfile = 'task/config.js';
 
 let baseConfigPath = [
   '.',
@@ -154,7 +158,7 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
  * set all common tasks
  * gulp, gulp build, gulp watch...
  */
-let taskMaster = require('./taskMaster');
+let taskMaster = require('./task/master');
 let tasks = gulp._registry._tasks;
 let def = 'default';
 let empty = 'empty';

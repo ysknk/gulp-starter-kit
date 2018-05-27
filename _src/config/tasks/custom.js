@@ -1,6 +1,6 @@
 'use strict';
 
-const TaskMaster = require('../../../_app/gulpfile.babel.js/taskMaster');
+const TaskMaster = require('../../../_app/gulpfile.babel.js/task/master');
 
 /**
  * Set Const Variables

@@ -5,7 +5,7 @@ import fancyLog from 'fancy-log';
 import colors from 'ansi-colors';
 
 // @author ysknk
-const pluginName = 'gulp-useful';
+const pluginName = 'useful';
 const text = {
   'stream': 'Stream not supported'
 };
@@ -35,28 +35,28 @@ module.exports = (opts_) => {
       iconv : {decode: {}, encode: {}};
   }
 
+  let transformStream = new Transform({objectMode: true});
+
   /**
-   * through.obj
-   *
-   * @param {object} chunks vinly objects
-   * @param {function} enc transform function
-   * @param {function} cb flush function
-   * @returns {object} vinly objects
+   * @param {Buffer|string} file
+   * @param {string=} encoding - ignored if file contains a Buffer
+   * @param {function(Error, object)} callback - Call this function (optionally with an
+   *          error argument and data) when you are done processing the supplied chunk.
    */
-  return through.obj((chunks, enc, cb) => {
-    if(chunks.isNull()) {
-      cb(null, chunks);
+  transformStream._transform = (file, encoding, callback) => {
+    if(file.isNull()) {
+      callback(null, file);
     }
 
-    if(chunks.isStream()){
-      return cb(new pluginError(pluginName, text.stream));
+    if(file.isStream()){
+      return callback(new pluginError(pluginName, text.stream));
     }
 
     let encodeFrom = opts_.encode.from;
     let encodeTo = opts_.encode.to;
 
-    let filename = chunks.relative;
-    let contents = chunks.contents.toString(encodeFrom);
+    let filename = file.relative;
+    let contents = file.contents.toString(encodeFrom);
 
     let replace = opts_.replace;
     let find = opts_.find;
@@ -128,17 +128,19 @@ module.exports = (opts_) => {
       change = '\n';
     }
     contents = contents.replace(code, change);
-    chunks.contents = new Buffer(contents);
+    file.contents = new Buffer(contents);
 
     // encode
     if(encodeTo != defaultEncode ||
       encodeFrom != defaultEncode) {
-      let content = iconv.decode(chunks.contents, encodeFrom, opts_.encode.iconv.decode);
-      chunks.contents = iconv.encode(content, encodeTo, opts_.encode.iconv.encode);
-      chunks.contents = new Buffer(chunks.contents);
+      let content = iconv.decode(file.contents, encodeFrom, opts_.encode.iconv.decode);
+      file.contents = iconv.encode(content, encodeTo, opts_.encode.iconv.encode);
+      file.contents = new Buffer(file.contents);
     }
+    callback(null, file);
+  };
 
-    cb(null, chunks);
-  });
+  return transformStream;
+
 };
 
