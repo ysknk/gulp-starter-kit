@@ -38,7 +38,8 @@ module.exports = {
     title: 'index title',
     description: 'index description',
     keywords: 'index keywords',
-    js: [...head.js, 'index.js']
+    js: [...head.js, 'index.js'],
+    page_name: 'index-page'
   },
 
   '$test': {

@@ -7,6 +7,8 @@ import mozjpeg from 'imagemin-mozjpeg';
 
 import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
 
+let meta = require('../../' + define.path.config + 'page');
+
 module.exports = {
   /* run flg */
   tasks: {
@@ -101,7 +103,7 @@ module.exports = {
     },
     lint_report_type: '',
 
-    meta: '../../' + define.path.config + 'page',// relative path -> tasks/html.js
+    meta,
     assets_path: '/assets/',//base absolute path
     path_type: 'relative'// relative | absolute
   },
@@ -115,6 +117,9 @@ module.exports = {
 
     options: {
       import: ['nib'],
+      rawDefine: {
+        meta
+      },
       define: {
         import_tree: import_tree
       },

@@ -59,7 +59,7 @@ class Html extends TaskMaster {
    * @returns {object} page data
    */
   setCurrentData(file) {
-    let meta = require(this.task.data.meta);
+    let meta = this.task.data.meta;
     let filepath = plugins.util.getReplaceDir(file.relative);
     let data = {};
 
