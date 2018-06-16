@@ -98,7 +98,16 @@ class Html extends TaskMaster {
         }
         isSet = true;
       }
+
+      let addCommon = {};
+      _.each(data, (val, key) => {
+        if(!key.match(/^[\/|\$]/)) {
+          addCommon[key] = val;
+        }
+      });
+      common = _.merge({}, common, addCommon);
     });
+
 
     data = _.merge({}, common, data);
     this.deleteChild(data);
@@ -108,13 +117,13 @@ class Html extends TaskMaster {
       data.assets_path = data.assets_path || this.task.data.assets_path;
 
       if(this.task.data.path_type.match(/relative/i)) {
-        data.assets_path = this.task.data.dist + data.assets_path;
+        data.assets_path = this.task.data.dest + data.assets_path;
 
         let assets_path = path.resolve(data.assets_path);
         let dirArray = filepath.split(dirMark);
         dirArray[dirArray.length - 1] = '';
-        let dist_path = path.resolve(this.task.data.dist + dirArray.join(dirMark));
-        let relative_path = path.relative(dist_path, assets_path);
+        let dest_path = path.resolve(this.task.data.dest + dirArray.join(dirMark));
+        let relative_path = path.relative(dest_path, assets_path);
 
         data.assets_path = plugins.util.getReplaceDir(relative_path);
       }
@@ -131,14 +140,14 @@ class Html extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist, {
+      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest, {
         extension: this.task.data.extension
       })))
       .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
 
-      .pipe($.pugInheritance(this.task.data.inheritance_options))
+      .pipe($.if(plugins.util.getIsWatch(), $.pugInheritance(this.task.data.inheritance_options)))
       .pipe($.filter((file) => {
         return this.ignoreFilter(file);
       }))
@@ -150,7 +159,7 @@ class Html extends TaskMaster {
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
 
       .pipe(plugins.useful(this.task.data.convert))
-      .pipe(gulp.dest(this.task.data.dist))
+      .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
@@ -170,7 +179,7 @@ class Html extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.filter((file) => {

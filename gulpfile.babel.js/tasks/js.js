@@ -54,7 +54,7 @@ class Js extends TaskMaster {
       };
     }
 
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe(named((path) => {
@@ -69,7 +69,7 @@ class Js extends TaskMaster {
       .pipe(webpackStream(this.task.data.options, webpack))
 
       .pipe(plugins.useful(this.task.data.convert))
-      .pipe(gulp.dest(this.task.data.dist))
+      .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
@@ -86,7 +86,7 @@ class Js extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe(named((path) => {

@@ -1,12 +1,3 @@
-import nib from 'nib';
-import autoprefixer from 'autoprefixer-stylus';
-import import_tree from 'stylus-import-tree';
-
-import pngquant from 'imagemin-pngquant';
-import mozjpeg from 'imagemin-mozjpeg';
-
-import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
-
 let meta = require('../../' + define.path.config + 'page');
 
 module.exports = {
@@ -50,13 +41,13 @@ module.exports = {
 
   /* serv @browserSync */
   serv: {
-    src: [define.path.dist],
+    src: [define.path.dest],
     options: {
       notify: false,
       open: 'local',// argv.no = false(ex: gulp watch --no)
       startPath: '/',
       server: {
-        baseDir: define.path.dist
+        baseDir: define.path.dest
       }
     }
   },
@@ -65,7 +56,7 @@ module.exports = {
   html: {
     // src: define.path.src('pug', 'all'),
     src: define.path.src('pug'),
-    dist: define.path.dist,
+    dest: define.path.dest,
     extension: '.html',
 
     options: {
@@ -112,7 +103,7 @@ module.exports = {
   css: {
     src: define.path.src('styl'),
     // src: define.path.src('styl', 'all'),
-    dist: define.path.dist,
+    dest: define.path.dest,
     extension: '.css',
 
     options: {
@@ -124,9 +115,12 @@ module.exports = {
         import_tree: import_tree
       },
       use: [
-        nib(),
-        autoprefixer(['last 2 versions', '> 2%'])
+        nib()
       ]
+    },
+    autoprefixer_options: {
+      browsers: ['last 2 versions', '> 2%'],
+      cascade: false
     },
 
     // ex: https://github.com/jakubpawlowicz/clean-css
@@ -170,7 +164,7 @@ module.exports = {
   /* js @webpack */
   js: {
     src: define.path.src('js'),
-    dist: define.path.dist,
+    dest: define.path.dest,
     extension: '.js',
     options: {
       performance: {
@@ -251,7 +245,7 @@ module.exports = {
   /* img @imagemin */
   img: {
     src: define.path.src('{jpg,jpeg,png,gif,svg}'),
-    dist: define.path.dist,
+    dest: define.path.dest,
 
     plugins: [
       pngquant({
@@ -276,7 +270,7 @@ module.exports = {
   /* copy */
   copy: { // other filetype
     src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg)'),
-    dist: define.path.dist
+    dest: define.path.dest
   }
 
 };

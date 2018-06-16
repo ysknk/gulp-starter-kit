@@ -130,7 +130,7 @@ module.exports = class TaskMaster {
         filePathFromSrc = filename.join('');
       }
 
-      let destFilePath = path.resolve(conf.dist, filePathFromSrc);
+      let destFilePath = path.resolve(conf.dest, filePathFromSrc);
       del.sync(destFilePath, {force: true});
       plugins.util.log(colors.bgred('delete ' + destFilePath));
     });

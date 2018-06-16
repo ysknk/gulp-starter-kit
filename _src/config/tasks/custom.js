@@ -36,7 +36,7 @@ class Custom extends TaskMaster {
   // build(stream, done) {
   //   stream
   //     .pipe($.plumber(this.errorMessage()))
-  //     .pipe(gulp.dest(this.task.data.dist))
+  //     .pipe(gulp.dest(this.task.data.dest))
   //     .pipe($.size(this.sizeOptions()))
   //     .pipe(plugins.log())
   //     .pipe(this.serv())

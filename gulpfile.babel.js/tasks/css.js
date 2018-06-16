@@ -32,16 +32,17 @@ class Css extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.stylus(this.task.data.options))
+      .pipe($.autoprefixer(this.task.data.autoprefixer_options))
       .pipe($.csscomb(this.task.data.comb_options))
       .pipe($.if(this.isMinify(), $.cleanCss(this.task.data.minify_options)))
 
       .pipe(plugins.useful(this.task.data.convert))
 
-      .pipe(gulp.dest(this.task.data.dist))
+      .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
@@ -61,10 +62,11 @@ class Css extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.stylus(this.task.data.options))
+      .pipe($.autoprefixer(this.task.data.autoprefixer_options))
       .pipe($.csscomb(this.task.data.comb_options))
 
       .pipe(plugins.useful(this.task.data.convert))

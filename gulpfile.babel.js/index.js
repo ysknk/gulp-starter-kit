@@ -6,7 +6,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import requireDir from 'require-dir';
 
 import stream from 'stream';
-import childProcess from 'child_process';
+import spawn from 'cross-spawn';
 
 import fs from 'fs-extra';
 import path from 'path';
@@ -30,11 +30,19 @@ import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
 
+import nib from 'nib';
+import autoprefixer from 'autoprefixer-stylus';
+import import_tree from 'stylus-import-tree';
+
+import pngquant from 'imagemin-pngquant';
+import mozjpeg from 'imagemin-mozjpeg';
+
+import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
+
 /**
  * set const variables
  */
 const {Transform} = stream;
-const {spawn} = childProcess;
 
 const browserSync = bs.create();
 
@@ -47,7 +55,7 @@ const argv = minimist(process.argv.slice(2));
 const tasksDir = 'tasks/';
 
 const srcDir = '../_src/';
-const distDir = '../html/';
+const destDir = '../html/';
 
 const define = {
   ns: '__', // namespace
@@ -70,7 +78,7 @@ const define = {
         return srcDir + val + ext;
       });
     },
-    dist: distDir
+    dest: destDir
   }
 };
 
@@ -97,6 +105,15 @@ const globalVars = {
   define,
   $,
   _,
+
+  nib,
+  autoprefixer,
+  import_tree,
+
+  pngquant,
+  mozjpeg,
+
+  licenseInfoWebpackPlugin,
 
   plugins: {
     util,
@@ -221,7 +238,8 @@ _.each(types, (array, key) => {
           ], gulp.series(restart));
 
           if(startProcess) startProcess.kill();
-          startProcess = spawn('gulp', [key, ...param], {stdio: 'inherit'});
+          startProcess = spawn('gulp', [key, ...param], {stdio: 'inherit'})
+            .on('error', (err) => {throw err;});
         }
         restart();
       });

@@ -32,13 +32,13 @@ class Img extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-    stream
+    return stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dist)))
+      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest)))
 
       .pipe($.imagemin(this.task.data.plugins, this.task.data.options))
 
-      .pipe(gulp.dest(this.task.data.dist))
+      .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
