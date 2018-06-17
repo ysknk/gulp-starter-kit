@@ -54,7 +54,7 @@ class Js extends TaskMaster {
       };
     }
 
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe(named((path) => {
@@ -86,7 +86,7 @@ class Js extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe(named((path) => {

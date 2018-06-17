@@ -32,7 +32,7 @@ class Copy extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
       .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest)))
       .pipe(gulp.dest(this.task.data.dest))

@@ -32,7 +32,7 @@ class Css extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.stylus(this.task.data.options))
@@ -62,7 +62,7 @@ class Css extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.stylus(this.task.data.options))

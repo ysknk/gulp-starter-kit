@@ -34,7 +34,7 @@ class Serv extends TaskMaster {
     }
 
     browserSync.init(this.task.data.options, () => {
-      return done && done();
+      done && done();
     });
   }
 
@@ -45,7 +45,7 @@ class Serv extends TaskMaster {
   reload(done) {
     browserSync.reload();
 
-    return done && done();
+    done && done();
   }
 
   /**
@@ -55,7 +55,7 @@ class Serv extends TaskMaster {
   stream(done) {
     browserSync.stream();
 
-    return done && done();
+    done && done();
   }
 
   /**

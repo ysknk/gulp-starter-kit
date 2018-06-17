@@ -84,6 +84,10 @@ class Html extends TaskMaster {
       confname = isDirectory ?
         dirMark + filesplit[0] : fileMark + filesplit[1];
 
+      if(!isDirectory && (section.length - 1) > i) {
+        confname = dirMark + name;
+      }
+
       if(meta[confname] && section.length == 1) {
         data = _.merge({}, data, meta[confname]);
       }else{
@@ -140,7 +144,7 @@ class Html extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
       .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest, {
         extension: this.task.data.extension
@@ -179,7 +183,7 @@ class Html extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
-    return stream
+    stream
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.filter((file) => {
