@@ -6,6 +6,10 @@ const TaskMaster = require('../../../_app/gulpfile.babel.js/task/master');
  * Set Const Variables
  */
 const config = global[define.ns];
+
+/**
+ * Set Variables
+ */
 const task = {
   name: 'custom',
   types: []// **:watch function [0] || 'proc'
@@ -16,15 +20,14 @@ const task = {
  * Custom
  */
 class Custom extends TaskMaster {
-  constructor(options) {
-    // it will be executed if you uncomment below
-    // super(options);
+  constructor(opts_) {
+    super(opts_);
   }
 
   /**
-   * init
+   * initialize
    */
-  // init() {}
+  // initialize() {}
 
   /**
    * build
@@ -44,13 +47,13 @@ class Custom extends TaskMaster {
   // }
 
   /**
-   * proc
+   * procedure
    * watch or build
    *
    * @param {object} stream gulp object
    * @param {function} done set complete
    */
-  proc(stream, done) {
+  procedure(stream, done) {
     //console.log(stream, done)
     console.log('custom test');
     done && done();
@@ -64,4 +67,3 @@ class Custom extends TaskMaster {
 }
 
 module.exports = new Custom(task);
-
