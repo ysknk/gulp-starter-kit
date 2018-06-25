@@ -252,7 +252,7 @@ module.exports = {
         quality: '50-100'
       }),
       mozjpeg({
-        quality:85,
+        quality: 85,
         progressive: true
       }),
       $.imagemin.gifsicle(),
