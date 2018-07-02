@@ -5,6 +5,7 @@ import mediaQuery from './_partials/classes/mediaQuery';
 import ajax from './_partials/classes/ajax';
 import smoothScroll from './_partials/classes/smoothScroll';
 import accordion from './_partials/classes/accordion';
+import modal from './_partials/classes/modal';
 import pageShare from './_partials/classes/pageShare';
 
 const NS = '$';
@@ -48,6 +49,9 @@ const NS = '$';
 
   // accordion
   $.fn.accordion = new accordion();
+
+  // modal
+  $.fn.modal = new modal();
 
   // pageShare
   $.fn.pageShare = new pageShare();

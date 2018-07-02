@@ -76,10 +76,11 @@ export default ((win, doc) => {
             break;
           case 'line':
             window.open([
-              'http://line.me/R/msg/text/?',
-              og.enc.description,
-              '%0D%0A',
-              og.enc.url
+              'https://social-plugins.line.me/lineit/share?',
+              'url=',
+              og.enc.url,
+              '&text=',
+              og.enc.description
             ].join(''), windowName, option);
             break;
           default:
