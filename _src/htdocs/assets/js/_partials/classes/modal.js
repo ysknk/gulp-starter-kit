@@ -58,19 +58,23 @@ export default ((win, doc) => {
       this.animate = {
         open: {
           duration: 300,
-          easing: 'easeInOutQuart',
-          complete: (opts) => {}
+          easing: 'easeInOutQuart'
         },
         close: {
           duration: 300,
-          easing: 'easeInOutQuart',
-          complete: (opts) => {}
+          easing: 'easeInOutQuart'
         }
       };
-      this.callback = {
-        open: (opts) => {},
-        close: (opts) => {}
-      };
+      this.template = `
+        <div id="${this.name.wrapper}" data-modal-close="" onclick="">
+          <div id="${this.name.container}">
+            <div id="${this.name.close}">
+              <a href="javascript:void(0)" data-modal-close="" onclick="">CLOSE</a>
+            </div>
+            <div id="${this.name.content}"></div>
+          </div>
+        </div>
+      `;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -124,15 +128,15 @@ export default ((win, doc) => {
      * open
      *
      * @param {object} btn element
+     * @param {object} opts options
      */
-    open(elem) {
+    open(elem, opts) {
       if(isChange) return;
 
       if(this.hasOpen(elem)) {
         this.close(elem);
         return;
       }
-
       let modal = doc.getElementById(this.name.modal);
 
       let template = elem.getAttribute(this.data.template);
@@ -161,6 +165,9 @@ export default ((win, doc) => {
           this.fixedOpen();
         }
 
+        _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+        opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
+
         content.innerHTML = html({
           'modal': this,
           'data': parseData
@@ -175,6 +182,11 @@ export default ((win, doc) => {
             modal.style[key] = value;
           });
 
+          this.animate.open.complete = () => {
+            _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+            opts && _.isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
+          };
+
           anime({
             targets: modal,
             opacity: 1,
@@ -188,6 +200,113 @@ export default ((win, doc) => {
     }
 
     /**
+     * showContent
+     *
+     * @param {string} html
+     * @param {object} opts options
+     */
+    showContent(html, opts) {
+      let content = doc.getElementById(this.name.content);
+
+      anime.remove(content);
+      content.innerHTML = html;
+
+      _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+      opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
+
+      this.imgLoadEnd(content, () => {
+        content.style.display = 'block';
+
+        this.animate.open.complete = () => {
+          _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+          opts && _.isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
+        };
+        anime({
+          targets: content,
+          opacity: 1,
+          ...this.animate.open
+        });
+      });
+    }
+
+    /**
+     * close
+     *
+     * @param {object} elem btn
+     * @param {object} opts options
+     */
+    close(elem, opts) {
+      let modal = doc.getElementById(this.name.modal);
+      let content = doc.getElementById(this.name.content);
+
+      if(this.isFixed) {
+        this.fixedClose();
+      }
+
+      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
+
+      this.getPrevElem().classList.remove(this.state.open);
+      elem.classList.remove(this.state.open);
+
+      this.animate.close.complete = () => {
+        _.each(this.styles, (value, key) => {
+          modal.style[key] = '';
+        });
+
+        modal.style.display = 'none';
+        modal.style.position = '';
+        content.innerHTML = '';
+        isOpen = false;
+
+        _.isFunction(this.onAfterClose) && this.onAfterClose(this);
+        opts && _.isFunction(opts.onAfterClose) && opts.onAfterClose(this);
+      };
+
+      anime.remove(modal);
+      modal.classList.remove(this.state.open);
+      modal.classList.add(this.state.close);
+
+      anime({
+        targets: modal,
+        opacity: 0,
+        ...this.animate.close
+      });
+    }
+
+    /**
+     * hideContent
+     *
+     * @param {object} elem btn
+     * @param {object} opts options
+     */
+    hideContent(elem, opts) {
+      isChange = true;
+      let content = doc.getElementById(this.name.content);
+
+      elem.classList.remove(this.state.open);
+
+      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
+
+      this.animate.close.complete = () => {
+        content.innerHtml = '';
+        content.style.dispaly = 'none';
+        isChange = false;
+
+        _.isFunction(this.onAfterClose) && this.onAfterClose(this);
+        opts && _.isFunction(opts.onAfterClose) && opts.onAfterClose(this);
+      };
+
+      anime.remove(content);
+      anime({
+        targets: content,
+        opacity: 0,
+        ...this.animate.close
+      });
+    }
+
+    /**
      * changeContent
      *
      * @param {object} template html template
@@ -196,13 +315,42 @@ export default ((win, doc) => {
     changeContent(template, data) {
       let prev = this.getPrevElem();
       this.hideContent(prev, {
-        'callback': () => {
+        'onAfterClose': () => {
           this.showContent(template({
             'modal': this,
             'data': data
           }));
         }
       });
+    }
+
+    /**
+     * imgLoadEnd
+     *
+     * @param {object} elem modal
+     * @param {function} cb callback
+     */
+    imgLoadEnd(elem, cb) {
+      let imgLoad = '';
+      try {
+        imgLoad = imagesLoaded(elem);
+      }catch(e) {}
+
+      if(imgLoad) {
+        imgLoad.on('always', () => {
+          setTimeout(() => {
+            _.isFunction(cb) && cb();
+          }, 0);
+        });
+
+        imgLoad.on('fail', () => {
+          setTimeout(() => {
+            _.isFunction(cb) && cb();
+          }, 0);
+        });
+      }else{
+        _.isFunction(cb) && cb();
+      }
     }
 
     /**
@@ -313,123 +461,6 @@ export default ((win, doc) => {
     }
 
     /**
-     * close
-     *
-     * @param {object} elem btn
-     */
-    close(elem) {
-      let modal = doc.getElementById(this.name.modal);
-      let content = doc.getElementById(this.name.content);
-
-      if(this.isFixed) {
-        this.fixedClose();
-      }
-
-      this.getPrevElem().classList.remove(this.state.open);
-      elem.classList.remove(this.state.open);
-
-      this.animate.close.complete = () => {
-
-        _.each(this.styles, (value, key) => {
-          modal.style[key] = '';
-        });
-        modal.style.display = 'none';
-        modal.style.position = '';
-        content.innerHTML = '';
-        isOpen = false;
-      };
-
-      anime.remove(modal);
-      modal.classList.remove(this.state.open);
-      modal.classList.add(this.state.close);
-
-      anime({
-        targets: modal,
-        opacity: 0,
-        ...this.animate.close
-      });
-    }
-
-    /**
-     * hideContent
-     *
-     * @param {object} elem btn
-     * @param {object} opts options
-     */
-    hideContent(elem, opts) {
-      isChange = true;
-      let content = doc.getElementById(this.name.content);
-
-      elem.classList.remove(this.state.open);
-
-      this.animate.close.complete = () => {
-        content.innerHtml = '';
-        content.style.dispaly = 'none';
-        opts &&
-          _.isFunction(opts.callback) &&
-            opts.callback();
-        isChange = false;
-      };
-
-      anime.remove(content);
-      anime({
-        targets: content,
-        opacity: 0,
-        ...this.animate.close
-      });
-    }
-
-    /**
-     * showContent
-     *
-     * @param {string} html
-     */
-    showContent(html) {
-      let content = doc.getElementById(this.name.content);
-
-      anime.remove(content);
-      content.innerHTML = html;
-
-      this.imgLoadEnd(content, () => {
-        content.style.display = 'block';
-        anime({
-          targets: content,
-          opacity: 1,
-          ...this.animate.open
-        });
-      });
-    }
-
-    /**
-     * imgLoadEnd
-     *
-     * @param {object} elem modal
-     * @param {function} cb callback
-     */
-    imgLoadEnd(elem, cb) {
-      let imgLoad = '';
-      try {
-        imgLoad = imagesLoaded(elem);
-      }catch(e) {}
-
-      if(imgLoad) {
-        imgLoad.on('always', () => {
-          setTimeout(() => {
-            _.isFunction(cb) && cb();
-          }, 0);
-        });
-
-        imgLoad.on('fail', () => {
-          setTimeout(() => {
-            _.isFunction(cb) && cb();
-          }, 0);
-        });
-      }else{
-        _.isFunction(cb) && cb();
-      }
-    }
-
-    /**
      * getPager
      *
      * @param {object} elem btn
@@ -474,16 +505,7 @@ export default ((win, doc) => {
       elem.id = this.name.modal;
       doc.body.appendChild(elem);
 
-      elem.innerHTML = `
-        <div id="${this.name.wrapper}" data-modal-close="" onclick="">
-          <div id="${this.name.container}">
-            <div id="${this.name.close}">
-              <a href="javascript:void(0)" data-modal-close="" onclick="">CLOSE</a>
-            </div>
-            <div id="${this.name.content}"></div>
-          </div>
-        </div>
-      `;
+      elem.innerHTML = this.template;
 
       return elem;
     }
@@ -533,6 +555,34 @@ export default ((win, doc) => {
     hasOpen(elem) {
       return elem.classList.contains(this.state.open)
     }
+
+    /**
+     * onBeforeOpen
+     *
+     * @param {object} obj class object
+     */
+    onBeforeOpen(obj) {}
+
+    /**
+     * onAfterOpen
+     *
+     * @param {object} obj class object
+     */
+    onAfterOpen(obj) {}
+
+    /**
+     * onBeforeClose
+     *
+     * @param {object} obj class object
+     */
+    onBeforeClose(obj) {}
+
+    /**
+     * onAfterClose
+     *
+     * @param {object} obj class object
+     */
+    onAfterClose(obj) {}
 
   }
 
