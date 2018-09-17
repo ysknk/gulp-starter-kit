@@ -1,4 +1,8 @@
+import _extend from 'lodash/extend';
+import _isObject from 'lodash/isObject';
+
 export default ((win, doc) => {
+  'use strict';
 
   /**
    * PageShare
@@ -23,9 +27,9 @@ export default ((win, doc) => {
       this.width = 650;
       this.height = 470;
 
-      _.isObject(opts_) && _.extend(this, opts_);
+      _isObject(opts_) && _extend(this, opts_);
 
-      this.initialize();
+      // this.initialize();
     }
 
     /**
@@ -43,10 +47,10 @@ export default ((win, doc) => {
       ].join(separator);
 
       doc.addEventListener('click', (e) => {
-        let elem = e.target.closest('[' + this.dataAttr.share + ']');// delegate
+        let elem = e.target.closest(`[${this.dataAttr.share}]`);// delegate
         if(!elem || e.target === doc) return;
 
-        let og = this.meta(elem);
+        let og = this.getMeta(elem);
         let attr = elem.getAttribute(this.dataAttr.share);
         let windowName = attr + '_window';
 
@@ -78,9 +82,7 @@ export default ((win, doc) => {
             window.open([
               'https://social-plugins.line.me/lineit/share?',
               'url=',
-              og.enc.url,
-              '&text=',
-              og.enc.description
+              og.enc.url
             ].join(''), windowName, option);
             break;
           default:
@@ -90,12 +92,12 @@ export default ((win, doc) => {
     }
 
     /**
-     * meta
+     * getMeta
      *
      * @param {object} elem has data tags element
      * @returns {object} meta data
      */
-    meta(elem) {
+    getMeta(elem) {
       let data = this.dataAttr;
 
       let og = {
@@ -105,13 +107,13 @@ export default ((win, doc) => {
       };
 
       let url = elem.getAttribute(data.url) ||
-        og.url ? og.url.getAttribute('content') : '';
+        (og.url ? og.url.getAttribute('content') : '');
 
       let title = elem.getAttribute(data.title) ||
-        og.title ? og.title.getAttribute('content') : '';
+        (og.title ? og.title.getAttribute('content') : '');
 
       let description = elem.getAttribute(data.description) ||
-        og.description ? og.description.getAttribute('content') : '';
+        (og.description ? og.description.getAttribute('content') : '');
 
       return {
         url: url,
@@ -129,3 +131,4 @@ export default ((win, doc) => {
   };
 
 })(window, document);
+

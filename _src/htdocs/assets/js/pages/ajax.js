@@ -1,6 +1,5 @@
-'use strict';
-
 ((win, doc) => {
+  'use strict';
 
   let html = document.querySelector('html');
 
@@ -20,3 +19,4 @@
   });
 
 })(window, document);
+

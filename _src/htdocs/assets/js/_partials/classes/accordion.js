@@ -1,6 +1,12 @@
 import anime from 'animejs';
 
+import _extend from 'lodash/extend';
+import _forEach from 'lodash/forEach';
+import _isObject from 'lodash/isObject';
+import _isFunction from 'lodash/isFunction';
+
 export default ((win, doc) => {
+  'use strict';
 
   /**
    * Accordion
@@ -16,14 +22,18 @@ export default ((win, doc) => {
       if(!(this instanceof Accordion)) {
         return new Accordion(opts_);
       }
+
+      this.baseElem = 'body';
+
       this.dataAttr = 'data-accr';
+      this.dataAttrClose = 'data-accr-close';
       this.openClassName = 'is-open';
       this.easing = 'easeInOutQuart';
       this.duration = 300;
 
-      _.isObject(opts_) && _.extend(this, opts_);
+      _isObject(opts_) && _extend(this, opts_);
 
-      this.initialize();
+      // this.initialize();
     }
 
     /**
@@ -32,14 +42,31 @@ export default ((win, doc) => {
     initialize() {
       // click to open or close
       doc.addEventListener('click', (e) => {
-        let elem = e.target.closest('[' + this.dataAttr + ']');// delegate
-        if(!elem || e.target === doc) return;
+        let toggleButton = e.target.closest([// delegate
+          this.baseElem,
+          `[${this.dataAttr}]`
+        ].join(' '));
 
-        let data = elem.getAttribute(this.dataAttr);
-        let contents = doc.querySelectorAll(data);
+        let closeButton = e.target.closest([// delegate
+          this.baseElem,
+          `[${this.dataAttrClose}]`
+        ].join(' '));
 
-        this[this.hasOpen(elem) ?
-          'close' : 'open'](elem, contents);
+        if((!toggleButton && !closeButton) || e.target === doc) return;
+
+        if(toggleButton) {
+          let data = toggleButton.getAttribute(this.dataAttr);
+          let contents = doc.querySelectorAll(data);
+
+          this[this.hasOpen(toggleButton) ?
+            'close' : 'open'](toggleButton, contents);
+
+        }else if(closeButton) {
+          let data = closeButton.getAttribute(this.dataAttrClose);
+          let contents = doc.querySelectorAll(data);
+
+          this.close(closeButton, contents);
+        }
       }, false);
     }
 
@@ -47,13 +74,16 @@ export default ((win, doc) => {
      * setClose
      */
     setClose() {
-      // close
-      let elems = doc.querySelectorAll('[' + this.dataAttr + ']');
-      _.each(elems, (elem) => {
+      let elems = doc.querySelectorAll([
+        this.baseElem,
+        `[${this.dataAttr}]`
+      ].join(' '));
+
+      _forEach(elems, (elem) => {
         if(!this.hasOpen(elem)) {
           let data = elem.getAttribute(this.dataAttr);
           let contents = doc.querySelectorAll(data);
-          _.each(contents, (content) => {
+          _forEach(contents, (content) => {
             content.style.overflow = 'hidden';
             content.style.height = '0';
           });
@@ -69,31 +99,31 @@ export default ((win, doc) => {
      */
     open(btn, contents) {
       btn.classList.add(this.openClassName);
-      _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+      _isFunction(this.onBeforeOpen) && this.onBeforeOpen(btn, contents);
 
-      _.each(contents, (content) => {
+      _forEach(contents, (content) => {
         anime.remove(content);
 
         content.classList.add(this.openClassName);
 
-        let oldHeight = content.clientHeight;
+        let nowHeight = content.clientHeight;
         content.style.overflow = 'visible';
         content.style.height = 'auto';
 
         let maxHeight = content.clientHeight;
         content.style.overflow = 'hidden';
-        content.style.height = oldHeight;
+        content.style.height = nowHeight;
 
         anime({
           targets: content,
-          height: [oldHeight, maxHeight],
+          height: [nowHeight, maxHeight],
           duration: this.duration,
           easing: this.easing,
           complete: () => {
             if(this.hasOpen(btn)) {
               content.style.overflow = 'visible';
               content.style.height = 'auto';
-              _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+              _isFunction(this.onAfterOpen) && this.onAfterOpen(btn, contents);
             }
           }
         });
@@ -108,9 +138,9 @@ export default ((win, doc) => {
      */
     close(btn, contents) {
       btn.classList.remove(this.openClassName);
-      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      _isFunction(this.onBeforeClose) && this.onBeforeClose(btn, contents);
 
-      _.each(contents, (content) => {
+      _forEach(contents, (content) => {
         anime.remove(content);
 
         content.classList.remove(this.openClassName);
@@ -123,7 +153,7 @@ export default ((win, doc) => {
           easing: this.easing,
           complete: () => {
             if(!this.hasOpen(btn)) {
-              _.isFunction(this.onAfterClose) && this.onAfterClose(this);
+              _isFunction(this.onAfterClose) && this.onAfterClose(btn, contents);
             }
           }
         });
@@ -137,37 +167,42 @@ export default ((win, doc) => {
      * @returns {boolean}
      */
     hasOpen(elem) {
-      return elem.classList.contains(this.openClassName)
+      return elem.classList.contains(this.openClassName);
     }
 
     /**
      * onBeforeOpen
      *
-     * @param {object} obj class object
+     * @param {object} elem btn element
+     * @param {object} contents contents element
      */
-    onBeforeOpen(obj) {}
+    onBeforeOpen(elem, contents) {}
 
     /**
      * onAfterOpen
      *
-     * @param {object} obj class object
+     * @param {object} elem btn element
+     * @param {object} contents contents element
      */
-    onAfterOpen(obj) {}
+    onAfterOpen(elem, contents) {}
 
     /**
      * onBeforeClose
      *
-     * @param {object} obj class object
+     * @param {object} elem btn element
+     * @param {object} contents contents element
      */
-    onBeforeClose(obj) {}
+    onBeforeClose(elem, contents) {}
 
     /**
      * onAfterClose
      *
-     * @param {object} obj class object
+     * @param {object} elem btn element
+     * @param {object} contents contents element
      */
-    onAfterClose(obj) {}
+    onAfterClose(elem, contents) {}
 
   };
 
 })(window, document);
+

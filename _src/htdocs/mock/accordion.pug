@@ -1,14 +1,25 @@
 extends /_partials/layouts/default
 
 block content
-  p.is-open(data-accr=`#content0`): a(href="javascript:void(0)" style="display:block;padding:1em;background:#ccc;")
-    != `btn0`
-  div(id=`content0`)
-    div(style="padding-bottom:10em;")
+  p.btn.is-open(data-accr=`#content0`)
+    a(href="javascript:void(0)")!= `btn0`
+  div.content(id=`content0`)
+    div
       p!= `content0`
+
   -for(var i = 1; 4 > i; i++)
-    p(data-accr=`#content${i}`): a(href="javascript:void(0)" style="display:block;padding:1em;background:#ccc;")
-      != `btn${i}`
-    div(id=`content${i}`)
-      div(style="padding-bottom:10em;")
+    p.btn(data-accr=`#content${i}`)
+      a(href="javascript:void(0)")!= `btn${i}`
+    div.content(id=`content${i}`)
+      div
         p!= `content${i}`
+
+  style.
+    .btn > a {
+      display: block;
+      padding: 1em;
+      background: #ccc;
+    }
+    .content > div {
+      padding-bottom: 10em;
+    }

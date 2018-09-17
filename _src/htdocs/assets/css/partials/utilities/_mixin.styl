@@ -1,6 +1,6 @@
 font_face(name, type, weight, style, hasType = false)
   @font-face
-    if(hasType)
+    if hasType
       font-family name + '-' + type
     else
       font-family name
@@ -42,7 +42,26 @@ percent(num, maxnum, unit = '%')
   unit((((num / maxnum) * 1000) / 10), unit)
 
 font_size(size, def = FONT_SIZE_DEFAULT)
+  if match('^(sp)$', def, 'i')
+    def = FONT_SIZE_SP
   font-size ceil(percentage(size, def))
+
+font_size_responsive(elem = body)
+  for i in (0..FONT_SIZE_SPLIT)
+    diff = wmin + (i * ((wsp - wmin) / FONT_SIZE_SPLIT))
+    rate = diff / wsp
+
+    if i == 0
+      @media (max-width: unit(wmin, "px"))
+        {elem}
+          font-size unit(round(fsp * rate), "px")
+    @media (min-width: unit(round(diff), "px"))
+      {elem}
+        font-size unit(round(fsp * rate), "px")
+
+  @media (min-width: unit(wsp + 1, "px"))
+    {elem}
+      font-size unit(fpc, "px")
 
 letter_spacing(size)
   letter-spacing (size / 1000)em
@@ -99,18 +118,18 @@ rollover(type = 'opacity', def = .7)
       &:hover
         text-decoration underline
 
-  else if type == 'background1'
-    transition background-color .1s linear
-    text-decoration none
-    &:link,
-    &:visited,
-    &:active,
-    &:focus
-    &:hover
-      text-decoration none
-    {upc} &
-      &:hover
-        background-color #e6ebf1
+  // else if type == 'background1'
+  //   transition background-color .1s linear
+  //   text-decoration none
+  //   &:link,
+  //   &:visited,
+  //   &:active,
+  //   &:focus
+  //   &:hover
+  //     text-decoration none
+  //   {upc} &
+  //     &:hover
+  //       background-color #e6ebf1
 
   else if type == 'none'
     text-decoration underline
@@ -134,3 +153,14 @@ rollover(type = 'opacity', def = .7)
     {upc} &
       &:hover
         text-decoration none
+
+placeholder()
+  &::-webkit-input-placeholder
+    {block}
+  &:-moz-placeholder
+    {block}
+  &::-moz-placeholder
+    {block}
+  &:-ms-input-placeholder
+    {block}
+

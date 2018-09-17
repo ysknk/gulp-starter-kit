@@ -1,16 +1,16 @@
-'use strict';
-
 import ua from './_partials/classes/ua';
 import mediaQuery from './_partials/classes/mediaQuery';
 import ajax from './_partials/classes/ajax';
 import smoothScroll from './_partials/classes/smoothScroll';
 import accordion from './_partials/classes/accordion';
 import modal from './_partials/classes/modal';
+import tab from './_partials/classes/tab';
 import pageShare from './_partials/classes/pageShare';
 
-const NS = '$';
-
 ((win, doc) => {
+  'use strict';
+
+  const NS = '$';
 
   const html = doc.querySelector('html');
   html.classList.remove('no-js');
@@ -46,19 +46,28 @@ const NS = '$';
 
   // scroll
   $.fn.scroll = new smoothScroll();
+  $.fn.scroll.initialize();
 
   // accordion
   $.fn.accordion = new accordion();
+  $.fn.accordion.initialize();
 
   // modal
   $.fn.modal = new modal();
+  $.fn.modal.initialize();
+
+  // tab
+  $.fn.tab = new tab();
+  $.fn.tab.initialize();
 
   // pageShare
   $.fn.pageShare = new pageShare();
+  $.fn.pageShare.initialize();
 
-  doc.addEventListener("DOMContentLoaded", (e) => {
+  doc.addEventListener('DOMContentLoaded', (e) => {
     $.fn.mediaQuery.check();
     $.fn.accordion.setClose();
+    $.fn.tab.setActive();
   }, false);
 
   win.addEventListener('load', (e) => {
@@ -70,3 +79,4 @@ const NS = '$';
   }, false);
 
 })(window, document);
+

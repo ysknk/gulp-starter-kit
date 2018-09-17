@@ -2,9 +2,17 @@ body
   font-size (fpc)px
   font-family FONT_FAMILY
   line-height 1.5
+
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   -webkit-text-size-adjust 100%
+
+  -webkit-print-color-adjust exact
+
+  font-feature-settings 'palt' 1
+  // font-variant-ligatures no-common-ligatures
+  // font-variant-numeric slashed-zero
+
   color FONT_COLOR_DEFAULT
   a
     color FONT_COLOR_LINK
@@ -44,18 +52,5 @@ body
     max-width 100%
 
 // fontsize
-for i in (0..FONT_SIZE_SPLIT)
-  diff = wmin + (i * ((wsp - wmin) / FONT_SIZE_SPLIT))
-  rate = diff / wsp
+font_size_responsive(body)
 
-  if i == 0
-    @media (max-width: unit(wmin, "px"))
-      body
-        font-size unit(round(fsp * rate), "px")
-  @media (min-width: unit(round(diff), "px"))
-    body
-      font-size unit(round(fsp * rate), "px")
-
-@media (min-width: unit(wsp + 1, "px"))
-  body
-    font-size unit(fpc, "px")

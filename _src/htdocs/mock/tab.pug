@@ -1,0 +1,40 @@
+extends /_partials/layouts/default
+
+block content
+  -for(var i = 1; 4 > i; i++)
+
+    div(class=`tab tab${i}`)
+      h1!= `tab${i}`
+      nav
+        ul
+          -for(var j = 1; 4 > j; j++)
+            -
+              var tabData = {
+                btn: '.tab' + i + ' li a',
+                group: '.tab' + i + ' .group-wrap .group',
+                category: '.content' + j
+              };
+            if i === 1 && j === 1
+              li: a.is-active(href="javascript:void(0)" data-tab=tabData)!= `nav${j}`
+            else
+              li: a(href="javascript:void(0)" data-tab=tabData)!= `nav${j}`
+      .group-wrap
+        -for(var j = 1; 4 > j; j++)
+          .group(class=`content${j}`)!= `tab${i} content${j}`
+
+  style.
+    .tab {
+      margin-top: 1em;
+    }
+    .tab:first-child {
+      margin-top: 0;
+    }
+    .tab nav li a.is-active {
+      color: #f00;
+    }
+    .group-wrap .group {
+      display: none;
+    }
+    .group-wrap .group.is-active {
+      display: block;
+    }

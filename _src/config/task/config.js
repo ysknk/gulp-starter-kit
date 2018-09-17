@@ -1,4 +1,4 @@
-// options -> /_app/gulpfile.babel.js/task.js
+// options -> /_app/gulpfile.babel.js/task/config.js
 
 module.exports = {
 
@@ -9,6 +9,10 @@ module.exports = {
 
   /* common */
   common: {
+    options: {
+      // development | production || none
+      mode: 'none'
+    }
   },
 
   /* serv @browserSync */

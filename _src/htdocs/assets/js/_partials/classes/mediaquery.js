@@ -1,4 +1,10 @@
+import _extend from 'lodash/extend';
+import _forEach from 'lodash/forEach';
+import _isObject from 'lodash/isObject';
+import _isFunction from 'lodash/isFunction';
+
 export default ((win, doc) => {
+  'use strict';
 
   /**
    *  MediaQuery
@@ -14,6 +20,9 @@ export default ((win, doc) => {
       if(!(this instanceof MediaQuery)) {
         return new MediaQuery(opts_);
       }
+
+      this.baseElem = 'body';
+
       this.point = [
         {
           name: 'layout-sp',
@@ -37,9 +46,9 @@ export default ((win, doc) => {
 
       this.html = doc.querySelector('html');
 
-      _.isObject(opts_) && _.extend(this, opts_);
+      _isObject(opts_) && _extend(this, opts_);
 
-      this.initialize();
+      // this.initialize();
     }
 
     /**
@@ -56,7 +65,7 @@ export default ((win, doc) => {
       let width = this.getWidth();
       let beforePoint = this.getCurrentPoint() || undefined;
 
-      _.each(this.point, (point, i) => {
+      _forEach(this.point, (point, i) => {
         // minがなければmax以下全て
         if(!point.size.min &&
             point.size.max >= width) {
@@ -89,7 +98,7 @@ export default ((win, doc) => {
         beforePoint.config.name != currentPoint.config.name) {
         this.html.classList.add(currentPoint.config.name);
         this.setImgSrc(currentPoint);
-        _.isFunction(this.onChange) && this.onChange(this);
+        _isFunction(this.onChange) && this.onChange(this);
       }
     }
 
@@ -103,12 +112,16 @@ export default ((win, doc) => {
 
       if(this.html.classList.contains(point.config.name)) {
         for(var key in point.config.src) {
-          let elems = doc.querySelectorAll('[' + point.config.src[key] + ']');
-          _.each(elems, (elem) => {
+          let elems = doc.querySelectorAll([
+            this.baseElem,
+            `[${point.config.src[key]}]`
+          ].join(' '));
+
+          _forEach(elems, (elem) => {
             if(key != '__DEFAULT__' && !elem.classList.contains(key)) return;
             let data = this.point[point.num].src[key];
-            if(!this.src.match(elem.getAttribute(data))) {
-              this.src = elem.getAttribute(data);
+            if(!elem.src || !elem.src.match(elem.getAttribute(data))) {
+              elem.src = elem.getAttribute(data);
             }
           });
         }
@@ -151,3 +164,4 @@ export default ((win, doc) => {
   }
 
 })(window, document);
+

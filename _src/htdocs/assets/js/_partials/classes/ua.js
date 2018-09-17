@@ -1,8 +1,12 @@
 import uaParserJs from 'ua-parser-js';
 
+import _extend from 'lodash/extend';
+import _isObject from 'lodash/isObject';
+
 const uaParser = new uaParserJs();
 
 export default ((win, doc) => {
+  'use strict';
 
   /**
    * Ua
@@ -19,7 +23,7 @@ export default ((win, doc) => {
         return new Ua(opts_);
       }
 
-      _.isObject(opts_) && _.extend(this, opts_);
+      _isObject(opts_) && _extend(this, opts_);
 
       // this.initialize();
     }
@@ -69,3 +73,4 @@ export default ((win, doc) => {
   };
 
 })(window, document);
+

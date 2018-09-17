@@ -1,8 +1,8 @@
-'use strict';
-
 ((win, doc) => {
+  'use strict';
 
-  doc.addEventListener("DOMContentLoaded", (e) => {
+  doc.addEventListener('DOMContentLoaded', (e) => {
   }, false);
 
 })(window, document);
+

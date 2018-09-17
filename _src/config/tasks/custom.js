@@ -11,7 +11,7 @@ const config = global[define.ns];
  * Set Variables
  */
 const task = {
-  name: 'custom',
+  name: 'custom',// pleaze replace => custom and Custom
   types: []// **:watch function [0] || 'proc'
 };
 //console.log(global)

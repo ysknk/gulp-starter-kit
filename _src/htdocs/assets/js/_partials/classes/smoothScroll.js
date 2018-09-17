@@ -1,6 +1,11 @@
 import anime from 'animejs';
 
+import _extend from 'lodash/extend';
+import _isObject from 'lodash/isObject';
+import _isFunction from 'lodash/isFunction';
+
 export default ((win, doc) => {
+  'use strict';
 
   /**
    * SmoothScroll
@@ -16,15 +21,18 @@ export default ((win, doc) => {
       if(!(this instanceof SmoothScroll)) {
         return new SmoothScroll(opts_);
       }
+
+      this.baseElem = 'body';
+
       this.elem = 'a';
       this.topHash = 'top';
       this.excludeClassName = 'no-scroll';
       this.easing = 'easeInOutQuart';
       this.duration = 300;
 
-      _.isObject(opts_) && _.extend(this, opts_);
+      _isObject(opts_) && _extend(this, opts_);
 
-      this.initialize();
+      // this.initialize();
     }
 
     /**
@@ -35,7 +43,11 @@ export default ((win, doc) => {
 
       // click to scroll
       doc.addEventListener('click', (e) => {
-        let elem = e.target.closest(this.elem);// delegate
+        let elem = e.target.closest([// delegate
+          this.baseElem,
+          this.elem
+        ].join(' '));
+
         let href = '';
         let target = '';
         let hash = '';
@@ -133,11 +145,11 @@ export default ((win, doc) => {
         y: window.pageYOffset
       };
 
-      _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
+      _isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
 
       if(scrollPos.y == elemPos.y) {
-        _.isFunction(cb) && cb();
-        _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+        _isFunction(cb) && cb();
+        _isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         return;
       }
 
@@ -148,8 +160,8 @@ export default ((win, doc) => {
         easing: this.easing,
         update: () => win.scroll(0, scrollPos.y),
         complete: () => {
-          _.isFunction(cb) && cb();
-          _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+          _isFunction(cb) && cb();
+          _isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         }
       });
 
@@ -173,3 +185,4 @@ export default ((win, doc) => {
   };
 
 })(window, document);
+

@@ -1,6 +1,13 @@
 import anime from 'animejs';
 
+import _extend from 'lodash/extend';
+import _forEach from 'lodash/forEach';
+import _template from 'lodash/template';
+import _isObject from 'lodash/isObject';
+import _isFunction from 'lodash/isFunction';
+
 export default ((win, doc) => {
+  'use strict';
 
   // common state
   let isOpen = false;
@@ -20,6 +27,9 @@ export default ((win, doc) => {
       if(!(this instanceof Modal)) {
         return new Modal(opts_);
       }
+
+      this.baseElem = 'body';
+
       this.isFixed = true;
       this.styles = {
         display: 'block',
@@ -31,10 +41,10 @@ export default ((win, doc) => {
         background: '#fff',
         opacity: 0
       };
-      this.elem = {
-        wrapper: '#wrapper',
-        alignRight: '.js-fixed-right'
-      };
+
+      this.wrapperElem = '#wrapper';
+      this.alignRightElem = '.js-fixed-right';
+
       this.name = {
         modal: 'modal',
         close: 'modal-close',
@@ -42,19 +52,23 @@ export default ((win, doc) => {
         wrapper: 'modal-wrapper',
         content: 'modal-content'
       };
+
       this.data = {
         open: 'data-modal-open',
         close: 'data-modal-close',
         template: 'data-modal-template',
         name: 'data-modal-name'
       };
-      this.separation = {
+
+      this.separater = {
         page: '--'
       };
+
       this.state = {
         open: 'is-open',
         close: 'is-close'
       };
+
       this.animate = {
         open: {
           duration: 300,
@@ -65,6 +79,7 @@ export default ((win, doc) => {
           easing: 'easeInOutQuart'
         }
       };
+
       this.template = `
         <div id="${this.name.wrapper}" data-modal-close="" onclick="">
           <div id="${this.name.container}">
@@ -76,17 +91,24 @@ export default ((win, doc) => {
         </div>
       `;
 
-      _.isObject(opts_) && _.extend(this, opts_);
+      _isObject(opts_) && _extend(this, opts_);
 
-      this.initialize();
+      // this.initialize();
     }
 
     /**
      * initialize
      */
     initialize() {
-      let open = '[' + this.data.open + ']';
-      let close = '[' + this.data.close + ']';
+      let open = [
+        this.baseElem,
+        `[${this.data.open}]`
+      ].join(' ');
+
+      let close = [
+        this.baseElem,
+        `[${this.data.close}]`
+      ].join(' ');
 
       // cancel
       doc.addEventListener("DOMContentLoaded", (e) => {
@@ -142,7 +164,7 @@ export default ((win, doc) => {
       let template = elem.getAttribute(this.data.template);
       template = doc.querySelector(template);
 
-      let html = _.template(template.innerHTML);
+      let html = _template(template.innerHTML);
       let data = elem.getAttribute(this.data.open);
 
       let parseData = data ? JSON.parse(data) : null;
@@ -165,8 +187,8 @@ export default ((win, doc) => {
           this.fixedOpen();
         }
 
-        _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
-        opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
+        _isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+        opts && _isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
         content.innerHTML = html({
           'modal': this,
@@ -178,13 +200,13 @@ export default ((win, doc) => {
 
           modal.style.position = this.isFixed ?
             'fixed' : 'absolute';
-          _.each(this.styles, (value, key) => {
+          _forEach(this.styles, (value, key) => {
             modal.style[key] = value;
           });
 
           this.animate.open.complete = () => {
-            _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
-            opts && _.isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
+            _isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+            opts && _isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
           };
 
           anime({
@@ -211,15 +233,15 @@ export default ((win, doc) => {
       anime.remove(content);
       content.innerHTML = html;
 
-      _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
-      opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
+      _isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+      opts && _isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
       this.imgLoadEnd(content, () => {
         content.style.display = 'block';
 
         this.animate.open.complete = () => {
-          _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
-          opts && _.isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
+          _isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+          opts && _isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
         };
         anime({
           targets: content,
@@ -243,14 +265,14 @@ export default ((win, doc) => {
         this.fixedClose();
       }
 
-      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
-      opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
+      _isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      opts && _isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
 
       this.getPrevElem().classList.remove(this.state.open);
       elem.classList.remove(this.state.open);
 
       this.animate.close.complete = () => {
-        _.each(this.styles, (value, key) => {
+        _forEach(this.styles, (value, key) => {
           modal.style[key] = '';
         });
 
@@ -259,8 +281,8 @@ export default ((win, doc) => {
         content.innerHTML = '';
         isOpen = false;
 
-        _.isFunction(this.onAfterClose) && this.onAfterClose(this);
-        opts && _.isFunction(opts.onAfterClose) && opts.onAfterClose(this);
+        _isFunction(this.onAfterClose) && this.onAfterClose(this);
+        opts && _isFunction(opts.onAfterClose) && opts.onAfterClose(this);
       };
 
       anime.remove(modal);
@@ -286,16 +308,16 @@ export default ((win, doc) => {
 
       elem.classList.remove(this.state.open);
 
-      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
-      opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
+      _isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      opts && _isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
 
       this.animate.close.complete = () => {
         content.innerHtml = '';
         content.style.dispaly = 'none';
         isChange = false;
 
-        _.isFunction(this.onAfterClose) && this.onAfterClose(this);
-        opts && _.isFunction(opts.onAfterClose) && opts.onAfterClose(this);
+        _isFunction(this.onAfterClose) && this.onAfterClose(this);
+        opts && _isFunction(opts.onAfterClose) && opts.onAfterClose(this);
       };
 
       anime.remove(content);
@@ -339,17 +361,17 @@ export default ((win, doc) => {
       if(imgLoad) {
         imgLoad.on('always', () => {
           setTimeout(() => {
-            _.isFunction(cb) && cb();
+            _isFunction(cb) && cb();
           }, 0);
         });
 
         imgLoad.on('fail', () => {
           setTimeout(() => {
-            _.isFunction(cb) && cb();
+            _isFunction(cb) && cb();
           }, 0);
         });
       }else{
-        _.isFunction(cb) && cb();
+        _isFunction(cb) && cb();
       }
     }
 
@@ -357,7 +379,7 @@ export default ((win, doc) => {
      * fixedOpen
      */
     fixedOpen() {
-      let wrapper = doc.querySelector(this.elem.wrapper);
+      let wrapper = doc.querySelector(this.wrapperElem);
 
       let scrollY = win.pageYOffset || doc.documentElement.scrollTop;
       this.setScrollTop(scrollY);
@@ -373,7 +395,7 @@ export default ((win, doc) => {
      * fixedClose
      */
     fixedClose() {
-      let wrapper = doc.querySelector(this.elem.wrapper);
+      let wrapper = doc.querySelector(this.wrapperElem);
 
       doc.querySelector('html').classList.remove(this.state.open);
 
@@ -425,7 +447,10 @@ export default ((win, doc) => {
       if(!wrapper) return;
 
       let resizeTimer = false;
-      let alignRight = wrapper.querySelectorAll(this.elem.alignRight);
+      let alignRight = wrapper.querySelectorAll([
+        this.baseElem,
+        this.alignRightElem
+      ].join(' '));
 
       if(!alignRight.length) return;
 
@@ -439,7 +464,7 @@ export default ((win, doc) => {
 
           let diffWidth = innerWidth - modalWidth;
 
-          _.each(alignRight, (elem) => {
+          _forEach(alignRight, (elem) => {
             elem.style.marginRight = `${diffWidth}px`;
           });
         }, 100);
@@ -471,12 +496,12 @@ export default ((win, doc) => {
       if(!data) return;
 
       let name = elem.getAttribute(this.data.name);
-      let split = name ? name.split(this.separation.page) : '';
-      let prefix = split[0] + this.separation.page;
+      let split = name ? name.split(this.separater.page) : '';
+      let prefix = split[0] + this.separater.page;
       let num = split && split[1] ? parseInt(split[1]) : undefined;
 
-      data.prev = '[' + this.data.name + '='  + (prefix + (num - 1)) + ']';
-      data.next = '[' + this.data.name + '='  + (prefix + (num + 1)) + ']';
+      data.prev = `[${this.data.name}=${(prefix + (num - 1))}]`;
+      data.next = `[${this.data.name}=${(prefix + (num + 1))}]`;
 
       let prev = doc.querySelector(data.prev);
       let next = doc.querySelector(data.next);
@@ -501,13 +526,15 @@ export default ((win, doc) => {
      * @returns {object} elem modal
      */
     createModal() {
-      let elem = doc.createElement('div');
-      elem.id = this.name.modal;
-      doc.body.appendChild(elem);
+      let elem = doc.querySelector(this.baseElem);
+      let modal = doc.createElement('div');
 
-      elem.innerHTML = this.template;
+      modal.id = this.name.modal;
+      elem.appendChild(modal);
 
-      return elem;
+      modal.innerHTML = this.template;
+
+      return modal;
     }
 
     /**
@@ -587,3 +614,4 @@ export default ((win, doc) => {
   }
 
 })(window, document);
+

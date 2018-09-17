@@ -18,3 +18,4 @@ export default ((win, doc) => {
   }
 
 })(window, document);
+
