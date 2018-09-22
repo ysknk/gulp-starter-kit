@@ -179,7 +179,6 @@ class Html extends TaskMaster {
 
       .on('finish', () => {done && done();})
       .pipe(this.serv());
-
   }
 
   /**
