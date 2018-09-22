@@ -21,6 +21,12 @@ const task = {
  * Js
  */
 class Js extends TaskMaster {
+
+  /**
+   * constructor
+   *
+   * @param {object} opts_
+   */
   constructor(opts_) {
     super(opts_);
   }

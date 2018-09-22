@@ -6,8 +6,8 @@
   $.fn.ajax.set(html, {
     url: 'https://httpbin.org/get'
   }, {
-    onSuccess: (resolve, reject, responce, that) => {
-      console.log(responce);
+    onSuccess: (resolve, reject, response, that) => {
+      console.log(response);
       console.log(this, that);
       return resolve();
     },

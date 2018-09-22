@@ -37,10 +37,10 @@ import pageShare from './_partials/classes/pageShare';
 
   // ajax
   $.fn.ajax = new ajax();
-  $.fn.ajax.onSuccess = (resolve, reject, responce, obj) => {
+  $.fn.ajax.onSuccess = (resolve, reject, response, obj) => {
     return resolve();
   };
-  $.fn.ajax.onFailure = (resolve, reject, responce, obj) => {
+  $.fn.ajax.onFailure = (resolve, reject, response, obj) => {
     return resolve();
   };
 

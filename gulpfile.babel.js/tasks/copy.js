@@ -15,6 +15,12 @@ const task = {
  * Copy
  */
 class Copy extends TaskMaster {
+
+  /**
+   * constructor
+   *
+   * @param {object} opts_
+   */
   constructor(opts_) {
     super(opts_);
   }

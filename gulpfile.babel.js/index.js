@@ -228,18 +228,24 @@ _.each(types, (array, key) => {
     if(key === 'start') {
       gulp.task(defaultName, () => {
         let startProcess;
-        let param = (process.argv && process.argv.slice(2)) || [];
+        let param = plugins.util.getParam();
 
         function restart() {
-          gulp.watch([
+          let watchSrc = [
             './' + gulpfile + '/**/*',
             define.path.config,
             '!' + define.path.config + 'node_modules/'
-          ], gulp.series(restart));
+          ];
+          gulp.watch(watchSrc, gulp.series(restart));
 
           if(startProcess) startProcess.kill();
-          startProcess = spawn('gulp', [key, ...param], {stdio: 'inherit'})
-            .on('error', (err) => {throw err;});
+
+          let gulpName = plugins.util.isWin() ?
+            'gulp.cmd' : 'gulp';
+
+          startProcess = spawn(gulpName, [key, ...param], {
+            stdio: 'inherit'
+          }).on('error', (err) => {throw err;});
         }
         restart();
       });

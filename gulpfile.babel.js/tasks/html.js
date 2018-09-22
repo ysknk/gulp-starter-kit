@@ -16,6 +16,12 @@ const task = {
  * Html
  */
 class Html extends TaskMaster {
+
+  /**
+   * constructor
+   *
+   * @param {object} opts_
+   */
   constructor(opts_) {
     super(opts_);
   }

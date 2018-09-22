@@ -11,7 +11,7 @@ const config = global[define.ns];
  * Set Variables
  */
 const task = {
-  name: 'custom',// pleaze replace => custom and Custom
+  name: 'custom',// please replace => custom and Custom
   types: []// **:watch function [0] || 'proc'
 };
 //console.log(global)
@@ -20,6 +20,12 @@ const task = {
  * Custom
  */
 class Custom extends TaskMaster {
+
+  /**
+   * constructor
+   *
+   * @param {object} opts_
+   */
   constructor(opts_) {
     super(opts_);
   }

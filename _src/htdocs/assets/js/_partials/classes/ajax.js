@@ -8,6 +8,8 @@ import _isFunction from 'lodash/isFunction';
 export default ((win, doc) => {
   'use strict';
 
+  const ERROR_MESSAGE = '通信中にエラーが発生しました。しばらく時間をおいてから、もう一度お試しください。';
+
   /**
    * Ajax
    */
@@ -24,7 +26,15 @@ export default ((win, doc) => {
       }
       this.elem = doc.querySelector('html');
       this.loadingClassName = 'is-ajax-loading';
+      this.errorClassName = 'is-ajax-error';
       this.isLoading = false;
+      this.message = {
+        failure: {
+          common: ERROR_MESSAGE,
+          timeout: ERROR_MESSAGE,
+          notfound: ERROR_MESSAGE
+        }
+      };
       this.config = {
         method: 'get',
         url: '',

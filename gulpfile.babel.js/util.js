@@ -115,7 +115,7 @@ class Util {
    * @param {boolean} bool true or false
    */
   setIsWatch(bool) {
-    this._watch = bool;
+    this._isWatch = bool;
   }
 
   /**
@@ -124,7 +124,16 @@ class Util {
    * @returns {boolean}
    */
   getIsWatch() {
-    return this._watch || false;
+    return this._isWatch || false;
+  }
+
+  /**
+   * getParam
+   *
+   * @returns {array}
+   */
+  getParam() {
+    return (process.argv && process.argv.slice(2)) || [];
   }
 
   /**
