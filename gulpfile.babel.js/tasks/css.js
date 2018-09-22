@@ -56,9 +56,8 @@ class Css extends TaskMaster {
       .pipe($.if(this.isLint(), $.csslint(this.task.data.lint_options)))
       .pipe($.if(this.isLint(), $.csslint.formatter(this.task.data.lint_report_type || '')))
 
-      .pipe(this.serv())
-
-      .on('finish', () => {done && done();});
+      .on('finish', () => {done && done();})
+      .pipe(this.serv());
   }
 
   /**

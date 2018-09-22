@@ -177,9 +177,9 @@ class Html extends TaskMaster {
       .pipe($.if(this.isLint(), $.htmlhint(this.task.data.lint_options)))
       .pipe($.if(this.isLint(), $.htmlhint.reporter(this.task.data.lint_report_type || path)))
 
-      .pipe(this.serv())
+      .on('finish', () => {done && done();})
+      .pipe(this.serv());
 
-      .on('finish', () => {done && done();});
   }
 
   /**
