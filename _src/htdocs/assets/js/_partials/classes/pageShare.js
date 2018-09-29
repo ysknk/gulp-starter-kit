@@ -1,8 +1,7 @@
-import _extend from 'lodash/extend';
-import _isObject from 'lodash/isObject';
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   /**
    * PageShare
@@ -27,7 +26,7 @@ export default ((win, doc) => {
       this.width = 650;
       this.height = 470;
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }

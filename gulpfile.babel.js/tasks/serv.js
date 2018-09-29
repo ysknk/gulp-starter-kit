@@ -76,7 +76,7 @@ class Serv extends TaskMaster {
     });
 
     // other types task
-    _.each(this.task.types, (type, i) => {
+    _.forEach(this.task.types, (type, i) => {
       if(!this[type]) return;
       gulp.task(this.task.name + ':' + type, (done) => {
         this[type](done);

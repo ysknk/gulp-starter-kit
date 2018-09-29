@@ -1,12 +1,7 @@
-import anime from 'animejs';
-
-import _extend from 'lodash/extend';
-import _forEach from 'lodash/forEach';
-import _isObject from 'lodash/isObject';
-import _isFunction from 'lodash/isFunction';
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   /**
    * Accordion
@@ -31,7 +26,7 @@ export default ((win, doc) => {
       this.easing = 'easeInOutQuart';
       this.duration = 300;
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }
@@ -79,11 +74,11 @@ export default ((win, doc) => {
         `[${this.dataAttr}]`
       ].join(' '));
 
-      _forEach(elems, (elem) => {
+      _.forEach(elems, (elem) => {
         if(!this.hasOpen(elem)) {
           let data = elem.getAttribute(this.dataAttr);
           let contents = doc.querySelectorAll(data);
-          _forEach(contents, (content) => {
+          _.forEach(contents, (content) => {
             content.style.overflow = 'hidden';
             content.style.height = '0';
           });
@@ -99,10 +94,10 @@ export default ((win, doc) => {
      */
     open(btn, contents) {
       btn.classList.add(this.openClassName);
-      _isFunction(this.onBeforeOpen) && this.onBeforeOpen(btn, contents);
+      _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(btn, contents);
 
-      _forEach(contents, (content) => {
-        anime.remove(content);
+      _.forEach(contents, (content) => {
+        FN.anime.remove(content);
 
         content.classList.add(this.openClassName);
 
@@ -114,7 +109,7 @@ export default ((win, doc) => {
         content.style.overflow = 'hidden';
         content.style.height = nowHeight;
 
-        anime({
+        FN.anime({
           targets: content,
           height: [nowHeight, maxHeight],
           duration: this.duration,
@@ -123,7 +118,7 @@ export default ((win, doc) => {
             if(this.hasOpen(btn)) {
               content.style.overflow = 'visible';
               content.style.height = 'auto';
-              _isFunction(this.onAfterOpen) && this.onAfterOpen(btn, contents);
+              _.isFunction(this.onAfterOpen) && this.onAfterOpen(btn, contents);
             }
           }
         });
@@ -138,22 +133,22 @@ export default ((win, doc) => {
      */
     close(btn, contents) {
       btn.classList.remove(this.openClassName);
-      _isFunction(this.onBeforeClose) && this.onBeforeClose(btn, contents);
+      _.isFunction(this.onBeforeClose) && this.onBeforeClose(btn, contents);
 
-      _forEach(contents, (content) => {
-        anime.remove(content);
+      _.forEach(contents, (content) => {
+        FN.anime.remove(content);
 
         content.classList.remove(this.openClassName);
         content.style.overflow = 'hidden';
 
-        anime({
+        FN.anime({
           targets: contents,
           height: '0',
           duration: this.duration,
           easing: this.easing,
           complete: () => {
             if(!this.hasOpen(btn)) {
-              _isFunction(this.onAfterClose) && this.onAfterClose(btn, contents);
+              _.isFunction(this.onAfterClose) && this.onAfterClose(btn, contents);
             }
           }
         });

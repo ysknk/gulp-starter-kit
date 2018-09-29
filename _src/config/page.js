@@ -17,7 +17,7 @@ const head = {
   keywords: 'common keywords',
 
   css: ['style.css'],
-  js: ['lib.js', 'common.js'],
+  js: ['script.js'],
 
   // og: {
   //   url: 'http://example.com/'

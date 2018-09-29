@@ -1,9 +1,11 @@
 ((win, doc) => {
   'use strict';
 
+  const FN = win[NS];
+
   let html = document.querySelector('html');
 
-  $.fn.ajax.set(html, {
+  FN.ajax.set(html, {
     url: 'https://httpbin.org/get'
   }, {
     onSuccess: (resolve, reject, response, that) => {

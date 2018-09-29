@@ -72,7 +72,7 @@ module.exports = (opts_) => {
       if(replace && replace.length || find && find.length) {
         // replace
         if(replace.length) {
-          _.each(replace, (content) => {
+          _.forEach(replace, (content) => {
             let ex = new RegExp('(' + content.from + ')', 'g');
             let isMatch = contents.match(ex);
             if(isMatch) {
@@ -91,7 +91,7 @@ module.exports = (opts_) => {
 
         // find
         if(find.length) {
-          _.each(find, (content) => {
+          _.forEach(find, (content) => {
             let ex = new RegExp('(' + content + ')', 'g');
             let isMatch = contents.match(ex);
             if(isMatch) {
@@ -108,7 +108,7 @@ module.exports = (opts_) => {
         // show match logs
         if(matchList.length) {
           fancyLog('- ' + colors.blue(filename));
-          _.each(matchList, (list) => {
+          _.forEach(matchList, (list) => {
             fancyLog(list);
           });
         }

@@ -1,12 +1,7 @@
-import uaParserJs from 'ua-parser-js';
-
-import _extend from 'lodash/extend';
-import _isObject from 'lodash/isObject';
-
-const uaParser = new uaParserJs();
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   /**
    * Ua
@@ -23,7 +18,7 @@ export default ((win, doc) => {
         return new Ua(opts_);
       }
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }
@@ -67,7 +62,7 @@ export default ((win, doc) => {
      * @returns {object}
      */
     getDevice() {
-      return uaParser.getDevice();
+      return FN.uaParser.getDevice();
     }
 
   };

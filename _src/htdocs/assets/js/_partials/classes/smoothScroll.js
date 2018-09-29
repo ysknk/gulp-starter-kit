@@ -1,11 +1,7 @@
-import anime from 'animejs';
-
-import _extend from 'lodash/extend';
-import _isObject from 'lodash/isObject';
-import _isFunction from 'lodash/isFunction';
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   /**
    * SmoothScroll
@@ -30,7 +26,7 @@ export default ((win, doc) => {
       this.easing = 'easeInOutQuart';
       this.duration = 300;
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }
@@ -145,23 +141,23 @@ export default ((win, doc) => {
         y: window.pageYOffset
       };
 
-      _isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
+      _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
 
       if(scrollPos.y == elemPos.y) {
-        _isFunction(cb) && cb();
-        _isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+        _.isFunction(cb) && cb();
+        _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         return;
       }
 
-      anime({
+      FN.anime({
         targets: scrollPos,
         y: elemPos.y,
         duration: this.duration,
         easing: this.easing,
         update: () => win.scroll(0, scrollPos.y),
         complete: () => {
-          _isFunction(cb) && cb();
-          _isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+          _.isFunction(cb) && cb();
+          _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         }
       });
 

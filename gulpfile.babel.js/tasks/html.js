@@ -51,7 +51,7 @@ class Html extends TaskMaster {
    * @param {object} data key value
    */
   deleteChild(data) {
-    _.each(data, (obj, key) => {
+    _.forEach(data, (obj, key) => {
       if(key.match(/^[\/|\$]/)) {
         delete data[key];
       }
@@ -76,13 +76,13 @@ class Html extends TaskMaster {
     let isSet = false;
 
     let common = {};
-    _.each(meta, (val, key) => {
+    _.forEach(meta, (val, key) => {
       if(!key.match(/^[\/|\$]/)) {
         common[key] = val;
       }
     });
 
-    _.each(section, (name, i) => {
+    _.forEach(section, (name, i) => {
       let confname = '';
       let filesplit = name.split(/(.*)(?:\.([^.]+$))/);
       let isDirectory = filesplit[0];
@@ -110,7 +110,7 @@ class Html extends TaskMaster {
       }
 
       let addCommon = {};
-      _.each(data, (val, key) => {
+      _.forEach(data, (val, key) => {
         if(!key.match(/^[\/|\$]/)) {
           addCommon[key] = val;
         }

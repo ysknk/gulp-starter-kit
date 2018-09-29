@@ -126,7 +126,7 @@ const globalVars = {
 /**
  * set global variables
  */
-_.each(globalVars, (obj, key) => {
+_.forEach(globalVars, (obj, key) => {
   util.setGlobalVars(key, obj);
 });
 
@@ -183,39 +183,39 @@ let taskMaster = require('./task/master');
 let tasks = gulp._registry._tasks;
 let defaultName = 'default';
 let emptyName = 'empty';
+let serveName = 'serv';
 let types = {};
 let taskmaster = new taskMaster();
-let isServ = taskmaster.isTask('serv');
+let isServ = taskmaster.isTask(serveName);
+let beforeTask = isServ ? serveName : emptyName;
 
 // empty
 gulp.task(emptyName, (done) => {done();});
 
 // build, watch
-_.each(tasks, (task, name) => {
+_.forEach(tasks, (task, name) => {
   let split = name.split(':');
-  let taskname = split[0];
-  let type = split.length > 1 ? split[1] : defaultName;
+  let taskname = split && split[0];
+  let type = split && split.length > 1 ? split[1] : defaultName;
 
   if(!types[type]) types[type] = [];
   types[type].push(name);
 });
 
-_.each(types, (array, key) => {
+_.forEach(types, (array, key) => {
   if(key === 'watch' || key === defaultName) {
-
-    if(key === defaultName) key = 'start';
-
-    gulp.task(key, gulp.series(isServ ? 'serv' : emptyName, function all() {
+    gulp.task(key, gulp.series(beforeTask, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
 
-      _.each(array, (string) => {
+      _.forEach(array, (string) => {
         let split = string.split(':');
         let taskname = split[0];
-        let serv = 'serv:' + (config[taskname] && config[taskname].serv || 'reload');
+        let serv = serveName + ':' + (config[taskname] && config[taskname][serveName] || 'reload');
         let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
 
-        if(taskname === 'serv' || taskname === emptyName) return;
+        if(taskname === serveName ||
+          taskname === emptyName) return;
 
         if(config && config[taskname]) {
           let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : emptyName));
@@ -223,33 +223,6 @@ _.each(types, (array, key) => {
         }
       });
     }));
-
-    // gulp restart
-    if(key === 'start') {
-      gulp.task(defaultName, () => {
-        let startProcess;
-        let param = plugins.util.getParam();
-
-        function restart() {
-          let watchSrc = [
-            './' + gulpfile + '/**/*',
-            define.path.config,
-            '!' + define.path.config + 'node_modules/'
-          ];
-          gulp.watch(watchSrc, gulp.series(restart));
-
-          if(startProcess) startProcess.kill();
-
-          let gulpName = plugins.util.isWin() ?
-            'gulp.cmd' : 'gulp';
-
-          startProcess = spawn(gulpName, [key, ...param], {
-            stdio: 'inherit'
-          }).on('error', (err) => {throw err;});
-        }
-        restart();
-      });
-    }
 
   }else{
     gulp.task(key, gulp.parallel.apply(gulp, array));

@@ -1,9 +1,7 @@
-import _extend from 'lodash/extend';
-import _forEach from 'lodash/forEach';
-import _isObject from 'lodash/isObject';
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   /**
    * Tab
@@ -28,7 +26,7 @@ export default ((win, doc) => {
       this.duration = 1000;
       this.easing = 'easeInOutQuart';
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }
@@ -72,7 +70,7 @@ export default ((win, doc) => {
       let data;
 
       // set state
-      _forEach(elems, (elem) => {
+      _.forEach(elems, (elem) => {
         if(this.hasActive(elem)) {
           data = this.toJson(elem.getAttribute(this.dataAttr));
           this.open(elem, data);
@@ -103,7 +101,7 @@ export default ((win, doc) => {
       ].join(' '));
       if(!btns.length) return;
 
-      _forEach(btns, (btn) => {
+      _.forEach(btns, (btn) => {
         if(elem === btn) {
           btn.classList.add(this.activeClassName);
         }else{
@@ -116,7 +114,7 @@ export default ((win, doc) => {
       let hideElems = new Array();
       let current = null;
 
-      _forEach(groups, (group) => {
+      _.forEach(groups, (group) => {
         if(group.classList.contains(name)) {
           current = group;
         }else{
@@ -126,7 +124,7 @@ export default ((win, doc) => {
 
       // hide
       if(hideElems.length) {
-        _forEach(hideElems, (hideElem) => {
+        _.forEach(hideElems, (hideElem) => {
           hideElem.classList.remove(this.activeClassName);
           this.onHid(hideElem, data);
         });

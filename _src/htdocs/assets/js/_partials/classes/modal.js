@@ -1,13 +1,7 @@
-import anime from 'animejs';
-
-import _extend from 'lodash/extend';
-import _forEach from 'lodash/forEach';
-import _template from 'lodash/template';
-import _isObject from 'lodash/isObject';
-import _isFunction from 'lodash/isFunction';
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   // common state
   let isOpen = false;
@@ -91,7 +85,7 @@ export default ((win, doc) => {
         </div>
       `;
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }
@@ -164,7 +158,7 @@ export default ((win, doc) => {
       let template = elem.getAttribute(this.data.template);
       template = doc.querySelector(template);
 
-      let html = _template(template.innerHTML);
+      let html = _.template(template.innerHTML);
       let data = elem.getAttribute(this.data.open);
 
       let parseData = data ? JSON.parse(data) : null;
@@ -187,8 +181,8 @@ export default ((win, doc) => {
           this.fixedOpen();
         }
 
-        _isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
-        opts && _isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
+        _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+        opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
         content.innerHTML = html({
           'modal': this,
@@ -196,20 +190,20 @@ export default ((win, doc) => {
         });
 
         this.imgLoadEnd(modal, () => {
-          anime.remove(modal);
+          FN.anime.remove(modal);
 
           modal.style.position = this.isFixed ?
             'fixed' : 'absolute';
-          _forEach(this.styles, (value, key) => {
+          _.forEach(this.styles, (value, key) => {
             modal.style[key] = value;
           });
 
           this.animate.open.complete = () => {
-            _isFunction(this.onAfterOpen) && this.onAfterOpen(this);
-            opts && _isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
+            _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+            opts && _.isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
           };
 
-          anime({
+          FN.anime({
             targets: modal,
             opacity: 1,
             ...this.animate.open
@@ -230,20 +224,20 @@ export default ((win, doc) => {
     showContent(html, opts) {
       let content = doc.getElementById(this.name.content);
 
-      anime.remove(content);
+      FN.anime.remove(content);
       content.innerHTML = html;
 
-      _isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
-      opts && _isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
+      _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+      opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
       this.imgLoadEnd(content, () => {
         content.style.display = 'block';
 
         this.animate.open.complete = () => {
-          _isFunction(this.onAfterOpen) && this.onAfterOpen(this);
-          opts && _isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
+          _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
+          opts && _.isFunction(opts.onAfterOpen) && opts.onAfterOpen(this);
         };
-        anime({
+        FN.anime({
           targets: content,
           opacity: 1,
           ...this.animate.open
@@ -265,14 +259,14 @@ export default ((win, doc) => {
         this.fixedClose();
       }
 
-      _isFunction(this.onBeforeClose) && this.onBeforeClose(this);
-      opts && _isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
+      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
 
       this.getPrevElem().classList.remove(this.state.open);
       elem.classList.remove(this.state.open);
 
       this.animate.close.complete = () => {
-        _forEach(this.styles, (value, key) => {
+        _.forEach(this.styles, (value, key) => {
           modal.style[key] = '';
         });
 
@@ -281,15 +275,15 @@ export default ((win, doc) => {
         content.innerHTML = '';
         isOpen = false;
 
-        _isFunction(this.onAfterClose) && this.onAfterClose(this);
-        opts && _isFunction(opts.onAfterClose) && opts.onAfterClose(this);
+        _.isFunction(this.onAfterClose) && this.onAfterClose(this);
+        opts && _.isFunction(opts.onAfterClose) && opts.onAfterClose(this);
       };
 
-      anime.remove(modal);
+      FN.anime.remove(modal);
       modal.classList.remove(this.state.open);
       modal.classList.add(this.state.close);
 
-      anime({
+      FN.anime({
         targets: modal,
         opacity: 0,
         ...this.animate.close
@@ -308,20 +302,20 @@ export default ((win, doc) => {
 
       elem.classList.remove(this.state.open);
 
-      _isFunction(this.onBeforeClose) && this.onBeforeClose(this);
-      opts && _isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
+      _.isFunction(this.onBeforeClose) && this.onBeforeClose(this);
+      opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
 
       this.animate.close.complete = () => {
         content.innerHtml = '';
         content.style.dispaly = 'none';
         isChange = false;
 
-        _isFunction(this.onAfterClose) && this.onAfterClose(this);
-        opts && _isFunction(opts.onAfterClose) && opts.onAfterClose(this);
+        _.isFunction(this.onAfterClose) && this.onAfterClose(this);
+        opts && _.isFunction(opts.onAfterClose) && opts.onAfterClose(this);
       };
 
-      anime.remove(content);
-      anime({
+      FN.anime.remove(content);
+      FN.anime({
         targets: content,
         opacity: 0,
         ...this.animate.close
@@ -361,17 +355,17 @@ export default ((win, doc) => {
       if(imgLoad) {
         imgLoad.on('always', () => {
           setTimeout(() => {
-            _isFunction(cb) && cb();
+            _.isFunction(cb) && cb();
           }, 0);
         });
 
         imgLoad.on('fail', () => {
           setTimeout(() => {
-            _isFunction(cb) && cb();
+            _.isFunction(cb) && cb();
           }, 0);
         });
       }else{
-        _isFunction(cb) && cb();
+        _.isFunction(cb) && cb();
       }
     }
 
@@ -464,7 +458,7 @@ export default ((win, doc) => {
 
           let diffWidth = innerWidth - modalWidth;
 
-          _forEach(alignRight, (elem) => {
+          _.forEach(alignRight, (elem) => {
             elem.style.marginRight = `${diffWidth}px`;
           });
         }, 100);

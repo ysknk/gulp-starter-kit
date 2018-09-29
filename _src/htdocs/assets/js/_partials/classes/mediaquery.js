@@ -1,10 +1,7 @@
-import _extend from 'lodash/extend';
-import _forEach from 'lodash/forEach';
-import _isObject from 'lodash/isObject';
-import _isFunction from 'lodash/isFunction';
-
 export default ((win, doc) => {
   'use strict';
+
+  const FN = win[NS];
 
   /**
    *  MediaQuery
@@ -46,7 +43,7 @@ export default ((win, doc) => {
 
       this.html = doc.querySelector('html');
 
-      _isObject(opts_) && _extend(this, opts_);
+      _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
     }
@@ -65,7 +62,7 @@ export default ((win, doc) => {
       let width = this.getWidth();
       let beforePoint = this.getCurrentPoint() || undefined;
 
-      _forEach(this.point, (point, i) => {
+      _.forEach(this.point, (point, i) => {
         // minがなければmax以下全て
         if(!point.size.min &&
             point.size.max >= width) {
@@ -98,7 +95,7 @@ export default ((win, doc) => {
         beforePoint.config.name != currentPoint.config.name) {
         this.html.classList.add(currentPoint.config.name);
         this.setImgSrc(currentPoint);
-        _isFunction(this.onChange) && this.onChange(this);
+        _.isFunction(this.onChange) && this.onChange(this);
       }
     }
 
@@ -117,7 +114,7 @@ export default ((win, doc) => {
             `[${point.config.src[key]}]`
           ].join(' '));
 
-          _forEach(elems, (elem) => {
+          _.forEach(elems, (elem) => {
             if(key != '__DEFAULT__' && !elem.classList.contains(key)) return;
             let data = this.point[point.num].src[key];
             if(!elem.src || !elem.src.match(elem.getAttribute(data))) {
