@@ -44,7 +44,7 @@ percent(num, maxnum, unit = '%')
 font_size(size, def = FONT_SIZE_DEFAULT)
   if match('^(sp)$', def, 'i')
     def = FONT_SIZE_SP
-  font-size ceil(percentage(size, def))
+  font-size ceil(percent(size, def))
 
 font_size_responsive(elem = body)
   for i in (0..FONT_SIZE_SPLIT)
