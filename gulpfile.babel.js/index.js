@@ -61,22 +61,25 @@ const define = {
   ns: '__', // namespace
 
   path: {
-    config: srcDir + 'config/',
-    htdocs: srcDir + 'htdocs/',
+    config: `${srcDir}config/`,
+    htdocs: `${srcDir}htdocs/`,
 
     src: (ext) => {
       return [
-        srcDir + 'htdocs/**/*.' + ext
+        `${srcDir}htdocs/**/*.${ext}`
       ];
     },
     ignore: (ext) => {
-      ext = ext ? ('.' + ext) : '';
-      return [
+      ext = ext ? `.${ext}` : '';
+      let src = [
         'htdocs/**/_*',
         'htdocs/**/_**/**/*'
       ].map((val) => {
         return srcDir + val + ext;
       });
+      src.push(`${srcDir}config/**/*`);
+
+      return src;
     },
     dest: destDir
   }

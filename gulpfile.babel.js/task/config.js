@@ -54,9 +54,13 @@ module.exports = {
 
   /* html @pug */
   html: {
-    // src: define.path.src('pug', 'all'),
     src: define.path.src('pug'),
+//     src: [
+//       define.path.htdocs + '/**/*.pug',
+//       define.path.config + 'page.js'
+//     ],
     dest: define.path.dest,
+    // config_src: [define.path.config + 'page.js'],
     extension: '.html',
 
     options: {

@@ -67,7 +67,7 @@ module.exports = class TaskMaster {
 
     // default task
     gulp.task(this.task.name, (done) => {
-      this[defaultTask](gulp.src(mergeSrc), done);
+      this[defaultTask](gulp.src(mergeSrc, {allowEmpty: true}), done);
     });
 
     // watch task
@@ -81,7 +81,7 @@ module.exports = class TaskMaster {
     _.forEach(this.task.types, (type, i) => {
       if(!this[type]) return;
       gulp.task(this.task.name + ':' + type, (done) => {
-        this[type](gulp.src(mergeSrc), done);
+        this[type](gulp.src(mergeSrc, {allowEmpty: true}), done);
       });
     });
   }
