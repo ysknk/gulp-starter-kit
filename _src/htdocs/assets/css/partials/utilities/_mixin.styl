@@ -18,7 +18,7 @@ font_face(name, type, weight, style, hasType = false)
 
 font_icon(name, type)
   overflow hidden
-  display inline-block
+  display inline
   font-family name
   content type
   line-height 1
@@ -92,6 +92,71 @@ break_point(type, css = false)
     {LAYOUT}{type} &
       {block}
 
+link_color(link, hover, visited, active)
+  if !link || link == ''
+    link = FONT_COLOR_LINK_DEFAULT
+  if !hover || hover == ''
+    hover = link
+  if !visited || visited == ''
+    visited = link
+  if !active || active == ''
+    active = link
+
+  color link
+  &:visited
+    color visited
+  {upc} &
+    &:hover
+      color hover
+  &:active,
+  &:focus
+    color active
+
+link_decoration(link, hover, visited, active)
+  if !link || link == ''
+    link = LINK_DECORATION_DEFAULT
+  if !hover || hover == ''
+    hover = LINK_DECORATION_HOVER
+  if !visited || visited == ''
+    visited = link
+  if !active || active == ''
+    active = link
+
+  text-decoration link
+  &:visited
+    text-decoration visited
+  {upc} &
+    &:hover
+      text-decoration hover
+  &:active,
+  &:focus
+    text-decoration active
+
+link_style(color, decoration, hover_color, hover_decoration)
+  if !color || color == ''
+    color = FONT_COLOR_LINK_DEFAULT
+  if !hover_color || hover_color == ''
+    hover_color = FONT_COLOR_LINK_HOVER
+
+  if !decoration || decoration == ''
+    decoration = LINK_DECORATION_DEFAULT
+  if !hover_decoration || hover_decoration == ''
+    hover_decoration = LINK_DECORATION_HOVER
+
+  color color
+  text-decoration decoration
+  &:visited
+    color color
+    text-decoration decoration
+  {upc} &
+    &:hover
+      color hover_color
+      text-decoration hover_decoration
+  &:active,
+  &:focus
+    color color
+    text-decoration decoration
+
 rollover(type = 'opacity', def = .7)
   if type == 'opacity'
     transition opacity .2s ease-in-out
@@ -149,7 +214,7 @@ rollover(type = 'opacity', def = .7)
     &:active,
     &:focus
       text-decoration none
-      // border-bottom 1px solid LINK_COLOR
+      // border-bottom 1px solid FONT_COLOR_LINK_DEFAULT
     {upc} &
       &:hover
         text-decoration none

@@ -14,42 +14,35 @@ body
   // font-variant-numeric slashed-zero
 
   color FONT_COLOR_DEFAULT
-  a
-    color FONT_COLOR_LINK
-    text-decoration none
-    &:hover
-      text-decoration underline
-    &:link
-    &:active
-    &:visited
-    &:focus
-      color FONT_COLOR_LINK
 
-  a
-  input
-  button
-    font-family FONT_FAMILY
-    -webkit-appearance none
-    -moz-appearance none
-    &:focus
-      outline none
+a
+  link_style('', '', '', '')
 
-  input
-  button
-    &::-moz-focus-inner
-      border none
+a
+input
+button
+  font-family FONT_FAMILY
+  -webkit-appearance none
+  -moz-appearance none
+  &:focus
+    outline none
 
-  input
+input
+button
+  &::-moz-focus-inner
     border none
-    border-radius 0
 
-  input[type="submit"]
-  label
-    cursor pointer
+input
+  border none
+  border-radius 0
 
-  img
-    vertical-align top
-    max-width 100%
+input[type="submit"]
+label
+  cursor pointer
+
+img
+  vertical-align top
+  max-width 100%
 
 // fontsize
 font_size_responsive(body)
