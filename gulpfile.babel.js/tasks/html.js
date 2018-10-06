@@ -65,7 +65,9 @@ class Html extends TaskMaster {
    * @returns {object} page data
    */
   setCurrentData(file) {
-    let meta = this.task.data.meta;
+    let meta = require(`../../${define.path.pageConfig}`);
+    delete require.cache[require.resolve(`../../${define.path.pageConfig}`)]
+
     let filepath = plugins.util.getReplaceDir(file.relative);
     let data = {};
 
@@ -143,21 +145,33 @@ class Html extends TaskMaster {
   }
 
   /**
+   * configBuild
+   *
+   * @param {object} stream gulp object
+   * @param {function} done set complete
+   */
+  configBuild(stream, done) {
+    this.build(stream, done, true);
+  }
+
+  /**
    * build
    * watch or build
    *
    * @param {object} stream gulp object
    * @param {function} done set complete
    */
-  build(stream, done) {
+  build(stream, done, isBuild) {
+    let isWatch = isBuild ? false : plugins.util.getIsWatch();
+
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest, {
+      .pipe($.if(isWatch, $.changed(this.task.data.dest, {
         extension: this.task.data.extension
       })))
-      .pipe($.if(plugins.util.getIsWatch(), $.cached(this.task.name)))
+      .pipe($.if(isWatch, $.cached(this.task.name)))
 
-      .pipe($.if(plugins.util.getIsWatch(), $.pugInheritance(this.task.data.inheritance_options)))
+      .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
       .pipe($.filter((file) => {
         return this.ignoreFilter(file);
       }))
@@ -209,8 +223,38 @@ class Html extends TaskMaster {
   /**
    * setTask
    */
-  // setTask() {}
+  setTask() {
+    let defaultTask = this.task.types && this.task.types.length ?
+      this.task.types[0] : 'procedure';
+    let src = this.getSrc();
+    let ignore = this.getIgnore();
+    let mergeSrc = [...src, ...ignore];
 
+    // default task
+    gulp.task(this.task.name, (done) => {
+      this[defaultTask](gulp.src(mergeSrc, {allowEmpty: true}), done);
+    });
+
+    // config build task
+    gulp.task('config:build', (done) => {
+      this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
+    });
+
+    // watch task
+    gulp.task(this.task.name + ':watch', () => {
+      plugins.util.setIsWatch(true);
+      let watcher = gulp.watch(src, gulp.parallel(this.task.name));
+      this.setDeleteWatcher(watcher, this.task.data);
+    });
+
+    // other types task
+    _.forEach(this.task.types, (type, i) => {
+      if(!this[type]) return;
+      gulp.task(this.task.name + ':' + type, (done) => {
+        this[type](gulp.src(mergeSrc, {allowEmpty: true}), done);
+      });
+    });
+  }
 }
 
 module.exports = new Html(task);

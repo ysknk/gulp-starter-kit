@@ -64,6 +64,8 @@ const define = {
     config: `${srcDir}config/`,
     htdocs: `${srcDir}htdocs/`,
 
+    pageConfig: `${srcDir}config/page.js`,
+
     src: (ext) => {
       return [
         `${srcDir}htdocs/**/*.${ext}`
@@ -223,6 +225,12 @@ _.forEach(types, (array, key) => {
         if(config && config[taskname]) {
           let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : emptyName));
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
+
+          // html only
+          if(taskname === 'html') {
+            gulp.watch(define.path.pageConfig, gulp.series('config:build', isServ ? serv : emptyName));
+          }
+
         }
       });
     }));

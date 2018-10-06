@@ -1,4 +1,4 @@
-let meta = require('../../' + define.path.config + 'page');
+let meta = require(`../../${define.path.pageConfig}`);
 
 module.exports = {
   /* run flg */
@@ -55,12 +55,7 @@ module.exports = {
   /* html @pug */
   html: {
     src: define.path.src('pug'),
-//     src: [
-//       define.path.htdocs + '/**/*.pug',
-//       define.path.config + 'page.js'
-//     ],
     dest: define.path.dest,
-    // config_src: [define.path.config + 'page.js'],
     extension: '.html',
 
     options: {
@@ -200,8 +195,7 @@ module.exports = {
               loader: "babel-loader?cacheDirectory=true",
               options: {
                 presets: [
-                  ['@babel/preset-env', {modules: false, useBuiltIns: 'usage'}],
-                  ['@babel/preset-stage-0', {decoratorsLegacy: true}]
+                  ['@babel/preset-env', {modules: false, useBuiltIns: 'usage'}]
                 ],
                 plugins: ['@babel/plugin-transform-runtime']
               }
