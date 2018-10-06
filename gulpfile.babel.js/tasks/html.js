@@ -160,6 +160,7 @@ class Html extends TaskMaster {
    *
    * @param {object} stream gulp object
    * @param {function} done set complete
+   * @param {boolean} isBuild set flag
    */
   build(stream, done, isBuild) {
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
