@@ -8,14 +8,14 @@ import axios from 'axios';
 import anime from 'animejs';
 // import _ from 'lodash';//look for globals/variable
 
-import ua from './_partials/classes/ua';
-import mediaQuery from './_partials/classes/mediaQuery';
-import ajax from './_partials/classes/ajax';
-import smoothScroll from './_partials/classes/smoothScroll';
-import accordion from './_partials/classes/accordion';
-import modal from './_partials/classes/modal';
-import tab from './_partials/classes/tab';
-import pageShare from './_partials/classes/pageShare';
+import ua from './_partials/shared_classes/ua';
+import mediaQuery from './_partials/shared_classes/mediaQuery';
+import ajax from './_partials/shared_classes/ajax';
+import smoothScroll from './_partials/shared_classes/smoothScroll';
+import accordion from './_partials/shared_classes/accordion';
+import modal from './_partials/shared_classes/modal';
+import tab from './_partials/shared_classes/tab';
+import pageShare from './_partials/shared_classes/pageShare';
 
 /**
  * common initialize

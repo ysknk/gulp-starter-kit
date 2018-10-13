@@ -32,8 +32,9 @@ export default ((win, doc) => {
         zIndex: 99999,
         width: '100%',
         height: '100%',
-        background: '#fff',
+        // background: '#fff',
         opacity: 0
+
       };
 
       this.wrapperElem = '#wrapper';
@@ -44,7 +45,9 @@ export default ((win, doc) => {
         close: 'modal-close',
         container: 'modal-container',
         wrapper: 'modal-wrapper',
-        content: 'modal-content'
+        content: 'modal-content',
+
+        notScroller: 'js-not-scroller',
       };
 
       this.data = {
@@ -159,9 +162,14 @@ export default ((win, doc) => {
       template = doc.querySelector(template);
 
       let html = _.template(template.innerHTML);
-      let data = elem.getAttribute(this.data.open);
+      let data = elem.getAttribute(this.data.open) || ``;
 
-      let parseData = data ? JSON.parse(data) : null;
+      let parseData = null;
+      try {
+        parseData = JSON.parse(data);
+      }catch(e) {}
+
+      // let parseData = data && JSON.parse(data) ? JSON.parse(data) : null;
       parseData = this.getPager(elem, parseData);
 
       if(!modal) modal = this.createModal();
@@ -169,7 +177,7 @@ export default ((win, doc) => {
 
       modal.className = '';
       if(!modal.classList.contains(template.id)) {
-        modal.classList.add(template.id, 'js-not-scroller');
+        modal.classList.add(template.id, this.name.notScroller);
       }
       modal.classList.add(this.state.open);
       elem.classList.add(this.state.open);
@@ -374,6 +382,7 @@ export default ((win, doc) => {
      */
     fixedOpen() {
       let wrapper = doc.querySelector(this.wrapperElem);
+      if(!wrapper) return;
 
       let scrollY = win.pageYOffset || doc.documentElement.scrollTop;
       this.setScrollTop(scrollY);
@@ -390,6 +399,7 @@ export default ((win, doc) => {
      */
     fixedClose() {
       let wrapper = doc.querySelector(this.wrapperElem);
+      if(!wrapper) return;
 
       doc.querySelector('html').classList.remove(this.state.open);
 

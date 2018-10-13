@@ -95,7 +95,7 @@ export default ((win, doc) => {
 
       if(last.match(/(\#\!)/)) return false;
 
-      if(last.match(/\#(.+)/)) {
+      if(last.match(/\#(.+)/) && !last.match(/\##/)) {
         hash = last.match(/#(.+)/)[1];
         return '#' + hash;
       }

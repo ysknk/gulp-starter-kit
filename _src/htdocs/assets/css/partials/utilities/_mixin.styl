@@ -42,7 +42,7 @@ percent(num, maxnum, unit = '%')
   unit((((num / maxnum) * 1000) / 10), unit)
 
 font_size(size, def = FONT_SIZE_DEFAULT)
-  if match('^(sp)$', def, 'i')
+  if def == 'sp'
     def = FONT_SIZE_SP
   font-size ceil(percent(size, def))
 

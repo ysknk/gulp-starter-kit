@@ -14,12 +14,12 @@ body
   // font-variant-numeric slashed-zero
 
   color FONT_COLOR_DEFAULT
+  break_word()
 
 a
   link_style('', '', '', '')
 
-a
-input
+a,
 button
   font-family FONT_FAMILY
   -webkit-appearance none
@@ -27,16 +27,29 @@ button
   &:focus
     outline none
 
-input
+input,
+textarea,
 button
+  padding 0
+  border none
+  background none
+  font-size inherit
+  font-family FONT_FAMILY
+  outline none
+  padding 0
+  appearance none
+  line-height inherit
   &::-moz-focus-inner
     border none
 
 input
-  border none
+  appearance none
   border-radius 0
+  &:focus
+    outline none
 
-input[type="submit"]
+input[type="submit"],
+button,
 label
   cursor pointer
 
