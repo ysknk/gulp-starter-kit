@@ -63,30 +63,19 @@ export default ((win, doc) => {
       return FN.axios(config)
         .then((response) => {
           return new Promise((resolve, reject) => {
-            return _.isFunction(cb.onSuccess) &&
-              cb.onSuccess(resolve, reject, response, this);
-          })
-          .then(() => {
-            return new Promise((resolve, reject) => {
-              return _.isFunction(this.onSuccess) &&
-                this.onSuccess(resolve, reject, response, this);
-            });
+            _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
+            _.isFunction(this.onSuccess) && this.onSuccess(response, this);
+            this.end(elem);
+            return resolve;
           })
         })
         .catch((error) => {
           return new Promise((resolve, reject) => {
-            return _.isFunction(cb.onFailure) &&
-              cb.onFailure(resolve, reject, error, this);
+            _.isFunction(cb.onFailure) && cb.onFailure(error, this);
+            _.isFunction(this.onFailure) && this.onFailure(error, this);
+            this.end(elem);
+            return resolve;
           })
-          .then(() => {
-            return new Promise((resolve, reject) => {
-              return _.isFunction(this.onFailure) &&
-                this.onFailure(resolve, reject, error, this);
-            });
-          })
-        })
-        .finally(() => {
-          this.end(elem);
         });
     }
 
@@ -123,28 +112,20 @@ export default ((win, doc) => {
     /**
      * onSuccess
      *
-     * @param {function} resolve promise
-     * @param {function} reject promise
      * @param {object} response object
      * @param {object} obj class object
      * @returns {object} promise
      */
-    onSuccess(resolve, reject, response, obj) {
-      return resolve();
-    }
+    onSuccess(response, obj) {}
 
     /**
      * onFailure
      *
-     * @param {function} resolve promise
-     * @param {function} reject promise
      * @param {object} error object
      * @param {object} obj class object
      * @returns {object} promise
      */
-    onFailure(resolve, reject, error, obj) {
-      return resolve();
-    }
+    onFailure(error, obj) {}
 
   };
 

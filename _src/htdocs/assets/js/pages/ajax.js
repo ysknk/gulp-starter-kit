@@ -8,15 +8,13 @@
   FN.ajax.set(html, {
     url: 'https://httpbin.org/get'
   }, {
-    onSuccess: (resolve, reject, response, that) => {
+    onSuccess: (response, that) => {
       console.log(response);
       console.log(this, that);
-      return resolve();
     },
-    onFailure: (resolve, reject, error, that) => {
+    onFailure: (error, that) => {
       console.log(error);
       console.log(this, that);
-      return resolve();
     }
   });
 

@@ -34,7 +34,6 @@ export default ((win, doc) => {
         height: '100%',
         // background: '#fff',
         opacity: 0
-
       };
 
       this.wrapperElem = '#wrapper';
@@ -45,12 +44,14 @@ export default ((win, doc) => {
         close: 'modal-close',
         container: 'modal-container',
         wrapper: 'modal-wrapper',
+        outer: 'modal-outer',
+        inner: 'modal-inner',
         content: 'modal-content',
 
         notScroller: 'js-not-scroller',
       };
 
-      this.data = {
+      this.dataAttr = {
         open: 'data-modal-open',
         close: 'data-modal-close',
         template: 'data-modal-template',
@@ -79,11 +80,15 @@ export default ((win, doc) => {
 
       this.template = `
         <div id="${this.name.wrapper}" data-modal-close="" onclick="">
-          <div id="${this.name.container}">
-            <div id="${this.name.close}">
-              <a href="javascript:void(0)" data-modal-close="" onclick="">CLOSE</a>
+          <div id="${this.name.outer}">
+            <div id="${this.name.inner}">
+              <div id="${this.name.container}">
+                <div id="${this.name.close}">
+                  <a href="javascript:void(0)" data-modal-close="" onclick="">CLOSE</a>
+                </div>
+                <div id="${this.name.content}"></div>
+              </div>
             </div>
-            <div id="${this.name.content}"></div>
           </div>
         </div>
       `;
@@ -99,12 +104,12 @@ export default ((win, doc) => {
     initialize() {
       let open = [
         this.baseElem,
-        `[${this.data.open}]`
+        `[${this.dataAttr.open}]`
       ].join(' ');
 
       let close = [
         this.baseElem,
-        `[${this.data.close}]`
+        `[${this.dataAttr.close}]`
       ].join(' ');
 
       // cancel
@@ -158,11 +163,11 @@ export default ((win, doc) => {
       }
       let modal = doc.getElementById(this.name.modal);
 
-      let template = elem.getAttribute(this.data.template);
+      let template = elem.getAttribute(this.dataAttr.template);
       template = doc.querySelector(template);
 
       let html = _.template(template.innerHTML);
-      let data = elem.getAttribute(this.data.open) || ``;
+      let data = elem.getAttribute(this.dataAttr.open) || ``;
 
       let parseData = null;
       try {
@@ -499,13 +504,13 @@ export default ((win, doc) => {
     getPager(elem, data) {
       if(!data) return;
 
-      let name = elem.getAttribute(this.data.name);
+      let name = elem.getAttribute(this.dataAttr.name);
       let split = name ? name.split(this.separater.page) : '';
       let prefix = split[0] + this.separater.page;
       let num = split && split[1] ? parseInt(split[1]) : undefined;
 
-      data.prev = `[${this.data.name}=${(prefix + (num - 1))}]`;
-      data.next = `[${this.data.name}=${(prefix + (num + 1))}]`;
+      data.prev = `[${this.dataAttr.name}=${(prefix + (num - 1))}]`;
+      data.next = `[${this.dataAttr.name}=${(prefix + (num + 1))}]`;
 
       let prev = doc.querySelector(data.prev);
       let next = doc.querySelector(data.next);
@@ -584,7 +589,7 @@ export default ((win, doc) => {
      * @returns {boolean}
      */
     hasOpen(elem) {
-      return elem.classList.contains(this.state.open)
+      return elem.classList.contains(this.state.open);
     }
 
     /**

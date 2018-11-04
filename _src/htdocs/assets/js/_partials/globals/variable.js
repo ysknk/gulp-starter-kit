@@ -13,7 +13,9 @@ export default ((win, doc) => {
     forEach: require('lodash/forEach'),
     template: require('lodash/template'),
     isObject: require('lodash/isObject'),
-    isFunction: require('lodash/isFunction')
+    isFunction: require('lodash/isFunction'),
+    throttle: require('lodash/throttle'),
+    debounce: require('lodash/debounce')
   };
 
 })(window, document);

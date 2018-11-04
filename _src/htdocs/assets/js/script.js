@@ -1,5 +1,6 @@
 import variable from './_partials/globals/variable';
 
+import animationEnd from './_partials/polyfill/animationEnd';
 import closest from './_partials/polyfill/closest';
 import styles from './_partials/polyfill/styles';
 import uaParserJs from 'ua-parser-js';
