@@ -14,7 +14,10 @@ module.exports = (opts_) => {
     logMessage: false
   }, opts_);
 
-  let transformStream = new Transform({objectMode: true});
+  let transformStream = new Transform({
+    highWaterMark: 512,
+    objectMode: true
+  });
 
   /**
    * @param {Buffer|string} file
@@ -24,7 +27,7 @@ module.exports = (opts_) => {
    */
   transformStream._transform = (file, encoding, callback) => {
     if(file.isNull()) {
-      callback(null, file);
+      return callback(null, file);
     }
 
     if(file.isStream()) {
@@ -49,9 +52,10 @@ module.exports = (opts_) => {
       if(opts_.logMessage) {
         fancyLog(result);
       }
+
+      callback(null, file);
     }
 
-    callback(null, file);
   };
 
   return transformStream;

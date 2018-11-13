@@ -120,7 +120,6 @@ class Html extends TaskMaster {
       common = _.merge({}, common, addCommon);
     });
 
-
     data = _.merge({}, common, data);
     this.deleteChild(data);
 
@@ -140,6 +139,11 @@ class Html extends TaskMaster {
         data.assets_path = plugins.util.getReplaceDir(relative_path);
       }
     })();
+
+    // set all data
+    if(!data.global) {
+      data.global = meta;
+    }
 
     return data;
   }

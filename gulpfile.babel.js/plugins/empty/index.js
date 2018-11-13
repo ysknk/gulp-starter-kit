@@ -4,7 +4,10 @@
 const pluginName = 'empty';
 
 module.exports = (opts_) => {
-  let transformStream = new Transform({objectMode: true});
+  let transformStream = new Transform({
+    highWaterMark: 512,
+    objectMode: true
+  });
 
   /**
    * @param {Buffer|string} file
