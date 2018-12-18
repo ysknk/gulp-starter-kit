@@ -188,6 +188,10 @@ class Html extends TaskMaster {
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
 
       .pipe(plugins.useful(this.task.data.convert))
+      .pipe($.if(this.isExtname(), $.rename({
+        extname: this.task.data.extension
+      })))
+
       .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))

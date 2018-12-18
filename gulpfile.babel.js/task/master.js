@@ -180,6 +180,16 @@ module.exports = class TaskMaster {
   }
 
   /**
+   * isExtname
+   * file extension
+   *
+   * @returns {boolean}
+   */
+  isExtname() {
+    return this.task.data.extension ? true : false;
+  }
+
+  /**
    * isNo
    * do not open the browser
    * gulp --no

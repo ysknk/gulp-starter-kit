@@ -41,6 +41,10 @@ class Copy extends TaskMaster {
     stream
       .pipe($.plumber(this.errorMessage()))
       .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest)))
+      .pipe($.if(this.isExtname(), $.rename({
+        extname: this.task.data.extension
+      })))
+
       .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))

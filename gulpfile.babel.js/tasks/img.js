@@ -43,6 +43,9 @@ class Img extends TaskMaster {
       .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest)))
 
       .pipe($.imagemin(this.task.data.plugins, this.task.data.options))
+      .pipe($.if(this.isExtname(), $.rename({
+        extname: this.task.data.extension
+      })))
 
       .pipe(gulp.dest(this.task.data.dest))
 

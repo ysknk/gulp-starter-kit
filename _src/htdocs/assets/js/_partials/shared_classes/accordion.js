@@ -94,9 +94,9 @@ export default ((win, doc) => {
      */
     open(btn, contents) {
       btn.classList.add(this.openClassName);
-      _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(btn, contents);
 
       _.forEach(contents, (content) => {
+        _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(btn, content);
         FN.anime.remove(content);
 
         content.classList.add(this.openClassName);
@@ -118,7 +118,7 @@ export default ((win, doc) => {
             if(this.hasOpen(btn)) {
               content.style.overflow = 'visible';
               content.style.height = 'auto';
-              _.isFunction(this.onAfterOpen) && this.onAfterOpen(btn, contents);
+              _.isFunction(this.onAfterOpen) && this.onAfterOpen(btn, content);
             }
           }
         });
@@ -133,22 +133,22 @@ export default ((win, doc) => {
      */
     close(btn, contents) {
       btn.classList.remove(this.openClassName);
-      _.isFunction(this.onBeforeClose) && this.onBeforeClose(btn, contents);
 
       _.forEach(contents, (content) => {
+        _.isFunction(this.onBeforeClose) && this.onBeforeClose(btn, content);
         FN.anime.remove(content);
 
         content.classList.remove(this.openClassName);
         content.style.overflow = 'hidden';
 
         FN.anime({
-          targets: contents,
+          targets: content,
           height: '0',
           duration: this.duration,
           easing: this.easing,
           complete: () => {
             if(!this.hasOpen(btn)) {
-              _.isFunction(this.onAfterClose) && this.onAfterClose(btn, contents);
+              _.isFunction(this.onAfterClose) && this.onAfterClose(btn, content);
             }
           }
         });

@@ -43,6 +43,7 @@
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.0",
     "gulp-pug-inheritance": "^0.2.1",
+    "gulp-rename": "^1.4.0",
     "gulp-size": "^3.0.0",
     "gulp-stylus": "^2.7.0",
     "iconv-lite": "^0.4.21",

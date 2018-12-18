@@ -44,7 +44,6 @@ class Js extends TaskMaster {
    * @param {function} done set complete
    */
   build(stream, done) {
-
     if(plugins.util.getIsWatch()) {
       this.task.data.options.cache = true;
       // this.task.data.options.watch = true;
@@ -75,6 +74,10 @@ class Js extends TaskMaster {
       .pipe(webpackStream(this.task.data.options, webpack))
 
       .pipe(plugins.useful(this.task.data.convert))
+      .pipe($.if(this.isExtname(), $.rename({
+        extname: this.task.data.extension
+      })))
+
       .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))
