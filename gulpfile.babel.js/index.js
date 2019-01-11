@@ -77,7 +77,7 @@ const define = {
         'htdocs/**/_*',
         'htdocs/**/_**/**/*'
       ].map((val) => {
-        return srcDir + val + ext;
+        return `${srcDir}${val}${ext}`;
       });
       src.push(`${srcDir}config/**/*`);
 
@@ -208,7 +208,7 @@ _.forEach(tasks, (task, name) => {
 });
 
 _.forEach(types, (array, key) => {
-  if(key === 'watch' || key === defaultName) {
+  if(key === `watch` || key === defaultName) {
     gulp.task(key, gulp.series(beforeTask, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
@@ -216,7 +216,7 @@ _.forEach(types, (array, key) => {
       _.forEach(array, (string) => {
         let split = string.split(':');
         let taskname = split[0];
-        let serv = serveName + ':' + (config[taskname] && config[taskname][serveName] || 'reload');
+        let serv = `${serveName}:${(config[taskname] && config[taskname][serveName] || 'reload')}`;
         let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
 
         if(taskname === serveName ||
@@ -227,8 +227,8 @@ _.forEach(types, (array, key) => {
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
 
           // html only
-          if(taskname === 'html') {
-            gulp.watch(define.path.pageConfig, gulp.series('config:build', isServ ? serv : emptyName));
+          if(taskname === `html`) {
+            gulp.watch(define.path.pageConfig, gulp.series(`config:build`, isServ ? serv : emptyName));
           }
 
         }
@@ -236,7 +236,8 @@ _.forEach(types, (array, key) => {
     }));
 
   }else{
-    gulp.task(key, gulp.parallel.apply(gulp, array));
+    let includeArray = array.filter(task => task != `config:build`);
+    gulp.task(key, gulp.parallel.apply(gulp, includeArray));
   }
 });
 

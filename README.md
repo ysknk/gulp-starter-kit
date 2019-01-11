@@ -21,6 +21,9 @@ node.js
     cd _app/
     node install.js
 
+    ex mock install)
+    node install.js --mock
+
 ## Usage
 
     cd _app/
@@ -39,6 +42,12 @@ check other tasks.
 
     gulp --tasks
 
+## License
+
+Licensed under MIT  
+Copyright (c) 2018 [ysknk](https://github.com/ysknk)  
+
 ## Author
 
 [ysknk](https://github.com/ysknk)
+

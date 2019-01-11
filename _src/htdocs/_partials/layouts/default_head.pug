@@ -49,17 +49,17 @@ if css
   if(typeof css === 'object')
     for item, key in css
       if item
-        link(href!=assets_path + '/css/' + item rel="stylesheet")
+        link(href!=assets_path + 'css/' + item rel="stylesheet")
   if(typeof css === 'string')
-    link(href!=assets_path + '/css/' + css rel="stylesheet")
+    link(href!=assets_path + 'css/' + css rel="stylesheet")
 block css
 
 if js
   if(typeof js === 'object')
     for item, key in js
       if item
-        script(src!=assets_path + '/js/' + item)
+        script(src!=assets_path + 'js/' + item)
   if(typeof js === 'string')
-    script(src!=assets_path + '/js/' + js)
+    script(src!=assets_path + 'js/' + js)
 block js
 

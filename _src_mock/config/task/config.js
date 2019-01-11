@@ -2,6 +2,11 @@
 
 module.exports = {
 
+  /* run flg */
+  // tasks: {
+  //   custom: true
+  // },
+
   /* common */
   common: {
     options: {
@@ -34,6 +39,9 @@ module.exports = {
   /* copy */
   copy: { // other filetype
   }//,
+
+  /* custom */
+  //custom: {}
 
 };
 

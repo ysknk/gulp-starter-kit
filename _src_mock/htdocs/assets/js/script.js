@@ -7,7 +7,6 @@ import uaParserJs from 'ua-parser-js';
 
 import axios from 'axios';
 import anime from 'animejs';
-import cookies from 'js-cookie';
 // import _ from 'lodash';//look for globals/variable
 
 import ua from './_partials/shared_classes/ua';
@@ -31,7 +30,6 @@ import pageShare from './_partials/shared_classes/pageShare';
   FN.uaParser = UA_PARSER;
   FN.axios = axios;
   FN.anime = anime;
-  FN.cookies = cookies;
 
   let html = doc.querySelector('html');
   html.classList.remove('no-js');

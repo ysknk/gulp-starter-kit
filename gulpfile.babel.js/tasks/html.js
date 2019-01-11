@@ -136,7 +136,7 @@ class Html extends TaskMaster {
         let dest_path = path.resolve(this.task.data.dest + dirArray.join(dirMark));
         let relative_path = path.relative(dest_path, assets_path);
 
-        data.assets_path = plugins.util.getReplaceDir(relative_path);
+        data.assets_path = `${plugins.util.getReplaceDir(relative_path)}/`;
       }
     })();
 
