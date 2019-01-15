@@ -18,6 +18,8 @@ import accordion from './_partials/shared_classes/accordion';
 import modal from './_partials/shared_classes/modal';
 import tab from './_partials/shared_classes/tab';
 import pageShare from './_partials/shared_classes/pageShare';
+import expander from './_partials/shared_classes/expander';
+import ellipsis from './_partials/shared_classes/ellipsis';
 
 /**
  * common initialize
@@ -31,7 +33,6 @@ import pageShare from './_partials/shared_classes/pageShare';
   FN.uaParser = UA_PARSER;
   FN.axios = axios;
   FN.anime = anime;
-  FN.cookies = cookies;
 
   let html = doc.querySelector('html');
   html.classList.remove('no-js');
@@ -76,6 +77,13 @@ import pageShare from './_partials/shared_classes/pageShare';
   FN.pageShare = new pageShare();
   FN.pageShare.initialize();
 
+  // expander
+  FN.expander = new expander();
+  FN.expander.initialize();
+
+  // ellipsis
+  FN.ellipsis = new ellipsis();
+
   /**
    * event procedure
    */
@@ -83,6 +91,8 @@ import pageShare from './_partials/shared_classes/pageShare';
     FN.mediaQuery.check();
     FN.accordion.setClose();
     FN.tab.setActive();
+    FN.expander.updateAll();
+    FN.ellipsis.updateAll();
   }, false);
 
   win.addEventListener('load', (e) => {
