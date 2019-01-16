@@ -1,3 +1,5 @@
+import '@babel/polyfill';
+
 import variable from './_partials/globals/variable';
 
 import animationEnd from './_partials/polyfill/animationEnd';
