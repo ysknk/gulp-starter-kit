@@ -115,6 +115,7 @@ export default ((win, doc) => {
       // cancel
       doc.addEventListener("DOMContentLoaded", (e) => {
         doc.body.addEventListener('click', (e) => {
+          if(!e.target || !e.target.closest) return;
           let elem = e.target.closest('#' + this.name.content);// delegate
           if(!elem || e.target === doc) return;
 
@@ -125,6 +126,7 @@ export default ((win, doc) => {
 
       // open
       doc.addEventListener('click', (e) => {
+        if(!e.target || !e.target.closest) return;
         let elem = e.target.closest(open);// delegate
         if(!elem || e.target === doc) return;
 
@@ -133,6 +135,7 @@ export default ((win, doc) => {
 
       // close
       doc.addEventListener('click', (e) => {
+        if(!e.target || !e.target.closest) return;
         let elem = e.target.closest(close);// delegate
         if(!elem || e.target === doc) return;
 

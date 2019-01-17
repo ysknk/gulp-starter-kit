@@ -53,6 +53,7 @@ export default ((win, doc) => {
      */
     initialize() {
       doc.addEventListener('click', (e) => {
+        if(!e.target || !e.target.closest) return;
         let elem = e.target.closest(`[${this.dataAttr}]`);// delegate
         if(!elem || e.target === doc) return;
 

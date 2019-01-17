@@ -37,6 +37,7 @@ export default ((win, doc) => {
     initialize() {
       // click to open or close
       doc.addEventListener('click', (e) => {
+        if(!e.target || !e.target.closest) return;
         let toggleButton = e.target.closest([// delegate
           this.baseElem,
           `[${this.dataAttr}]`

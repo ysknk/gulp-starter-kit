@@ -174,7 +174,6 @@ class Html extends TaskMaster {
       .pipe($.if(isWatch, $.changed(this.task.data.dest, {
         extension: this.task.data.extension
       })))
-      .pipe($.if(isWatch, $.cached(this.task.name)))
 
       .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
       .pipe($.filter((file) => {

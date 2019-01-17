@@ -41,6 +41,7 @@ export default ((win, doc) => {
 
       // タブ切り替え
       doc.addEventListener('click', (e) => {
+        if(!e.target || !e.target.closest) return;
         let elem = e.target.closest([// delegate
           this.baseElem,
           `[${this.dataAttr}]`

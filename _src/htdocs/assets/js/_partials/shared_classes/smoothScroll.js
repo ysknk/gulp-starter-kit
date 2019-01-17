@@ -39,6 +39,7 @@ export default ((win, doc) => {
 
       // click to scroll
       doc.addEventListener('click', (e) => {
+        if(!e.target || !e.target.closest) return;
         let elem = e.target.closest([// delegate
           this.baseElem,
           this.elem
