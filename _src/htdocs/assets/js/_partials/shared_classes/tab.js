@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -18,13 +18,13 @@ export default ((win, doc) => {
         return new Tab(opts_);
       }
 
-      this.baseElem = 'body';
+      this.baseElem = `body`;
 
-      this.dataAttr = 'data-tab';
-      this.activeClassName = 'is-active';
+      this.dataAttr = `data-tab`;
+      this.activeClassName = `is-active`;
 
       this.duration = 1000;
-      this.easing = 'easeInOutQuart';
+      this.easing = `easeInOutQuart`;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -40,14 +40,14 @@ export default ((win, doc) => {
       this.setIsActive(false);
 
       // タブ切り替え
-      doc.addEventListener('click', (e) => {
+      doc.addEventListener(`click`, (e) => {
         if(!e.target || !e.target.closest) return;
         let elem = e.target.closest([// delegate
           this.baseElem,
           `[${this.dataAttr}]`
-        ].join(' '));
+        ].join(` `));
 
-        if(!elem || e.target === doc) return;
+        if(e.target === doc || !elem) return;
 
         data = this.toJson(elem.getAttribute(this.dataAttr));
         if(this.hasActive(elem)) {
@@ -67,7 +67,7 @@ export default ((win, doc) => {
       let elems = doc.querySelectorAll([
         this.baseElem,
         `[${this.dataAttr}]`
-      ].join(' '));
+      ].join(` `));
       let data;
 
       // set state
@@ -92,14 +92,14 @@ export default ((win, doc) => {
       let groups = document.querySelectorAll([
         this.baseElem,
         data.group
-      ].join(' '));
+      ].join(` `));
       if(!groups.length) return;
 
       // set btn class
       let btns = document.querySelectorAll([
         this.baseElem,
         data.btn
-      ].join(' '));
+      ].join(` `));
       if(!btns.length) return;
 
       _.forEach(btns, (btn) => {
@@ -111,7 +111,7 @@ export default ((win, doc) => {
       });
 
       // not current close
-      let name = data.category.replace(/^(\.|\#)/, '');
+      let name = data.category.replace(/^(\.|\#)/, ``);
       let hideElems = new Array();
       let current = null;
 

@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -18,12 +18,12 @@ export default ((win, doc) => {
         return new Accordion(opts_);
       }
 
-      this.baseElem = 'body';
+      this.baseElem = `body`;
 
-      this.dataAttr = 'data-accr';
-      this.dataAttrClose = 'data-accr-close';
-      this.openClassName = 'is-open';
-      this.easing = 'easeInOutQuart';
+      this.dataAttr = `data-accr`;
+      this.dataAttrClose = `data-accr-close`;
+      this.openClassName = `is-open`;
+      this.easing = `easeInOutQuart`;
       this.duration = 300;
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -36,26 +36,26 @@ export default ((win, doc) => {
      */
     initialize() {
       // click to open or close
-      doc.addEventListener('click', (e) => {
+      doc.addEventListener(`click`, (e) => {
         if(!e.target || !e.target.closest) return;
         let toggleButton = e.target.closest([// delegate
           this.baseElem,
           `[${this.dataAttr}]`
-        ].join(' '));
+        ].join(` `));
 
         let closeButton = e.target.closest([// delegate
           this.baseElem,
           `[${this.dataAttrClose}]`
-        ].join(' '));
+        ].join(` `));
 
-        if((!toggleButton && !closeButton) || e.target === doc) return;
+        if(e.target === doc || (!toggleButton && !closeButton)) return;
 
         if(toggleButton) {
           let data = toggleButton.getAttribute(this.dataAttr);
           let contents = doc.querySelectorAll(data);
 
           this[this.hasOpen(toggleButton) ?
-            'close' : 'open'](toggleButton, contents);
+            `close` : `open`](toggleButton, contents);
 
         }else if(closeButton) {
           let data = closeButton.getAttribute(this.dataAttrClose);
@@ -73,15 +73,15 @@ export default ((win, doc) => {
       let elems = doc.querySelectorAll([
         this.baseElem,
         `[${this.dataAttr}]`
-      ].join(' '));
+      ].join(` `));
 
       _.forEach(elems, (elem) => {
         if(!this.hasOpen(elem)) {
           let data = elem.getAttribute(this.dataAttr);
           let contents = doc.querySelectorAll(data);
           _.forEach(contents, (content) => {
-            content.style.overflow = 'hidden';
-            content.style.height = '0';
+            content.style.overflow = `hidden`;
+            content.style.height = `0`;
           });
         }
       });
@@ -103,11 +103,11 @@ export default ((win, doc) => {
         content.classList.add(this.openClassName);
 
         let nowHeight = content.clientHeight;
-        content.style.overflow = 'visible';
-        content.style.height = 'auto';
+        content.style.overflow = `visible`;
+        content.style.height = `auto`;
 
         let maxHeight = content.clientHeight;
-        content.style.overflow = 'hidden';
+        content.style.overflow = `hidden`;
         content.style.height = nowHeight;
 
         FN.anime({
@@ -117,8 +117,8 @@ export default ((win, doc) => {
           easing: this.easing,
           complete: () => {
             if(this.hasOpen(btn)) {
-              content.style.overflow = 'visible';
-              content.style.height = 'auto';
+              content.style.overflow = `visible`;
+              content.style.height = `auto`;
               _.isFunction(this.onAfterOpen) && this.onAfterOpen(btn, content);
             }
           }
@@ -140,11 +140,11 @@ export default ((win, doc) => {
         FN.anime.remove(content);
 
         content.classList.remove(this.openClassName);
-        content.style.overflow = 'hidden';
+        content.style.overflow = `hidden`;
 
         FN.anime({
           targets: content,
-          height: '0',
+          height: `0`,
           duration: this.duration,
           easing: this.easing,
           complete: () => {

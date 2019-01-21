@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -22,76 +22,77 @@ export default ((win, doc) => {
         return new Modal(opts_);
       }
 
-      this.baseElem = 'body';
+      this.baseElem = `body`;
 
       this.isFixed = true;
+      this.isSetHeight = false;
       this.styles = {
-        display: 'block',
+        display: `block`,
         top: 0,
         left: 0,
         zIndex: 99999,
-        width: '100%',
-        height: '100%',
-        // background: '#fff',
+        width: `100%`,
+        height: `100%`,
+        // background: `#fff`,
         opacity: 0
       };
 
-      this.wrapperElem = '#wrapper';
-      this.alignRightElem = '.js-fixed-right';
+      this.wrapperElem = `#wrapper`;
+      this.alignRightElem = `.js-fixed-right`;
 
       this.name = {
-        modal: 'modal',
-        close: 'modal-close',
-        container: 'modal-container',
-        wrapper: 'modal-wrapper',
-        outer: 'modal-outer',
-        inner: 'modal-inner',
-        content: 'modal-content',
+        modal: `modal`,
+        close: `modal__close`,
+        container: `modal__container`,
+        wrapper: `modal__wrapper`,
+        outer: `modal__outer`,
+        inner: `modal__inner`,
+        content: `modal__content`,
 
-        notScroller: 'js-not-scroller',
+        notScroller: `js-not-scroller`,
       };
 
       this.dataAttr = {
-        open: 'data-modal-open',
-        close: 'data-modal-close',
-        template: 'data-modal-template',
-        name: 'data-modal-name'
+        open: `data-modal-open`,
+        close: `data-modal-close`,
+        template: `data-modal-template`,
+        name: `data-modal-name`
       };
 
       this.separater = {
-        page: '--'
+        page: `--`
       };
 
       this.state = {
-        open: 'is-open',
-        close: 'is-close'
+        open: `is-open`,
+        close: `is-close`
       };
 
       this.animate = {
         open: {
           duration: 300,
-          easing: 'easeInOutQuart'
+          easing: `easeInOutQuart`
         },
         close: {
           duration: 300,
-          easing: 'easeInOutQuart'
+          easing: `easeInOutQuart`
         }
       };
 
-      this.template = `
-        <div id="${this.name.wrapper}" data-modal-close="" onclick="">
-          <div id="${this.name.outer}">
-            <div id="${this.name.inner}">
-              <div id="${this.name.container}">
-                <div id="${this.name.close}">
-                  <a href="javascript:void(0)" data-modal-close="" onclick="">CLOSE</a>
-                </div>
-                <div id="${this.name.content}"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
+      this.template = [``,
+        `<div id="${this.name.wrapper}" data-modal-close="" onclick="">`,
+          `<div id="${this.name.outer}">`,
+            `<div id="${this.name.inner}">`,
+              `<div id="${this.name.container}">`,
+                `<div id="${this.name.close}">`,
+                  `<a href="javascript:void(0)" data-modal-close="" onclick=""></a>`,
+                `</div>`,
+                `<div id="${this.name.content}"></div>`,
+              `</div>`,
+            `</div>`,
+          `</div>`,
+        `</div>`
+      ].join(``);
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -105,50 +106,101 @@ export default ((win, doc) => {
       let open = [
         this.baseElem,
         `[${this.dataAttr.open}]`
-      ].join(' ');
+      ].join(` `);
 
       let close = [
         this.baseElem,
         `[${this.dataAttr.close}]`
-      ].join(' ');
+      ].join(` `);
 
-      // cancel
-      doc.addEventListener("DOMContentLoaded", (e) => {
-        doc.body.addEventListener('click', (e) => {
-          if(!e.target || !e.target.closest) return;
-          let elem = e.target.closest('#' + this.name.content);// delegate
-          if(!elem || e.target === doc) return;
+      // // let isClick = false;
 
+      // let isModal = false;
+      // let isOpen = false;
+      // let isClose = false;
+
+      // doc.addEventListener(`mousedown`, (e) => {
+      //   if(!e.target || !e.target.closest) return;
+
+      //   let openElem = e.target.closest(open);// delegate
+      //   let closeElem = e.target.closest(close);// delegate
+      //   let modalElem = e.target.closest(`#${this.name.content}`);// delegate
+
+      //   if(e.target === doc || (!openElem && !closeElem && !modalElem)) return;
+
+      //   // isClick = true;
+      //   // setTimeout(() => {
+      //   //   isClick = false;
+      //   // }, 1000);
+
+      //   // cancel
+      //   if(modalElem) {
+      //     isModal = true;
+      //     isOpen = false;
+      //     isClose = false;
+
+      //   // open
+      //   }else if(openElem) {
+      //     isOpen = openElem;
+      //     isModal = false;
+      //     isClose = false;
+
+      //   // close
+      //   }else if(closeElem) {
+      //     isClose = closeElem;
+      //     isModal = false;
+      //     isOpen = false;
+
+      //   }else{
+      //     isModal = false;
+      //     isOpen = false;
+      //     isClose = false;
+      //   }
+      // }, false);
+
+      // doc.addEventListener(`mouseup`, (e) => {
+      //   if(!e.target || !e.target.closest) return;
+      //   // if(!isClick) return;
+
+      //   let openElem = e.target.closest(open);// delegate
+      //   let closeElem = e.target.closest(close);// delegate
+      //   let modalElem = e.target.closest(`#${this.name.content}`);// delegate
+
+      //   if(e.target === doc || (!openElem && !closeElem && !modalElem)) {
+      //     isModal = false;
+      //     isOpen = false;
+      //     isClose = false;
+      //     return;
+      //   }
+
+      //   if(isModal && isModal == modalElem) {
+      //     e.preventDefault();
+      //     e.stopPropagation();
+      //   }else if(isOpen && isOpen == openElem) {
+      //     this.open(isOpen);
+      //   }else if(isClose && isClose == closeElem) {
+      //     this.close(isClose);
+      //   }
+      // }, false);
+
+      doc.addEventListener(`click`, (e) => {
+        if(!e.target || !e.target.closest) return;
+        let openElem = e.target.closest(open);// delegate
+        let closeElem = e.target.closest(close);// delegate
+        let modalElem = e.target.closest(`#${this.name.content}`);// delegate
+        if((!openElem && !closeElem && !modalElem) || e.target === doc) return;
+        // cancel
+        if(modalElem) {
           e.preventDefault();
           e.stopPropagation();
-        });
-      });
-
-      // open
-      doc.addEventListener('click', (e) => {
-        if(!e.target || !e.target.closest) return;
-        let elem = e.target.closest(open);// delegate
-        if(!elem || e.target === doc) return;
-
-        this.open(elem);
-      });
-
-      // close
-      doc.addEventListener('click', (e) => {
-        if(!e.target || !e.target.closest) return;
-        let elem = e.target.closest(close);// delegate
-        if(!elem || e.target === doc) return;
-
-        this.close(elem);
-      });
-
-      // resize, scroll
-      let updateFunc = () => {
-        this.update();
-      };
-
-      win.addEventListener('resize', updateFunc);
-      win.addEventListener('scroll', updateFunc);
+        // open
+        }else if(openElem) {
+          this.open(openElem);
+        // close
+        }else if(closeElem) {
+          this.close(closeElem);
+        }
+      }, false);
     }
 
     /**
@@ -183,7 +235,7 @@ export default ((win, doc) => {
       if(!modal) modal = this.createModal();
       let content = doc.getElementById(this.name.content);
 
-      modal.className = '';
+      modal.className = ``;
       if(!modal.classList.contains(template.id)) {
         modal.classList.add(template.id, this.name.notScroller);
       }
@@ -201,15 +253,15 @@ export default ((win, doc) => {
         opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
         content.innerHTML = html({
-          'modal': this,
-          'data': parseData
+          modal: this,
+          data: parseData
         });
 
         this.imgLoadEnd(modal, () => {
           FN.anime.remove(modal);
 
           modal.style.position = this.isFixed ?
-            'fixed' : 'absolute';
+            `fixed` : `absolute`;
           _.forEach(this.styles, (value, key) => {
             modal.style[key] = value;
           });
@@ -249,7 +301,7 @@ export default ((win, doc) => {
       opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
       this.imgLoadEnd(content, () => {
-        content.style.display = 'block';
+        content.style.display = `block`;
 
         this.animate.open.complete = () => {
           _.isFunction(this.onAfterOpen) && this.onAfterOpen(this);
@@ -285,12 +337,12 @@ export default ((win, doc) => {
 
       this.animate.close.complete = () => {
         _.forEach(this.styles, (value, key) => {
-          modal.style[key] = '';
+          modal.style[key] = ``;
         });
 
-        modal.style.display = 'none';
-        modal.style.position = '';
-        content.innerHTML = '';
+        modal.style.display = `none`;
+        modal.style.position = ``;
+        content.innerHTML = ``;
         isOpen = false;
 
         _.isFunction(this.onAfterClose) && this.onAfterClose(this);
@@ -324,8 +376,8 @@ export default ((win, doc) => {
       opts && _.isFunction(opts.onBeforeClose) && opts.onBeforeClose(this);
 
       this.animate.close.complete = () => {
-        content.innerHtml = '';
-        content.style.dispaly = 'none';
+        content.innerHtml = ``;
+        content.style.dispaly = `none`;
         isChange = false;
 
         _.isFunction(this.onAfterClose) && this.onAfterClose(this);
@@ -349,10 +401,10 @@ export default ((win, doc) => {
     changeContent(template, data) {
       let prev = this.getPrevElem();
       this.hideContent(prev, {
-        'onAfterClose': () => {
+        onAfterClose: () => {
           this.showContent(template({
-            'modal': this,
-            'data': data
+            modal: this,
+            data: data
           }));
         }
       });
@@ -365,19 +417,19 @@ export default ((win, doc) => {
      * @param {function} cb callback
      */
     imgLoadEnd(elem, cb) {
-      let imgLoad = '';
+      let imgLoad = ``;
       try {
         imgLoad = imagesLoaded(elem);
       }catch(e) {}
 
       if(imgLoad) {
-        imgLoad.on('always', () => {
+        imgLoad.on(`always`, () => {
           setTimeout(() => {
             _.isFunction(cb) && cb();
           }, 0);
         });
 
-        imgLoad.on('fail', () => {
+        imgLoad.on(`fail`, () => {
           setTimeout(() => {
             _.isFunction(cb) && cb();
           }, 0);
@@ -397,11 +449,11 @@ export default ((win, doc) => {
       let scrollY = win.pageYOffset || doc.documentElement.scrollTop;
       this.setScrollTop(scrollY);
 
-      wrapper.style.position = 'fixed';
-      wrapper.style.width = '100%';
+      wrapper.style.position = `fixed`;
+      wrapper.style.width = `100%`;
       wrapper.style.top = `${-1 * scrollY}px`;
 
-      doc.querySelector('html').classList.add(this.state.open);
+      doc.querySelector(`html`).classList.add(this.state.open);
     }
 
     /**
@@ -411,21 +463,26 @@ export default ((win, doc) => {
       let wrapper = doc.querySelector(this.wrapperElem);
       if(!wrapper) return;
 
-      doc.querySelector('html').classList.remove(this.state.open);
+      doc.querySelector(`html`).classList.remove(this.state.open);
 
-      wrapper.style.position = '';
-      wrapper.style.width = '';
-      wrapper.style.top = '';
+      wrapper.style.position = ``;
+      wrapper.style.width = ``;
+      wrapper.style.top = ``;
 
-      doc.querySelector('html').scrollTop = this.getScrollTop();
-      doc.querySelector('body').scrollTop = this.getScrollTop();
+      doc.querySelector(`html`).scrollTop = this.getScrollTop();
+      doc.querySelector(`body`).scrollTop = this.getScrollTop();
     }
 
     /**
      * update
      */
     update() {
-      // this.setHeight()
+      let modal = doc.getElementById(this.name.modal);
+      if(!modal) return;
+
+      if(this.isSetHeight) {
+        this.setHeight();
+      }
       this.setAlign();
       this.setPosTop();
     }
@@ -435,12 +492,8 @@ export default ((win, doc) => {
      */
     setHeight() {
       let modal = doc.getElementById(this.name.modal);
-      let content = doc.getElementById(this.name.content);
 
       let resizeTimer = false;
-
-      if(!modal || !content) return;
-
       let func = () => {
         if(resizeTimer !== false) {
           clearTimeout(resizeTimer);
@@ -464,7 +517,7 @@ export default ((win, doc) => {
       let alignRight = wrapper.querySelectorAll([
         this.baseElem,
         this.alignRightElem
-      ].join(' '));
+      ].join(` `));
 
       if(!alignRight.length) return;
 
@@ -510,7 +563,7 @@ export default ((win, doc) => {
       if(!data) return;
 
       let name = elem.getAttribute(this.dataAttr.name);
-      let split = name ? name.split(this.separater.page) : '';
+      let split = name ? name.split(this.separater.page) : ``;
       let prefix = split[0] + this.separater.page;
       let num = split && split[1] ? parseInt(split[1]) : undefined;
 
@@ -524,9 +577,9 @@ export default ((win, doc) => {
       data.next = next ? data.next : false;
 
       let pager = {
-        'prev': prev || false,
-        'now': elem,
-        'next': next || false,
+        prev: prev || false,
+        now: elem,
+        next: next || false,
       };
 
       data.pager = pager;
@@ -541,7 +594,7 @@ export default ((win, doc) => {
      */
     createModal() {
       let elem = doc.querySelector(this.baseElem);
-      let modal = doc.createElement('div');
+      let modal = doc.createElement(`div`);
 
       modal.id = this.name.modal;
       elem.appendChild(modal);
@@ -600,28 +653,28 @@ export default ((win, doc) => {
     /**
      * onBeforeOpen
      *
-     * @param {object} obj class object
+     * @param {object} obj
      */
     onBeforeOpen(obj) {}
 
     /**
      * onAfterOpen
      *
-     * @param {object} obj class object
+     * @param {object} obj
      */
     onAfterOpen(obj) {}
 
     /**
      * onBeforeClose
      *
-     * @param {object} obj class object
+     * @param {object} obj
      */
     onBeforeClose(obj) {}
 
     /**
      * onAfterClose
      *
-     * @param {object} obj class object
+     * @param {object} obj
      */
     onAfterClose(obj) {}
 

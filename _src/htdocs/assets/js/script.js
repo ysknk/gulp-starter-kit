@@ -3,8 +3,8 @@ import variable from './_partials/globals/variable';
 import animationEnd from './_partials/polyfill/animationEnd';
 import closest from './_partials/polyfill/closest';
 import styles from './_partials/polyfill/styles';
-import uaParserJs from 'ua-parser-js';
 
+import uaParserJs from 'ua-parser-js';
 import axios from 'axios';
 import anime from 'animejs';
 import cookies from 'js-cookie';
@@ -25,30 +25,29 @@ import ellipsis from './_partials/shared_classes/ellipsis';
  * common initialize
  */
 ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
-  const UA_PARSER = new uaParserJs();
-  FN.uaParser = UA_PARSER;
+  FN.uaParser = new uaParserJs();
   FN.axios = axios;
   FN.anime = anime;
-
-  let html = doc.querySelector('html');
-  html.classList.remove('no-js');
 
   // ua
   FN.ua = new ua();
 
+  let html = doc.querySelector(`html`);
+  html.classList.remove(`no-js`);
+
   // html class
   if(FN.ua.isPc()) {
-    html.classList.add('ua-pc');
+    html.classList.add(`ua-pc`);
   }
   if(FN.ua.isSp() && !FN.ua.isTab()) {
-    html.classList.add('ua-sp');
+    html.classList.add(`ua-sp`);
   }
   if(FN.ua.isTab()) {
-    html.classList.add('ua-tab');
+    html.classList.add(`ua-tab`);
   }
 
   // mediaquery
@@ -87,20 +86,25 @@ import ellipsis from './_partials/shared_classes/ellipsis';
   /**
    * event procedure
    */
-  doc.addEventListener('DOMContentLoaded', (e) => {
-    FN.mediaQuery.check();
+  doc.addEventListener(`DOMContentLoaded`, (e) => {
+    FN.mediaQuery.update();
     FN.accordion.setClose();
     FN.tab.setActive();
     FN.expander.updateAll();
     FN.ellipsis.updateAll();
   }, false);
 
-  win.addEventListener('load', (e) => {
+  win.addEventListener(`load`, (e) => {
     FN.scroll.locationHref();
   }, false);
 
-  win.addEventListener('resize', (e) => {
-    FN.mediaQuery.check();
+  win.addEventListener(`resize`, (e) => {
+    FN.mediaQuery.update();
+    FN.modal.update();
+  }, false);
+
+  win.addEventListener(`scroll`, (e) => {
+    FN.modal.update();
   }, false);
 
 })(window, document);

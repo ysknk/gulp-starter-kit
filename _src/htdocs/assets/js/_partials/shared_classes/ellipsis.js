@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -119,19 +119,19 @@ export default ((win, doc) => {
      * @returns {object}
      */
     createBaseElem(elem) {
-      let node = doc.createElement('ellipsis');
-      node.style.display = 'block';
-      node.style.position = 'absolute';
+      let node = doc.createElement(`ellipsis`);
+      node.style.display = `block`;
+      node.style.position = `absolute`;
 
-      node.style.width = '100%';
+      node.style.width = `100%`;
 
-      node.style.top = '-99999px';
-      node.style.left = '-99999px';
+      node.style.top = `-99999px`;
+      node.style.left = `-99999px`;
       node.style.zIndex = -100;
-      node.style.visibility = 'hidden';
-      node.style.pointerEvents  = 'none';
+      node.style.visibility = `hidden`;
+      node.style.pointerEvents  = `none`;
 
-      node.innerHTML = 'a';
+      node.innerHTML = `a`;
 
       elem.appendChild(node);
       return node;

@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -18,12 +18,12 @@ export default ((win, doc) => {
         return new SmoothScroll(opts_);
       }
 
-      this.baseElem = 'body';
+      this.baseElem = `body`;
 
-      this.elem = 'a';
-      this.topHash = 'top';
-      this.excludeClassName = 'no-scroll';
-      this.easing = 'easeInOutQuart';
+      this.elem = `a`;
+      this.topHash = `top`;
+      this.excludeClassName = `no-scroll`;
+      this.easing = `easeInOutQuart`;
       this.duration = 300;
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -35,24 +35,24 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      let html = doc.querySelector('html');
+      let html = doc.querySelector(`html`);
 
       // click to scroll
-      doc.addEventListener('click', (e) => {
+      doc.addEventListener(`click`, (e) => {
         if(!e.target || !e.target.closest) return;
         let elem = e.target.closest([// delegate
           this.baseElem,
           this.elem
-        ].join(' '));
+        ].join(` `));
 
-        let href = '';
-        let target = '';
-        let hash = '';
+        if(e.target === doc || !elem) return;
 
-        if(!elem || e.target === doc) return;
+        let href = ``;
+        let target = ``;
+        let hash = ``;
 
         try {
-          href = elem.getAttribute('href');
+          href = elem.getAttribute(`href`);
           target = doc.querySelector(href);
           hash = this.getHash(href);
         }catch(e) {
@@ -62,8 +62,7 @@ export default ((win, doc) => {
         if(!hash || elem.classList.contains(this.excludeClassName)) return;
 
         if(e) e.preventDefault();
-        this.goto((hash === '#' + this.topHash) ?
-          html : target);
+        this.goto((hash === `#${this.topHash}`) ? html : target);
       }, false);
     }
 
@@ -90,15 +89,15 @@ export default ((win, doc) => {
     getHash(str) {
       if(!str) return false;
 
-      let dir = str.split('/');
+      let dir = str.split(`/`);
       let last = dir[dir.length - 1];
-      let hash = '';
+      let hash = ``;
 
       if(last.match(/(\#\!)/)) return false;
 
       if(last.match(/\#(.+)/) && !last.match(/\##/)) {
         hash = last.match(/#(.+)/)[1];
-        return '#' + hash;
+        return `#${hash}`;
       }
     }
 
@@ -108,10 +107,10 @@ export default ((win, doc) => {
      * @param {string} hash element src
      */
     updateUrlHash(hash) {
-      if(typeof win === 'undefined' ||
-        typeof win.history === 'undefined' ||
-          typeof win.history.pushState === 'undefined') return;
-      win.history.pushState({}, '', hash ? '#' + hash : '');
+      if(typeof win === `undefined` ||
+        typeof win.history === `undefined` ||
+          typeof win.history.pushState === `undefined`) return;
+      win.history.pushState({}, ``, hash ? `#${hash}` : ``);
     }
 
     /**
@@ -144,7 +143,7 @@ export default ((win, doc) => {
 
       _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
 
-      if(scrollPos.y == elemPos.y) {
+      if(scrollPos.y === elemPos.y) {
         _.isFunction(cb) && cb();
         _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
         return;

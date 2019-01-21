@@ -1,9 +1,9 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
-  const ERROR_MESSAGE = '通信中にエラーが発生しました。しばらく時間をおいてから、もう一度お試しください。';
+  const ERROR_MESSAGE = `通信中にエラーが発生しました。しばらく時間をおいてから、もう一度お試しください。`;
 
   /**
    * Ajax
@@ -19,9 +19,9 @@ export default ((win, doc) => {
       if(!(this instanceof Ajax)) {
         return new Ajax(opts_);
       }
-      this.elem = doc.querySelector('html');
-      this.loadingClassName = 'is-ajax-loading';
-      this.errorClassName = 'is-ajax-error';
+      this.elem = doc.querySelector(`html`);
+      this.loadingClassName = `is-ajax-loading`;
+      this.errorClassName = `is-ajax-error`;
       this.isLoading = false;
       this.message = {
         failure: {
@@ -31,8 +31,8 @@ export default ((win, doc) => {
         }
       };
       this.config = {
-        method: 'get',
-        url: '',
+        method: `get`,
+        url: ``,
         timeout: 5000
       };
 

@@ -1,13 +1,13 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
-  const NS = '$';
-  if(!win['NS']) win['NS'] = NS;
+  const NS = `$`;
+  if(!win[`NS`]) win[`NS`] = NS;
   if(!win[NS]) win[NS] = {};
 
   // lodash minimal add
-  if(!win['_']) win['_'] = {};
-  win['_'] = {
+  if(!win[`_`]) win[`_`] = {};
+  win[`_`] = {
     merge: require('lodash/merge'),
     extend: require('lodash/extend'),
     forEach: require('lodash/forEach'),

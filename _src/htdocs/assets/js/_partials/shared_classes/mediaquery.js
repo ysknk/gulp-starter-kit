@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -18,22 +18,22 @@ export default ((win, doc) => {
         return new MediaQuery(opts_);
       }
 
-      this.baseElem = 'body';
+      this.baseElem = `body`;
 
       this.point = [
         {
-          name: 'layout-sp',
+          name: `layout-sp`,
           src: {
-            '__DEFAULT__': 'data-sp-src'
+            __DEFAULT__: `data-sp-src`
           },
           size: {
             max: 750
           }
         },
         {
-          name: 'layout-pc',
+          name: `layout-pc`,
           src: {
-            '__DEFAULT__': 'data-pc-src'
+            __DEFAULT__: `data-pc-src`
           },
           size: {
             min: 751
@@ -41,7 +41,7 @@ export default ((win, doc) => {
         }
       ];
 
-      this.html = doc.querySelector('html');
+      this.html = doc.querySelector(`html`);
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -52,13 +52,13 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      this.check();
+      this.update();
     }
 
     /**
-     * check
+     * update
      */
-    check() {
+    update() {
       let width = this.getWidth();
       let beforePoint = this.getCurrentPoint() || undefined;
 
@@ -112,10 +112,10 @@ export default ((win, doc) => {
           let elems = doc.querySelectorAll([
             this.baseElem,
             `[${point.config.src[key]}]`
-          ].join(' '));
+          ].join(` `));
 
           _.forEach(elems, (elem) => {
-            if(key != '__DEFAULT__' && !elem.classList.contains(key)) return;
+            if(key != `__DEFAULT__` && !elem.classList.contains(key)) return;
             let data = this.point[point.num].src[key];
             if(!elem.src || !elem.src.match(elem.getAttribute(data))) {
               elem.src = elem.getAttribute(data);

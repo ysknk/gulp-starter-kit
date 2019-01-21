@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  'use strict';
+  `use strict`;
 
   const FN = win[NS];
 
@@ -27,7 +27,7 @@ export default ((win, doc) => {
       this.duration = 300;
       this.easing = `easeInOutQuart`;
 
-      this.elemSelector = '.js-expander';
+      this.elemSelector = `.js-expander`;
       this.outerElemSelector = `${this.elemSelector}__outer`;
       this.innerElemSelector = `${this.elemSelector}__inner`;
       this.buttonElemSelector = `${this.elemSelector}__button`;
@@ -52,17 +52,14 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      doc.addEventListener('click', (e) => {
+      doc.addEventListener(`click`, (e) => {
         if(!e.target || !e.target.closest) return;
         let elem = e.target.closest(`[${this.dataAttr}]`);// delegate
-        if(!elem || e.target === doc) return;
+        if(e.target === doc || !elem) return;
 
-        if(this.hasOpen(elem)) {
-          this.close(elem);
-        }else{
-          this.open(elem);
-        }
-      });
+        this[this.hasOpen(elem) ?
+          `close` : `open`](elem);
+      }, false);
     }
 
     /**
@@ -94,9 +91,9 @@ export default ((win, doc) => {
 
       // not expander initialize
       if(childElems.innerElem.clientHeight < childElems.outerElem.clientHeight) {
-        elem.style.display = 'none';
+        elem.style.display = `none`;
         childElems.outerElem.style.height = ``;
-        childElems.outerElem.style.overflow = '';
+        childElems.outerElem.style.overflow = ``;
         childElems.buttonElem.innerHTML = ``;
       }
     }
@@ -113,7 +110,7 @@ export default ((win, doc) => {
       if(!childElems) return;
 
       childElems.outerElem.style.height = `${data.lineLimit || this.lineLimit}em`;
-      childElems.outerElem.style.overflow = 'hidden';
+      childElems.outerElem.style.overflow = `hidden`;
       childElems.buttonElem.innerHTML = data.expandLabel || this.expandLabel;
 
       if(this.hasOpen(elem)) {
@@ -123,7 +120,7 @@ export default ((win, doc) => {
         }
       }
 
-      elem.style.display = 'block';
+      elem.style.display = `block`;
       elem.classList.remove(this.openClassName);
       elem.classList.remove(this.openedClassName);
     }
@@ -148,7 +145,7 @@ export default ((win, doc) => {
 
       FN.anime.remove(childElems.outerElem);
 
-      childElems.outerElem.style.overflow = 'hidden';
+      childElems.outerElem.style.overflow = `hidden`;
 
       if(this.hasOpen(elem)) {
         elem.classList.remove(this.openClassName);
@@ -188,9 +185,9 @@ export default ((win, doc) => {
       if(!childElems) return;
 
       childElems.outerElem.style.height = ``;
-      childElems.outerElem.style.overflow = '';
+      childElems.outerElem.style.overflow = ``;
       childElems.buttonElem.innerHTML = data.collapseLabel || this.collapseLabel;
-      elem.style.display = 'block';
+      elem.style.display = `block`;
       elem.classList.add(this.openClassName);
       elem.classList.add(this.openedClassName);
     }
@@ -214,11 +211,11 @@ export default ((win, doc) => {
       childElems.buttonElem.innerHTML = collapseLabel;
 
       let nowHeight = childElems.outerElem.clientHeight;
-      childElems.outerElem.style.overflow = 'visible';
-      childElems.outerElem.style.height = 'auto';
+      childElems.outerElem.style.overflow = `visible`;
+      childElems.outerElem.style.height = `auto`;
 
       let maxHeight = childElems.outerElem.clientHeight;
-      childElems.outerElem.style.overflow = 'hidden';
+      childElems.outerElem.style.overflow = `hidden`;
       childElems.outerElem.style.height = nowHeight;
 
       FN.anime({
@@ -229,8 +226,8 @@ export default ((win, doc) => {
         complete: () => {
           if(this.hasOpen(elem)) {
             elem.classList.add(this.openedClassName);
-            childElems.outerElem.style.overflow = 'visible';
-            childElems.outerElem.style.height = 'auto';
+            childElems.outerElem.style.overflow = `visible`;
+            childElems.outerElem.style.height = `auto`;
           }
         }
       });
@@ -243,23 +240,23 @@ export default ((win, doc) => {
      * @returns {object}
      */
     createBaseElem(elem) {
-      if(elem.querySelector('expander')) {
-        return elem.querySelector('expander');
+      if(elem.querySelector(`expander`)) {
+        return elem.querySelector(`expander`);
       }
-      let node = doc.createElement('expander');
-      node.style.display = 'block';
-      node.style.position = 'absolute';
+      let node = doc.createElement(`expander`);
+      node.style.display = `block`;
+      node.style.position = `absolute`;
 
-      node.style.width = '100%';
+      node.style.width = `100%`;
 
-      node.style.top = '-99999px';
-      node.style.left = '-99999px';
+      node.style.top = `-99999px`;
+      node.style.left = `-99999px`;
       node.style.zIndex = -100;
-      node.style.visibility = 'hidden';
+      node.style.visibility = `hidden`;
       node.style.lineHeight = 1;
-      node.style.pointerEvents  = 'none';
+      node.style.pointerEvents  = `none`;
 
-      node.innerHTML = 'a';
+      node.innerHTML = `a`;
 
       elem.appendChild(node);
       return node;
