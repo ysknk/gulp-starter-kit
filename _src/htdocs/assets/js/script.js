@@ -25,7 +25,7 @@ import ellipsis from './_partials/shared_classes/ellipsis';
  * common initialize
  */
 ((win, doc) => {
-  `use strict`;
+  'use strict';
 
   const FN = win[NS];
 
@@ -36,18 +36,18 @@ import ellipsis from './_partials/shared_classes/ellipsis';
   // ua
   FN.ua = new ua();
 
-  let html = doc.querySelector(`html`);
-  html.classList.remove(`no-js`);
+  let html = doc.querySelector('html');
+  html.classList.remove('no-js');
 
   // html class
-  if(FN.ua.isPc()) {
-    html.classList.add(`ua-pc`);
+  if (FN.ua.isPc()) {
+    html.classList.add('ua-pc');
   }
-  if(FN.ua.isSp() && !FN.ua.isTab()) {
-    html.classList.add(`ua-sp`);
+  if (FN.ua.isSp() && !FN.ua.isTab()) {
+    html.classList.add('ua-sp');
   }
-  if(FN.ua.isTab()) {
-    html.classList.add(`ua-tab`);
+  if (FN.ua.isTab()) {
+    html.classList.add('ua-tab');
   }
 
   // mediaquery
@@ -86,7 +86,7 @@ import ellipsis from './_partials/shared_classes/ellipsis';
   /**
    * event procedure
    */
-  doc.addEventListener(`DOMContentLoaded`, (e) => {
+  doc.addEventListener('DOMContentLoaded', (e) => {
     FN.mediaQuery.update();
     FN.accordion.setClose();
     FN.tab.setActive();
@@ -94,16 +94,16 @@ import ellipsis from './_partials/shared_classes/ellipsis';
     FN.ellipsis.updateAll();
   }, false);
 
-  win.addEventListener(`load`, (e) => {
+  win.addEventListener('load', (e) => {
     FN.scroll.locationHref();
   }, false);
 
-  win.addEventListener(`resize`, (e) => {
+  win.addEventListener('resize', (e) => {
     FN.mediaQuery.update();
     FN.modal.update();
   }, false);
 
-  win.addEventListener(`scroll`, (e) => {
+  win.addEventListener('scroll', (e) => {
     FN.modal.update();
   }, false);
 

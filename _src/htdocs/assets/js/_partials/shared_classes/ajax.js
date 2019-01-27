@@ -1,9 +1,9 @@
 export default ((win, doc) => {
-  `use strict`;
+  'use strict';
 
   const FN = win[NS];
 
-  const ERROR_MESSAGE = `通信中にエラーが発生しました。しばらく時間をおいてから、もう一度お試しください。`;
+  const ERROR_MESSAGE = '通信中にエラーが発生しました。しばらく時間をおいてから、もう一度お試しください。';
 
   /**
    * Ajax
@@ -16,12 +16,12 @@ export default ((win, doc) => {
      * @param {object} opts_
      */
     constructor(opts_) {
-      if(!(this instanceof Ajax)) {
+      if (!(this instanceof Ajax)) {
         return new Ajax(opts_);
       }
-      this.elem = doc.querySelector(`html`);
-      this.loadingClassName = `is-ajax-loading`;
-      this.errorClassName = `is-ajax-error`;
+      this.elem = doc.querySelector('html');
+      this.loadingClassName = 'is-ajax-loading';
+      this.errorClassName = 'is-ajax-error';
       this.isLoading = false;
       this.message = {
         failure: {
@@ -31,8 +31,8 @@ export default ((win, doc) => {
         }
       };
       this.config = {
-        method: `get`,
-        url: ``,
+        method: 'get',
+        url: '',
         timeout: 5000
       };
 
@@ -54,9 +54,12 @@ export default ((win, doc) => {
      * @param {object} cb callback functions
      * @returns {object} promise
      */
-    set(elem, config, cb = {onSuccess: () => {}, onFailure: () => {}}) {
-      if(this.isLoading || !config || !config.url) return;
-      config = _.merge({}, this.config, config)
+    set(elem, config, cb = {
+      onSuccess: () => {},
+      onFailure: () => {}
+    }) {
+      if (this.isLoading || !config || !config.url) return;
+      config = _.merge({}, this.config, config);
 
       this.start(elem);
 
@@ -67,7 +70,7 @@ export default ((win, doc) => {
             _.isFunction(this.onSuccess) && this.onSuccess(response, this);
             this.end(elem);
             return resolve;
-          })
+          });
         })
         .catch((error) => {
           return new Promise((resolve, reject) => {
@@ -75,7 +78,7 @@ export default ((win, doc) => {
             _.isFunction(this.onFailure) && this.onFailure(error, this);
             this.end(elem);
             return resolve;
-          })
+          });
         });
     }
 
@@ -86,10 +89,10 @@ export default ((win, doc) => {
      */
     start(elem) {
       this.isLoading = true;
-      if(elem) {
+      if (elem) {
         elem.classList.add(this.loadingClassName);
       }
-      if(this.elem) {
+      if (this.elem) {
         this.elem.classList.add(this.loadingClassName);
       }
     }
@@ -100,10 +103,10 @@ export default ((win, doc) => {
      * @param {object} elem
      */
     end(elem) {
-      if(elem) {
+      if (elem) {
         elem.classList.remove(this.loadingClassName);
       }
-      if(this.elem) {
+      if (this.elem) {
         this.elem.classList.remove(this.loadingClassName);
       }
       this.isLoading = false;

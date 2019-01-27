@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  `use strict`;
+  'use strict';
 
   const FN = win[NS];
 
@@ -15,17 +15,17 @@ export default ((win, doc) => {
      * @param {object} opts_
      */
     constructor(opts_) {
-      if(!(this instanceof Ellipsis)) {
+      if (!(this instanceof Ellipsis)) {
         return new Ellipsis(opts_);
       }
 
-      this.initializeClassName = `is-initialize`;
+      this.initializeClassName = 'is-initialize';
 
       // config initialize
       this.lineLimit = 3;
-      this.ellipsisLabel = `…`;
+      this.ellipsisLabel = '…';
 
-      this.dataAttr = `data-ellipsis`;
+      this.dataAttr = 'data-ellipsis';
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -42,7 +42,7 @@ export default ((win, doc) => {
      */
     updateAll() {
       let elems = doc.querySelectorAll(`[${this.dataAttr}]`);
-      if(!elems || !elems.length) return;
+      if (!elems || !elems.length) return;
 
       _.forEach(elems, (elem) => {
         this.update(elem);
@@ -55,7 +55,7 @@ export default ((win, doc) => {
      * @param {object} elem
      */
     update(elem) {
-      if(elem.classList.contains(this.initializeClassName)) return;
+      if (this.hasInitialize(elem)) return;
       elem.classList.add(this.initializeClassName);
 
       let data = this.getData(elem);
@@ -69,10 +69,10 @@ export default ((win, doc) => {
 
       let limitHeight = (baseHeight * lineLimit);
 
-      if(elem.clientHeight > limitHeight) {
-        elem.style.position = `relative`;
+      if (elem.clientHeight > limitHeight) {
+        elem.style.position = 'relative';
         elem.style.height = `${limitHeight}px`;
-        elem.style.overflow = `hidden`;
+        elem.style.overflow = 'hidden';
 
         let html = this.optimText({
           elem: baseElem,
@@ -82,10 +82,10 @@ export default ((win, doc) => {
         baseElem.parentNode.removeChild(baseElem);
         elem.innerHTML = html;
 
-        elem.style.position = ``;
-        elem.style.height = ``;
-        elem.style.overflow = ``;
-      }else{
+        elem.style.position = '';
+        elem.style.height = '';
+        elem.style.overflow = '';
+      } else {
         baseElem.parentNode.removeChild(baseElem);
       }
     }
@@ -103,10 +103,10 @@ export default ((win, doc) => {
       obj.elem.innerHTML = joinText + obj.label;
 
       // 2倍以上の高さがあれば 1/4 カット
-      if((obj.elem.clientHeight / obj.limit) >= 2) {
+      if ((obj.elem.clientHeight / obj.limit) >= 2) {
         let cutLength = ([...joinText].length / 4);// 全て半角英数だとしても消し込みすぎないように
         this.optimText(obj, [...joinText], (cutLength - (cutLength % 1)));
-      }else if(obj.elem.clientHeight > obj.limit) {
+      } else if (obj.elem.clientHeight > obj.limit) {
         this.optimText(obj, [...joinText]);
       }
       return obj.elem.innerHTML;
@@ -119,19 +119,22 @@ export default ((win, doc) => {
      * @returns {object}
      */
     createBaseElem(elem) {
-      let node = doc.createElement(`ellipsis`);
-      node.style.display = `block`;
-      node.style.position = `absolute`;
+      if (elem.querySelector('ellipsis')) {
+        return elem.querySelector('ellipsis');
+      }
+      let node = doc.createElement('ellipsis');
+      node.style.display = 'block';
+      node.style.position = 'absolute';
 
-      node.style.width = `100%`;
+      node.style.width = '100%';
 
-      node.style.top = `-99999px`;
-      node.style.left = `-99999px`;
+      node.style.top = '-99999px';
+      node.style.left = '-99999px';
       node.style.zIndex = -100;
-      node.style.visibility = `hidden`;
-      node.style.pointerEvents  = `none`;
+      node.style.visibility = 'hidden';
+      node.style.pointerEvents  = 'none';
 
-      node.innerHTML = `a`;
+      node.innerHTML = 'a';
 
       elem.appendChild(node);
       return node;
@@ -145,9 +148,19 @@ export default ((win, doc) => {
      */
     getData(elem) {
       let data = elem.getAttribute(this.dataAttr);
-      if(!data) return false;
+      if (!data) return false;
 
       return JSON.parse(data);
+    }
+
+    /**
+     * hasInitialize
+     *
+     * @param {object} elem element
+     * @returns {boolean}
+     */
+    hasInitialize(elem) {
+      return elem.classList.contains(this.initializeClassName);
     }
 
   };

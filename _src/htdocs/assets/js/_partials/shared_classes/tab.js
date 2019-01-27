@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  `use strict`;
+  'use strict';
 
   const FN = win[NS];
 
@@ -14,17 +14,17 @@ export default ((win, doc) => {
      * @param {object} opts_
      */
     constructor(opts_) {
-      if(!(this instanceof Tab)) {
+      if (!(this instanceof Tab)) {
         return new Tab(opts_);
       }
 
-      this.baseElem = `body`;
+      this.baseElem = 'body';
 
-      this.dataAttr = `data-tab`;
-      this.activeClassName = `is-active`;
+      this.dataAttr = 'data-tab';
+      this.activeClassName = 'is-active';
 
       this.duration = 1000;
-      this.easing = `easeInOutQuart`;
+      this.easing = 'easeInOutQuart';
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -40,21 +40,21 @@ export default ((win, doc) => {
       this.setIsActive(false);
 
       // タブ切り替え
-      doc.addEventListener(`click`, (e) => {
-        if(!e.target || !e.target.closest) return;
+      doc.addEventListener('click', (e) => {
+        if (!e.target || !e.target.closest) return;
         let elem = e.target.closest([// delegate
           this.baseElem,
           `[${this.dataAttr}]`
-        ].join(` `));
+        ].join(' '));
 
-        if(e.target === doc || !elem) return;
+        if (e.target === doc || !elem) return;
 
         data = this.toJson(elem.getAttribute(this.dataAttr));
-        if(this.hasActive(elem)) {
+        if (this.hasActive(elem)) {
           // @current close
           // this.onHide(elem, data);
           return;
-        }else{
+        } else {
           this.open(elem, data);
         }
       });
@@ -67,12 +67,12 @@ export default ((win, doc) => {
       let elems = doc.querySelectorAll([
         this.baseElem,
         `[${this.dataAttr}]`
-      ].join(` `));
+      ].join(' '));
       let data;
 
       // set state
       _.forEach(elems, (elem) => {
-        if(this.hasActive(elem)) {
+        if (this.hasActive(elem)) {
           data = this.toJson(elem.getAttribute(this.dataAttr));
           this.open(elem, data);
         }
@@ -86,45 +86,45 @@ export default ((win, doc) => {
      * @param {object} data json btn,category,group
      */
     open(elem, data) {
-      if(this.getIsActive()) return;
+      if (this.getIsActive()) return;
       this.setIsActive(true);
 
-      let groups = document.querySelectorAll([
+      let groups = doc.querySelectorAll([
         this.baseElem,
         data.group
-      ].join(` `));
-      if(!groups.length) return;
+      ].join(' '));
+      if (!groups.length) return;
 
       // set btn class
-      let btns = document.querySelectorAll([
+      let btns = doc.querySelectorAll([
         this.baseElem,
         data.btn
-      ].join(` `));
-      if(!btns.length) return;
+      ].join(' '));
+      if (!btns.length) return;
 
       _.forEach(btns, (btn) => {
-        if(elem === btn) {
+        if (elem === btn) {
           btn.classList.add(this.activeClassName);
-        }else{
+        } else {
           btn.classList.remove(this.activeClassName);
         }
       });
 
       // not current close
-      let name = data.category.replace(/^(\.|\#)/, ``);
-      let hideElems = new Array();
+      let name = data.category.replace(/^(\.|\#)/, '');
+      let hideElems = [];
       let current = null;
 
       _.forEach(groups, (group) => {
-        if(group.classList.contains(name)) {
+        if (group.classList.contains(name)) {
           current = group;
-        }else{
+        } else {
           hideElems.push(group);
         }
       });
 
       // hide
-      if(hideElems.length) {
+      if (hideElems.length) {
         _.forEach(hideElems, (hideElem) => {
           hideElem.classList.remove(this.activeClassName);
           this.onHid(hideElem, data);

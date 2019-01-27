@@ -1,5 +1,5 @@
 export default ((win, doc) => {
-  `use strict`;
+  'use strict';
 
   const FN = win[NS];
 
@@ -14,7 +14,7 @@ export default ((win, doc) => {
      * @param {object} opts_
      */
     constructor(opts_) {
-      if(!(this instanceof Ua)) {
+      if (!(this instanceof Ua)) {
         return new Ua(opts_);
       }
 
