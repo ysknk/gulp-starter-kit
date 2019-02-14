@@ -47,21 +47,27 @@ font_size(size, def = FONT_SIZE_DEFAULT)
   font-size ceil(percent(size, def))
 
 font_size_responsive(elem = body)
+  // wmin = wmin * 2
+  // wsp = wsp * 2
+  // fsp = fsp * 2
   for i in (0..FONT_SIZE_SPLIT)
     diff = wmin + (i * ((wsp - wmin) / FONT_SIZE_SPLIT))
     rate = diff / wsp
 
     if i == 0
       @media (max-width: unit(wmin, "px"))
+        {lsp}
+          {elem}
+            font-size unit(round(fsp * rate), "px")
+    @media (min-width: unit(round(diff), "px"))
+      {lsp}
         {elem}
           font-size unit(round(fsp * rate), "px")
-    @media (min-width: unit(round(diff), "px"))
-      {elem}
-        font-size unit(round(fsp * rate), "px")
 
   @media (min-width: unit(wsp + 1, "px"))
-    {elem}
-      font-size unit(fpc, "px")
+    {lpc}
+      {elem}
+        font-size unit(fpc, "px")
 
 letter_spacing(size)
   letter-spacing (size / 1000)em

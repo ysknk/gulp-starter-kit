@@ -138,7 +138,7 @@ export default ((win, doc) => {
     goto(elem, cb) {
       let elemPos = this.getOffsetPos(elem);
       let scrollPos = {
-        y: window.pageYOffset
+        y: win.pageYOffset
       };
 
       _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
