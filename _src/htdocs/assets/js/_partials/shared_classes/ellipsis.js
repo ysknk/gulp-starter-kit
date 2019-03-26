@@ -62,7 +62,7 @@ export default ((win, doc) => {
 
       let elemText = elem.innerHTML;
       let baseElem = this.createBaseElem(elem);
-      let baseHeight = baseElem.clientHeight;
+      let baseHeight = baseElem.getBoundingClientRect().height;
 
       let lineLimit = data.lineLimit || this.lineLimit;
       let ellipsisLabel = data.ellipsisLabel || this.ellipsisLabel;

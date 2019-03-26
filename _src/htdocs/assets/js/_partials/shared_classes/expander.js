@@ -143,7 +143,7 @@ export default ((win, doc) => {
 
       // 1emの高さを取得
       let baseElem = this.createBaseElem(childElems.outerElem);
-      let baseHeight = baseElem.clientHeight;
+      let baseHeight = baseElem.getBoundingClientRect().height;
       let limitHeight = (baseHeight * lineLimit);
 
       FN.anime.remove(childElems.outerElem);
