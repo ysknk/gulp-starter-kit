@@ -1,4 +1,4 @@
-body
+.{p}base
   font-size (fpc)px
   font-family FONT_FAMILY
   line-height 1.5
@@ -22,77 +22,77 @@ body
     width 100%
     overflow-x hidden
 
-a
-  link_style('', '', '', '')
-  &:focus
-    outline none
+  a
+    link_style('', '', '', '')
+    &:focus
+      outline none
 
-input,
-textarea,
-button
-  padding 0
-  background #fff
-  appearance none
-  line-height inherit
-  border none
-  background none
-  font-size inherit
-  font-family FONT_FAMILY
-  outline none
-  &::-moz-focus-inner
-    border none
-
-input
-  &[type="text"],
-  &[type="search"],
-  &[type="datetime"],
-  &[type="datetime-local"],
-  &[type="date"],
-  &[type="week"],
-  &[type="month"],
-  &[type="time"],
-  &[type="color"],
-  &[type="password"],
-  &[type="url"],
-  &[type="email"],
-  &[type="number"]
-    min-height 2em
-
-  &[type="date"]
+  input,
+  textarea,
+  button
+    padding 0
+    background #fff
     appearance none
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button,
-    &::-webkit-clear-button
-      appearance none
-      margin 0
-    &::-webkit-calendar-picker-indicator
-      position relative
-      padding .2em
-      background none
-      font-size .5em
-
-select
-  appearance none
-  background #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAvklEQVQoFY2QMQqEMBBFv7ERa/EMXkGw11K8QbDXzuN4BHv7QO6ifUgj7v4UAdlVM8Uwf+b9YZJISnlqrfEUZVlinucnBGKaJgghbiHOyLyFKIoCbdvecpyReYvo/Ma2bajrGtbaC58kCdZ1RZ7nl/4/4d5EsO/7nzl7IUtodBexMMagaRrs+06JLMvcNWmaOv2W/C/TMAyD58dxROgSmvxFFMdxoOs6lliWBXEcuzokXRbRoJRyvqqqQvye+QDMDz1D6yuj9wAAAABJRU5ErkJggg==") no-repeat
-  background-position right center
-  background-size .5em
-  padding-right 1.5em
-
-input
-  appearance none
-  border-radius 0
-  &:focus
+    line-height inherit
+    border none
+    background none
+    font-size inherit
+    font-family FONT_FAMILY
     outline none
+    &::-moz-focus-inner
+      border none
 
-input[type="submit"],
-button,
-label
-  cursor pointer
+  input
+    &[type="text"],
+    &[type="search"],
+    &[type="datetime"],
+    &[type="datetime-local"],
+    &[type="date"],
+    &[type="week"],
+    &[type="month"],
+    &[type="time"],
+    &[type="color"],
+    &[type="password"],
+    &[type="url"],
+    &[type="email"],
+    &[type="number"]
+      min-height 2em
 
-img
-  vertical-align top
-  max-width 100%
+    &[type="date"]
+      appearance none
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button,
+      &::-webkit-clear-button
+        appearance none
+        margin 0
+      &::-webkit-calendar-picker-indicator
+        position relative
+        padding .2em
+        background none
+        font-size .5em
 
-// fontsize
-font_size_responsive(body)
+  select
+    appearance none
+    background #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAvklEQVQoFY2QMQqEMBBFv7ERa/EMXkGw11K8QbDXzuN4BHv7QO6ifUgj7v4UAdlVM8Uwf+b9YZJISnlqrfEUZVlinucnBGKaJgghbiHOyLyFKIoCbdvecpyReYvo/Ma2bajrGtbaC58kCdZ1RZ7nl/4/4d5EsO/7nzl7IUtodBexMMagaRrs+06JLMvcNWmaOv2W/C/TMAyD58dxROgSmvxFFMdxoOs6lliWBXEcuzokXRbRoJRyvqqqQvye+QDMDz1D6yuj9wAAAABJRU5ErkJggg==") no-repeat
+    background-position right center
+    background-size .5em
+    padding-right 1.5em
+
+  input
+    appearance none
+    border-radius 0
+    &:focus
+      outline none
+
+  input[type="submit"],
+  button,
+  label
+    cursor pointer
+
+  img
+    vertical-align top
+    max-width 100%
+
+// responsive fontsize
+font_size_responsive('.' + p + 'base')
 

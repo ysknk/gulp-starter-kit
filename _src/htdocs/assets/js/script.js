@@ -1,8 +1,8 @@
 import variable from './_partials/globals/variable';
 
-import animationEnd from './_partials/polyfill/animationEnd';
-import closest from './_partials/polyfill/closest';
-import styles from './_partials/polyfill/styles';
+import animationEnd from './_partials/polyfills/animationEnd';
+import closest from './_partials/polyfills/closest';
+import styles from './_partials/polyfills/styles';
 
 import uaParserJs from 'ua-parser-js';
 import axios from 'axios';

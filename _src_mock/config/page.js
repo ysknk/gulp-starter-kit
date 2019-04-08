@@ -30,6 +30,8 @@ const head = {
 module.exports = {
   ...head,
 
+  p: 'site-', // class_name prefix
+
   page_name: 'common-page',
 
   // /^\// -> directory

@@ -83,8 +83,13 @@ export default ((win, doc) => {
       this.template = ['',
         `<div id="${this.name.wrapper}" data-modal-close="" onclick="">`,
           `<div id="${this.name.outer}">`,
-            `<div id="${this.name.blocker}" onclick=""></div>`,
+
+            `<div class="${this.name.blocker}" onclick=""></div>`,
+
             `<div id="${this.name.inner}">`,
+
+              `<div class="${this.name.blocker}" onclick=""></div>`,
+
               `<div id="${this.name.container}">`,
                 `<div id="${this.name.close}">`,
                   `<a href="javascript:void(0)" data-modal-close="" onclick=""></a>`,
@@ -115,72 +120,12 @@ export default ((win, doc) => {
         `[${this.dataAttr.close}]`
       ].join(' ');
 
-      // // let isClick = false;
-      // let isModal = false;
-      // let isOpen = false;
-      // let isClose = false;
-
-      // doc.addEventListener(`mousedown`, (e) => {
-      //   if (!e.target || !e.target.closest) return;
-
-      //   let openElem = e.target.closest(open);// delegate
-      //   let closeElem = e.target.closest(close);// delegate
-      //   let modalElem = e.target.closest(`#${this.name.content}`);// delegate
-      //   let blockElem = e.target.closest(`#${this.name.blocker}`);// delegate
-
-      //   if (e.target === doc || (!blockElem && !openElem && !closeElem && !modalElem)) return;
-
-      //   // isClick = true;
-      //   // setTimeout(() => {
-      //   //   isClick = false;
-      //   // }, 1000);
-      //   isModal = false;
-      //   isOpen = false;
-      //   isClose = false;
-
-      //   // cancel
-      //   if (blockElem || modalElem) {
-      //     isModal = true;
-      //   // open
-      //   } else if (openElem) {
-      //     isOpen = openElem;
-      //   // close
-      //   } else if (closeElem) {
-      //     isClose = closeElem;
-      //   }
-      // }, false);
-
-      // doc.addEventListener(`mouseup`, (e) => {
-      //   if (!e.target || !e.target.closest) return;
-      //   // if (!isClick) return;
-      //   let openElem = e.target.closest(open);// delegate
-      //   let closeElem = e.target.closest(close);// delegate
-      //   let modalElem = e.target.closest(`#${this.name.content}`);// delegate
-      //   let blockElem = e.target.closest(`#${this.name.blocker}`);// delegate
-
-      //   if (e.target === doc || (!blockElem && !openElem && !closeElem && !modalElem)) {
-      //     isModal = false;
-      //     isOpen = false;
-      //     isClose = false;
-      //     return;
-      //   }
-
-      //   if (isModal && isModal === modalElem) {
-      //     e.preventDefault();
-      //     e.stopPropagation();
-      //   } else if (isOpen && isOpen === openElem) {
-      //     this.open(isOpen);
-      //   } else if (isClose && isClose === closeElem) {
-      //     this.close(isClose);
-      //   }
-      // }, false);
-
       doc.addEventListener('click', (e) => {
         if (!e.target || !e.target.closest) return;
         let openElem = e.target.closest(open);// delegate
         let closeElem = e.target.closest(close);// delegate
         let modalElem = e.target.closest(`#${this.name.content}`);// delegate
-        let blockElem = e.target.closest(`#${this.name.blocker}`);// delegate
+        let blockElem = e.target.closest(`.${this.name.blocker}`);// delegate
 
         let isElemUndefined = (!blockElem && !openElem && !closeElem && !modalElem);
 
