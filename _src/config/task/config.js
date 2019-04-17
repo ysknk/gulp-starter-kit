@@ -3,7 +3,8 @@
 module.exports = {
 
   tasks: {
-    webfont: true
+    styleguide: true,
+    webfont: true,
   },
 
   /* common */
@@ -37,6 +38,11 @@ module.exports = {
 
   /* copy */
   copy: { // other filetype
+  },
+
+  /* styleguide */
+  styleguide: {
+
   },
 
   /* webfont */
