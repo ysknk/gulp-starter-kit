@@ -40,6 +40,8 @@ module.exports = {
   },
 
   /* webfont */
+  /* ../webfont/uF001-hoge1.svg */
+  /* ../webfont/uF001-huga1.svg */
   webfont: {
     src: ['../_src/config/webfont/*.svg'],
     dest: `${define.path.dest}assets/webfont/`,
