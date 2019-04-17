@@ -2,6 +2,10 @@
 
 module.exports = {
 
+  tasks: {
+    webfont: true
+  },
+
   /* common */
   common: {
     options: {
@@ -33,7 +37,21 @@ module.exports = {
 
   /* copy */
   copy: { // other filetype
-  }//,
+  },
+
+  /* webfont */
+  webfont: {
+    src: ['../_src/config/webfont/*.svg'],
+    dest: `${define.path.dest}assets/webfont/`,
+    options: {
+      startUnicode: 0xF001,
+      fontName: 'icons1',
+      normalize: true,
+      fontHeight: 500,
+      prependUnicode: true,
+      formats: ['ttf', 'eot', 'woff'],
+    }
+  },
 
 };
 

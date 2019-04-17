@@ -13,6 +13,7 @@
     "@babel/polyfill": "^7.2.5",
     "animejs": "^2.2.0",
     "axios": "^0.18.0",
+    "gulp-iconfont": "^10.0.2",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
     "ua-parser-js": "^0.7.17"
