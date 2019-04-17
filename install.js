@@ -11,12 +11,17 @@ const remove = isWindows ? 'rd /s /q' : 'rm -rf';
 const paramMark = `--`;
 const isMock = process.argv && process.argv[2] === `${paramMark}mock`;
 
+const cmd = {
+  build: `gulp build`
+};
+
 const dir = {
   mockSrc: `./_src_mock/`,
   src: `./_src/`,
   dest: `../_src/`,
   config: `../_src/config/`
 };
+
 const message = {
   complete: `\ninstall complete!`,
   cancel: `\ninstall canceled...`,
@@ -41,11 +46,12 @@ const message = {
       dir: 'cd',
       exec: 'npm install'
     });
+
   }).then(() => {
     return new Promise((resolve, reject) => {
       fs = require('fs-extra');
 
-      title('base files copy destination directory [' + dir.dest + ']');
+      title(`base files copy destination directory [${dir.dest}]`);
       console.log([
         'you may be overwriting it.',
         'do you want to overwrite?',
@@ -71,7 +77,6 @@ const message = {
                 execSync(`${remove} ${path.normalize(dir.dest)}`, {stdio:[0,1,2]});
                 // console.log(colors.magenta(`clean ${path.normalize(dir.dest)}`));
               }
-
               // copy
               fsCopy({
                 clobber: true
@@ -93,15 +98,20 @@ const message = {
       };
       question();
     });
+
   }).then(() => {
     return new Promise((resolve, reject) => {
+      let configDir = path.join(process.cwd(), dir.config);
       return npmInstall(resolve, reject, {
         dir: dir.config,
-        exec: 'cd ' + dir.config + ' && ' + 'npm install'
+        exec: `npm --prefix ${configDir} install ${configDir}`
       });
     });
+
   }).then(() => {
+    execSync(cmd.build, {stdio:[0,1,2]});
     return close();
+
   }).catch(() => {
     return close();
   });
@@ -191,11 +201,13 @@ const message = {
             }
             resolve();
             break;
+
           // skip
           case '2':
             console.log(message.skip);
             resolve();
             break;
+
           // no
           default:
             console.log(message.cancel);

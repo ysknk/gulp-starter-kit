@@ -25,6 +25,7 @@ export default ((win, doc) => {
       this.lineLimit = 3;
       this.ellipsisLabel = '…';
 
+      this.customTag = 'ellipsis';
       this.dataAttr = 'data-ellipsis';
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -119,15 +120,13 @@ export default ((win, doc) => {
      * @returns {object}
      */
     createBaseElem(elem) {
-      if (elem.querySelector('ellipsis')) {
-        return elem.querySelector('ellipsis');
-      }
-      let node = doc.createElement('ellipsis');
+      let node = elem.querySelector(this.customTag) || '';
+      if (node) {return node;}
+
+      node = doc.createElement(this.customTag);
       node.style.display = 'block';
       node.style.position = 'absolute';
-
       node.style.width = '100%';
-
       node.style.top = '-99999px';
       node.style.left = '-99999px';
       node.style.zIndex = -100;

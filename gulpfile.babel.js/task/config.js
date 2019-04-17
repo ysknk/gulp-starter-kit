@@ -162,8 +162,10 @@ module.exports = {
 
   /* js @webpack */
   js: {
-    src: define.path.src('js'),
+    // console.log(define.path.src('js').push(define.path.src('ts')[0]))
+    src: define.path.src('{js,jsx,ts,tsx,vue}'),
     dest: define.path.dest,
+    // ignore: define.path.ignore('{d\.ts}'),
     extension: '.js',
     options: {
       performance: {
@@ -183,7 +185,7 @@ module.exports = {
           path.resolve(__dirname, '../../' + define.path.config + 'node_modules'),
           'node_modules'
         ],
-        extensions: ['.js', '.jsx', '.json', '.vue']
+        extensions: ['.json', '.jsx', '.js', '.vue', '.tsx', '.ts']
       },
 
       module: {
@@ -198,6 +200,41 @@ module.exports = {
                   ['@babel/preset-env', {modules: false, useBuiltIns: 'usage'}]
                 ],
                 plugins: ['@babel/plugin-transform-runtime']
+              }
+            }
+          }, {
+            test: /(?<!\.d)\.tsx?$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "ts-loader",
+              // ex: https://www.typescriptlang.org/docs/handbook/compiler-options.html
+              options: {
+                configFile: path.resolve(__dirname, '../../' + define.path.config + 'tsconfig.json'),
+                compilerOptions: {
+                  module: "commonjs",
+                  lib: ["es2019", "dom", "dom.iterable"],
+                  jsx: "react",
+
+                  sourceMap: false,
+
+                  incremental: true,
+                  removeComments: false,
+                  downlevelIteration: true,
+                  strict: true,
+                  moduleResolution: "node",
+                  forceConsistentCasingInFileNames: true,
+
+                  noImplicitAny: false,
+                  strictNullChecks: false,
+                  strictFunctionTypes: false,
+                  strictBindCallApply: false,
+                  strictPropertyInitialization: false,
+                  noImplicitThis: false,
+
+                  noEmitOnError: true,
+                  noUnusedLocals: false,
+                  noUnusedParameters: false
+                }
               }
             }
           }
@@ -267,7 +304,7 @@ module.exports = {
 
   /* copy */
   copy: { // other filetype
-    src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg)'),
+    src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg|d.ts|ts|tsx)'),
     dest: define.path.dest
   }
 

@@ -9,7 +9,7 @@ export default ((win, doc) => {
    *   <div class="js-expander__outer">
    *     <div class="js-expander__inner">hoge</div>
    *   </div>
-   *   <div class="r-expander" data-expander="{&quot;content&quot;: &quot;.js-expander&quot;}"><span class="r-expander__fade"></span><a class="js-expander__button r-expander__button" href="javascript:void(0)"></a></div>
+   *   <div class="r-expander" data-expander="{&quot;content&quot;: &quot;.js-expander&quot;}"><span class="r-expander__fade"></span><a class="js-expander__button" href="javascript:void(0)"></a></div>
    * </div>
    */
   return class Expander {
@@ -27,20 +27,25 @@ export default ((win, doc) => {
       this.duration = 300;
       this.easing = 'easeInOutQuart';
 
+      this.baseSelector = 'body';
       this.elemSelector = '.js-expander';
-      this.outerElemSelector = `${this.elemSelector}__outer`;
-      this.innerElemSelector = `${this.elemSelector}__inner`;
-      this.buttonElemSelector = `${this.elemSelector}__button`;
+      this.outerSelector = `${this.elemSelector}__outer`;
+      this.innerSelector = `${this.elemSelector}__inner`;
+      this.buttonSelector = `${this.elemSelector}__button`;
 
       this.initializeClassName = 'is-initialize';
       this.openClassName = 'is-open';
       this.openedClassName = 'is-opened';
+
+      this.isInitializeScroll = false;
+      this.isCloseScroll = false;
 
       // config initialize
       this.lineLimit = 6;
       this.expandLabel = '続きを読む';
       this.collapseLabel = 'もっと少なく読む';
 
+      this.customTag = 'expander';
       this.dataAttr = 'data-expander';
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -54,7 +59,7 @@ export default ((win, doc) => {
     initialize() {
       doc.addEventListener('click', (e) => {
         if (!e.target || !e.target.closest) return;
-        let elem = e.target.closest(`[${this.dataAttr}]`);// delegate
+        let elem = e.target.closest(`${this.baseSelector} [${this.dataAttr}]`);
         if (e.target === doc || !elem) return;
 
         this[this.hasOpen(elem) ?
@@ -116,7 +121,7 @@ export default ((win, doc) => {
       childElems.outerElem.style.overflow = 'hidden';
       childElems.buttonElem.innerHTML = data.expandLabel || this.expandLabel;
 
-      if (this.hasOpen(elem)) {
+      if (this.isInitializeScroll && this.hasOpen(elem)) {
         let contentPos = this.getOffsetPos(childElems.contentElem);
         if (contentPos.y) {
           win.scrollTo(0, contentPos.y);
@@ -156,7 +161,7 @@ export default ((win, doc) => {
         childElems.buttonElem.innerHTML = expandLabel;
 
         let contentPos = this.getOffsetPos(childElems.contentElem);
-        if (contentPos.y) {
+        if (this.isCloseScroll && contentPos.y) {
           FN.scroll.goto(childElems.contentElem);
         }
       }
@@ -213,7 +218,7 @@ export default ((win, doc) => {
       elem.classList.add(this.openClassName);
       childElems.buttonElem.innerHTML = collapseLabel;
 
-      let height = this.getHeight(childElems);
+      let height = this.getHeight(childElems.outerElem);
 
       FN.anime({
         targets: childElems.outerElem,
@@ -258,15 +263,13 @@ export default ((win, doc) => {
      * @returns {object}
      */
     createBaseElem(elem) {
-      if (elem.querySelector('expander')) {
-        return elem.querySelector('expander');
-      }
-      let node = doc.createElement('expander');
+      let node = elem.querySelector(this.customTag) || '';
+      if (node) {return node;}
+
+      node = doc.createElement(this.customTag);
       node.style.display = 'block';
       node.style.position = 'absolute';
-
       node.style.width = '100%';
-
       node.style.top = '-99999px';
       node.style.left = '-99999px';
       node.style.zIndex = -100;
@@ -290,9 +293,9 @@ export default ((win, doc) => {
       let contentElem = doc.querySelector(elem);
       let elems = {
         contentElem,
-        outerElem: contentElem.querySelector(this.outerElemSelector),
-        innerElem: contentElem.querySelector(this.innerElemSelector),
-        buttonElem: contentElem.querySelector(this.buttonElemSelector)
+        outerElem: contentElem.querySelector(this.outerSelector),
+        innerElem: contentElem.querySelector(this.innerSelector),
+        buttonElem: contentElem.querySelector(this.buttonSelector)
       };
 
       if (!elems.outerElem ||
