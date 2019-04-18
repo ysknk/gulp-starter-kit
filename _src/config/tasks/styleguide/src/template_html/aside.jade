@@ -1,0 +1,19 @@
+.menu.is-medium
+
+  h2.menu-label CATEGORIES
+
+  nav
+    .aigis-categoryList
+      != helper.renderCollectionTree('category')
+
+  h2.menu-label TAG
+
+  nav.field.is-grouped.is-grouped-multiline
+      each tag in config.collection.tag
+        .control
+          .tags.has-addons
+            a.tag.is-link(href=root+'tag/'+tag+'/index.html') #{tag}
+
+  h2.menu-label
+    a(href=`${root}color.html`) ALL COLORS
+

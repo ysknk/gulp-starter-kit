@@ -42,14 +42,14 @@ module.exports = {
 
   /* styleguide */
   styleguide: {
-
+    src: [`${define.path.config}tasks/styleguide/src/aigis_config.yml`],
   },
 
   /* webfont */
   /* ../webfont/uF001-hoge1.svg */
   /* ../webfont/uF001-huga1.svg */
   webfont: {
-    src: ['../_src/config/webfont/*.svg'],
+    src: [`${define.path.config}tasks/webfont/**/*.svg`],
     dest: `${define.path.dest}assets/webfont/`,
     options: {
       startUnicode: 0xF001,

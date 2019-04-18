@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width')
+    link(href=`${root}aigis_assets/css/highlight/okadia.css` rel='stylesheet')
+    link(href=`${root}aigis_assets/css/bulma.css` rel='stylesheet')
+    link(href=`${root}aigis_assets/css/theme.css` rel='stylesheet')
+    link(href=`${root}assets/css/style.css` rel='stylesheet')
+    script(src=`${root}assets/js/script.js`)
+
+  body
+    .aigis-container
+      header.hero.is-primary
+        .hero-body
+          .columns
+            .column.is-12
+              .container.content
+                h1.title: a(href=root + 'index.html') #{config.name}
+
+      main
+        aside
+          include ./aside
+        article
+          .aigis-contents
+            .aigis-contents__body
+              if components.length
+                include ./components
+              else
+                .aigis-module
+                  != html
+
+      footer.aigis-footer Last update at #{timestamp}
+

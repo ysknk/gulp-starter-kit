@@ -1,8 +1,8 @@
 'use strict';
 
-const TaskMaster = require('../../../_app/gulpfile.babel.js/task/master');
+const TaskMaster = require('../../../../_app/gulpfile.babel.js/task/master');
 
-const plugin = require('aigis');
+const plugin = require('gulp-iconfont');
 
 /**
  * Set Const Variables
@@ -13,14 +13,14 @@ const config = global[define.ns];
  * Set Variables
  */
 const task = {
-  name: 'styleguide',
+  name: 'webfont',
   types: []// **:watch function [0] || 'proc'
 };
 
 /**
- * Styleguide
+ * Webfont
  */
-class Styleguide extends TaskMaster {
+class Webfont extends TaskMaster {
 
   /**
    * constructor
@@ -42,7 +42,10 @@ class Styleguide extends TaskMaster {
     let runTimestamp = Math.round(Date.now() / 1000);
 
     stream
-      .pipe(plugin(/**/))
+      .pipe(plugin({
+        ...this.task.data.options,
+        timestamp: runTimestamp,
+      }))
       .pipe(gulp.dest(this.task.data.dest))
 
       .pipe($.size(this.sizeOptions()))
@@ -67,4 +70,4 @@ class Styleguide extends TaskMaster {
 
 }
 
-module.exports = new Styleguide(task);
+module.exports = new Webfont(task);

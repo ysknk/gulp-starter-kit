@@ -1,8 +1,12 @@
 'use strict';
 
-const TaskMaster = require('../../../_app/gulpfile.babel.js/task/master');
+const TaskMaster = require('../../../../_app/gulpfile.babel.js/task/master');
 
-const plugin = require('gulp-iconfont');
+const plugin = require('node-aigis');
+
+const pluginError = require('plugin-error');
+const through = require('through2');
+const path = require('path');
 
 /**
  * Set Const Variables
@@ -13,14 +17,14 @@ const config = global[define.ns];
  * Set Variables
  */
 const task = {
-  name: 'webfont',
+  name: 'styleguide',
   types: []// **:watch function [0] || 'proc'
 };
 
 /**
- * Webfont
+ * Styleguide
  */
-class Webfont extends TaskMaster {
+class Styleguide extends TaskMaster {
 
   /**
    * constructor
@@ -39,16 +43,23 @@ class Webfont extends TaskMaster {
    * @param {function} done set complete
    */
   procedure(stream, done) {
-    let runTimestamp = Math.round(Date.now() / 1000);
-
     stream
-      .pipe(plugin({
-        ...this.task.data.options,
-        timestamp: runTimestamp,
-      }))
-      .pipe(gulp.dest(this.task.data.dest))
+      .pipe(through.obj(function(file, enc, cb) {
+        let configFile = path.resolve(file.path);
 
-      .pipe($.size(this.sizeOptions()))
+        try {
+          let aigis = new plugin(configFile);
+          aigis.run().then(cb);
+        } catch(e) {
+          this.emit('error', new pluginError('node-aigis', e.message));
+          cb();
+        }
+
+        this.push(file);
+      }, function(cb) {
+        this.emit('end');
+        cb();
+      }))
 
       .on('finish', () => {done && done();});
   }
@@ -70,4 +81,4 @@ class Webfont extends TaskMaster {
 
 }
 
-module.exports = new Webfont(task);
+module.exports = new Styleguide(task);

@@ -2,7 +2,6 @@
   "name": "config",
   "version": "1.0.0",
   "description": "",
-  "repository": "/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +15,7 @@
     "gulp-iconfont": "^10.0.2",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
+    "node-aigis": "^1.4.1",
     "ua-parser-js": "^0.7.17"
   }
 }

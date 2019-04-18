@@ -101,10 +101,12 @@ const message = {
 
   }).then(() => {
     return new Promise((resolve, reject) => {
-      let configDir = path.join(process.cwd(), dir.config);
+      // let configDir = path.join(process.cwd(), dir.config);
       return npmInstall(resolve, reject, {
         dir: dir.config,
-        exec: `npm --prefix ${configDir} install ${configDir}`
+        // exec: `npm --prefix ${configDir} install ${configDir}`
+        // exec: `npm install --cwd ${configDir} --prefix ${configDir}`
+        exec: `cd ${dir.config} && npm install`
       });
     });
 
