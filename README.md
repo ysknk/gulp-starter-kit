@@ -21,9 +21,6 @@ node.js
     cd _app/
     node install.js
 
-    ex mock install)
-    node install.js --mock
-
 ## Usage
 
     cd _app/
