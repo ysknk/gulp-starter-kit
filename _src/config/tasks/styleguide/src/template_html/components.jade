@@ -1,20 +1,25 @@
-nav
-  h2.title: span COMPONENTS
-  ul.aigis-moduleList
+nav.uk-scope
+  h2.uk-h2: span COMPONENTS
+  ul.uk-list.uk-list-bullet
     each component in components
-      li.aigis-moduleList__item
-        a(href=`#${component.config.name}`) #{component.config.name}
+      li: a.uk-link-reset(href=`#${component.config.name}`) #{component.config.name}
 
 each component in components
-  hr.hr(style="margin-bottom: 0;")
+  .uk-scope
+    hr.uk-margin-large
 
   .aigis-module
-    h2.aigis-module__heading(id=component.config.name) #{component.config.name}
+    .uk-scope
+      h2.uk-h2(id=component.config.name) #{component.config.name}
     .aigis-module__filepath!= component.sourcePath.replace(/\\/g, '/').replace(/^\//, '')
 
-    .tags
-      each tag in component.config.tag
-        .tag(class=`is-white aigis-tags__item--${tag}`) #{tag}
+    .uk-scope
+      nav(data-uk-margin)
+        each tag in component.config.tag
+          != '\n'
+          a.tm-inline-block.tm-line-height-reset.uk-link-reset(href=root+'tag/'+tag+'/index.html')
+            span.uk-label(class=`uk-label-${tag}`) #{tag}
 
-    != component.html.replace(/aigis-preview/g, 'aigis-preview module-base-layout')
+    != component.html.replace(/aigis-preview/g, `aigis-preview ${site_base_class}`)
+    //- != component.html.replace(/aigis-preview/g, 'aigis-preview module-base-layout')
 

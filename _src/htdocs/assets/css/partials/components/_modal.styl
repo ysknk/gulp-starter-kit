@@ -1,0 +1,57 @@
+/*
+---
+name: modal
+category:
+  - components
+  - components/modal
+tag:
+  - base
+  - latest
+  - pc
+  - sp
+  - js
+  - data
+---
+
+modal styles
+
+* Base modal style.
+* Use [data-modal-template].
+* Use  [data-modal-open]. -> Pass by data array.
+* Not require [data-modal-name]. -> Fade to switch content.
+
+```html
+<p><a href="javascript:void(0)" data-modal-template="#modal1" data-modal-open>link</a></p>
+
+<script id="modal1" type="text/template">
+  <p>modal1</p>
+</script>
+```
+```jade
+p: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open) link
+
+script#modal1(type="text/template")
+  modal1
+```
+ex)group
+```jade
+p.btn: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open='{"id": "test1"}' data-modal-name="group--1") btn-1
+p.btn: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open='{"id": "test2"}' data-modal-name="group--2") btn-2
+p.btn: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open='{"id": "test3"}' data-modal-name="group--3") btn-3
+
+script#modal1(type="text/template")
+  p <%= data.id %>
+
+  | <% if(data.prev) { %>
+  .prev(onclick!="javascript:document.querySelector('<%= data.prev %>').click();") prev
+  | <% } %>
+  | <% if(data.next) { %>
+  .next(onclick!="javascript:document.querySelector('<%= data.next %>').click();") next
+  | <% } %>
+```
+*/
+#{p}modal
+  background #000
+  &__container
+    background #fff
+

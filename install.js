@@ -9,14 +9,14 @@ const isWindows = (process.platform === `win32`);
 const remove = isWindows ? 'rd /s /q' : 'rm -rf';
 
 const paramMark = `--`;
-const isMock = process.argv && process.argv[2] === `${paramMark}mock`;
+// const isMock = process.argv && process.argv[2] === `${paramMark}mock`;
 
 const cmd = {
   build: `gulp build`
 };
 
 const dir = {
-  mockSrc: `./_src_mock/`,
+  // mockSrc: `./_src_mock/`,
   src: `./_src/`,
   dest: `../_src/`,
   config: `../_src/config/`
@@ -154,21 +154,21 @@ const message = {
         console.error(err);
         reject();
       }
-      if(isMock) {
-        fs.copy(dir.mockSrc, dir.dest, {
-          clobber: true
-        }, (err) => {
-          if(err) {
-            console.error(err);
-            reject();
-          }
-          console.log(message.complete);
-          resolve();
-        });
-      }else{
-        console.log(message.complete);
-        resolve();
-      }
+      // if(isMock) {
+      //   fs.copy(dir.mockSrc, dir.dest, {
+      //     clobber: true
+      //   }, (err) => {
+      //     if(err) {
+      //       console.error(err);
+      //       reject();
+      //     }
+      //     console.log(message.complete);
+      //     resolve();
+      //   });
+      // }else{
+      console.log(message.complete);
+      resolve();
+      // }
     });
   }
 

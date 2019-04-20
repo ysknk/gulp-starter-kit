@@ -40,18 +40,17 @@ export default ((win, doc) => {
       this.wrapperElem = '#wrapper';
       this.alignRightElem = '.js-fixed-right';
 
-      this.name = {
-        modal: 'modal',
-        close: 'modal__close',
-        container: 'modal__container',
-        blocker: 'modal__blocker',
-        wrapper: 'modal__wrapper',
-        outer: 'modal__outer',
-        inner: 'modal__inner',
-        content: 'modal__content',
+      this.name = {};
+      this.name.modal = 'site-modal';
+      this.name.close = `${this.name.modal}__close`;
+      this.name.container = `${this.name.modal}__container`;
+      this.name.blocker = `${this.name.modal}__blocker`;
+      this.name.wrapper = `${this.name.modal}__wrapper`;
+      this.name.outer = `${this.name.modal}__outer`;
+      this.name.inner = `${this.name.modal}__inner`;
+      this.name.content = `${this.name.modal}__content`;
 
-        notScroller: 'js-not-scroller',
-      };
+      this.name.notScroller = 'js-not-scroller';
 
       this.dataAttr = {
         open: 'data-modal-open',

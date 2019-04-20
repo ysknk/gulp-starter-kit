@@ -1,19 +1,19 @@
-.menu.is-medium
+.uk-scope
+  .uk-container
 
-  h2.menu-label CATEGORIES
+    h2.uk-h2 CATEGORIES
+    nav
+      //- .aigis-categoryList
+      .uk-list.uk-list-divider.tm-collection-tree
+        != helper.renderCollectionTree('category')
 
-  nav
-    .aigis-categoryList
-      != helper.renderCollectionTree('category')
+    h2.uk-h2 TAG
 
-  h2.menu-label TAG
-
-  nav.field.is-grouped.is-grouped-multiline
+    nav(data-uk-margin)
       each tag in config.collection.tag
-        .control
-          .tags.has-addons
-            a.tag.is-link(href=root+'tag/'+tag+'/index.html') #{tag}
+        != '\n'
+        a.tm-inline-block.tm-line-height-reset.uk-link-reset(href=root+'tag/'+tag+'/index.html')
+          span.uk-label(class=`uk-label-${tag}`) #{tag}
 
-  h2.menu-label
-    a(href=`${root}color.html`) ALL COLORS
+    h2.uk-h2: a.uk-link-reset(href=`${root}color.html`) ALL COLORS
 

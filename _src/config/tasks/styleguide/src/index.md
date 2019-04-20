@@ -12,5 +12,6 @@ aigis [document](https://aigis-styleguide.github.io/aigis/docs/jp/)
 
 ## Notice
 
-  更新時にスタイルガイドの反映を忘れないように
+- Css framework for styleguide is [Uikit](https://getuikit.com/docs/introduction)
+- Template custom is free
 
