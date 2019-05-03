@@ -26,15 +26,26 @@ mixin img_src(path, alt)
 
 //- section
 //- ex) +section('hoge')
-mixin section(name, tag="section", type="local", indent="              ")
+mixin section(name, tag="section", type="local", indent="          ")
   != `\n${indent}<!-- #${name}-->`
-  #{tag}(id=name class=`${type}-parts ${type}-${name}`)&attributes(attributes)
-    div(class=`${type}-${name}-inner ${type}-parts-inner`)
+  #{tag}(id=name class=`${p}section -${name}`)&attributes(attributes)
+    div(class=`${p}section__inner`)
       if block
         block
       else
         p No content provided
   != `\n${indent}<!-- /#${name}-->`
+
+mixin title(en, ja, h = 'h2')
+  #{h}(class=`${p}title -${h}`)&attributes(attributes)
+    if block
+      span(class=`${p}title__inner`)
+        block
+    else
+      if en
+        span(class=`${p}title__en`)!= en
+      if ja
+        span(class=`${p}title__ja`)!= ja
 
 //- sns
 //- ex) +set_sns(['twitter', 'facebook', 'googleplus', 'line'], og.url, twitter.description)

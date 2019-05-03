@@ -219,8 +219,10 @@ export default ((win, doc) => {
      */
     getParseData(elem) {
       let data = elem.getAttribute(this.dataAttr.open) || '';
-
       let parseData = null;
+
+      if (!data) return;
+
       try {
         parseData = JSON.parse(data);
       }catch(e) {

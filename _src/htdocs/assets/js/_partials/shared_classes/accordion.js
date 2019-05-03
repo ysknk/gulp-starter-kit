@@ -131,7 +131,7 @@ export default ((win, doc) => {
 
       elem.style.overflow = 'visible';
       elem.style.height = 'auto';
-      let max = elem.clientHeight;
+      let max = elem.getBoundingClientRect().height;
       elem.style.overflow = 'hidden';
       elem.style.height = now;
 

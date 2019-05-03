@@ -16,6 +16,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
     "node-aigis": "^1.4.1",
-    "ua-parser-js": "^0.7.17"
+    "ua-parser-js": "^0.7.17",
+    "moment-timezone": "^0.5.25"
   }
 }
