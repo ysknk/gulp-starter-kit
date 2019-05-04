@@ -4,7 +4,7 @@ module.exports = {
 
   tasks: {
     styleguide: true,
-    webfont: true,
+    webfont: true
   },
 
   /* common */
@@ -46,8 +46,8 @@ module.exports = {
   },
 
   /* webfont */
-  /* ../webfont/uF001-hoge1.svg */
-  /* ../webfont/uF001-huga1.svg */
+  /* ../tasks/webfont/src/uF001-hoge1.svg */
+  /* ../tasks/webfont/src/uF001-huga1.svg */
   webfont: {
     src: [`${define.path.config}tasks/webfont/**/*.svg`],
     dest: `${define.path.dest}assets/webfont/`,
@@ -59,7 +59,7 @@ module.exports = {
       prependUnicode: true,
       formats: ['ttf', 'eot', 'woff'],
     }
-  },
+  }
 
 };
 
