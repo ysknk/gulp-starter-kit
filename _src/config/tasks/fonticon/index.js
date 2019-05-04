@@ -13,14 +13,14 @@ const config = global[define.ns];
  * Set Variables
  */
 const task = {
-  name: 'webfont',
+  name: 'fonticon',
   types: []// **:watch function [0] || 'proc'
 };
 
 /**
- * Webfont
+ * Fonticon
  */
-class Webfont extends TaskMaster {
+class Fonticon extends TaskMaster {
 
   /**
    * constructor
@@ -70,4 +70,4 @@ class Webfont extends TaskMaster {
 
 }
 
-module.exports = new Webfont(task);
+module.exports = new Fonticon(task);
