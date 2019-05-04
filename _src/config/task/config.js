@@ -4,7 +4,7 @@ module.exports = {
 
   tasks: {
     styleguide: true,
-    fonticon: true
+    iconfont: true
   },
 
   /* common */
@@ -45,12 +45,12 @@ module.exports = {
     src: [`${define.path.config}tasks/styleguide/src/aigis_config.yml`],
   },
 
-  /* fonticon */
-  /* ../tasks/fonticon/src/uF001-hoge1.svg */
-  /* ../tasks/fonticon/src/uF001-huga1.svg */
-  fonticon: {
-    src: [`${define.path.config}tasks/fonticon/**/*.svg`],
-    dest: `${define.path.dest}assets/fonticon/`,
+  /* iconfont */
+  /* ../tasks/iconfont/src/uF001-hoge1.svg */
+  /* ../tasks/iconfont/src/uF001-huga1.svg */
+  iconfont: {
+    src: [`${define.path.config}tasks/iconfont/**/*.svg`],
+    dest: `${define.path.dest}assets/iconfont/`,
     options: {
       startUnicode: 0xF001,
       fontName: 'icons1',
