@@ -6,10 +6,10 @@ export default ((win, doc) => {
   /**
    * Expander
    * <div class="js-expander">
-   *   <div class="js-expander__outer">
-   *     <div class="js-expander__inner">hoge</div>
+   *   <div class="js-expander_outer">
+   *     <div class="js-expander_inner">hoge</div>
    *   </div>
-   *   <div class="r-expander" data-expander="{&quot;content&quot;: &quot;.js-expander&quot;}"><span class="r-expander__fade"></span><a class="js-expander__button" href="javascript:void(0)"></a></div>
+   *   <div class="r-expander" data-expander="{&quot;content&quot;: &quot;.js-expander&quot;}"><span class="r-expander_fade"></span><a class="js-expander_button" href="javascript:void(0)"></a></div>
    * </div>
    */
   return class Expander {
@@ -29,9 +29,9 @@ export default ((win, doc) => {
 
       this.baseSelector = 'body';
       this.elemSelector = '.js-expander';
-      this.outerSelector = `${this.elemSelector}__outer`;
-      this.innerSelector = `${this.elemSelector}__inner`;
-      this.buttonSelector = `${this.elemSelector}__button`;
+      this.outerSelector = `${this.elemSelector}_outer`;
+      this.innerSelector = `${this.elemSelector}_inner`;
+      this.buttonSelector = `${this.elemSelector}_button`;
 
       this.initializeClassName = 'is-initialize';
       this.openClassName = 'is-open';

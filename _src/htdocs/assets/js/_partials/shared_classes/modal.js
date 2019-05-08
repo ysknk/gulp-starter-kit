@@ -42,13 +42,13 @@ export default ((win, doc) => {
 
       this.name = {};
       this.name.modal = 'site-modal';
-      this.name.close = `${this.name.modal}__close`;
-      this.name.container = `${this.name.modal}__container`;
-      this.name.blocker = `${this.name.modal}__blocker`;
-      this.name.wrapper = `${this.name.modal}__wrapper`;
-      this.name.outer = `${this.name.modal}__outer`;
-      this.name.inner = `${this.name.modal}__inner`;
-      this.name.content = `${this.name.modal}__content`;
+      this.name.close = `${this.name.modal}_close`;
+      this.name.container = `${this.name.modal}_container`;
+      this.name.blocker = `${this.name.modal}_blocker`;
+      this.name.wrapper = `${this.name.modal}_wrapper`;
+      this.name.outer = `${this.name.modal}_outer`;
+      this.name.inner = `${this.name.modal}_inner`;
+      this.name.content = `${this.name.modal}_content`;
 
       this.name.notScroller = 'js-not-scroller';
 

@@ -18,10 +18,11 @@ export default ((win, doc) => {
         return new PageShare(opts_);
       }
       this.dataAttr = {
-        share: 'data-share',
-        url: 'data-url',
-        title: 'data-title',
-        description: 'data-description'
+        share: 'data-share-sns',
+        url: 'data-share-url',
+        title: 'data-share-title',
+        description: 'data-share-description',
+        target: 'data-share-target'
       };
       this.width = 650;
       this.height = 470;
@@ -56,6 +57,8 @@ export default ((win, doc) => {
     open(elem) {
       let og = this.getMeta(elem);
       let attr = elem.getAttribute(this.dataAttr.share);
+      let target = elem.getAttribute(this.dataAttr.target);
+
       let windowName = `${attr}_window`;
 
       let left = Number((win.screen.width - this.width) / 2);
@@ -73,18 +76,40 @@ export default ((win, doc) => {
         `top=${top}`
       ].join(separator);
 
-      switch(attr) {
+      let url = ``;
+
+      switch (attr) {
         case 'twitter':
-          window.open(`${this.twitterShareUrl}url=${og.enc.url}&text=${og.enc.description}`, windowName, option);
+          url = `${this.twitterShareUrl}url=${og.enc.url}&text=${og.enc.description}`;
           break;
         case 'facebook':
-          window.open(`${this.facebookShareUrl}u=${og.enc.url}`, windowName, option);
+          url = `${this.facebookShareUrl}u=${og.enc.url}`;
           break;
         case 'line':
-          window.open(`${this.LineShareUrl}url=${og.enc.url}`, windowName, option);
+          url = `${this.LineShareUrl}url=${og.enc.url}`;
           break;
         default:
           break;
+      }
+
+      if (url) {
+        this.openUrl(url, target, windowName, option);
+      }
+    }
+
+    /**
+     * openUrl
+     *
+     * @param {string} url
+     * @param {string} target
+     * @param {string} windowName
+     * @param {string} option
+     */
+    openUrl(url, target, windowName, option) {
+      if (target === '_blank') {
+        window.open(url, windowName, option);
+      }else{
+        location.href = url;
       }
     }
 
@@ -121,7 +146,7 @@ export default ((win, doc) => {
      */
     getMetaOg(elem, property) {
       let ogTag = doc.querySelector(`meta[property="og:${property}"]`) || '';
-      let content = elem.getAttribute(this.data[property]) ||
+      let content = elem.getAttribute(this.dataAttr[property]) ||
         (ogTag ? ogTag.getAttribute('content') : '');
 
       return content;

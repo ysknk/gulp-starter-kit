@@ -111,12 +111,15 @@ export default ((win, doc) => {
         }
       });
 
-      currentNavs = _.orderBy(
-        currentNavs,
-        ['visualRange', 'num'],
-        ['desc', 'desc']
-      );
-      return currentNavs[0];
+      if (currentNavs && currentNavs.length) {
+        currentNavs = _.orderBy(
+          currentNavs,
+          ['visualRange', 'num'],
+          ['desc', 'desc']
+        );
+      }
+
+      return currentNavs[0] || null;
     }
 
     /**

@@ -20,14 +20,14 @@ tab styles
 
 ```html
 <div class="site-tab">
-  <nav class="site-tab__nav">
+  <nav class="site-tab_nav">
     <ul>
-      <li><a class="is-active" href="javascript:void(0)" data-tab="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab__group > div&quot;,&quot;category&quot;:&quot;.content1&quot;}">nav1</a></li>
-      <li><a href="javascript:void(0)" data-tab="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab__group > div&quot;,&quot;category&quot;:&quot;.content2&quot;}">nav2</a></li>
-      <li><a href="javascript:void(0)" data-tab="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab__group > div&quot;,&quot;category&quot;:&quot;.content3&quot;}">nav3</a></li>
+      <li><a class="is-active" href="javascript:void(0)" data-tab="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab_group > div&quot;,&quot;category&quot;:&quot;.content1&quot;}">nav1</a></li>
+      <li><a href="javascript:void(0)" data-tab="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab_group > div&quot;,&quot;category&quot;:&quot;.content2&quot;}">nav2</a></li>
+      <li><a href="javascript:void(0)" data-tab="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab_group > div&quot;,&quot;category&quot;:&quot;.content3&quot;}">nav3</a></li>
     </ul>
   </nav>
-  <div class="site-tab__group">
+  <div class="site-tab_group">
     <div class="content1">content1</div>
     <div class="content2">content2</div>
     <div class="content3">content3</div>
@@ -36,24 +36,26 @@ tab styles
 ```
 ```jade
 div(class=`${p}tab`)
-  nav(class=`${p}tab__nav`)
+  nav(class=`${p}tab_nav`)
     ul
-      li: a(class="is-active" href="javascript:void(0)" data-tab!="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab__group > div&quot;,&quot;category&quot;:&quot;.content1&quot;}") nav1
-      li: a(href="javascript:void(0)" data-tab!="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab__group > div&quot;,&quot;category&quot;:&quot;.content2&quot;}") nav2
-      li: a(href="javascript:void(0)" data-tab!="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab__group > div&quot;,&quot;category&quot;:&quot;.content3&quot;}") nav3
-  div(class=`${p}tab__group`)
+      li: a(class="is-active" href="javascript:void(0)" data-tab!="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab_group > div&quot;,&quot;category&quot;:&quot;.content1&quot;}") nav1
+      li: a(href="javascript:void(0)" data-tab!="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab_group > div&quot;,&quot;category&quot;:&quot;.content2&quot;}") nav2
+      li: a(href="javascript:void(0)" data-tab!="{&quot;btn&quot;:&quot;.site-tab li a&quot;,&quot;group&quot;:&quot;.site-tab .site-tab_group > div&quot;,&quot;category&quot;:&quot;.content3&quot;}") nav3
+  div(class=`${p}tab_group`)
     div(class=`content1`) content1
     div(class=`content2`) content2
     div(class=`content3`) content3
 ```
 */
 .{p}tab
-  &__nav
+  this = selector('^[1..-1]')
+
+  &_nav
     li
       a
         &.is-active
           color #f00
-  &__group
+  &_group
     & > div
       display none
       &.is-active

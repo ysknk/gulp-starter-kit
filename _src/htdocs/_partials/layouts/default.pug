@@ -16,8 +16,8 @@ html.no-js(lang=lang)
       != '\n'
 
       // main
-      main(role="main")
-        article
+      main(role="main" class=`${p}main`)
+        article(class=`${p}article`)
           block content
             p content
       // /main

@@ -21,32 +21,34 @@ accordion styles
 
 ```html
 <div class="site-accordion">
-  <p class="is-open site-accordion__button" data-accr="#accordion__content1">
+  <p class="is-open site-accordion_button" data-accr="#accordion_content1">
     <a href="javascript:void(0)">button1</a>
   </p>
-  <div id="accordion__content1" class="site-accordion__content">
+  <div id="accordion_content1" class="site-accordion_content">
     <div>
-      <p>accordion__content1</p>
+      <p>accordion_content1</p>
     </div>
   </div>
 </div>
 ```
 ```jade
 div(class=`${p}accordion`)
-  p.is-open(class=`${p}accordion__button` data-accr=`#accordion__content1`)
+  p.is-open(class=`${p}accordion_button` data-accr=`#accordion_content1`)
     a(href="javascript:void(0)")!= `button1`
-  div#accordion__content1(class=`${p}accordion__content`)
+  div#accordion_content1(class=`${p}accordion_content`)
     div
-      p!= `accordion__content1`
+      p!= `accordion_content1`
 ```
 */
 .{p}accordion
-  &__button
+  this = selector('^[1..-1]')
+
+  &_button
     & > a
       display block
       padding 1em
       background #ccc
-  &__content
+  &_content
     & > div
       padding-bottom 10em
 
