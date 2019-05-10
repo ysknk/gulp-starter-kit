@@ -22,7 +22,7 @@ export default ((win, doc) => {
       this.elem = doc.querySelector('html');
       this.loadingClassName = 'is-ajax-loading';
       this.errorClassName = 'is-ajax-error';
-      this.isLoading = false;
+      this.isLoading = {};
       this.message = {
         failure: {
           common: ERROR_MESSAGE,
@@ -31,6 +31,7 @@ export default ((win, doc) => {
         }
       };
       this.config = {
+        id: 'request',
         method: 'get',
         url: '',
         timeout: 5000
@@ -58,17 +59,19 @@ export default ((win, doc) => {
       onSuccess: () => {},
       onFailure: () => {}
     }) {
-      if (this.isLoading || !config || !config.url) return;
+      if (!config || !config.url) return;
+      if (!this.isLoading[config.id]) this.isLoading[config.id] = false;
+      if (this.isLoading[config.id]) return;
       config = _.merge({}, this.config, config);
 
-      this.start(elem);
+      this.start(elem, config);
 
       return FN.axios(config)
         .then((response) => {
           return new Promise((resolve, reject) => {
             _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
             _.isFunction(this.onSuccess) && this.onSuccess(response, this);
-            this.end(elem);
+            this.end(elem, config);
             return resolve;
           });
         })
@@ -76,7 +79,7 @@ export default ((win, doc) => {
           return new Promise((resolve, reject) => {
             _.isFunction(cb.onFailure) && cb.onFailure(error, this);
             _.isFunction(this.onFailure) && this.onFailure(error, this);
-            this.end(elem);
+            this.end(elem, config);
             return resolve;
           });
         });
@@ -86,9 +89,10 @@ export default ((win, doc) => {
      * start
      *
      * @param {object} elem
+     * @param {object} config
      */
-    start(elem) {
-      this.isLoading = true;
+    start(elem, config) {
+      this.isLoading[config.id] = true;
       if (elem) {
         elem.classList.add(this.loadingClassName);
       }
@@ -101,15 +105,16 @@ export default ((win, doc) => {
      * end
      *
      * @param {object} elem
+     * @param {object} config
      */
-    end(elem) {
+    end(elem, config) {
       if (elem) {
         elem.classList.remove(this.loadingClassName);
       }
       if (this.elem) {
         this.elem.classList.remove(this.loadingClassName);
       }
-      this.isLoading = false;
+      this.isLoading[config.id] = false;
     }
 
     /**
