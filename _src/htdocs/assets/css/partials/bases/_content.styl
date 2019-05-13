@@ -1,6 +1,11 @@
 .{p}base
-  font-size (fpc)px
   font-family FONT_FAMILY
+
+  font-size (fpc)px
+  // font-size (($common-font-size / ($common-content-width)) * 100)vw
+  // @media (min-width: unit($common-content-width, 'px'))
+  //   font-size ($common-font-size)px !important
+
   line-height 1.5
 
   -webkit-font-smoothing antialiased
@@ -17,11 +22,23 @@
   color FONT_COLOR_DEFAULT
   break_word()
 
-  {lpc} &
+  +break_point('pc')
     min-width (wpc)px
-  {lsp} &
+
+    .{p}display-none
+      &.-pc
+        display none !important
+
+  +break_point('sp')
+    min-width 320px
     width 100%
-    overflow-x hidden
+    img
+      width 100%
+      height auto
+
+    .{p}display-none
+      &.-sp
+        display none !important
 
   a
     link_style('', '', '', '')

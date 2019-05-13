@@ -17,12 +17,12 @@ mixin inline(tag, name, attr)
 //- responsive img
 //- ex) +img_device_src('/common/', 'hoge')
 mixin img_device_src(path, alt)
-  img(src=`${src}pc${path}` data-pc-src=`${src}pc${path}` data-sp-src=`${src}sp${path}` alt!=alt)
+  img(src=`${src}pc/${path}` data-pc-src=`${src}pc/${path}` data-sp-src=`${src}sp/${path}` alt!=alt)&attributes(attributes)
 
 //- img
 //- ex) +img_src('/common/', 'hoge')
 mixin img_src(path, alt)
-  img(src=`${src}${path}` alt!=alt)
+  img(src=`${src}${path}` alt!=alt)&attributes(attributes)
 
 //- section
 //- ex) +section('hoge')
@@ -36,7 +36,7 @@ mixin section(name, tag="section", type="local", indent="          ")
         p No content provided
   != `\n${indent}<!-- /#${name}-->`
 
-mixin title(en, ja, h = 'h2')
+mixin title(en, ja, h="h2")
   #{h}(class=`${p}title -${h}`)&attributes(attributes)
     if block
       span(class=`${p}title__inner`)
@@ -48,8 +48,8 @@ mixin title(en, ja, h = 'h2')
         span(class=`${p}title__ja`)!= ja
 
 //- sns
-//- ex) +set_sns(['twitter', 'facebook', 'googleplus', 'line'], og.url, twitter.description)
-mixin set_sns(btn, txt=og.url, url=twitter.description)
+//- ex) +set_sns(['twitter', 'facebook', 'line'])
+mixin set_sns(btn, txt=title, url=og.url)
   ul
     - for(var i = 0; btn.length > i; i++)
       +inline('li', btn[i])
@@ -61,14 +61,6 @@ mixin set_sns(btn, txt=og.url, url=twitter.description)
         if btn[i] == 'facebook'
           .fb-like(data-href=url data-layout="button" data-action="like" data-show-faces="false" data-share="false")
 
-        if btn[i] == 'googleplus'
-          .g-plusone(data-size="medium" data-annotation="bubble" data-href=url)
-          script(src="https://apis.google.com/js/platform.js" async defer).
-            {lang: 'ja'}
-
         if btn[i] == 'line'
-          span
-            script(type="text/javascript" src="//media.line.me/js/line-button.js?v=20140411")
-            script(type="text/javascript").
-              new media_line_me.LineButton({"pc":false,"lang":"ja","type":"a","text":txt,"withUrl":true});
-
+          div.line-it-button(data-lang="ja" data-type="like" data-url!=url data-share="true" style="display: none;")
+          script(src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer")

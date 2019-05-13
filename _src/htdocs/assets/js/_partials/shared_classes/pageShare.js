@@ -80,7 +80,7 @@ export default ((win, doc) => {
 
       switch (attr) {
         case 'twitter':
-          url = `${this.twitterShareUrl}url=${og.enc.url}&text=${og.enc.description}`;
+          url = `${this.twitterShareUrl}url=${og.enc.url}&text=${og.enc.title}`;
           break;
         case 'facebook':
           url = `${this.facebookShareUrl}u=${og.enc.url}`;
