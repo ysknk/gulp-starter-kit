@@ -1,6 +1,6 @@
 const head = {
   lang: 'ja',
-  charset: 'utf8',
+  charset: 'utf-8',
 
   // canonical: 'http://example.com/',
 
