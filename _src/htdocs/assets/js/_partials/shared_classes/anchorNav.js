@@ -142,7 +142,7 @@ export default ((win, doc) => {
       let elem = doc.querySelector(selector);
 
       let top = this.getOffsetPos(elem).y;
-      let height = elem.getBoundingClientRect().height;
+      let height = elem ? elem.getBoundingClientRect().height : 0;
 
       return {
         selector,
