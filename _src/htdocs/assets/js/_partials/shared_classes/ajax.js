@@ -59,10 +59,10 @@ export default ((win, doc) => {
       onSuccess: () => {},
       onFailure: () => {}
     }) {
+      config = _.merge({}, this.config, config);
       if (!config || !config.url) return;
       if (!this.isLoading[config.id]) this.isLoading[config.id] = false;
       if (this.isLoading[config.id]) return;
-      config = _.merge({}, this.config, config);
 
       this.start(elem, config);
 
