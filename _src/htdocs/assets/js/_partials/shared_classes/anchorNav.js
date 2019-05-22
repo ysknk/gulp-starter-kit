@@ -118,8 +118,18 @@ export default ((win, doc) => {
           ['desc', 'desc']
         );
       }
+      let targetObject = currentNavs[0];
+      // ひとつだけの場合、コンテンツ自体の高さ1/5見えてるかどうか
+      if (currentNavs.length <= 1) {
+        let targetHeight = this.getWindowData().height;
+        if (targetObject) {
+          if ((targetHeight / 5) >= targetObject.visualRange) {
+            targetObject.elem = null;
+          }
+        }
+      }
 
-      return currentNavs[0] || null;
+      return targetObject || null;
     }
 
     /**
