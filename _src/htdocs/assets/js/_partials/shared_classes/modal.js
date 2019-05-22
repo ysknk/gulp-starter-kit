@@ -173,6 +173,8 @@ export default ((win, doc) => {
       } else {
         if (this.isFixed) {
           this.fixedOpen();
+        } else {
+          this.update();
         }
 
         _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
@@ -452,7 +454,7 @@ export default ((win, doc) => {
           clearTimeout(resizeTimer);
         }
         resizeTimer = setTimeout(() => {
-          modal.style.height = doc.body.clinetHeight;
+          modal.style.height = `${doc.body.clientHeight}px`;
         }, 20);
       })();
     }
