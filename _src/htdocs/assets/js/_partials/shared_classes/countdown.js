@@ -20,7 +20,9 @@ export default ((win, doc) => {
       }
 
       this.dateFormat = `YYYY-M-D H:m`;
-      this.targetDate = `2019-7-10 13:00`;
+      this.targetDate = `2100-12-31 00:00`;
+
+      this.showType = `background`;// text or background
 
       this.endClassName = `is-countdown-end`;
 
@@ -67,17 +69,50 @@ export default ((win, doc) => {
     }
 
     /**
-     * setHTML
+     * setValues
      */
-    setHTML() {
+    setValues() {
       let time = this.getDiffTimes();
       _.forEach(this.elems, (elem) => {
-        let attr = elem.getAttribute(this.dataAttr.units);
-        let value = time[attr];
-        if (elem.getAttribute(this.dataAttr.value) == value) return;
-        elem.setAttribute(this.dataAttr.value, value);
-        elem.innerHTML = value;
+        this.setHTML(time, elem);
       });
+    }
+
+    /**
+     * setHTML
+     *
+     * @param {string} time
+     * @param {object} elem
+     */
+    setHTML(time, elem) {
+      let attr = elem.getAttribute(this.dataAttr.units);
+      let value = time[attr];
+      if (elem.getAttribute(this.dataAttr.value) == value) return;
+      elem.setAttribute(this.dataAttr.value, value);
+
+      switch(this.showType) {
+        case `text`:
+          elem.innerHTML = value;
+          break;
+
+        case `background`:
+          let valueElems = elem.querySelectorAll(`[${this.dataAttr.value}]`);
+          let splits = value.split(``);
+
+          if (valueElems && valueElems.length) {
+            _.forEach(splits, (split, i) => {
+              valueElems[i].setAttribute(this.dataAttr.value, split);
+            });
+          }else{
+            elem.innerHTML = ``;
+            _.forEach(splits, (split, i) => {
+              let span = doc.createElement(`span`);
+              span.setAttribute(this.dataAttr.value, split);
+              elem.appendChild(span);
+            });
+          }
+          break;
+      }
     }
 
     /**
@@ -88,7 +123,7 @@ export default ((win, doc) => {
         if (this.isEnd()) {
           this.setEnd();
         } else {
-          this.setHTML();
+          this.setValues();
           this.updateTime();
         }
       }, 1000);
@@ -128,7 +163,7 @@ export default ((win, doc) => {
       let mins = duration.minutes();
       let secs = duration.seconds();
 
-      days = this.setZeroPadding(days, '0', 2);
+      days = this.setZeroPadding(days, '0', 3);
       hours = this.setZeroPadding(hours, '0', 2);
       mins = this.setZeroPadding(mins, '0', 2);
       secs = this.setZeroPadding(secs, '0', 2);
@@ -156,4 +191,3 @@ export default ((win, doc) => {
   };
 
 })(window, document);
-
