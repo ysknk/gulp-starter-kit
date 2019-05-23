@@ -25,6 +25,7 @@ export default ((win, doc) => {
       this.showType = `background`;// text or background
 
       this.endClassName = `is-countdown-end`;
+      this.initClassName = `is-countdown-init`;
 
       this.dataAttr = {
         date: `data-countdown-date`,
@@ -65,7 +66,19 @@ export default ((win, doc) => {
      */
     setEnd() {
       let html = doc.querySelector(`html`);
-      html.classList.add(this.endClassName);
+      if (!html.classList.contains(this.initClassName)) {
+        html.classList.add(this.endClassName);
+      }
+    }
+
+    /**
+     * setInit
+     */
+    setInit() {
+      let html = doc.querySelector(`html`);
+      if (!html.classList.contains(this.initClassName)) {
+        html.classList.add(this.initClassName);
+      }
     }
 
     /**
@@ -76,6 +89,7 @@ export default ((win, doc) => {
       _.forEach(this.elems, (elem) => {
         this.setHTML(time, elem);
       });
+      this.setInit();
     }
 
     /**
@@ -112,7 +126,7 @@ export default ((win, doc) => {
             });
           }
           break;
-      }
+      };
     }
 
     /**
@@ -191,3 +205,4 @@ export default ((win, doc) => {
   };
 
 })(window, document);
+
