@@ -22,7 +22,7 @@ export default ((win, doc) => {
       this.dateFormat = `YYYY-M-D H:m`;
       this.targetDate = `2100-12-31 00:00`;
 
-      this.showType = `background`;// text or background
+      this.showType = `text`;// text or background
 
       this.endClassName = `is-countdown-end`;
       this.initClassName = `is-countdown-init`;
