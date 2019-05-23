@@ -119,7 +119,7 @@ export default ((win, doc) => {
      * @returns {number} window width
      */
     getWidth() {
-      return this.html.getBoundingClientRect().width;
+      return parseInt(this.html.getBoundingClientRect().width);
     }
 
     /**
