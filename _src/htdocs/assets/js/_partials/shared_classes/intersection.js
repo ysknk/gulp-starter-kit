@@ -72,7 +72,7 @@ export default ((win, doc) => {
     update() {
       let elems = doc.querySelectorAll(`[${this.dataAttr}]`);
       let windowData = this.getWindowData();
-      let bodyHeight = doc.body.getBoundingClientRect().height;
+      let bodyHeight = parseInt(doc.body.getBoundingClientRect().height);
 
       _.forEach(elems, (elem, i) => {
         let data = this.getParseData(elem);
