@@ -22,7 +22,7 @@ export default ((win, doc) => {
       this.dateFormat = `YYYY-M-D H:m`;
       this.targetDate = `2100-12-31 00:00`;
 
-      this.showType = `text`;// text or background
+      this.showType = `background`;// text or background
 
       this.endClassName = `is-countdown-end`;
       this.initClassName = `is-countdown-init`;
@@ -59,6 +59,16 @@ export default ((win, doc) => {
       } else {
         this.updateTime();
       }
+    }
+
+    /**
+     * getEnd
+     *
+     * @returns {boolean}
+     */
+    getEnd() {
+      let html = doc.querySelector(`html`);
+      return html.classList.contains(this.endClassName);
     }
 
     /**
@@ -150,7 +160,7 @@ export default ((win, doc) => {
      */
     isEnd() {
       let diffTime = this.getTargetDate().diff(FN.moment());
-      return (!diffTime || diffTime <= 0) ? true : false;
+      return (this.getEnd() || !diffTime || diffTime <= 0) ? true : false;
     }
 
     /**
