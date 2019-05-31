@@ -95,7 +95,7 @@ export default ((win, doc) => {
           if (targetData.top <= windowData.top) {
             visualRange = targetData.bottom - windowData.top;
           // 下部見切れ
-          } else if (targetData.bottom >= windowData.bottom) {
+          } else if (targetData.bottom > windowData.bottom) {
             visualRange = windowData.bottom - targetData.top;
           // 見切れていない
           } else {
@@ -118,14 +118,13 @@ export default ((win, doc) => {
           ['desc', 'desc']
         );
       }
+
       let targetObject = currentNavs[0];
       // ひとつだけの場合、コンテンツ自体の高さ1/5見えてるかどうか
-      if (currentNavs.length <= 1) {
+      if (currentNavs.length <= 1 && targetObject) {
         let targetHeight = this.getWindowData().height;
-        if (targetObject) {
-          if ((targetHeight / 5) >= targetObject.visualRange) {
-            targetObject.elem = null;
-          }
+        if ((targetHeight / 5) >= targetObject.visualRange) {
+          targetObject.elem = null;
         }
       }
 
