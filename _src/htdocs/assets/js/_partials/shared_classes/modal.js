@@ -499,8 +499,12 @@ export default ((win, doc) => {
       if (!wrapper && !outer) return;
 
       setTimeout(() => {
-        wrapper && wrapper.scrollTop = 0;
-        outer && outer.scrollTop = 0;
+        if (wrapperElem) {
+          wrapperElem.scrollTop = 0;
+        }
+        if (outerElem) {
+          outerElem.scrollTop = 0;
+        }
       }, 0);
     }
 
