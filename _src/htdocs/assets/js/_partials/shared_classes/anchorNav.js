@@ -67,7 +67,8 @@ export default ((win, doc) => {
 
       _.forEach(navs, (nav) => {
         let targetData = this.getTargetData(nav);
-        if (!current || nav.selector !== current.selector) {
+        let navSelector = nav.getAttribute(this.dataAttr.nav);
+        if (!current || (navSelector !== current.selector)) {
           nav.classList.remove(this.currentClassName)
         }
       });
