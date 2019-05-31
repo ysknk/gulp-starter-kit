@@ -52,7 +52,7 @@ export default ((win, doc) => {
      */
     setCurrentNav(current) {
       let elem = current && current.elem ? current.elem : '';
-      if (elem) {
+      if (elem && !elem.classList.contains(this.currentClassName)) {
         elem.classList.add(this.currentClassName)
       }
     }
