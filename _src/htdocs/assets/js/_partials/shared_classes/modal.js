@@ -495,10 +495,12 @@ export default ((win, doc) => {
      */
     setPosTop() {
       let wrapper = doc.getElementById(this.name.wrapper);
-      if (!wrapper) return;
+      let outer = doc.getElementById(this.name.outer);
+      if (!wrapper && !outer) return;
 
       setTimeout(() => {
-        wrapper.scrollTop = 0;
+        wrapper && wrapper.scrollTop = 0;
+        outer && outer.scrollTop = 0;
       }, 0);
     }
 
