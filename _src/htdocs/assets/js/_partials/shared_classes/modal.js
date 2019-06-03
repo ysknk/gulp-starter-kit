@@ -186,6 +186,8 @@ export default ((win, doc) => {
           data: parseData
         });
 
+        this.setPosTop();
+
         this.imgLoadEnd(modal, () => {
           FN.anime.remove(modal);
 
@@ -249,6 +251,8 @@ export default ((win, doc) => {
 
       FN.anime.remove(content);
       content.innerHTML = html;
+
+      this.setPosTop();
 
       _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
       opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
@@ -439,7 +443,6 @@ export default ((win, doc) => {
         this.setHeight();
       }
       this.setAlign();
-      this.setPosTop();
     }
 
     /**
