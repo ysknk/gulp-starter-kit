@@ -45,6 +45,15 @@
     &:focus
       outline none
 
+  a,
+  input[type="submit"],
+  button
+  label
+    rollover()
+    &:disabled
+      cursor default
+      opacity 1 !important
+
   input,
   textarea,
   button
