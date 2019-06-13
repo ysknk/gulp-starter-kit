@@ -178,6 +178,12 @@ rollover(type = 'opacity', def = .7)
         opacity def
         text-decoration none
 
+    input
+      &:disabled
+        opacity 1 !important
+    &:disabled
+      opacity 1 !important
+
   else if type == 'underline'
     text-decoration none
     &:link,
