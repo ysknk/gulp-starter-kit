@@ -141,8 +141,8 @@ class Html extends TaskMaster {
     })();
 
     // set all data
-    if(!data.global) {
-      data.global = meta;
+    if(!data[`$global`]) {
+      data[`$global`] = meta;
     }
 
     return data;
