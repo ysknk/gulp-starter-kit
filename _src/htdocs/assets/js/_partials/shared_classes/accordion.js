@@ -94,7 +94,18 @@ export default ((win, doc) => {
      * @param {object} contents element
      */
     open(btn, contents) {
-      btn.classList.add(this.openClassName);
+      let data = btn.getAttribute(this.dataAttrClose)
+        || btn.getAttribute(this.dataAttr)
+        || null;
+      let setButtons = (attr) => {
+        let buttons = doc.querySelectorAll(`[${attr}="${data}"]`);
+        _.forEach(buttons, (button) => {
+          button.classList.add(this.openClassName);
+        });
+      };
+
+      setButtons(this.dataAttrClose);
+      setButtons(this.dataAttr);
 
       _.forEach(contents, (content) => {
         _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(btn, content);
@@ -131,7 +142,7 @@ export default ((win, doc) => {
 
       elem.style.overflow = 'visible';
       elem.style.height = 'auto';
-      let max = elem.getBoundingClientRect().height;
+      let max = elem.clientHeight;
       elem.style.overflow = 'hidden';
       elem.style.height = `${now}px`;
 
@@ -148,7 +159,18 @@ export default ((win, doc) => {
      * @param {object} contents element
      */
     close(btn, contents) {
-      btn.classList.remove(this.openClassName);
+      let data = btn.getAttribute(this.dataAttrClose)
+        || btn.getAttribute(this.dataAttr)
+        || null;
+      let setButtons = (attr) => {
+        let buttons = doc.querySelectorAll(`[${attr}="${data}"]`);
+        _.forEach(buttons, (button) => {
+          button.classList.remove(this.openClassName);
+        });
+      };
+
+      setButtons(this.dataAttrClose);
+      setButtons(this.dataAttr);
 
       _.forEach(contents, (content) => {
         _.isFunction(this.onBeforeClose) && this.onBeforeClose(btn, content);
