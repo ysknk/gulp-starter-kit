@@ -133,7 +133,7 @@ export default ((win, doc) => {
       elem.style.height = 'auto';
       let max = elem.getBoundingClientRect().height;
       elem.style.overflow = 'hidden';
-      elem.style.height = now;
+      elem.style.height = `${now}px`;
 
       return {
         now,
@@ -156,6 +156,7 @@ export default ((win, doc) => {
 
         content.classList.remove(this.openClassName);
         content.style.overflow = 'hidden';
+        content.style.height = `${content.clientHeight}px`;
 
         FN.anime({
           targets: content,
