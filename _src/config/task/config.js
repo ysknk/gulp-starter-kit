@@ -47,7 +47,7 @@ module.exports = {
 
   /* iconfont */
   /* ../tasks/iconfont/src/uF001-hoge1.svg */
-  /* ../tasks/iconfont/src/uF001-huga1.svg */
+  /* ../tasks/iconfont/src/uF002-huga1.svg */
   iconfont: {
     src: [`${define.path.config}tasks/iconfont/**/*.svg`],
     dest: `${define.path.dest}assets/iconfont/`,
