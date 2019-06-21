@@ -38,7 +38,7 @@ import intersection from './_partials/shared_classes/intersection';
   FN.axios = axios;
   FN.anime = anime;
 
-  moment.tz.setDefault("Asia/Tokyo");
+  moment.tz.setDefault('Asia/Tokyo');
   FN.moment = moment;
 
   // ua
