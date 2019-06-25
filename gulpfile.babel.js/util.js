@@ -128,6 +128,24 @@ class Util {
   }
 
   /**
+   * setWatchEvent
+   *
+   * @param {object} obj event, path
+   */
+  setWatchEvent(obj) {
+    this._watchEvent = obj;
+  }
+
+  /**
+   * getWatchEvent
+   *
+   * @returns {object} event, path
+   */
+  getWatchEvent() {
+    return this._watchEvent || false;
+  }
+
+  /**
    * getParam
    *
    * @returns {array}
