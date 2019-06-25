@@ -137,6 +137,18 @@ module.exports = class TaskMaster {
   }
 
   /**
+   * setAllWatcher
+   *
+   * @param {object} watcher gulp watch object
+   * @param {object} conf gulp task config
+   */
+  setAllWatcher(watcher, conf) {
+    watcher.on('all', (event, path) => {
+      plugins.util.setWatchEvent({event, path});
+    });
+  }
+
+  /**
    * serv
    *
    * @returns {object}
@@ -231,11 +243,12 @@ module.exports = class TaskMaster {
    * ignoreFilter
    *
    * @param {object} file gulp object
+   * @param {string} filepath
    * @returns {boolean}
    */
-  ignoreFilter(file) {
-    let htdocs = path.relative(this.task.data.htdocsdir, file.path);
-    let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative));
+  ignoreFilter(file, filepath) {
+    let htdocs = path.relative(this.task.data.htdocsdir, file.path || filepath);
+    let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative || filepath));
     let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
     return isDirectoryIgnore && isFileIgnore;
   }
