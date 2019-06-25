@@ -224,6 +224,7 @@ _.forEach(types, (array, key) => {
 
         if(config && config[taskname]) {
           let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : emptyName));
+          taskmaster.setAllWatcher(watcher, config[taskname]);
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
 
           // html only
