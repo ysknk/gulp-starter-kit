@@ -168,6 +168,7 @@ class Html extends TaskMaster {
    */
   build(stream, done, isBuild) {
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
+    let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
 
     stream
       .pipe($.plumber(this.errorMessage()))
