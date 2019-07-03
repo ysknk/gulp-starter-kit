@@ -187,7 +187,7 @@ export default ((win, doc) => {
       let mins = duration.minutes();
       let secs = duration.seconds();
 
-      days = this.setZeroPadding(days, '0', 3);
+      days = this.setZeroPadding(days, '00', 3);
       hours = this.setZeroPadding(hours, '0', 2);
       mins = this.setZeroPadding(mins, '0', 2);
       secs = this.setZeroPadding(secs, '0', 2);
