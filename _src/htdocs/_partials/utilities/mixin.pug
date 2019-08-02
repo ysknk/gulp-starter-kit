@@ -29,7 +29,7 @@ mixin img_src(path, alt)
 mixin section(name, tag="section", type="local", indent="          ")
   != `\n${indent}<!-- #${name}-->`
   #{tag}(id=name class=`${p}section -${name}`)&attributes(attributes)
-    div(class=`${p}section__inner`)
+    div(class=`${p}section_inner`)
       if block
         block
       else
@@ -39,13 +39,13 @@ mixin section(name, tag="section", type="local", indent="          ")
 mixin title(en, ja, h="h2")
   #{h}(class=`${p}title -${h}`)&attributes(attributes)
     if block
-      span(class=`${p}title__inner`)
+      span(class=`${p}title_inner`)
         block
     else
       if en
-        span(class=`${p}title__en`)!= en
+        span(class=`${p}title_en`)!= en
       if ja
-        span(class=`${p}title__ja`)!= ja
+        span(class=`${p}title_ja`)!= ja
 
 //- sns
 //- ex) +set_sns(['twitter', 'facebook', 'line'])
