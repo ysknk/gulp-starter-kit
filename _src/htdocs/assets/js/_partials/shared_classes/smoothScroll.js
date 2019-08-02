@@ -21,8 +21,9 @@ export default ((win, doc) => {
       this.baseElem = 'body';
 
       this.elem = 'a';
-      this.topHash = 'top';
+      this.pageTopHash = 'top';
       this.excludeClassName = 'no-scroll';
+      this.pushHistoryClassName = 'push-hisotry-scroll';
       this.easing = 'easeInOutQuart';
       this.duration = 300;
 
@@ -60,9 +61,10 @@ export default ((win, doc) => {
         }
 
         if (!hash || elem.classList.contains(this.excludeClassName)) return;
+        let pushHistory = elem.classList.contains(this.pushHistoryClassName);
 
         if (e) e.preventDefault();
-        this.goto((hash === `#${this.topHash}`) ? html : target);
+        this.goto((hash === `#${this.pageTopHash}`) ? html : target, pushHistory);
       }, false);
     }
 
@@ -76,7 +78,7 @@ export default ((win, doc) => {
       setTimeout(() => {
         let elem = doc.querySelector(hash);
         if (!elem) return;
-        this.goto(elem);
+        this.goto(elem, false);
       }, 100);
     }
 
@@ -133,9 +135,10 @@ export default ((win, doc) => {
      * goto
      *
      * @param {object} elem element
+     * @param {boolean} setHistory
      * @param {function} cb callback
      */
-    goto(elem, cb) {
+    goto(elem, setHistory, cb) {
       let elemPos = this.getOffsetPos(elem);
       let scrollPos = {
         y: win.pageYOffset
@@ -161,7 +164,9 @@ export default ((win, doc) => {
         }
       });
 
-      this.updateUrlHash(elem.id);
+      if (setHistory) {
+        this.updateUrlHash(elem.id);
+      }
     }
 
     /**
