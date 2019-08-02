@@ -61,10 +61,10 @@ export default ((win, doc) => {
         }
 
         if (!hash || elem.classList.contains(this.excludeClassName)) return;
-        let pushHistory = elem.classList.contains(this.pushHistoryClassName);
+        let isPushHistory = elem.classList.contains(this.pushHistoryClassName);
 
         if (e) e.preventDefault();
-        this.goto((hash === `#${this.pageTopHash}`) ? html : target, pushHistory);
+        this.goto((hash === `#${this.pageTopHash}`) ? html : target, isPushHistory);
       }, false);
     }
 
@@ -186,4 +186,3 @@ export default ((win, doc) => {
   };
 
 })(window, document);
-
