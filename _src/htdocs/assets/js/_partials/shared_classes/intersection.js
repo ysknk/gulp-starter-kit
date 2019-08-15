@@ -33,7 +33,8 @@ export default ((win, doc) => {
         threshold: 0.3// 0 - 1.0 -> screen top - bottom
       };
 
-      this.initializeStyle();
+      this.initializeStyle = `opacity: 0;`;
+      this.setInitializeStyle();
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -41,12 +42,12 @@ export default ((win, doc) => {
     }
 
     /**
-     * initializeStyle
+     * setInitializeStyle
      */
-    initializeStyle() {
+    setInitializeStyle() {
       let headElem = doc.querySelector('head');
       let styleElem = doc.createElement('style');
-      styleElem.innerHTML = `[${this.dataAttr}] { opacity: 0; }`;
+      styleElem.innerHTML = `[${this.dataAttr}] {${this.initializeStyle}}`;
       headElem.appendChild(styleElem);
     }
 
