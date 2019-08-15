@@ -34,10 +34,10 @@ export default ((win, doc) => {
       };
 
       this.initializeStyle = `opacity: 0;`;
-      this.setInitializeStyle();
 
       _.isObject(opts_) && _.extend(this, opts_);
 
+      this.setInitializeStyle();
       // this.initialize();
     }
 
