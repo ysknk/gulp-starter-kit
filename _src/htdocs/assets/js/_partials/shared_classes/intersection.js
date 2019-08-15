@@ -45,6 +45,7 @@ export default ((win, doc) => {
      * setInitializeStyle
      */
     setInitializeStyle() {
+      if (!this.initializeStyle) return;
       let headElem = doc.querySelector('head');
       let styleElem = doc.createElement('style');
       styleElem.innerHTML = `[${this.dataAttr}] {${this.initializeStyle}}`;
