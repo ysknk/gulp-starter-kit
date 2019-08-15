@@ -10,7 +10,7 @@ const head = {
   x_ua_compatible: 'IE=edge',
   robots: '',
   format_detection: 'telephone=no',
-  viewport: 'width=device-width,initial-scale=1',
+  viewport: 'width=device-width,initial-scale=1,shrink-to-fit=no', // or -> width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no
 
   title: 'common title',
   description: 'common description',
