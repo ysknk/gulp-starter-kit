@@ -37,6 +37,7 @@ import intersection from './_partials/shared_classes/intersection';
   FN.uaParser = new uaParserJs();
   FN.axios = axios;
   FN.anime = anime;
+  FN.cookies = cookies;
 
   moment.tz.setDefault('Asia/Tokyo');
   FN.moment = moment;
