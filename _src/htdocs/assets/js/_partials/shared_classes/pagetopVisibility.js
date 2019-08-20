@@ -23,7 +23,7 @@ export default ((win, doc) => {
       this.showClassName = `is-show`;
       this.hideClassName = `is-hide`;
 
-      this.threshold = 0.3;
+      this.threshold = 0.6;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
