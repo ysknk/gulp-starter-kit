@@ -26,9 +26,11 @@ export default ((win, doc) => {
       this.htmlElem = doc.querySelector('html');
       this.cpnCode = this.htmlElem.getAttribute(`data-cpn-code`);
 
-      this.cookieName = `age_auth`;
-      this.cookieValue = `over20`;
-      this.cookieExpires = 365;
+      this.dataWrap = `mileage_save_data`
+      this.dataType = `localStorage`;// localStorage || Cookie
+      this.dataName = `isAgreeAge`;
+      this.dataValue = true;
+      this.dataExpires = 365;
 
       this.template = [
         `<div class="${this.elemSelector}">`,
@@ -67,13 +69,13 @@ export default ((win, doc) => {
       let elem = doc.querySelector(`#${this.wrapId}`);
       if (elem) return;
 
-      let isCheckAge = this.getCookie(this.cookieName);
+      let isCheckAge = this.getLocalData(this.dataName);
 
       // 立ち上げ
       if (!isCheckAge) {
         this.openConfirm(elem);
       }else{
-        this.setAgeCookie();
+        this.setAgeData();
       }
     }
 
@@ -108,7 +110,7 @@ export default ((win, doc) => {
       elem.parentNode.removeChild(elem);
       doc.body.classList.remove(this.openClassName);
 
-      this.setAgeCookie();
+      this.setAgeData();
     }
 
     /**
@@ -131,33 +133,52 @@ export default ((win, doc) => {
     }
 
     /**
-     * getCookie
+     * getLocalData
      *
      * @param {string} name
      * @returns {string}
      */
-    getCookie(name) {
-      return FN.cookies.get(name) || '';
+    getLocalData(name) {
+      if (this.dataType.match(/Cookie/i)) {
+        return FN.cookies.get(name) || '';
+      } else {
+        if (!localStorage) return '';
+        let data = localStorage.getItem(this.dataWrap);
+        return data && JSON.parse(data)[name] || '';
+      }
     }
 
     /**
-     * setCookie
+     * setLocalData
      *
      * @param {string} name
      * @param {string} value
      * @param {object} options
      */
-    setCookie(name, value, options) {
-      FN.cookies.set(name, value, options);
+    setLocalData(name, value, options) {
+      if (this.dataType.match(/Cookie/i)) {
+        FN.cookies.set(name, value, options);
+      } else {
+        if (!localStorage) return;
+
+        let isData = this.getLocalData(this.dataWrap);
+        if (isData) return;
+
+        try {
+          localStorage.setItem(this.dataWrap, `{"${name}": ${value}}`);
+        } catch(e) {
+          console.log(e);
+        }
+      }
     }
 
     /**
-     * setAgeCookie
+     * setAgeData
      *
      */
-    setAgeCookie() {
-      this.setCookie(this.cookieName, this.cookieValue, {
-        expires: this.cookieExpires
+    setAgeData() {
+      this.setLocalData(this.dataName, this.dataValue, {
+        expires: this.dataExpires
       });
     }
 
