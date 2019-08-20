@@ -92,6 +92,12 @@ export default ((win, doc) => {
 
       doc.body.appendChild(node);
       doc.body.classList.add(this.openClassName);
+
+      let event = (e) => {
+        e.preventDefault();
+      };
+      node.removeEventListener('touchmove', event, false);
+      node.addEventListener('touchmove', event, false);
     }
 
     /**
