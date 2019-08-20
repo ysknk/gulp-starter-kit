@@ -21,6 +21,7 @@ export default ((win, doc) => {
 
       this.wrapId = `age-auth`;
       this.elemSelector = this.wrapId;
+      this.openClassName = `is-auth-open`;
 
       this.htmlElem = doc.querySelector('html');
       this.cpnCode = this.htmlElem.getAttribute(`data-cpn-code`);
@@ -31,19 +32,21 @@ export default ((win, doc) => {
 
       this.template = [
         `<div class="${this.elemSelector}">`,
-          `<div class="${this.elemSelector}_text">`,
-            `<p>このキャンペーンはお酒に関する<br>内容を含んでいます。</p>`,
-            `<p>未成年者の飲酒は法律で禁止されております。</p>`,
-            `<p>あなたは20歳以上ですか？</p>`,
+          `<div class="${this.elemSelector}_inner">`,
+            `<div class="${this.elemSelector}_lead">`,
+              `<p class="${this.elemSelector}_text">このキャンペーンはお酒に関する<br>内容を含んでいます。</p>`,
+              `<p class="${this.elemSelector}_text">未成年者の飲酒は法律で禁止されております。</p>`,
+              `<p class="${this.elemSelector}_strong">あなたは20歳以上ですか？</p>`,
+            `</div>`,
+            `<ul class="${this.elemSelector}_buttons">`,
+              `<li class="${this.elemSelector}_button -no">`,
+                `<a href="javascript:void(0)" onclick="javascript:${NS}.ageAuth.setConfirmNo()">いいえ</a>`,
+              `</li>`,
+              `<li class="${this.elemSelector}_button -yes">`,
+                `<a href="javascript:void(0)" onclick="javascript:${NS}.ageAuth.setConfirmYes()">はい</a>`,
+              `</li>`,
+            `</ul>`,
           `</div>`,
-          `<ul class="${this.elemSelector}_buttons">`,
-            `<li class="${this.elemSelector}_button -no">`,
-              `<a href="javascript:void(0)" onclick="javascript:${NS}.ageAuth.setConfirmNo()">いいえ</a>`,
-            `</li>`,
-            `<li class="${this.elemSelector}_button -yes">`,
-              `<a href="javascript:void(0)" onclick="javascript:${NS}.ageAuth.setConfirmYes()">はい</a>`,
-            `</li>`,
-          `</ul>`,
         `</div>`
       ].join('');
 
@@ -88,6 +91,7 @@ export default ((win, doc) => {
       node.innerHTML = this.template;
 
       doc.body.appendChild(node);
+      doc.body.classList.add(this.openClassName);
     }
 
     /**
@@ -96,6 +100,7 @@ export default ((win, doc) => {
     setConfirmYes() {
       let elem = doc.querySelector(`#${this.wrapId}`);
       elem.parentNode.removeChild(elem);
+      doc.body.classList.remove(this.openClassName);
 
       this.setAgeCookie();
     }
@@ -105,6 +110,7 @@ export default ((win, doc) => {
      */
     setConfirmNo() {
       let url = this.getErrorPageUrl();
+      doc.body.classList.remove(this.openClassName);
       location.replace(url);
     }
 
