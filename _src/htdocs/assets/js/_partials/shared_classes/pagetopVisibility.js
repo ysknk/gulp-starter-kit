@@ -46,39 +46,59 @@ export default ((win, doc) => {
       let scrollPosY =  win.pageYOffset;
 
       if (winHeight >= bodyHeight) {
-        this.onHide();
+        this.onElemsHide(elems);
         return;
       }
 
       if (scrollPosY >= (winHeight * this.threshold)) {
-        this.onShow();
+        this.onElemsShow(elems);
       }else{
-        this.onHide();
+        this.onElemsHide(elems);
       }
     }
 
     /**
-     * onHide
+     * onElemsHide
+     *
+     * @param {object} elems
      */
-    onHide() {
-      let elems = doc.querySelectorAll(this.elemSelector);
+    onElemsHide(elems) {
       _.forEach(elems, (elem) => {
         if (elem.classList.contains(this.hideClassName)) return;
-        elem.classList.remove(this.showClassName);
-        elem.classList.add(this.hideClassName);
+        this.onElemHide(elem);
       });
     }
 
     /**
-     * onShow
+     * onElemHide
+     *
+     * @param {object} elem
      */
-    onShow() {
-      let elems = doc.querySelectorAll(this.elemSelector);
+    onElemHide(elem) {
+      elem.classList.remove(this.showClassName);
+      elem.classList.add(this.hideClassName);
+    }
+
+    /**
+     * onElemsShow
+     *
+     * @param {object} elems
+     */
+    onElemsShow(elems) {
       _.forEach(elems, (elem) => {
         if (elem.classList.contains(this.showClassName)) return;
-        elem.classList.remove(this.hideClassName);
-        elem.classList.add(this.showClassName);
+        this.onElemShow(elem);
       });
+    }
+
+    /**
+     * onElemShow
+     *
+     * @param {object} elem
+     */
+    onElemShow(elem) {
+      elem.classList.remove(this.hideClassName);
+      elem.classList.add(this.showClassName);
     }
 
   };
