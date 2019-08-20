@@ -24,7 +24,8 @@ export default ((win, doc) => {
       this.openClassName = `is-auth-open`;
 
       this.htmlElem = doc.querySelector('html');
-      this.cpnCode = this.htmlElem.getAttribute(`data-cpn-code`);
+      this.cpnCode = this.htmlElem.getAttribute(`data-cpn-code`) || ``;
+      this.cpnAuth = this.htmlElem.getAttribute(`data-cpn-auth`) || ``;
 
       this.dataWrap = `mileage_save_data`
       this.dataType = `localStorage`;// localStorage || Cookie
@@ -63,6 +64,7 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
+      if (!this.cpnAuth || !this.cpnAuth.match(/age/i)) return;
       // エラーページでは認証しない
       if (location.href.match(this.getErrorPageUrl())) return;
 
