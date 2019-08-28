@@ -26,15 +26,14 @@ mixin img_src(path, alt)
 
 //- section
 //- ex) +section('hoge')
-mixin section(name, tag="section", type="local", indent="          ")
-  != `\n${indent}<!-- #${name}-->`
+mixin section(name, tag="section", indent="          ")
+  != `\n${indent}<!-- ${name}-->`
   #{tag}(id=name class=`${p}section -${name}`)&attributes(attributes)
-    div(class=`${p}section_inner`)
-      if block
-        block
-      else
-        p No content provided
-  != `\n${indent}<!-- /#${name}-->`
+    if block
+      block
+    else
+      p No content provided
+  != `\n${indent}<!-- /${name}-->`
 
 mixin title(en, ja, h="h2")
   #{h}(class=`${p}title -${h}`)&attributes(attributes)
