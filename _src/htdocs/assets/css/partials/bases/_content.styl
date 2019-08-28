@@ -55,14 +55,24 @@
       opacity 1 !important
 
   input,
-  textarea,
-  button
+  textarea
     padding 0
     background #fff
     appearance none
     line-height inherit
     border none
+    font-size inherit
+    font-family FONT_FAMILY
+    outline none
+    &::-moz-focus-inner
+      border none
+
+  button
+    padding 0
     background none
+    appearance none
+    line-height inherit
+    border none
     font-size inherit
     font-family FONT_FAMILY
     outline none
