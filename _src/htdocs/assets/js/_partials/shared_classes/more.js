@@ -37,13 +37,19 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      let elem = this.getElem();
-      if (!elem) return;
+      let baseElem = this.getElem();
+      if (!baseElem) return;
 
       this.initAllItem();
       this.showNextItems();
 
-      elem.addEventListener('click', (e) => {
+      doc.addEventListener('click', (e) => {
+        if (!e.target || !e.target.closest) return;
+        let elem = e.target.closest([// delegate
+          `[${this.dataAttr.elems}]`
+        ].join(' '));
+        if (e.target === doc || !elem) return;
+
         if (this.isLoading) return;
         this.isLoading = true;
 
@@ -69,6 +75,7 @@ export default ((win, doc) => {
      * @param {object} elem
      */
     initItem(elem) {
+      if (!elem) return;
       elem.classList.add(this.initClassName);
       elem.classList.remove(this.showClassName);
     }
