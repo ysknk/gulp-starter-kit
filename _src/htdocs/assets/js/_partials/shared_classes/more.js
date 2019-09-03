@@ -160,10 +160,7 @@ export default ((win, doc) => {
      * @returns {object}
      */
     getElem() {
-      if (!this.elem) {
-        this.elem = doc.querySelector(`[${this.dataAttr.elems}]`);
-      }
-      return this.elem;
+      return doc.querySelector(`[${this.dataAttr.elems}]`);
     }
 
     /**
