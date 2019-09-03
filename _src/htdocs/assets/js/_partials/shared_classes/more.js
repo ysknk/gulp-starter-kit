@@ -150,6 +150,7 @@ export default ((win, doc) => {
      */
     removeButton() {
       let buttonElem = this.getElem();
+      if (!buttonElem) return;
       buttonElem.parentNode.removeChild(buttonElem);
     }
 
