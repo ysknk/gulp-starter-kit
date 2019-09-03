@@ -21,7 +21,7 @@ export default ((win, doc) => {
       this.baseElem = 'body';
 
       this.elem = 'a';
-      this.queryName = '';
+      this.queryNames = [];
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -32,7 +32,7 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      if (!this.queryName) return;
+      if (!this.queryNames.length) return;
 
       doc.addEventListener('click', (e) => {
         if (!e.target || !e.target.closest) return;
@@ -56,14 +56,16 @@ export default ((win, doc) => {
     updateHref(elem) {
       if(!elem.href || elem.href.match(/(^javascript|#)/i)) return;
 
-      let value = this.getUrlParam(this.queryName);
-      if (!value) return;
+      _.forEach(this.queryNames, (queryName) => {
+        let value = this.getUrlParam(queryName);
+        if (!value) return;
 
-      let join = elem.href.match(/\?/) ? '&' : '?';
-      let param = `${this.queryName}=${value}`;
-      if(elem.href.match(param)) return;
+        let join = elem.href.match(/\?/) ? '&' : '?';
+        let param = `${queryName}=${value}`;
+        if(elem.href.match(param)) return;
 
-      elem.href = `${elem.href}${join}${param}`;
+        elem.href = `${elem.href}${join}${param}`;
+      });
     }
 
     /**
