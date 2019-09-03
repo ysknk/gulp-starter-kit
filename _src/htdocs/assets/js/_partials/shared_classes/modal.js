@@ -497,9 +497,9 @@ export default ((win, doc) => {
      * setPosTop
      */
     setPosTop() {
-      let wrapper = doc.getElementById(this.name.wrapper);
-      let outer = doc.getElementById(this.name.outer);
-      if (!wrapper && !outer) return;
+      let wrapperElem = doc.getElementById(this.name.wrapper);
+      let outerElem = doc.getElementById(this.name.outer);
+      if (!wrapperElem && !outerElem) return;
 
       setTimeout(() => {
         if (wrapperElem) {
