@@ -61,6 +61,7 @@ export default ((win, doc) => {
 
       let join = elem.href.match(/\?/) ? '&' : '?';
       let param = `${this.queryName}=${value}`;
+      if(elem.href.match(param)) return;
 
       elem.href = `${elem.href}${join}${param}`;
     }
