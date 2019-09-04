@@ -44,9 +44,9 @@ export default ((win, doc) => {
       this.name.modal = 'site-modal';
       this.name.close = `${this.name.modal}_close`;
       this.name.container = `${this.name.modal}_container`;
-      this.name.blocker = `${this.name.modal}_blocker`;
       this.name.wrapper = `${this.name.modal}_wrapper`;
       this.name.outer = `${this.name.modal}_outer`;
+      this.name.background = `${this.name.modal}_background`;
       this.name.inner = `${this.name.modal}_inner`;
       this.name.content = `${this.name.modal}_content`;
 
@@ -80,14 +80,10 @@ export default ((win, doc) => {
       };
 
       this.template = ['',
-        `<div id="${this.name.wrapper}" data-modal-close="" onclick="">`,
+        `<div id="${this.name.wrapper}">`,
           `<div id="${this.name.outer}">`,
-
-            `<div class="${this.name.blocker}" onclick=""></div>`,
-
+            `<div id="${this.name.background}" data-modal-close="" onclick=""></div>`,
             `<div id="${this.name.inner}">`,
-
-              `<div class="${this.name.blocker}" onclick=""></div>`,
 
               `<div id="${this.name.container}">`,
                 `<div id="${this.name.close}">`,
@@ -123,18 +119,13 @@ export default ((win, doc) => {
         if (!e.target || !e.target.closest) return;
         let openElem = e.target.closest(open);// delegate
         let closeElem = e.target.closest(close);// delegate
-        let modalElem = e.target.closest(`#${this.name.content}`);// delegate
-        let blockElem = e.target.closest(`.${this.name.blocker}`);// delegate
 
-        let isElemUndefined = (!blockElem && !openElem && !closeElem && !modalElem);
+        let isElemUndefined = (!openElem && !closeElem);
 
         if (e.target === doc || isElemUndefined) return;
-        // cancel
-        if (blockElem || modalElem) {
-          e.preventDefault();
-          e.stopPropagation();
+
         // open
-        } else if (openElem) {
+        if (openElem) {
           this.open(openElem);
         // close
         } else if (closeElem) {
@@ -157,13 +148,10 @@ export default ((win, doc) => {
         return;
       }
 
-      let template = elem.getAttribute(this.dataAttr.template);
-      template = doc.querySelector(template);
-
+      let template = this.getTemplateElem(elem, opts);
       let modal = this.getModal(template);
-
       let html = _.template(template.innerHTML);
-      let parseData = this.getParseData(elem);
+      let parseData = this.getParseData(elem, opts);
 
       modal.classList.add(this.state.open);
       elem.classList.add(this.state.open);
@@ -216,13 +204,30 @@ export default ((win, doc) => {
     }
 
     /**
+     * getTemplateElem
+     *
+     * @param {object} elem
+     * @param {object} opts
+     * @returns {object}
+     */
+    getTemplateElem(elem, opts) {
+      let template = opts && opts.template
+        ? opts.template
+        : elem.getAttribute(this.dataAttr.template);
+      return doc.querySelector(template);
+    }
+
+    /**
      * getParseData
      *
      * @param {object} elem
+     * @param {object} opts
      * @returns {object}
      */
-    getParseData(elem) {
-      let data = elem.getAttribute(this.dataAttr.open) || '';
+    getParseData(elem, opts) {
+      let data = opts && opts.obj
+        ? opts.obj
+        : (elem.getAttribute(this.dataAttr.open) || '');
       let parseData = null;
 
       if (!data) return;
@@ -407,6 +412,8 @@ export default ((win, doc) => {
       this.setScrollTop(scrollY);
 
       wrapper.style.position = 'fixed';
+      wrapper.style.right = '0';
+      wrapper.style.left = '0';
       wrapper.style.width = '100%';
       wrapper.style.top = `${-1 * scrollY}px`;
 
@@ -425,6 +432,8 @@ export default ((win, doc) => {
       html.classList.remove(this.state.open);
 
       wrapper.style.position = '';
+      wrapper.style.right = '';
+      wrapper.style.left = '';
       wrapper.style.width = '';
       wrapper.style.top = '';
 
