@@ -225,8 +225,8 @@ export default ((win, doc) => {
      * @returns {object}
      */
     getParseData(elem, opts) {
-      let data = opts && opts.obj
-        ? opts.obj
+      let data = opts && opts.data
+        ? opts.data
         : (elem.getAttribute(this.dataAttr.open) || '');
       let parseData = null;
 
