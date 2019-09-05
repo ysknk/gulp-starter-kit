@@ -229,10 +229,10 @@ export default ((win, doc) => {
       let parseData = null;
 
       if (opts && opts.data) {
-        parseData = data;
+        parseData = opts.data;
+      } else if (!data) {
+        return;
       }
-
-      if (!data) return;
 
       if (!parseData) {
         try {
