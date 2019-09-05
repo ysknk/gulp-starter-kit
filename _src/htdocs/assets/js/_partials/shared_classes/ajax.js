@@ -68,20 +68,14 @@ export default ((win, doc) => {
 
       return FN.axios(config)
         .then((response) => {
-          return new Promise((resolve, reject) => {
-            _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
-            _.isFunction(this.onSuccess) && this.onSuccess(response, this);
-            this.end(elem, config);
-            return resolve();
-          });
+          _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
+          _.isFunction(this.onSuccess) && this.onSuccess(response, this);
+          this.end(elem, config);
         })
         .catch((error) => {
-          return new Promise((resolve, reject) => {
-            _.isFunction(cb.onFailure) && cb.onFailure(error, this);
-            _.isFunction(this.onFailure) && this.onFailure(error, this);
-            this.end(elem, config);
-            return resolve();
-          });
+          _.isFunction(cb.onFailure) && cb.onFailure(error, this);
+          _.isFunction(this.onFailure) && this.onFailure(error, this);
+          this.end(elem, config);
         });
     }
 
