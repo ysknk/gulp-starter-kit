@@ -225,20 +225,24 @@ export default ((win, doc) => {
      * @returns {object}
      */
     getParseData(elem, opts) {
-      let data = opts && opts.data
-        ? opts.data
-        : (elem.getAttribute(this.dataAttr.open) || '');
+      let data = elem.getAttribute(this.dataAttr.open) || '';
       let parseData = null;
+
+      if (opts && opts.data) {
+        parseData = data;
+      }
 
       if (!data) return;
 
-      try {
-        parseData = JSON.parse(data);
-      }catch(e) {
-        if (console.warn) {
-          console.warn(e);
-        } else {
-          console.log(e);
+      if (!parseData) {
+        try {
+          parseData = JSON.parse(data);
+        }catch(e) {
+          if (console.warn) {
+            console.warn(e);
+          } else {
+            console.log(e);
+          }
         }
       }
 
