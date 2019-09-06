@@ -5,6 +5,8 @@ export default ((win, doc) => {
 
   /**
    * inheritParameter
+   * フォームのsubmitは対応していません
+   * ページ制限も特にしていない、body内のaタグに対応
    */
   return class inheritParameter {
 
@@ -42,9 +44,11 @@ export default ((win, doc) => {
         ].join(' '));
         if (e.target === doc || !elem) return;
 
-        e.preventDefault();
-        this.updateHref(elem);
-        this.gotoHref(elem);
+        if(elem.href && !elem.href.match(/(javascript\:|#)/i)) {
+          e.preventDefault();
+          this.updateHref(elem);
+          this.gotoHref(elem);
+        }
       });
     }
 
@@ -54,8 +58,6 @@ export default ((win, doc) => {
      * @param {object} elem a tag
      */
     updateHref(elem) {
-      if(!elem.href || elem.href.match(/(^javascript|#)/i)) return;
-
       _.forEach(this.queryNames, (queryName) => {
         let value = this.getUrlParam(queryName);
         if (!value) return;
