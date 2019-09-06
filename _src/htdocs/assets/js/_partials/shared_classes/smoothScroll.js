@@ -56,7 +56,7 @@ export default ((win, doc) => {
           href = elem.getAttribute('href');
           target = doc.querySelector(href);
           hash = this.getHash(href);
-        }catch(e) {
+        } catch(e) {
           return;
         }
 
