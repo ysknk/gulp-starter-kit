@@ -62,9 +62,13 @@ export default ((win, doc) => {
 
         if (!hash || elem.classList.contains(this.excludeClassName)) return;
         let isPushHistory = elem.classList.contains(this.pushHistoryClassName);
-
         if (e) e.preventDefault();
-        this.goto((hash === `#${this.pageTopHash}`) ? html : target, isPushHistory);
+
+        this.goto(((hash === `#${this.pageTopHash}`)
+          ? html
+          : target),
+          isPushHistory
+        );
       }, false);
     }
 
@@ -186,3 +190,4 @@ export default ((win, doc) => {
   };
 
 })(window, document);
+
