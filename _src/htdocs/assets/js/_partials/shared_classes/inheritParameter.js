@@ -5,8 +5,6 @@ export default ((win, doc) => {
 
   /**
    * inheritParameter
-   * フォームのsubmitは対応していません
-   * ページ制限も特にしていない、body内のaタグに対応
    */
   return class inheritParameter {
 
