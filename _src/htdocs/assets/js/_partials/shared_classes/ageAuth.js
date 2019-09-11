@@ -176,7 +176,6 @@ export default ((win, doc) => {
 
     /**
      * setAgeData
-     *
      */
     setAgeData() {
       this.setLocalData(this.dataName, this.dataValue, {
