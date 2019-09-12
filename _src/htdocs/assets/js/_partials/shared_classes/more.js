@@ -26,6 +26,7 @@ export default ((win, doc) => {
       this.showClassName = `is-show`;
       this.initClassName = `is-init`;
       this.isLoading = false;
+      this.count = 5;//default
       this.page = 0;
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -137,7 +138,9 @@ export default ((win, doc) => {
      */
     getCalculateCount() {
       let buttonElem = this.getElem();
-      let count = buttonElem.getAttribute(this.dataAttr.count);
+      let elemCount = buttonElem
+        && buttonElem.getAttribute(this.dataAttr.count);
+      let count = elemCount || this.count;
       let nowPage = this.getPage();
       return {
         start: (nowPage - 1) * count,
