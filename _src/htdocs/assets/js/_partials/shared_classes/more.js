@@ -19,15 +19,21 @@ export default ((win, doc) => {
       }
 
       this.dataAttr = {
+        initcount: `data-more-initcount`,
         count: `data-more-count`,
-        elems: `data-more-elems`,
+        elems: `data-more-elems`
       };
 
       this.showClassName = `is-show`;
       this.initClassName = `is-init`;
+
       this.isLoading = false;
+
+      this.initcount = 5;
       this.count = 5;
       this.page = 0;
+
+      this.isInit = true;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -98,8 +104,20 @@ export default ((win, doc) => {
     showItems(page) {
       let buttonElem = this.getElem();
       if (!buttonElem) return;
+
+      let isInit = this.getIsInit();
+
       let elems = this.getItemElems();
-      let count = this.getCalculateCount();
+      var count = this.getCalculateCount(page);
+
+      // initcount と countが合わない場合
+      if (!isInit) {
+        if (this.getInitCount() != this.getCount()) {
+          var diffcount = (this.getInitCount() - this.getCount()) + this.getInitCount();
+          count.start = count.start - this.getInitCount() + diffcount;
+          count.limit = count.limit - this.getInitCount() + diffcount;
+        }
+      }
 
       if (count.start > elems.length) {
         this.onError(() => {
@@ -123,6 +141,7 @@ export default ((win, doc) => {
           break;
         }
       }
+
     }
 
     /**
@@ -134,14 +153,54 @@ export default ((win, doc) => {
     }
 
     /**
-     * getCalculateCount
+     * getCountNumber
+     *
+     * @returns {number}
      */
-    getCalculateCount() {
+    getCountNumber() {
+      var count = this.getCount()
+
+      if (this.getIsInit()) {
+        this.setIsInit(false);
+        count = this.getInitCount();
+      }
+
+      return count;
+    }
+
+    /**
+     * getCount
+     *
+     * @returns {number}
+     */
+    getCount() {
+      let buttonElem = this.getElem();
+      var elemCount = buttonElem
+        && buttonElem.getAttribute(this.dataAttr.count);
+      return elemCount || this.count;
+    }
+
+    /**
+     * getInitCount
+     *
+     * @returns {number}
+     */
+    getInitCount() {
       let buttonElem = this.getElem();
       let elemCount = buttonElem
-        && buttonElem.getAttribute(this.dataAttr.count);
-      let count = elemCount || this.count;
-      let nowPage = this.getPage();
+        && buttonElem.getAttribute(this.dataAttr.initcount);
+      return elemCount || this.initcount;
+    }
+
+    /**
+     * getCalculateCount
+     *
+     * @param {number} page
+     * @returns {object}
+     */
+    getCalculateCount(page) {
+      let count = this.getCountNumber();
+      let nowPage = page || this.getPage();
       return {
         start: (nowPage - 1) * count,
         limit: nowPage * count
@@ -191,6 +250,15 @@ export default ((win, doc) => {
     }
 
     /**
+     * setPage
+     *
+     * @param {number} page
+     */
+    setPage(page) {
+      this.page = page;
+    }
+
+    /**
      * getPage
      *
      * @returns {number}
@@ -200,17 +268,39 @@ export default ((win, doc) => {
     }
 
     /**
+     * setIsInit
+     *
+     * @param {boolean} bool
+     */
+    setIsInit(bool) {
+      this.isInit = bool;
+    }
+
+    /**
+     * getIsInit
+     *
+     * @returns {boolean}
+     */
+    getIsInit() {
+      return this.isInit;
+    }
+
+    /**
      * incrementPage
+     *
+     * @returns {number}
      */
     incrementPage() {
-      this.page++;
+      return this.page++;
     }
 
     /**
      * decrementPage
+     *
+     * @returns {number}
      */
     decrementPage() {
-      this.page--;
+      return this.page--;
     }
 
   };
