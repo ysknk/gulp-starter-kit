@@ -26,7 +26,7 @@ export default ((win, doc) => {
       this.showClassName = `is-show`;
       this.initClassName = `is-init`;
       this.isLoading = false;
-      this.count = 5;//default
+      this.count = 5;
       this.page = 0;
 
       _.isObject(opts_) && _.extend(this, opts_);
