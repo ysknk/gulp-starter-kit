@@ -113,7 +113,7 @@ export default ((win, doc) => {
       // initcount と countが合わない場合
       if (!isInit) {
         if (this.getInitCount() != this.getCount()) {
-          var diffcount = (this.getInitCount() - this.getCount()) + this.getInitCount();
+          let diffcount = (this.getInitCount() - this.getCount()) + this.getInitCount();
           count.start = count.start - this.getInitCount() + diffcount;
           count.limit = count.limit - this.getInitCount() + diffcount;
         }
@@ -175,7 +175,7 @@ export default ((win, doc) => {
      */
     getCount() {
       let buttonElem = this.getElem();
-      var elemCount = buttonElem
+      let elemCount = buttonElem
         && buttonElem.getAttribute(this.dataAttr.count);
       return elemCount || this.count;
     }
