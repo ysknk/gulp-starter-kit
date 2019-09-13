@@ -67,23 +67,51 @@ export default ((win, doc) => {
       if (!this.isLoading[config.id]) this.isLoading[config.id] = false;
       if (this.isLoading[config.id]) return;
 
+      let startDate = new Date();
+      let startTime = startDate.getTime();
+
       this.start(elem, config);
 
       return FN.axios(config)
         .then((response) => {
+          let duration = this.getCalcurateProcTime(
+            startTime,
+            config.successDuration
+          );
+
           setTimeout(() => {
             _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
             _.isFunction(this.onSuccess) && this.onSuccess(response, this);
             this.end(elem, config);
-          }, config.successDuration);
+          }, duration);
         })
         .catch((error) => {
+          let duration = this.getCalcurateProcTime(
+            startTime,
+            config.failureDuration
+          );
+
           setTimeout(() => {
             _.isFunction(cb.onFailure) && cb.onFailure(error, this);
             _.isFunction(this.onFailure) && this.onFailure(error, this);
             this.end(elem, config);
-          }, config.failureDuration);
+          }, duration);
         });
+    }
+
+    /**
+     * getCalcurateProcTime
+     *
+     * @param {number} startTime
+     * @param {number} baseTime
+     */
+    getCalcurateProcTime(startTime, baseTime) {
+      let endDate = new Date();
+      let endTime = endDate.getTime();
+      let procTime = endTime - startTime;
+      return (baseTime - procTime) > 0
+        ? baseTime - procTime
+        : 0;
     }
 
     /**
