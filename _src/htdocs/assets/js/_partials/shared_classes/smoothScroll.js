@@ -113,9 +113,9 @@ export default ((win, doc) => {
      * @param {string} hash element src
      */
     updateUrlHash(hash) {
-      if (typeof win === 'undefined' ||
-        typeof win.history === 'undefined' ||
-          typeof win.history.pushState === 'undefined') return;
+      if (typeof win === 'undefined'
+        || typeof win.history === 'undefined'
+        || typeof win.history.pushState === 'undefined') return;
       win.history.pushState({}, '', hash ? `#${hash}` : '');
     }
 
@@ -127,7 +127,7 @@ export default ((win, doc) => {
      */
     getOffsetPos(elem) {
       let pos = {x: 0, y: 0};
-      while(elem){
+      while(elem) {
         pos.y += elem.offsetTop || 0;
         pos.x += elem.offsetLeft || 0;
         elem = elem.offsetParent;
