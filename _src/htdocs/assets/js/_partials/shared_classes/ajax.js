@@ -75,14 +75,14 @@ export default ((win, doc) => {
             _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
             _.isFunction(this.onSuccess) && this.onSuccess(response, this);
             this.end(elem, config);
-          }, this.successDuration);
+          }, config.successDuration);
         })
         .catch((error) => {
           setTimeout(() => {
             _.isFunction(cb.onFailure) && cb.onFailure(error, this);
             _.isFunction(this.onFailure) && this.onFailure(error, this);
             this.end(elem, config);
-          }, this.failureDuration);
+          }, config.failureDuration);
         });
     }
 
