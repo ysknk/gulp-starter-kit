@@ -7,8 +7,9 @@ import styles from './_partials/polyfills/styles';
 import uaParserJs from 'ua-parser-js';
 import axios from 'axios';
 import anime from 'animejs';
-import cookies from 'js-cookie';
-import moment from 'moment-timezone';
+// import cookies from 'js-cookie';
+// import moment from 'moment-timezone';
+
 // import _ from 'lodash';//look for globals/variable
 
 import ua from './_partials/shared_classes/ua';
@@ -18,12 +19,12 @@ import smoothScroll from './_partials/shared_classes/smoothScroll';
 import accordion from './_partials/shared_classes/accordion';
 import modal from './_partials/shared_classes/modal';
 import tab from './_partials/shared_classes/tab';
-import pageShare from './_partials/shared_classes/pageShare';
-import expander from './_partials/shared_classes/expander';
-import ellipsis from './_partials/shared_classes/ellipsis';
-import countdown from './_partials/shared_classes/countdown';
-import anchorNav from './_partials/shared_classes/anchorNav';
-import parallax from './_partials/shared_classes/parallax';
+// import pageShare from './_partials/shared_classes/pageShare';
+// import expander from './_partials/shared_classes/expander';
+// import ellipsis from './_partials/shared_classes/ellipsis';
+// import countdown from './_partials/shared_classes/countdown';
+// import anchorNav from './_partials/shared_classes/anchorNav';
+// import parallax from './_partials/shared_classes/parallax';
 import intersection from './_partials/shared_classes/intersection';
 
 /**
@@ -37,10 +38,10 @@ import intersection from './_partials/shared_classes/intersection';
   FN.uaParser = new uaParserJs();
   FN.axios = axios;
   FN.anime = anime;
-  FN.cookies = cookies;
+  // FN.cookies = cookies;
 
-  moment.tz.setDefault('Asia/Tokyo');
-  FN.moment = moment;
+  // moment.tz.setDefault('Asia/Tokyo');
+  // FN.moment = moment;
 
   // ua
   FN.ua = new ua();
@@ -82,24 +83,24 @@ import intersection from './_partials/shared_classes/intersection';
   FN.tab.initialize();
 
   // pageShare
-  FN.pageShare = new pageShare();
-  FN.pageShare.initialize();
+  // FN.pageShare = new pageShare();
+  // FN.pageShare.initialize();
 
   // expander
-  FN.expander = new expander();
-  FN.expander.initialize();
+  // FN.expander = new expander();
+  // FN.expander.initialize();
 
   // ellipsis
-  FN.ellipsis = new ellipsis();
+  // FN.ellipsis = new ellipsis();
 
   // countdown
-  FN.countdown = new countdown();
+  // FN.countdown = new countdown();
 
   // anchorNav
-  FN.anchorNav = new anchorNav();
+  // FN.anchorNav = new anchorNav();
 
   // parallax
-  FN.parallax = new parallax();
+  // FN.parallax = new parallax();
 
   // intersection
   FN.intersection = new intersection();
@@ -111,11 +112,11 @@ import intersection from './_partials/shared_classes/intersection';
     FN.mediaQuery.update();
     FN.accordion.setClose();
     FN.tab.setActive();
-    FN.expander.updateAll();
-    FN.ellipsis.updateAll();
-    FN.countdown.update();
-    FN.anchorNav.update();
-    FN.parallax.update();
+    // FN.expander.updateAll();
+    // FN.ellipsis.updateAll();
+    // FN.countdown.update();
+    // FN.anchorNav.update();
+    // FN.parallax.update();
     FN.intersection.initialize();
     FN.intersection.update();
   }, false);
@@ -127,15 +128,15 @@ import intersection from './_partials/shared_classes/intersection';
   win.addEventListener('resize', (e) => {
     FN.mediaQuery.update();
     FN.modal.update();
-    FN.anchorNav.update();
-    FN.parallax.update();
+    // FN.anchorNav.update();
+    // FN.parallax.update();
     FN.intersection.update();
   }, false);
 
   win.addEventListener('scroll', (e) => {
     FN.modal.update();
-    FN.anchorNav.update();
-    FN.parallax.update();
+    // FN.anchorNav.update();
+    // FN.parallax.update();
     FN.intersection.update();
   }, false);
 
