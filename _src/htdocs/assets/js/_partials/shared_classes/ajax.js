@@ -34,7 +34,10 @@ export default ((win, doc) => {
         id: 'request',
         method: 'get',
         url: '',
-        timeout: 5000
+        timeout: 5000,
+
+        successDuration: 0,
+        failureDuration: 0
       };
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -68,14 +71,18 @@ export default ((win, doc) => {
 
       return FN.axios(config)
         .then((response) => {
-          _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
-          _.isFunction(this.onSuccess) && this.onSuccess(response, this);
-          this.end(elem, config);
+          setTimeout(() => {
+            _.isFunction(cb.onSuccess) && cb.onSuccess(response, this);
+            _.isFunction(this.onSuccess) && this.onSuccess(response, this);
+            this.end(elem, config);
+          }, this.successDuration);
         })
         .catch((error) => {
-          _.isFunction(cb.onFailure) && cb.onFailure(error, this);
-          _.isFunction(this.onFailure) && this.onFailure(error, this);
-          this.end(elem, config);
+          setTimeout(() => {
+            _.isFunction(cb.onFailure) && cb.onFailure(error, this);
+            _.isFunction(this.onFailure) && this.onFailure(error, this);
+            this.end(elem, config);
+          }, this.failureDuration);
         });
     }
 
