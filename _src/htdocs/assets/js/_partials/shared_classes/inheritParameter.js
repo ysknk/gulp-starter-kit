@@ -42,7 +42,7 @@ export default ((win, doc) => {
         ].join(' '));
         if (e.target === doc || !elem) return;
 
-        if(elem.href && !elem.href.match(/(javascript\:|#)/i)) {
+        if (elem.href && !elem.href.match(/(javascript\:|#)/i)) {
           e.preventDefault();
           this.updateHref(elem);
           this.gotoHref(elem);
@@ -62,7 +62,7 @@ export default ((win, doc) => {
 
         let join = elem.href.match(/\?/) ? '&' : '?';
         let param = `${queryName}=${value}`;
-        if(elem.href.match(param)) return;
+        if (elem.href.match(param)) return;
 
         elem.href = `${elem.href}${join}${param}`;
       });
@@ -76,7 +76,7 @@ export default ((win, doc) => {
     gotoHref(elem) {
       if (!elem.target || elem.target.match(/^_self$/i)) {
         location.href = elem.href;
-      }else{
+      } else {
         window.open(elem.href);
       }
     }
@@ -89,8 +89,8 @@ export default ((win, doc) => {
      * @returns {string} value
      */
     getUrlParam(name, url) {
-      if(!name) return;
-      if(!url) url = location.href;
+      if (!name) return;
+      if (!url) url = location.href;
       name = name.replace(/[\[\]]/g, '\\$&');
 
       let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
