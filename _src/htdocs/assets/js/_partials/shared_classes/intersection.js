@@ -199,7 +199,7 @@ export default ((win, doc) => {
      */
     getOffsetPos(elem) {
       let pos = {x: 0, y: 0};
-      while(elem){
+      while(elem) {
         pos.y += elem.offsetTop || 0;
         pos.x += elem.offsetLeft || 0;
         elem = elem.offsetParent;
