@@ -141,12 +141,12 @@ export default ((win, doc) => {
      * @returns {string}
      */
     getLocalData(name) {
-      if (this.dataType.match(/Cookie/i)) {
-        return FN.cookies.get(name) || '';
-      } else {
+      if (this.dataType.match(/^localStorage$/i)) {
         if (!localStorage) return '';
         let data = localStorage.getItem(this.dataWrap);
         return data && JSON.parse(data)[name] || '';
+      } else {
+        return FN.cookies.get(name) || '';
       }
     }
 
@@ -158,9 +158,7 @@ export default ((win, doc) => {
      * @param {object} options
      */
     setLocalData(name, value, options) {
-      if (this.dataType.match(/Cookie/i)) {
-        FN.cookies.set(name, value, options);
-      } else {
+      if (this.dataType.match(/^localStorage$/i)) {
         if (!localStorage) return;
 
         let isData = this.getLocalData(this.dataWrap);
@@ -171,6 +169,8 @@ export default ((win, doc) => {
         } catch(e) {
           console.log(e);
         }
+      } else {
+        FN.cookies.set(name, value, options);
       }
     }
 
