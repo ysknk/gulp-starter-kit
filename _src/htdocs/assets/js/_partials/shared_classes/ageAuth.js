@@ -28,7 +28,7 @@ export default ((win, doc) => {
       this.cpnAuth = this.htmlElem.getAttribute(`data-cpn-auth`) || ``;
 
       this.dataWrap = `mileage_data`
-      this.dataType = `Cookie`;// localStorage || Cookie
+      this.dataType = `Cookie`;// localStorage || Cookie[default]
       this.dataName = `isAgreeAge`;
       this.dataValue = true;
       this.dataExpires = 365;
