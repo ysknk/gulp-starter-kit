@@ -9,11 +9,11 @@
     return bodyElem.classList.contains(PAGE_NAME);
   }
 
-  function init() {}
+  function initialize() {}
 
   doc.addEventListener('DOMContentLoaded', (e) => {
     if (!isCurrentPage()) return;
-    init();
+    initialize();
   }, false);
 
 })(window, document);
