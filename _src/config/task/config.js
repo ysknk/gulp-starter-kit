@@ -50,10 +50,10 @@ module.exports = {
   /* ../tasks/iconfont/src/uF002-huga1.svg */
   iconfont: {
     src: [`${define.path.config}tasks/iconfont/**/*.svg`],
-    dest: `${define.path.dest}assets/iconfont/`,
+    dest: `${define.path.dest}assets/font/`,
     options: {
       startUnicode: 0xF001,
-      fontName: 'icons1',
+      fontName: 'icon1',
       normalize: true,
       fontHeight: 500,
       prependUnicode: true,
