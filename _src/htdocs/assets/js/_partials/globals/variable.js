@@ -1,6 +1,9 @@
 export default ((win, doc) => {
   'use strict';
 
+  const PREFIX = 'site-';
+  if (!win['PREFIX']) win['PREFIX'] = PREFIX;
+
   const NS = '$';
   if (!win['NS']) win['NS'] = NS;
   if (!win[NS]) win[NS] = {};
