@@ -5,11 +5,11 @@ font_face(name, type, weight, style, hasType = false)
     else
       font-family name
 
-    src url('../webfont/' + name + (type ? '-' + type : '') + '.eot')
-    src url('../webfont/' + name + (type ? '-' + type : '') + '.eot?#iefix') format('embedded-opentype'),
-      url('../webfont/' + name + (type ? '-' + type : '') + '.woff2') format('woff2'),
-      url('../webfont/' + name + (type ? '-' + type : '') + '.woff') format('woff'),
-      url('../webfont/' + name + (type ? '-' + type : '') + '.ttf') format('truetype')
+    src url('../font/' + name + (type ? '-' + type : '') + '.eot')
+    src url('../font/' + name + (type ? '-' + type : '') + '.eot?#iefix') format('embedded-opentype'),
+      url('../font/' + name + (type ? '-' + type : '') + '.woff2') format('woff2'),
+      url('../font/' + name + (type ? '-' + type : '') + '.woff') format('woff'),
+      url('../font/' + name + (type ? '-' + type : '') + '.ttf') format('truetype')
 
     if weight
       font-weight weight
