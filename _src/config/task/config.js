@@ -57,7 +57,7 @@ module.exports = {
       normalize: true,
       fontHeight: 500,
       prependUnicode: true,
-      formats: ['ttf', 'eot', 'woff'],
+      formats: ['ttf', 'eot', 'woff', 'woff2'],
     }
   }
 
