@@ -1,8 +1,12 @@
+const title = `common title`;
+const description = `common description`;
+const url = ``;
+
 const head = {
   lang: 'ja',
   charset: 'utf-8',
 
-  // canonical: 'http://example.com/',
+  // canonical: `${url}`,
 
   // favicon: '/favicon.ico',
   // apple_touch_icon: '/apple-touch-icon.png',
@@ -12,18 +16,20 @@ const head = {
   format_detection: 'telephone=no',
   viewport: 'width=device-width,initial-scale=1,shrink-to-fit=no', // or -> width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no
 
-  title: 'common title',
-  description: 'common description',
+  title,
+  description,
   keywords: 'common keywords',
 
   css: ['style.css'],
   js: ['script.js'],
 
   // og: {
-  //   url: 'http://example.com/'
+  //   url: `${url}`,
+  //   title,
+  //   description,
   // },
   // twitter: {
-  //   url: 'http://example.com/'
+  //   url: `${url}`,
   // }
 };
 
