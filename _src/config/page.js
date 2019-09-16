@@ -1,3 +1,5 @@
+const site_name = ``;
+const separator = ` | `;
 const title = `common title`;
 const description = `common description`;
 const url = ``;
@@ -24,6 +26,8 @@ const head = {
   js: ['script.js'],
 
   // og: {
+  //   site_name,
+  //   type: `article`,
   //   url: `${url}`,
   //   title,
   //   description,
