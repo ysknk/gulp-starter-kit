@@ -21,13 +21,24 @@ export default ((win, doc) => {
       this.dataAttr = {
         initcount: `data-more-initcount`,
         count: `data-more-count`,
-        elems: `data-more-elems`
+        elems: `data-more-elems`,
+
+        labelShow: `data-more-label-show`,
+        labelHide: `data-more-label-hide`
       };
+
+      this.wrapSelector = ``;
 
       this.showClassName = `is-show`;
       this.initClassName = `is-init`;
 
+      this.hideClassName = `is-hide`;
+
+      this.notMoreClassName = `not-more`;
+
       this.isLoading = false;
+
+      this.defaultLabel = `もっと見る`;
 
       this.initcount = 5;
       this.count = 5;
@@ -44,11 +55,7 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      let baseElem = this.getElem();
-      if (!baseElem) return;
-
-      this.initAllItem();
-      this.showNextItems();
+      this.listInitialize();
 
       doc.addEventListener('click', (e) => {
         if (!e.target || !e.target.closest) return;
@@ -60,10 +67,47 @@ export default ((win, doc) => {
         if (this.isLoading) return;
         this.isLoading = true;
 
-        this.showNextItems();
+        if (this.isShow()) {
+          this.showNextItems();
+        } else {
+          this.listInitialize();
+          this.gotoTop();
+        }
 
         this.isLoading = false;
       }, false);
+    }
+
+    /**
+     * gotoTop
+     */
+    gotoTop() {
+      let elem = this.getWrapElem();
+      if (!elem) return;
+      FN.scroll.goto(elem);
+    }
+
+    /**
+     * listInitialize
+     */
+    listInitialize() {
+      this.setIsInit(true);
+
+      let baseElem = this.getElem();
+      if (!baseElem) return;
+
+      let text = this.getLabel(this.dataAttr.labelShow)
+        || this.defaultLabel;
+      if (text) {
+        baseElem.classList.remove(this.hideClassName);
+        baseElem.classList.add(this.showClassName);
+        this.changeButtonLabel(text, this.dataAttr.labelShow);
+      }
+
+      this.setPage(0);
+
+      this.initAllItem();
+      this.showNextItems();
     }
 
     /**
@@ -110,19 +154,19 @@ export default ((win, doc) => {
       let elems = this.getItemElems();
       var count = this.getCalculateCount(page);
 
-      // initcount と countが合わない場合
-      if (!isInit) {
-        if (this.getInitCount() != this.getCount()) {
-          let diffcount = (this.getInitCount() - this.getCount()) + this.getInitCount();
-          count.start = count.start - this.getInitCount() + diffcount;
-          count.limit = count.limit - this.getInitCount() + diffcount;
-        }
+      if (this.getInitCount() >= elems.length) {
+        this.onError(() => {
+          let wrapElem = this.getWrapElem();
+          if (!wrapElem) return;
+          wrapElem.classList.add(this.notMoreClassName);
+        });
       }
 
-      if (count.start > elems.length) {
-        this.onError(() => {
-          this.decrementPage();
-        });
+      // initcount と countが合わない場合
+      if (!isInit && this.getInitCount() != this.getCount()) {
+        let diffcount = (this.getInitCount() - this.getCount()) + this.getInitCount();
+        count.start = count.start - this.getInitCount() + diffcount;
+        count.limit = count.limit - this.getInitCount() + diffcount;
       }
 
       for(var i = count.start; count.limit > i; i++) {
@@ -130,18 +174,17 @@ export default ((win, doc) => {
         let nextElem = elems[i + 1];
 
         if (!elem) {
-          this.onError();
+          this.onListEnd();
           break;
         }
 
         this.showItem(elem);
 
         if (!nextElem) {
-          this.onError();
+          this.onListEnd();
           break;
         }
       }
-
     }
 
     /**
@@ -213,7 +256,19 @@ export default ((win, doc) => {
     removeButton() {
       let buttonElem = this.getElem();
       if (!buttonElem) return;
-      buttonElem.parentNode.removeChild(buttonElem);
+      buttonElem.parentNode.parentNode.removeChild(buttonElem.parentNode);
+    }
+
+    /**
+     * changeButtonLabel
+     *
+     * @param {string} label
+     * @param {string} data
+     */
+    changeButtonLabel(label, data) {
+      let elem = this.getLabelElem(data);
+      if (!elem) return;
+      elem.innerHTML = label;
     }
 
     /**
@@ -223,6 +278,38 @@ export default ((win, doc) => {
      */
     getElem() {
       return doc.querySelector(`[${this.dataAttr.elems}]`);
+    }
+
+    /**
+     * getWrapElem
+     *
+     * @returns {object}
+     */
+    getWrapElem() {
+      return this.wrapSelector
+        ? doc.querySelector(this.wrapSelector)
+        : ``;
+    }
+
+    /**
+     * getLabel
+     *
+     * @returns {string}
+     */
+    getLabel(data) {
+      let elem = this.getLabelElem(data);
+      if (!elem) return '';
+      return elem.getAttribute(data) || '';
+    }
+
+    /**
+     * getLabelElem
+     *
+     * @returns {object}
+     */
+    getLabelElem(data) {
+      if (!this.getElem()) return;
+      return this.getElem().querySelector(`[${data || this.dataAttr.labelShow}]`);
     }
 
     /**
@@ -247,6 +334,35 @@ export default ((win, doc) => {
     onError(cb) {
       this.removeButton();
       _.isFunction(cb) && cb();
+    }
+
+    /**
+     * onListEnd
+     */
+    onListEnd(cb) {
+      let elem = this.getElem();
+      let text = this.getLabel(this.dataAttr.labelHide);
+      if (text) {
+        elem.classList.remove(this.showClassName);
+        elem.classList.add(this.hideClassName);
+        this.changeButtonLabel(text, this.dataAttr.labelHide);
+        _.isFunction(cb) && cb();
+        return;
+      }
+
+      this.removeButton();
+      _.isFunction(cb) && cb();
+    }
+
+    /**
+     * isShow
+     *
+     * @returns {boolean}
+     */
+    isShow() {
+      let elem = this.getElem();
+      return elem.classList.contains(this.hideClassName)
+        ? false : true;
     }
 
     /**
