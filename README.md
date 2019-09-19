@@ -23,6 +23,16 @@ use submodule add.
     cd _app/
     node install.js
 
+### before directory
+
+    _app
+
+### after directory
+
+    _app
+    _src
+    html
+
 ## Usage
 
     cd _app/
