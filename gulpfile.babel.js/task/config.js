@@ -197,9 +197,13 @@ module.exports = {
               loader: "babel-loader?cacheDirectory=true",
               options: {
                 presets: [
-                  ['@babel/preset-env', {modules: false, useBuiltIns: 'usage'}]
-                ],
-                plugins: ['@babel/plugin-transform-runtime']
+                  ['@babel/preset-env', {
+                    targets: '> 0.25%, not dead',
+                    useBuiltIns: 'usage',
+                    corejs: 3,
+                    // debug: true,
+                  }]
+                ]
               }
             }
           }, {
