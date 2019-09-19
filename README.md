@@ -26,14 +26,14 @@ use submodule add.
 ### before directory
 
     [root]
-      | [_app]
+      |-[_app]
 
 ### after directory
 
     [root]
-      | [_app]
-      | [_src]
-      | [html]
+      |-[_app]
+      |-[_src]
+      |-[html]
 
 ## Usage
 
