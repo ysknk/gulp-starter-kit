@@ -194,7 +194,7 @@ module.exports = {
             test: /\.(js|jsx|json|vue)$/,
             exclude: /node_modules/,
             use: {
-              loader: "babel-loader?cacheDirectory=true",
+              loader: 'babel-loader?cacheDirectory=true',
               options: {
                 presets: [
                   ['@babel/preset-env', {
@@ -210,14 +210,14 @@ module.exports = {
             test: /(?<!\.d)\.tsx?$/,
             exclude: /node_modules/,
             use: {
-              loader: "ts-loader",
+              loader: 'ts-loader',
               // ex: https://www.typescriptlang.org/docs/handbook/compiler-options.html
               options: {
                 configFile: path.resolve(__dirname, `../../${define.path.config}tsconfig.json`),
                 compilerOptions: {
-                  module: "commonjs",
-                  lib: ["es2019", "dom", "dom.iterable"],
-                  jsx: "react",
+                  module: 'commonjs',
+                  lib: ['es2019', 'dom', 'dom.iterable'],
+                  jsx: 'react',
 
                   sourceMap: false,
 
@@ -225,7 +225,7 @@ module.exports = {
                   removeComments: false,
                   downlevelIteration: true,
                   strict: true,
-                  moduleResolution: "node",
+                  moduleResolution: 'node',
                   forceConsistentCasingInFileNames: true,
 
                   noImplicitAny: false,
