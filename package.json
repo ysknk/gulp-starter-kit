@@ -61,7 +61,7 @@
     "typescript": "^3.2.4",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "vinyl-named": "^1.1.0",
-    "webpack": "^4.5.0",
-    "webpack-stream": "^4.0.3"
+    "webpack": "^4.40.2",
+    "webpack-stream": "^5.2.1"
   }
 }
