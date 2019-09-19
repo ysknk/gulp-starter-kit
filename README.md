@@ -10,7 +10,7 @@ use submodule add.
 * styl -> css
 * js(webpack&babel) -> js
 * img(image-min) -> img
-* other -> other
+* other(copy) -> other
 
 ## Requirement
 
