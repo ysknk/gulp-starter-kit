@@ -6,15 +6,16 @@ use submodule add.
 
 ## Description
 
-* pug -> html
-* styl -> css
-* js(webpack&babel) -> js
-* img(image-min) -> img
+* Pug -> html
+* Stylus -> css
+* js(webpack & Babel) -> js
+* img(imagemin) -> img
 * other(copy) -> other
 
 ## Requirement
 
-node.js
+* Node.js
+* gulp.js(npm global install)
 
 ## Install
 
