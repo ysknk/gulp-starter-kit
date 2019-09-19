@@ -17,7 +17,6 @@
     "moment-timezone": "^0.5.25"
   },
   "devDependencies": {
-    "@babel/polyfill": "^7.2.5",
     "gulp-iconfont": "^10.0.2",
     "node-aigis": "^1.4.1"
   }
