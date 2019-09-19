@@ -25,13 +25,15 @@ use submodule add.
 
 ### before directory
 
-    _app
+    [root]
+      | [_app]
 
 ### after directory
 
-    _app
-    _src
-    html
+    [root]
+      | [_app]
+      | [_src]
+      | [html]
 
 ## Usage
 
