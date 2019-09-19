@@ -23,12 +23,12 @@ use submodule add.
     cd _app/
     node install.js
 
-### before directory
+### Directory before installation
 
     [root]
       |-[_app]
 
-### after directory
+### Directory after installation
 
     [root]
       |-[_app]
