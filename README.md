@@ -18,6 +18,7 @@ node.js
 
 ## Install
 
+    git submodule add {this_repo_url} _app
     cd _app/
     node install.js
 
