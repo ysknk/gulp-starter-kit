@@ -24,7 +24,7 @@ export default ((win, doc) => {
 
       _.isObject(opts_) && _.extend(this, opts_);
 
-      // this.initialize();
+      this.initialize();
     }
 
     /**
