@@ -37,6 +37,8 @@ use submodule add.
 
 ## Usage
 
+### Command
+
     cd _app/
     gulp
     gulp build
@@ -49,7 +51,7 @@ use submodule add.
     .
     .
 
-check other tasks.
+#### check other tasks.
 
     gulp --tasks
 
