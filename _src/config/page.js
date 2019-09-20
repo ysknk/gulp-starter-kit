@@ -51,6 +51,11 @@ module.exports = {
     description: 'index description',
     keywords: 'index keywords',
     js: [...head.js, 'pages/index.js'],
+    // og: Object.assign({}, head.og, {
+    //   type: `website`,
+    //   title: 'index title',
+    //   description: 'index description',
+    // }),
     page_name: 'index-page',
     extension: '.html'
   },
