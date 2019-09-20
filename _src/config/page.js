@@ -6,6 +6,7 @@ const url = ``;
 
 const head = {
   lang: 'ja',
+  dir: 'ltr',
   charset: 'utf-8',
 
   // canonical: `${url}`,
