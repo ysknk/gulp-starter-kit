@@ -51,7 +51,8 @@ module.exports = {
     description: 'index description',
     keywords: 'index keywords',
     js: [...head.js, 'pages/index.js'],
-    page_name: 'index-page'
+    page_name: 'index-page',
+    extension: '.html'
   },
 };
 
