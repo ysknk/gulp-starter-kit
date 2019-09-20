@@ -19,7 +19,6 @@ export default ((win, doc) => {
       }
 
       this.buttonSelector = `.js-submit`;// add input tag
-      this.disabledClassName = 'is-disabled';
 
       this.isSubmit = false;
 
@@ -39,7 +38,6 @@ export default ((win, doc) => {
           try {
             if (e && e.persisted && this.isSubmit) {
               this.isSubmit = false;
-              elem.classList.remove(this.disabledClassName);
             }
           } catch(e) {}
         });
@@ -52,7 +50,6 @@ export default ((win, doc) => {
 
         if (!this.isSubmit) {
           this.isSubmit = true;
-          elem.classList.add(this.disabledClassName);
         } else {
           e.preventDefault();
         }
