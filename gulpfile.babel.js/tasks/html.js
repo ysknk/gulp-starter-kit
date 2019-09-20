@@ -24,6 +24,8 @@ class Html extends TaskMaster {
    */
   constructor(opts_) {
     super(opts_);
+
+    this.extension = this.task.data.extension;
   }
 
   /**
@@ -140,6 +142,9 @@ class Html extends TaskMaster {
       }
     })();
 
+    this.extension = data.extension
+      || this.task.data.extension;
+
     // set all data
     if(!data[`$global`]) {
       data[`$global`] = meta;
@@ -167,30 +172,37 @@ class Html extends TaskMaster {
    * @param {boolean} isBuild set flag
    */
   build(stream, done, isBuild) {
+    let that = this;
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
     let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
 
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(isWatch, $.changed(this.task.data.dest, {
-        extension: this.task.data.extension
-      })))
-
-      .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
-      .pipe($.filter((file) => {
-        return this.ignoreFilter(file);
-      }))
 
       .pipe($.data((file) => {
         return this.setCurrentData(file);
       }))
+
+      .pipe($.if(isWatch, $.changed(this.task.data.dest, {
+        transformPath: (distPath) => {
+          let parse = path.parse(distPath);
+          let filename = `${parse.name}${this.extension}`;
+          let dist = path.join(path.dirname(distPath), filename);
+          return dist;
+        }
+      })))
+
+      // .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
+      .pipe($.filter((file) => {
+        return this.ignoreFilter(file);
+      }))
       .pipe(pug(this.task.data.options))
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
 
-      .pipe(plugins.useful(this.task.data.convert))
-      .pipe($.if(this.isExtname(), $.rename({
-        extname: this.task.data.extension
+      .pipe($.if(this.isExtname(), $.rename(function(path) {
+        path.extname = that.extension;
       })))
+      .pipe(plugins.useful(this.task.data.convert))
 
       .pipe(gulp.dest(this.task.data.dest))
 
