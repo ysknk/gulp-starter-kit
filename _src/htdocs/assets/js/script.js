@@ -113,7 +113,6 @@ import intersection from './_partials/shared_classes/intersection';
    * event procedure
    */
   doc.addEventListener('DOMContentLoaded', (e) => {
-    // FN.preventDuplicateSubmit.initialize();
     FN.mediaQuery.update();
     FN.accordion.setClose();
     FN.tab.setActive();
