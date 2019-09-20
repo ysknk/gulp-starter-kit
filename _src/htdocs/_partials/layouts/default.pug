@@ -3,21 +3,21 @@ doctype html
 include ../utilities/variable
 include ../utilities/mixin
 
-html.no-js(lang=lang)
+html.no-js(lang!=lang dir!=dir)
   head
     include default_head
 
-  body(class=`${p}base ${p}${page_name}`)
+  body(class!=`${p}base ${p}${page_name}`)
     // wrapper
-    #wrapper(class=`${p}wrapper`)
+    #wrapper(class!=`${p}wrapper`)
       != '\n'
 
       include header
       != '\n'
 
       // main
-      main(role="main" class=`${p}main`)
-        article(class=`${p}article`)
+      main(role!="main" class!=`${p}main`)
+        article(class!=`${p}article`)
           block content
             p content
       // /main
