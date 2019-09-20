@@ -26,6 +26,7 @@ import tab from './_partials/shared_classes/tab';
 // import anchorNav from './_partials/shared_classes/anchorNav';
 // import parallax from './_partials/shared_classes/parallax';
 import intersection from './_partials/shared_classes/intersection';
+// import preventDuplicateSubmit from './_partials/classes/preventDuplicateSubmit';
 
 /**
  * common initialize
@@ -105,10 +106,14 @@ import intersection from './_partials/shared_classes/intersection';
   // intersection
   FN.intersection = new intersection();
 
+  // preventDuplicateSubmit
+  // FN.preventDuplicateSubmit = new preventDuplicateSubmit();
+
   /**
    * event procedure
    */
   doc.addEventListener('DOMContentLoaded', (e) => {
+    // FN.preventDuplicateSubmit.initialize();
     FN.mediaQuery.update();
     FN.accordion.setClose();
     FN.tab.setActive();
