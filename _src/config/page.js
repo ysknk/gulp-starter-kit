@@ -27,6 +27,7 @@ const head = {
 
   // og: {
   //   site_name,
+  //   locale: `ja_JP`,
   //   type: `article`,
   //   url: `${url}`,
   //   title,
