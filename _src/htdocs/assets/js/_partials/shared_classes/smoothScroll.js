@@ -145,7 +145,8 @@ export default ((win, doc) => {
     goto(elem, setHistory, cb) {
       let elemPos = this.getOffsetPos(elem);
       let scrollPos = {
-        y: win.pageYOffset
+        y: win.pageYOffset,
+        x: win.pageXOffset
       };
 
       _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
@@ -161,7 +162,7 @@ export default ((win, doc) => {
         y: elemPos.y,
         duration: this.duration,
         easing: this.easing,
-        update: () => win.scroll(0, scrollPos.y),
+        update: () => win.scroll(scrollPos.x, scrollPos.y),
         complete: () => {
           _.isFunction(cb) && cb();
           _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
