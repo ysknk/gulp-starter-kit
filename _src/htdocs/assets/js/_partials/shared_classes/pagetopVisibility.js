@@ -43,7 +43,7 @@ export default ((win, doc) => {
       let bodyElem = doc.body;
       let bodyHeight = bodyElem.getBoundingClientRect().height;
       let winHeight = win.innerHeight;
-      let scrollPosY =  win.pageYOffset;
+      let scrollPosY = win.pageYOffset;
 
       if (winHeight >= bodyHeight) {
         this.onElemsHide(elems);
