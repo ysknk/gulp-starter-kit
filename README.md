@@ -21,7 +21,7 @@ use submodule add.
 
     git submodule add [this_repo_url] _app
     cd _app/
-    node install.js
+    npm i
 
 ### Directory before installation
 
