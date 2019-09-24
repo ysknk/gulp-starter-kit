@@ -25,9 +25,9 @@ const message = {
 (function() {
   let inputMark = `> `;
   let colors = {
-    red: (str)=> {return `\u001b[31m${str}\u001b[0m`;},
-    magenta: (str)=> {return `\u001b[35m${str}\u001b[0m`;},
-    cyan: (str)=> {return `\u001b[36m${str}\u001b[0m`;}
+    red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
+    magenta: (str) => {return `\u001b[35m${str}\u001b[0m`;},
+    cyan: (str) => {return `\u001b[36m${str}\u001b[0m`;}
   };
   let fs = ``;
 
