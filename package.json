@@ -7,7 +7,7 @@
     "test": "gulp",
     "watch": "gulp watch",
     "build": "gulp build",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
     "postinstall": "node postinstall.js"
   },
   "author": "ysknk",
