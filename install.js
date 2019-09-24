@@ -1,32 +1,22 @@
 'use strict'
 
-const path = require('path');
 const execSync = require('child_process').execSync;
-const readline = require('readline');
-const rl = readline.createInterface(process.stdin, process.stdout);
-
-const isWindows = (process.platform === `win32`);
-const remove = isWindows ? 'rd /s /q' : 'rm -rf';
-
-const paramMark = `--`;
-// const isMock = process.argv && process.argv[2] === `${paramMark}mock`;
 
 const cmd = {
+  install: `npm install`,
   build: `gulp build`
 };
 
 const dir = {
-  // mockSrc: `./_src_mock/`,
   src: `./_src/`,
   dest: `../_src/`,
   config: `../_src/config/`
 };
 
 const message = {
-  complete: `\ninstall complete!`,
-  cancel: `\ninstall canceled...`,
-  skip: `\ninstall skipped...`,
-  end: `\ninstall.js complete!`,
+  postInstallComplete: `postinstall complete!\n`,
+  copyComplete: `\nfile copy complete!\n`,
+  notCopy: `\nfile exists. not copy.\n`,
   error: {
     nodejs: `\nplease install nodejs or upgrade nodejs version.`
   }
@@ -42,95 +32,48 @@ const message = {
   let fs = ``;
 
   new Promise((resolve, reject) => {
-    return npmInstall(resolve, reject, {
-      dir: 'cd',
-      exec: 'npm install'
-    });
+    fs = require('fs-extra');
+
+    title(`base files copy destination directory [${dir.src} => ${dir.dest}]`);
+
+    if (checkFile(fs, dir.dest)) {
+      console.log(message.notCopy)
+      return resolve();
+    }
+
+    return fsCopy({
+      clobber: true
+    }, resolve, reject);
 
   }).then(() => {
-    return new Promise((resolve, reject) => {
-      fs = require('fs-extra');
-
-      title(`base files copy destination directory [${dir.dest}]`);
-      console.log([
-        'you may be overwriting it.',
-        'do you want to overwrite?',
-        '',
-        '- please input a number.',
-        '[1] clean init',
-        '[2] copy not overwrite',
-        '[*] cancel',
-        ''
-      ].join('\n'));
-
-      let question = function() {
-        rl.question(inputMark, (answer) => {
-          if(!answer.trim()) {
-            question();
-            return;
-          }
-          switch(answer.trim()) {
-            // yes(clean init)
-            case '1':
-              // clean
-              if(checkFile(fs, dir.dest)) {
-                execSync(`${remove} ${path.normalize(dir.dest)}`, {stdio:[0,1,2]});
-                // console.log(colors.magenta(`clean ${path.normalize(dir.dest)}`));
-              }
-              // copy
-              fsCopy({
-                clobber: true
-              }, resolve, reject);
-              break;
-            // yes
-            case '2':
-              fsCopy({
-                clobber: false
-              }, resolve, reject);
-              break;
-            // no
-            default:
-              console.log(message.cancel);
-              resolve();
-              break;
-          }
-        });
-      };
-      question();
-    });
-
+    title(`[${dir.config}] ${cmd.install} begin.`);
+    execSync(`cd ${dir.config} && ${cmd.install}`, {stdio:[0,1,2]});
+    title(`[${dir.config}] ${cmd.install} end.`);
   }).then(() => {
-    return new Promise((resolve, reject) => {
-      // let configDir = path.join(process.cwd(), dir.config);
-      return npmInstall(resolve, reject, {
-        dir: dir.config,
-        // exec: `npm --prefix ${configDir} install ${configDir}`
-        // exec: `npm install --cwd ${configDir} --prefix ${configDir}`
-        exec: `cd ${dir.config} && npm install`
-      });
-    });
-
-  }).then(() => {
+    title(`${cmd.build} begin.`);
     execSync(cmd.build, {stdio:[0,1,2]});
-    return close();
+    title(`${cmd.build} end.`);
 
-  }).catch(() => {
-    return close();
+  }).then(() => {
+    console.log(message.postInstallComplete)
+
+  }).catch((e) => {
+    console.log(e);
   });
 
   function checkFile(fs, filepath) {
-    if(!fs) return;
+    if (!fs) return;
     try {
       fs.statSync(filepath);
       return true
-    }catch(err) {
-      if(err.code === 'ENOENT') {
+    } catch(err) {
+      if (err.code === 'ENOENT') {
         return false;
       }
     }
   }
 
-  function title(message, mark = '=', repeat = 30) {
+  function title(message, mark = '-', repeat = 30) {
     return console.log([
       '',
       colors.magenta(mark.repeat(repeat)),
@@ -139,85 +82,14 @@ const message = {
     ].join('\n'));
   }
 
-  function close() {
-    return new Promise((resolve, reject) => {
-      console.log(message.end);
-      rl.close();
-      process.stdin.destroy();
-      resolve();
-    });
-  }
-
   function fsCopy(opt, resolve, reject) {
     fs.copy(dir.src, dir.dest, opt, (err) => {
-      if(err) {
+      if (err) {
         console.error(err);
         reject();
       }
-      // if(isMock) {
-      //   fs.copy(dir.mockSrc, dir.dest, {
-      //     clobber: true
-      //   }, (err) => {
-      //     if(err) {
-      //       console.error(err);
-      //       reject();
-      //     }
-      //     console.log(message.complete);
-      //     resolve();
-      //   });
-      // }else{
-      console.log(message.complete);
+      console.log(message.copyComplete);
       resolve();
-      // }
     });
-  }
-
-  function npmInstall(resolve, reject, options) {
-    if(!options || !options.exec || !options.dir) return reject();
-
-    title('npm install ? [' + options.dir + ']');
-    console.log([
-      '- please input a number.',
-      '[1] install',
-      '[2] skip',
-      '[*] cancel(not install)',
-      ''
-    ].join('\n'));
-
-    let question = function() {
-      rl.question(inputMark, (answer) => {
-        if(!answer.trim()) {
-          question();
-          return;
-        }
-        switch(answer.trim()) {
-          // yes
-          case '1':
-            if(execSync) {
-              title('npm install start.', '-');
-              execSync(options.exec, {stdio:[0,1,2]});
-              title('npm install end.', '-');
-            }else{
-              console.log(message.error.nodejs);
-              reject();
-            }
-            resolve();
-            break;
-
-          // skip
-          case '2':
-            console.log(message.skip);
-            resolve();
-            break;
-
-          // no
-          default:
-            console.log(message.cancel);
-            reject();
-            break;
-        }
-      });
-    };
-    question();
   }
 })();
