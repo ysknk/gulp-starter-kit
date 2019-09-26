@@ -88,7 +88,7 @@ const message = {
       ? [colors[theme_color](`/*${mark.repeat(repeat - 2)}*/\n`)].join('\n')
       : [
         colors[theme_color](`/*${mark.repeat(repeat)}`),
-        colors[theme_color]('  ' + message),
+        colors[theme_color](`  ${message}`),
         colors[theme_color](`${mark.repeat(repeat)}*/${isEnd ? '\n' : ''}`),
       ].join('\n'));
   }
