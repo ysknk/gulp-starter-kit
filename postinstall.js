@@ -15,7 +15,7 @@ const dir = {
 
 const message = {
   postInstallComplete: `\npostinstall complete!\n`,
-  copyComplete: `\nfile copy complete!\n`,
+  copyComplete: `file copy complete!\n`,
   notCopy: `file exists. not copy.\n`,
   error: {
     nodejs: `\nplease install nodejs or upgrade nodejs version.`
