@@ -21,6 +21,7 @@ export default ((win, doc) => {
       this.buttonSelector = `.js-submit`;// add input tag
 
       this.isSubmit = false;
+      this.transitionTimeout = (1000 * 2);
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -50,6 +51,9 @@ export default ((win, doc) => {
 
         if (!this.isSubmit) {
           this.isSubmit = true;
+          setTimeout(() => {
+            this.isSubmit = false;
+          }, this.transitionTimeout);
         } else {
           e.preventDefault();
         }
