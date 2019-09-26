@@ -14,9 +14,9 @@ const dir = {
 };
 
 const message = {
-  postInstallComplete: `postinstall complete!\n`,
+  postInstallComplete: `\npostinstall complete!\n`,
   copyComplete: `\nfile copy complete!\n`,
-  notCopy: `\nfile exists. not copy.\n`,
+  notCopy: `file exists. not copy.\n`,
   error: {
     nodejs: `\nplease install nodejs or upgrade nodejs version.`
   }
@@ -25,9 +25,9 @@ const message = {
 (function() {
   let inputMark = `> `;
   let colors = {
-    red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
-    magenta: (str) => {return `\u001b[35m${str}\u001b[0m`;},
-    cyan: (str) => {return `\u001b[36m${str}\u001b[0m`;}
+    red: (str)=> {return `\u001b[31m${str}\u001b[0m`;},
+    magenta: (str)=> {return `\u001b[35m${str}\u001b[0m`;},
+    cyan: (str)=> {return `\u001b[36m${str}\u001b[0m`;}
   };
   let fs = ``;
 
@@ -46,9 +46,9 @@ const message = {
     }, resolve, reject);
 
   }).then(() => {
-    title(`[${dir.config}] ${cmd.install} begin.`);
+    title(`${cmd.install} begin. [${dir.config}]`);
     execSync(`cd ${dir.config} && ${cmd.install}`, {stdio:[0,1,2]});
-    title(`[${dir.config}] ${cmd.install} end.`);
+    title(`${cmd.install} end. [${dir.config}]`);
   }).then(() => {
     title(`${cmd.build} begin.`);
     execSync(cmd.build, {stdio:[0,1,2]});
@@ -75,10 +75,9 @@ const message = {
 
   function title(message, mark = '-', repeat = 30) {
     return console.log([
-      '',
-      colors.magenta(mark.repeat(repeat)),
+      colors.magenta(`/*${mark.repeat(repeat)}`),
       colors.magenta('  ' + message),
-      colors.magenta(mark.repeat(repeat)) + '\n'
+      colors.magenta(`${mark.repeat(repeat)}*/`),
     ].join('\n'));
   }
 
