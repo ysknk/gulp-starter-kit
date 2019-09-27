@@ -51,6 +51,10 @@ use submodule add.
     .
     .
 
+#### check other tasks.
+
+    gulp --tasks
+
 ### Config
 
     [root]
@@ -59,10 +63,6 @@ use submodule add.
               |-[task/] task config
               |-[tasks/] original task
               |-[page.js] pug, styl variables
-
-#### check other tasks.
-
-    gulp --tasks
 
 ## License
 
