@@ -53,10 +53,10 @@ use submodule add.
 
 ### Config
 
-    _src/config/
-      |- task/ [task config]
-      |- tasks/ [original task]
-      |- page.js [pug, styl variables]
+    [_src/config/]
+      |-[task/] task config
+      |-[tasks/] original task
+      |-[page.js] pug, styl variables
 
 #### check other tasks.
 
