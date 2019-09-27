@@ -176,14 +176,17 @@ class Html extends TaskMaster {
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
     let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
 
-    let watchPath = path.parse(watchEvent.path);
-    let taskData = this.task.data;
-    let baseDir = taskData.inheritance_options.basedir;
-    let normalizeBaseDir = path.resolve(baseDir);
-    let normalizeWatchDir = path.resolve(watchPath.dir).replace(/\\/g, '\/');
-    let checkPath = `^${normalizeBaseDir}${path.sep}_`.replace(/\\/g, '\/');
-    let exPirtial = new RegExp(checkPath, 'i');
-    let isPirtial = normalizeWatchDir.match(exPirtial);
+    let isPirtial = false;
+    if (isWatch) {
+      let watchPath = path.parse(watchEvent.path);
+      let taskData = this.task.data;
+      let baseDir = taskData.inheritance_options.basedir;
+      let normalizeBaseDir = path.resolve(baseDir);
+      let normalizeWatchDir = path.resolve(watchPath.dir).replace(/\\/g, '\/');
+      let checkPath = `^${normalizeBaseDir}${path.sep}_`.replace(/\\/g, '\/');
+      let exPirtial = new RegExp(checkPath, 'i');
+      isPirtial = normalizeWatchDir.match(exPirtial);
+    }
 
     stream
       .pipe($.plumber(this.errorMessage()))
