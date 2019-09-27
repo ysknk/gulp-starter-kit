@@ -51,7 +51,7 @@ use submodule add.
     .
     .
 
-#### check other tasks.
+#### Check other tasks.
 
     gulp --tasks
 
