@@ -60,7 +60,7 @@ use submodule add.
     [root]
       |-[_src/]
           |-[config/]
-              |-[task/] task config
+              |-[task/] task config (master_data: /gulpfile.babel.js/task/config.js)
               |-[tasks/] original task
               |-[page.js] pug, styl variables
 
