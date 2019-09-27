@@ -198,7 +198,7 @@ class Html extends TaskMaster {
           let filename = `${parse.name}${this.extension}`;
           let dist = path.join(path.dirname(distPath), filename);
 
-          // pirtial保存時全pugファイル書き出し
+          // 比較対象をなくすことで、pirtial保存時全pugファイル書き出し
           if (isPirtial) {
             dist = ``;
           }
