@@ -1,25 +1,25 @@
-'use strict'
+(() => {
+  'use strict'
 
-const execSync = require('child_process').execSync;
+  const execSync = require('child_process').execSync;
 
-const cmd = {
-  install: `npm install`,
-  build: `gulp build`
-};
+  const cmd = {
+    install: `npm install`,
+    build: `gulp build`
+  };
 
-const dir = {
-  src: `./_src/`,
-  dest: `../_src/`,
-  config: `../_src/config/`
-};
+  const dir = {
+    src: `./_src/`,
+    dest: `../_src/`,
+    config: `../_src/config/`
+  };
 
-const message = {
-  postInstallComplete: `postinstall complete!\n`,
-  copyComplete: `file copy complete!`,
-  notCopy: `file exists. not copy.`
-};
+  const message = {
+    postInstallComplete: `postinstall complete!\n`,
+    copyComplete: `file copy complete!`,
+    notCopy: `file exists. not copy.`
+  };
 
-(function() {
   let inputMark = `> `;
   let colors = {
     red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
