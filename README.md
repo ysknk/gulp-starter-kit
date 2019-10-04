@@ -20,14 +20,20 @@ use submodule add or clone.
 ## Install
 
 ### submodule add
-    git submodule add [this_repo_url] _app
-    cd _app/
-    npm i
+
+```Shell
+git submodule add [this_repo_url] _app
+cd _app/
+npm i
+```
 
 ### clone
-    git clone [this_repo_url] _app
-    cd _app/
-    npm i
+
+```Shell
+git clone [this_repo_url] _app
+cd _app/
+npm i
+```
 
 ### Directory before installation
 
@@ -45,30 +51,36 @@ use submodule add or clone.
 
 ### npm Command
 
-    cd _app/
-    npm run watch
-    npm run build
+```Shell
+cd _app/
+npm run watch
+npm run build
     .
     .
     .
+```
 
 ### Gulp Command
 
-    cd _app/
-    gulp
-    gulp build
-    gulp watch
-    gulp lint
-    gulp [html|css|js|img]
-    gulp [html|css|js|img]:build
-    gulp [html|css|js|img]:watch
+```Shell
+cd _app/
+gulp
+gulp build
+gulp watch
+gulp lint
+gulp [html|css|js|img]
+gulp [html|css|js|img]:build
+gulp [html|css|js|img]:watch
     .
     .
     .
+```
 
 #### Check other tasks.
 
-    gulp --tasks
+```Shell
+gulp --tasks
+```
 
 ### Config
 
