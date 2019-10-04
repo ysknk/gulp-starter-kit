@@ -2,7 +2,7 @@ Gulp Starter Kit
 ====
 
 website build tools.  
-use submodule add.  
+use submodule add or clone.  
 
 ## Description
 
@@ -19,7 +19,13 @@ use submodule add.
 
 ## Install
 
+### submodule add
     git submodule add [this_repo_url] _app
+
+### clone
+    git clone [this_repo_url] _app
+
+
     cd _app/
     npm i
 
