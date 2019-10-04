@@ -251,6 +251,10 @@ class Html extends TaskMaster {
         return this.setCurrentData(file);
       }))
       .pipe(pug(this.task.data.options))
+      .pipe($.if(this.isExtname(), $.rename(function(path) {
+        path.extname = that.extension;
+      })))
+      .pipe(plugins.useful(this.task.data.convert))
 
       .pipe($.htmlhint(this.task.data.lint_options))
       .pipe($.htmlhint.reporter(this.task.data.lint_report_type || path))
