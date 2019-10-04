@@ -45,7 +45,6 @@ npm i
     [root/]
       |-[_app/]
       |-[_src/]
-          |
           |-[config/]
           |   |-[task/] task config (master_data: /gulpfile.babel.js/task/config.js)
           |   |-[tasks/] original task
