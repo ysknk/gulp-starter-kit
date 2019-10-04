@@ -49,7 +49,7 @@ npm i
 
 ## Usage
 
-### npm Command
+### npm-scripts
 
 ```Shell
 cd _app/
