@@ -21,11 +21,11 @@ use submodule add or clone.
 
 ### submodule add
     git submodule add [this_repo_url] _app
+    cd _app/
+    npm i
 
 ### clone
     git clone [this_repo_url] _app
-
-
     cd _app/
     npm i
 
