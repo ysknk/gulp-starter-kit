@@ -37,7 +37,16 @@ use submodule add.
 
 ## Usage
 
-### Command
+### npm Command
+
+    cd _app/
+    npm run watch
+    npm run build
+    .
+    .
+    .
+
+### Gulp Command
 
     cd _app/
     gulp
