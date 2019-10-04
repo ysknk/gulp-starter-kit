@@ -15,7 +15,7 @@ use submodule add or clone.
 ## Requirement
 
 * Node.js
-* gulp.js(npm global install)
+* gulp-cli(npm global install)
 
 ## Install
 
