@@ -37,15 +37,20 @@ npm i
 
 ### Directory before installation
 
-    [root]
-      |-[_app]
+    [root/]
+      |-[_app/]
 
 ### Directory after installation
 
-    [root]
-      |-[_app]
-      |-[_src]
-      |-[html]
+    [root/]
+      |-[_app/]
+      |-[_src/]
+          |
+          |-[config/]
+          |   |-[task/] task config (master_data: /gulpfile.babel.js/task/config.js)
+          |   |-[tasks/] original task
+          |   |-[page.js] pug, styl variables
+          |-[htdocs/] work directory
 
 ## Usage
 
@@ -81,15 +86,6 @@ gulp [html|css|js|img]:watch
 ```Shell
 gulp --tasks
 ```
-
-### Config
-
-    [root]
-      |-[_src/]
-          |-[config/]
-              |-[task/] task config (master_data: /gulpfile.babel.js/task/config.js)
-              |-[tasks/] original task
-              |-[page.js] pug, styl variables
 
 ## License
 
