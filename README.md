@@ -8,7 +8,7 @@ use submodule add.
 
 * Pug -> html
 * Stylus(+nib) -> css
-* js(webpack & Babel) -> js
+* js(webpack+Babel) -> js
 * img(imagemin) -> img
 * other(copy) -> other
 
