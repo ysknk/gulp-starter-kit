@@ -59,6 +59,7 @@ npm i
 cd _app/
 npm run watch
 npm run build
+npm run clean
     .
     .
     .
@@ -71,10 +72,12 @@ cd _app/
 gulp
 gulp build
 gulp watch
+gulp clean
 gulp lint
 gulp [html|css|js|img]
 gulp [html|css|js|img]:build
 gulp [html|css|js|img]:watch
+gulp [html|css|js|img]:clean
     .
     .
     .
