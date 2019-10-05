@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "gulp",
+    "prestart": "npm i",
+    "start": "gulp",
     "watch": "gulp watch",
     "build": "gulp build",
     "clean": "gulp clean",
     "lint": "gulp lint",
+    "test": "test",
     "postinstall": "node postinstall.js"
   },
   "author": "ysknk",
