@@ -1,17 +1,17 @@
 'use strict';
 
 // @author ysknk
-const pluginName = 'log';
+const pluginName = 'clean';
 const text = {
   'stream': 'Stream not supported',
-  'action': 'Publish >>> ',
+  'action': 'Clean >>> ',
   'title': pluginName
 };
 
 module.exports = (opts_) => {
   opts_ = _.merge({}, {
     title: '',
-    logMessage: false
+    logMessage: true
   }, opts_);
 
   let transformStream = new Transform({
@@ -35,9 +35,16 @@ module.exports = (opts_) => {
     }
 
     if(file.isBuffer()) {
-      let relative = file.relative.replace(/\\/g, '/');
-      let path = colors.bold(colors.magenta(relative));
+      let relative = `${opts_.dest}${file.relative}`;
+      let path = colors.bold(colors.red(relative));
       let result = text.action + path;
+
+      if(!fs.existsSync(relative)) {
+        callback(null, file);
+        return;
+      }
+
+      del.sync(relative, {force: true});
 
       notifier.notify({
         title: opts_.title ?
@@ -52,10 +59,8 @@ module.exports = (opts_) => {
       if(opts_.logMessage) {
         fancyLog(result);
       }
-
       callback(null, file);
     }
-
   };
 
   return transformStream;

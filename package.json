@@ -7,6 +7,7 @@
     "test": "gulp",
     "watch": "gulp watch",
     "build": "gulp build",
+    "clean": "gulp clean",
     "lint": "gulp lint",
     "postinstall": "node postinstall.js"
   },

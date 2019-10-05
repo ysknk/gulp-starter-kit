@@ -9,7 +9,7 @@ import pug from '../plugins/pug/';
 const config = global[define.ns];
 const task = {
   name: 'html',
-  types: ['build', 'lint']// **:watch function [0] || 'procedure'
+  types: ['build', 'lint', 'clean']// **:watch function [0] || 'procedure'
 };
 
 /**
@@ -134,6 +134,8 @@ class Html extends TaskMaster {
    * @param {function} done set complete
    */
   lint(stream, done) {
+    let that = this;
+
     stream
       .pipe($.plumber(this.errorMessage()))
 
@@ -153,6 +155,29 @@ class Html extends TaskMaster {
       .pipe($.htmlhint(this.task.data.lint_options))
       .pipe($.htmlhint.reporter(this.task.data.lint_report_type || path))
 
+      .on('finish', () => {done && done();});
+  }
+
+  /**
+   * clean
+   *
+   * @param {object} stream gulp object
+   * @param {function} done set complete
+   */
+  clean(stream, done) {
+    let that = this;
+
+    stream
+      .pipe($.plumber(this.errorMessage()))
+      .pipe($.data((file) => {
+        return this.setCurrentData(file.relative, this.task.data);
+      }))
+      .pipe($.if(this.isExtname(), $.rename(function(path) {
+        path.extname = that.extension;
+      })))
+      .pipe(plugins.clean({
+        dest: this.task.data.dest
+      }))
       .on('finish', () => {done && done();});
   }
 

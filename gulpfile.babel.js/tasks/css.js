@@ -8,7 +8,7 @@ import TaskMaster from '../task/master';
 const config = global[define.ns];
 const task = {
   name: 'css',
-  types: ['build', 'lint']// **:watch function [0] || 'procedure'
+  types: ['build', 'lint', 'clean']// **:watch function [0] || 'procedure'
 };
 
 /**

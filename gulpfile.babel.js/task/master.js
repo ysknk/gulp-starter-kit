@@ -56,6 +56,24 @@ module.exports = class TaskMaster {
   }
 
   /**
+   * clean
+   *
+   * @param {object} stream gulp object
+   * @param {function} done set complete
+   */
+  clean(stream, done) {
+    stream
+      .pipe($.plumber(this.errorMessage()))
+      .pipe($.if(this.isExtname(), $.rename({
+        extname: this.task.data.extension
+      })))
+      .pipe(plugins.clean({
+        dest: this.task.data.dest
+      }))
+      .on('finish', () => {done && done();});
+  }
+
+  /**
    * setTask
    */
   setTask() {
@@ -131,7 +149,6 @@ module.exports = class TaskMaster {
         data = that.setCurrentData(filePathFromSrc, conf);
         extname = data.extension || conf.extension;
       }
-
 
       let filename = plugins.util.splitExtension(filePathFromSrc);
       if(extname && filename[1] != extname) {

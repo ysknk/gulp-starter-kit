@@ -26,6 +26,7 @@ import _ from 'lodash';
 
 import util from './util';
 
+import clean from './plugins/clean/';
 import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
@@ -122,6 +123,7 @@ const globalVars = {
 
   plugins: {
     util,
+    clean,
     empty,
     log,
     useful

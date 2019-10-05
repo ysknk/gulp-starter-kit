@@ -6,7 +6,6 @@ import defaultPug from 'pug';
 const pluginName = 'pug';
 const text = {
   'stream': 'Stream not supported',
-  'publish': 'Publish >>> ',
   'title': pluginName
 };
 

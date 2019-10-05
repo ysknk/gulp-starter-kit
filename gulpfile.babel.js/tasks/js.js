@@ -14,7 +14,7 @@ import uglifyJsPlugin from 'uglifyjs-webpack-plugin';
 const config = global[define.ns];
 const task = {
   name: 'js',
-  types: ['build', 'lint']// **:watch function [0] || 'procedure'
+  types: ['build', 'lint', 'clean']// **:watch function [0] || 'procedure'
 };
 
 /**
