@@ -63,6 +63,8 @@ npm run clean
     .
     .
     .
+# not browser open
+npm run watch -- --no
 ```
 
 ### Gulp Command
@@ -81,6 +83,8 @@ gulp [html|css|js|img]:clean
     .
     .
     .
+# not browser open
+gulp --no
 ```
 
 #### Check other tasks.
