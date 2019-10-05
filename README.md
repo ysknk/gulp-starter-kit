@@ -71,9 +71,8 @@ npm run watch -- --no
 
 ```Shell
 cd _app/
-gulp
-gulp build
 gulp watch
+gulp build
 gulp clean
 gulp lint
 gulp [html|css|js|img]
@@ -83,6 +82,8 @@ gulp [html|css|js|img]:clean
     .
     .
     .
+# deafult watch
+gulp
 # not browser open
 gulp --no
 ```
