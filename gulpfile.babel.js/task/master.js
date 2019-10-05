@@ -121,12 +121,21 @@ module.exports = class TaskMaster {
    * @param {object} conf gulp task config
    */
   setDeleteWatcher(watcher, conf) {
+    let that = this;
     watcher.on('unlink', (filepath) => {
       let filePathFromSrc = path.relative(path.resolve(define.path.htdocs), filepath);
+      let extname = conf.extension;
+      let data = ``;
+
+      if (conf.meta) {
+        data = that.setCurrentData(filePathFromSrc, conf);
+        extname = data.extension || conf.extension;
+      }
+
 
       let filename = plugins.util.splitExtension(filePathFromSrc);
-      if(conf.extension && filename[1] != conf.extension) {
-        filename[1] = conf.extension;
+      if(extname && filename[1] != extname) {
+        filename[1] = extname;
         filePathFromSrc = filename.join('');
       }
 
@@ -251,6 +260,117 @@ module.exports = class TaskMaster {
     let isFileIgnore = !/^_/.test(plugins.util.getReplaceDir(file.relative || filepath));
     let isDirectoryIgnore = !/\/_/.test(plugins.util.getReplaceDir(htdocs));
     return isDirectoryIgnore && isFileIgnore;
+  }
+
+  /**
+   * setCurrentData
+   * use pug
+   *
+   * @param {string} filepath gulp object
+   * @param {object} taskData
+   * @returns {object} page data
+   */
+  setCurrentData(filepath, taskData) {
+    let meta = require(`../../${define.path.pageConfig}`);
+    delete require.cache[require.resolve(`../../${define.path.pageConfig}`)]
+
+    filepath = plugins.util.getReplaceDir(filepath);
+
+    let data = {};
+
+    let dirMark = '/';
+    let fileMark = '$';
+
+    let section = filepath.split('/');
+    let isSet = false;
+
+    let common = {};
+    _.forEach(meta, (val, key) => {
+      if(!key.match(/^[\/|\$]/)) {
+        common[key] = val;
+      }
+    });
+
+    _.forEach(section, (name, i) => {
+      let confname = '';
+      let filesplit = name.split(/(.*)(?:\.([^.]+$))/);
+      let isDirectory = filesplit[0];
+
+      confname = isDirectory ?
+        dirMark + filesplit[0] : fileMark + filesplit[1];
+
+      if(!isDirectory && (section.length - 1) > i) {
+        confname = dirMark + name;
+      }
+
+      if(meta[confname] && section.length == 1) {
+        data = _.merge({}, data, meta[confname]);
+      }else{
+        if(isSet) {
+          if(data[confname]) {
+            let fulldata = _.merge({}, data);
+            let nochild = _.merge({}, this.deleteChild(data));
+            data = _.merge({}, nochild, fulldata[confname]);
+          }
+        }else{
+          data = _.merge({}, data, meta[confname]);
+        }
+        isSet = true;
+      }
+
+      let addCommon = {};
+      _.forEach(data, (val, key) => {
+        if(!key.match(/^[\/|\$]/)) {
+          addCommon[key] = val;
+        }
+      });
+      common = _.merge({}, common, addCommon);
+    });
+
+    data = _.merge({}, common, data);
+    this.deleteChild(data);
+
+    // set assets path
+    (() => {
+      if (!this.task || !data) return;
+      data.assets_path = data.assets_path || taskData.assets_path;
+
+      if(taskData.path_type.match(/relative/i)) {
+        data.assets_path = taskData.dest + data.assets_path;
+
+        let assets_path = path.resolve(data.assets_path);
+        let dirArray = filepath.split(dirMark);
+        dirArray[dirArray.length - 1] = '';
+        let dest_path = path.resolve(taskData.dest + dirArray.join(dirMark));
+        let relative_path = path.relative(dest_path, assets_path);
+
+        data.assets_path = `${plugins.util.getReplaceDir(relative_path)}/`;
+      }
+    })();
+
+    this.extension = data.extension
+      || taskData.extension;
+
+    // set all data
+    if(!data[`$global`]) {
+      data[`$global`] = meta;
+    }
+
+    return data;
+  }
+
+  /**
+   * deleteChild
+   * use pug
+   *
+   * @param {object} data key value
+   */
+  deleteChild(data) {
+    _.forEach(data, (obj, key) => {
+      if(key.match(/^[\/|\$]/)) {
+        delete data[key];
+      }
+    });
   }
 
 };

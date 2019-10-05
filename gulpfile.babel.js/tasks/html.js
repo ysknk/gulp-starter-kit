@@ -48,112 +48,6 @@ class Html extends TaskMaster {
   }
 
   /**
-   * deleteChild
-   *
-   * @param {object} data key value
-   */
-  deleteChild(data) {
-    _.forEach(data, (obj, key) => {
-      if(key.match(/^[\/|\$]/)) {
-        delete data[key];
-      }
-    });
-  }
-
-  /**
-   * setCurrentData
-   *
-   * @param {object} file gulp object
-   * @returns {object} page data
-   */
-  setCurrentData(file) {
-    let meta = require(`../../${define.path.pageConfig}`);
-    delete require.cache[require.resolve(`../../${define.path.pageConfig}`)]
-
-    let filepath = plugins.util.getReplaceDir(file.relative);
-    let data = {};
-
-    let dirMark = '/';
-    let fileMark = '$';
-
-    let section = filepath.split('/');
-    let isSet = false;
-
-    let common = {};
-    _.forEach(meta, (val, key) => {
-      if(!key.match(/^[\/|\$]/)) {
-        common[key] = val;
-      }
-    });
-
-    _.forEach(section, (name, i) => {
-      let confname = '';
-      let filesplit = name.split(/(.*)(?:\.([^.]+$))/);
-      let isDirectory = filesplit[0];
-
-      confname = isDirectory ?
-        dirMark + filesplit[0] : fileMark + filesplit[1];
-
-      if(!isDirectory && (section.length - 1) > i) {
-        confname = dirMark + name;
-      }
-
-      if(meta[confname] && section.length == 1) {
-        data = _.merge({}, data, meta[confname]);
-      }else{
-        if(isSet) {
-          if(data[confname]) {
-            let fulldata = _.merge({}, data);
-            let nochild = _.merge({}, this.deleteChild(data));
-            data = _.merge({}, nochild, fulldata[confname]);
-          }
-        }else{
-          data = _.merge({}, data, meta[confname]);
-        }
-        isSet = true;
-      }
-
-      let addCommon = {};
-      _.forEach(data, (val, key) => {
-        if(!key.match(/^[\/|\$]/)) {
-          addCommon[key] = val;
-        }
-      });
-      common = _.merge({}, common, addCommon);
-    });
-
-    data = _.merge({}, common, data);
-    this.deleteChild(data);
-
-    // set assets path
-    (() => {
-      data.assets_path = data.assets_path || this.task.data.assets_path;
-
-      if(this.task.data.path_type.match(/relative/i)) {
-        data.assets_path = this.task.data.dest + data.assets_path;
-
-        let assets_path = path.resolve(data.assets_path);
-        let dirArray = filepath.split(dirMark);
-        dirArray[dirArray.length - 1] = '';
-        let dest_path = path.resolve(this.task.data.dest + dirArray.join(dirMark));
-        let relative_path = path.relative(dest_path, assets_path);
-
-        data.assets_path = `${plugins.util.getReplaceDir(relative_path)}/`;
-      }
-    })();
-
-    this.extension = data.extension
-      || this.task.data.extension;
-
-    // set all data
-    if(!data[`$global`]) {
-      data[`$global`] = meta;
-    }
-
-    return data;
-  }
-
-  /**
    * configBuild
    *
    * @param {object} stream gulp object
@@ -192,7 +86,7 @@ class Html extends TaskMaster {
       .pipe($.plumber(this.errorMessage()))
 
       .pipe($.data((file) => {
-        return this.setCurrentData(file);
+        return this.setCurrentData(file.relative, this.task.data);
       }))
 
       .pipe($.if(isWatch, $.changed(this.task.data.dest, {
@@ -248,7 +142,7 @@ class Html extends TaskMaster {
       }))
 
       .pipe($.data((file) => {
-        return this.setCurrentData(file);
+        return this.setCurrentData(file.relative, this.task.data);
       }))
       .pipe(pug(this.task.data.options))
       .pipe($.if(this.isExtname(), $.rename(function(path) {
