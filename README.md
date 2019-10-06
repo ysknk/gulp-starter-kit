@@ -75,7 +75,7 @@ npm run delete
     .
 ```
 
-### Gulp Command
+### Gulp command
 
 ```Shell
 cd _app/
@@ -93,7 +93,6 @@ gulp lint
 gulp clean
 # delete dest directory
 gulp delete
-
 # watch target [task] files and server open
 gulp [html|css|js|img]
 gulp [html|css|js|img]:watch
@@ -113,6 +112,18 @@ gulp [html|css|js|img]:clean
 ```Shell
 gulp --tasks
 ```
+
+#### Original task
+
+Default original tasks
+
+```Shell
+# node-aigis
+gulp styleguide
+# gulp-iconfont
+gulp iconfont
+```
+___* Gulp command only___
 
 ## License
 
