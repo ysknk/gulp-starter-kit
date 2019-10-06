@@ -78,7 +78,6 @@ npm run delete
 
 ```Shell
 cd _app/
-
 # watch target files and server open
 gulp watch
 # deafult watch
