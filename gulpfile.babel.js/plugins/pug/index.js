@@ -49,7 +49,7 @@ module.exports = (opts_) => {
         }else{
           compiled = pug.compile(contents, opts_)(data);
         }
-        file.contents = new Buffer(compiled);
+        file.contents = new Buffer.from(compiled);
       }catch(e) {
         return callback(new pluginError(pluginName, e));
       }
