@@ -54,7 +54,7 @@ class Util {
       return true;
     }catch(err) {
       if(err.code === 'ENOENT') {
-        if(!fs.existsSync(filepath)) {
+        if(!fs.statSync(filepath)) {
           fs.mkdirSync(filepath);
           this.log([
             'Create directory',

@@ -20,6 +20,23 @@ module.exports = (opts_) => {
   });
 
   /**
+   * checkFile
+   *
+   * @param {string} filepath
+   * @returns {boolean}
+   */
+  function checkFile(filepath) {
+    try {
+      fs.statSync(filepath);
+      return true
+    }catch(err) {
+      if(err.code === 'ENOENT') {
+        return false;
+      }
+    }
+  }
+
+  /**
    * @param {Buffer|string} file
    * @param {string=} encoding - ignored if file contains a Buffer
    * @param {function(Error, object)} callback - Call this function (optionally with an
@@ -37,28 +54,26 @@ module.exports = (opts_) => {
     if(file.isBuffer()) {
       let relative = `${opts_.dest}${file.relative}`;
       let path = colors.bold(colors.red(relative));
-      let result = text.action + path;
+      let result = `${text.action}${path}`;
 
-      if(!fs.existsSync(relative)) {
-        callback(null, file);
-        return;
+      if (checkFile(relative)) {
+        del.sync(relative, {force: true});
+
+        notifier.notify({
+          title: opts_.title ?
+            (text.title + ': ' + opts_.title) : text.title,
+          message: relative,
+          sound: false,
+          wait: false,
+          timeout: 1,
+          type: 'info'
+        });
+
+        if(opts_.logMessage) {
+          fancyLog(result);
+        }
       }
 
-      del.sync(relative, {force: true});
-
-      notifier.notify({
-        title: opts_.title ?
-          (text.title + ': ' + opts_.title) : text.title,
-        message: relative,
-        sound: false,
-        wait: false,
-        timeout: 1,
-        type: 'info'
-      });
-
-      if(opts_.logMessage) {
-        fancyLog(result);
-      }
       callback(null, file);
     }
   };

@@ -8,6 +8,7 @@ module.exports = {
     js: true,
     img: true,
     copy: true,
+    delete: true,
     serv: true
   },
 
@@ -310,6 +311,12 @@ module.exports = {
   copy: { // other filetype
     src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg|d.ts|ts|tsx)'),
     dest: define.path.dest
+  },
+
+  /* delete */
+  delete: { // all
+    src: `${define.path.dest}`,
+    // dest: define.path.dest
   }
 
 };
