@@ -132,14 +132,14 @@ module.exports = (opts_) => {
         change = '\n';
       }
       contents = contents.replace(code, change);
-      file.contents = new Buffer(contents);
+      file.contents = new Buffer.from(contents);
 
       // encode
       if(encodeTo != defaultEncode ||
         encodeFrom != defaultEncode) {
         let content = iconv.decode(file.contents, encodeFrom, opts_.encode.iconv.decode);
         file.contents = iconv.encode(content, encodeTo, opts_.encode.iconv.encode);
-        file.contents = new Buffer(file.contents);
+        file.contents = new Buffer.from(file.contents);
       }
 
       callback(null, file);
