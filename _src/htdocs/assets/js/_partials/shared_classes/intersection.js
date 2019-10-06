@@ -5,7 +5,7 @@ export default ((win, doc) => {
 
   /**
    * Intersection
-   * <div data-intersection='{"action": "fadeout", "threshold": 0.2}'>hoge</div>
+   * <div data-intersection='{"action": "fadeout", "threshold": 0.2, "callback": {"in": "onIn"}}'>hoge</div>
    */
   return class Intersection {
 
@@ -30,7 +30,11 @@ export default ((win, doc) => {
         action: 'fadein',
         isOnce: true,
         src: '',// image src
-        threshold: 0.3// 0 - 1.0 -> screen top - bottom
+        threshold: 0.3,// 0 - 1.0 -> screen top - bottom
+        callback: {// callback
+          in: `onIn`,
+          out: `onOut`,
+        }
       };
 
       this.initializeStyle = `opacity: 0;`;
@@ -40,6 +44,16 @@ export default ((win, doc) => {
       this.setInitializeStyle();
       // this.initialize();
     }
+
+    /**
+     * onIn
+     */
+    onIn() {}
+
+    /**
+     * onOut
+     */
+    onOut() {}
 
     /**
      * setInitializeStyle
@@ -118,6 +132,7 @@ export default ((win, doc) => {
         }
         elem.classList.remove(data.classname.out);
         elem.classList.add(data.classname.in);
+        data.callback && data.callback.in && this[data.callback.in]();
       }
     }
 
@@ -130,6 +145,7 @@ export default ((win, doc) => {
     setOut(elem, data) {
       elem.classList.remove(data.classname.in);
       elem.classList.add(data.classname.out);
+      data.callback && data.callback.out && this[data.callback.out];
     }
 
     /**
