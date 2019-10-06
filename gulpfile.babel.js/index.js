@@ -190,6 +190,7 @@ let taskMaster = require('./task/master');
 let tasks = gulp._registry._tasks;
 let defaultName = 'default';
 let emptyName = 'empty';
+let deleteName = 'delete';
 let serveName = 'serv';
 let types = {};
 let taskmaster = new taskMaster();
@@ -222,7 +223,8 @@ _.forEach(types, (array, key) => {
         let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
 
         if(taskname === serveName ||
-          taskname === emptyName) return;
+          taskname === emptyName ||
+          taskname === deleteName) return;
 
         if(config && config[taskname]) {
           let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : emptyName));

@@ -62,9 +62,6 @@ module.exports = {
     options: {
       pretty: true
     },
-    inheritance_options: {
-      skip: 'node_modules'
-    },
 
     // ex: https://github.com/kangax/html-minifier/
     minify_options: {

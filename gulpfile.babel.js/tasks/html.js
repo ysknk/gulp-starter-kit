@@ -40,11 +40,6 @@ class Html extends TaskMaster {
       htdocsdir,
       this.task.data.options
     );
-
-    this.task.data.inheritance_options = _.merge({},
-      htdocsdir,
-      this.task.data.inheritance_options
-    );
   }
 
   /**
@@ -74,7 +69,7 @@ class Html extends TaskMaster {
     if (isWatch) {
       let watchPath = path.parse(watchEvent.path);
       let taskData = this.task.data;
-      let baseDir = taskData.inheritance_options.basedir;
+      let baseDir = taskData.htdocsdir;
       let normalizeBaseDir = path.resolve(baseDir);
       let normalizeWatchDir = path.resolve(watchPath.dir).replace(/\\/g, '\/');
       let checkPath = `^${normalizeBaseDir}${path.sep}_`.replace(/\\/g, '\/');
@@ -103,7 +98,6 @@ class Html extends TaskMaster {
         }
       })))
 
-      // .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
       .pipe($.filter((file) => {
         return this.ignoreFilter(file);
       }))
