@@ -45,11 +45,12 @@ npm i
     [root/]
       |-[_app/]
       |-[_src/]
-          |-[config/]
-          |   |-[task/] *task config (master_data: /gulpfile.babel.js/task/config.js)
-          |   |-[tasks/] *original task
-          |   |-[page.js] *pug, styl variables
-          |-[htdocs/] *work directory
+      |   |-[config/]
+      |   |   |-[task/] *task config (master_data: /gulpfile.babel.js/task/config.js)
+      |   |   |-[tasks/] *original task
+      |   |   |-[page.js] *pug, styl variables
+      |   |-[htdocs/] *work directory
+      |-[html/] *default dest directory
 
 ## Usage
 
