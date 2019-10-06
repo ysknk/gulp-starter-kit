@@ -245,7 +245,10 @@ module.exports = class TaskMaster {
    * @returns {boolean}
    */
   isMinify() {
-    if(argv.min || this.task.data.minify) {
+    if(argv.min
+      || this.task.data.minify
+      || this.task.data.options.mode === 'production'
+    ) {
       if(this.task.data.options && this.task.data.options.mode) {
         this.task.data.options.mode = 'production';
       }
