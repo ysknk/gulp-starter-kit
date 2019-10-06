@@ -59,6 +59,8 @@ npm i
 cd _app/
 # watch target files and server open
 npm run watch
+# not browser open
+npm run watch -- --no
 # compile all target files
 npm run build
 # lint all target files
@@ -70,16 +72,19 @@ npm run delete
     .
     .
     .
-# not browser open
-npm run watch -- --no
 ```
 
 ### Gulp Command
 
 ```Shell
 cd _app/
+
 # watch target files and server open
 gulp watch
+# deafult watch
+gulp
+# not browser open
+gulp --no
 # compile all target files
 gulp build
 # lint all target files
@@ -101,10 +106,6 @@ gulp [html|css|js|img]:clean
     .
     .
     .
-# deafult watch
-gulp
-# not browser open
-gulp --no
 ```
 
 #### Check other tasks.
