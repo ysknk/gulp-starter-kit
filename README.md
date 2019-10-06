@@ -57,9 +57,16 @@ npm i
 
 ```Shell
 cd _app/
+# watch target files and server open
 npm run watch
+# compile all target files
 npm run build
+# lint all target files
+npm run lint
+# clean all target files
 npm run clean
+# delete dest directory
+npm run delete
     .
     .
     .
@@ -71,13 +78,25 @@ npm run watch -- --no
 
 ```Shell
 cd _app/
+# watch target files and server open
 gulp watch
+# compile all target files
 gulp build
-gulp clean
+# lint all target files
 gulp lint
+# clean all target files
+gulp clean
+# delete dest directory
+gulp delete
+
+# watch target [task] files and server open
 gulp [html|css|js|img]
-gulp [html|css|js|img]:build
 gulp [html|css|js|img]:watch
+# compile all target [task] files
+gulp [html|css|js|img]:build
+# lint all target [task] files
+gulp [html|css|js|img]:lint
+# clean all target [task] files
 gulp [html|css|js|img]:clean
     .
     .
