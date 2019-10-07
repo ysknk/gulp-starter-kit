@@ -241,12 +241,9 @@ rollover(type = 'opacity', def = .7)
         text-decoration none
 
 placeholder()
-  &::-webkit-input-placeholder
-    {block}
-  &:-moz-placeholder
-    {block}
-  &::-moz-placeholder
-    {block}
+  &::-webkit-input-placeholder,
+  &:-moz-placeholder,
+  &::-moz-placeholder,
   &:-ms-input-placeholder
     {block}
 
