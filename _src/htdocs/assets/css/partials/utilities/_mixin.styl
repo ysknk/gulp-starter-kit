@@ -92,12 +92,23 @@ hidden_text()
 
 break_point(type, css = false)
   if css
-    if type == 'sp'
-      @media screen and (max-width: wsp)
-        {block}
-    if type == 'pc'
-      @media screen and (min-width: (wsp + 1))
-        {block}
+    if wtab
+      if type == 'pc'
+        @media screen and (min-width: (wtab + 1)px)
+          {block}
+      if type == 'tab'
+        @media screen and (max-width: (wtab)px)
+          {block}
+      if type == 'sp'
+        @media screen and (max-width: (wsp)px)
+          {block}
+    else
+      if type == 'pc'
+        @media screen and (min-width: (wsp + 1)px)
+          {block}
+      if type == 'sp'
+        @media screen and (max-width: (wsp)px)
+          {block}
   else
     {LAYOUT}{type} &
       {block}
