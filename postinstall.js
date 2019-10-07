@@ -36,7 +36,7 @@
   new Promise((resolve, reject) => {
     fs = require('fs-extra');
 
-    title(`base files copy destination directory begin. [${dir.src} => ${dir.dest}]`);
+    title(`base files copy. [${dir.src} => ${dir.dest}]`);
 
     if (checkFile(fs, dir.dest)) {
       console.log(message.notCopy)
