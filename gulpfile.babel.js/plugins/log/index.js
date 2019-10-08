@@ -37,7 +37,7 @@ module.exports = (opts_) => {
     if(file.isBuffer()) {
       let relative = file.relative.replace(/\\/g, '/');
       let path = colors.bold(colors.magenta(relative));
-      let result = text.action + path;
+      let result = `${text.action}${path}`;
 
       notifier.notify({
         title: opts_.title ?
