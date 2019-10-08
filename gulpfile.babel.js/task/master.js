@@ -138,8 +138,15 @@ module.exports = class TaskMaster {
    * @param {object} watcher gulp watch object
    * @param {object} conf gulp task config
    */
+  /**
+   * setDeleteWatcher
+   *
+   * @param {object} watcher gulp watch object
+   * @param {object} conf gulp task config
+   */
   setDeleteWatcher(watcher, conf) {
     let that = this;
+
     watcher.on('unlink', (filepath) => {
       let filePathFromSrc = path.relative(path.resolve(define.path.htdocs), filepath);
       let extname = conf.extension;
@@ -151,14 +158,16 @@ module.exports = class TaskMaster {
       }
 
       let filename = plugins.util.splitExtension(filePathFromSrc);
-      if(extname && filename[1] != extname) {
+      if (extname && filename[1] != extname) {
         filename[1] = extname;
         filePathFromSrc = filename.join('');
       }
 
       let destFilePath = path.resolve(conf.dest, filePathFromSrc);
-      del.sync(destFilePath, {force: true});
-      plugins.util.log(colors.bgred('delete ' + destFilePath));
+      if (plugins.util.checkFile(destFilePath)) {
+        del.sync(destFilePath, {force: true});
+        plugins.util.log(colors.bgred('delete ' + destFilePath));
+      }
     });
   }
 
