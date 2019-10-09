@@ -162,11 +162,11 @@ let localConfigPath = [
 
 let configBody = 'module.exports \= \{\};';
 
-if(!plugins.util.checkFile(baseConfigPath)) {
+if (!plugins.util.checkFile(baseConfigPath)) {
   plugins.util.createFile(baseConfigPath, configBody);
 }
 
-if(!plugins.util.checkFile(localConfigPath)) {
+if (!plugins.util.checkFile(localConfigPath)) {
   plugins.util.createFile(localConfigPath, configBody);
 }
 
@@ -214,12 +214,12 @@ _.forEach(tasks, (task, name) => {
   let taskname = split && split[0];
   let type = split && split.length > 1 ? split[1] : defaultName;
 
-  if(!types[type]) types[type] = [];
+  if (!types[type]) types[type] = [];
   types[type].push(name);
 });
 
 _.forEach(types, (array, key) => {
-  if(key === `watch` || key === defaultName) {
+  if (key === `watch` || key === defaultName) {
     gulp.task(key, gulp.series(beforeTask, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
@@ -230,17 +230,17 @@ _.forEach(types, (array, key) => {
         let serv = `${serveName}:${(config[taskname] && config[taskname][serveName] || 'reload')}`;
         let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
 
-        if(taskname === serveName ||
+        if (taskname === serveName ||
           taskname === emptyName ||
           taskname === deleteName) return;
 
-        if(config && config[taskname]) {
+        if (config && config[taskname]) {
           let watcher = gulp.watch(src, gulp.series(taskname, isServ ? serv : emptyName));
           taskmaster.setAllWatcher(watcher, config[taskname]);
           taskmaster.setDeleteWatcher(watcher, config[taskname]);
 
           // html only
-          if(taskname === `html`) {
+          if (taskname === `html`) {
             gulp.watch(define.path.pageConfig, gulp.series(`config:build`, isServ ? serv : emptyName));
           }
 
