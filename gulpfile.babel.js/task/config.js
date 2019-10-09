@@ -285,16 +285,16 @@ module.exports = {
     dest: define.path.dest,
 
     plugins: [
-      pngquant({
+      imageminPngquant({
         quality: '50-100'
       }),
-      mozjpeg({
+      imageminMozjpeg({
         quality: 85,
         progressive: true
       }),
-      $.imagemin.gifsicle(),
-      $.imagemin.optipng(),
-      $.imagemin.svgo()
+      imageminGifsicle(),
+      imageminOptipng(),
+      imageminSvgo()
     ],
     options: {
       interlaced: true,
