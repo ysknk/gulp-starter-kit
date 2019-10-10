@@ -5,6 +5,7 @@ export default ((win, doc) => {
 
   /**
    * PageShare
+   * <a href="javascript:void(0)" data-share-sns="[twitter|facebook|line]" data-share-target="_blank">link</a>
    */
   return class PageShare {
 
