@@ -108,7 +108,7 @@ export default ((win, doc) => {
     openUrl(url, target, windowName, option) {
       if (target === '_blank') {
         window.open(url, windowName, option);
-      }else{
+      } else {
         location.href = url;
       }
     }
