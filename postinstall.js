@@ -30,7 +30,9 @@
     src: `./_src/`,
     dest: `../_src/`,
     config: `../_src/config/`,
-    gitignore: `.gitignore`
+
+    gitignore: `.gitignore`,
+    editorconfig: `.editorconfig`
   };
 
   let fs = ``;
@@ -73,6 +75,21 @@
     });
 
   }).then(() => {
+    return new Promise((resolve, reject) => {
+      title(`files copy. [${dir.editorconfig} => ${dir.root}]`);
+
+      if (checkFile(fs, `${dir.root}${dir.editorconfig}`)) {
+        console.log(message.notCopy)
+        title(``, true);
+        return resolve();
+      }
+
+      // editorconfig
+      fsCopy(dir.editorconfig, `${dir.root}${dir.editorconfig}`, {}, () => {
+        title(``, true);
+      }, resolve, reject);
+    });
+
 
   }).then(() => {
     title(`${cmd.install} [${dir.config}]`);
