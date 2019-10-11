@@ -3,23 +3,6 @@
 
   const execSync = require('child_process').execSync;
 
-  const cmd = {
-    install: `npm install`,
-    build: `gulp build`
-  };
-
-  const dir = {
-    src: `./_src/`,
-    dest: `../_src/`,
-    config: `../_src/config/`
-  };
-
-  const message = {
-    postInstallComplete: `postinstall complete!\n`,
-    copyComplete: `file copy complete!`,
-    notCopy: `file exists. not copy.`
-  };
-
   let inputMark = `> `;
   let colors = {
     red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
@@ -30,6 +13,26 @@
     lightGreen: (str) => {return `\u001b[92m${str}\u001b[0m`;}
   };
   let theme_color = `lightBlue`;
+
+  const message = {
+    postInstallComplete: `postinstall complete!\n`,
+    copyComplete: `file copy complete!`,
+    notCopy: `file exists. not copy.`
+  };
+
+  const cmd = {
+    install: `npm install`,
+    build: `gulp build`
+  };
+
+  const dir = {
+    root: `../`,
+    src: `./_src/`,
+    dest: `../_src/`,
+    config: `../_src/config/`,
+    gitignore: `.gitignore`
+  };
+
   let fs = ``;
   let isInitialize = false;
 
@@ -45,11 +48,31 @@
     }
 
     isInitialize = true;
-    fsCopy({
+
+    // _src
+    fsCopy(dir.src, dir.dest, {
       clobber: true
     }, () => {
       title(``, true);
     }, resolve, reject);
+
+  }).then(() => {
+    return new Promise((resolve, reject) => {
+      title(`files copy. [${dir.gitignore} => ${dir.root}]`);
+
+      if (checkFile(fs, `${dir.root}${dir.gitignore}`)) {
+        console.log(message.notCopy)
+        title(``, true);
+        return resolve();
+      }
+
+      // gitignore
+      fsCopy(dir.gitignore, `${dir.root}${dir.gitignore}`, {}, () => {
+        title(``, true);
+      }, resolve, reject);
+    });
+
+  }).then(() => {
 
   }).then(() => {
     title(`${cmd.install} [${dir.config}]`);
@@ -93,16 +116,16 @@
       ].join('\n'));
   }
 
-  function fsCopy(opt, callback, resolve, reject) {
-    fs.copy(dir.src, dir.dest, opt, (err) => {
+  function fsCopy(src, dest, opt, callback, resolve, reject) {
+    fs.copy(src, dest, opt, (err) => {
       if (err) {
         console.error(err);
         callback && callback();
-        reject();
+        reject && reject();
       }
       console.log(message.copyComplete);
       callback && callback();
-      resolve();
+      resolve && resolve();
     });
   }
 })();
