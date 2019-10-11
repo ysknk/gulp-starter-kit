@@ -49,7 +49,7 @@ module.exports = (opts_) => {
         type: 'info'
       });
 
-      if(opts_.logMessage) {
+      if (opts_.logMessage) {
         fancyLog(result);
       }
 
