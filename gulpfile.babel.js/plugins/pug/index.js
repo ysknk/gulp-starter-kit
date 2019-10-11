@@ -27,15 +27,15 @@ module.exports = (opts_) => {
    *          error argument and data) when you are done processing the supplied chunk.
    */
   transformStream._transform = (file, encoding, callback) => {
-    if(file.isNull()) {
+    if (file.isNull()) {
       return callback(null, file);
     }
 
-    if(file.isStream()){
+    if (file.isStream()) {
       return callback(new pluginError(pluginName, text.stream));
     }
 
-    if(file.isBuffer()) {
+    if (file.isBuffer()) {
       let data = _.merge({}, opts_.data, file.data || {});
       opts_.filename = file.path;
       file.path = replaceExt(file.path, opts_.client ? '.js' : '.html');
@@ -44,13 +44,13 @@ module.exports = (opts_) => {
         let compiled;
         let contents = String(file.contents);
 
-        if(opts_.client) {
+        if (opts_.client) {
           compiled = pug.compileClient(contents, opts_);
-        }else{
+        } else {
           compiled = pug.compile(contents, opts_)(data);
         }
         file.contents = new Buffer.from(compiled);
-      }catch(e) {
+      } catch(e) {
         return callback(new pluginError(pluginName, e));
       }
 
