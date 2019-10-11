@@ -29,7 +29,7 @@ module.exports = (opts_) => {
     try {
       fs.statSync(filepath);
       return true
-    }catch(err) {
+    } catch(err) {
       if(err.code === 'ENOENT') {
         return false;
       }
@@ -43,15 +43,15 @@ module.exports = (opts_) => {
    *          error argument and data) when you are done processing the supplied chunk.
    */
   transformStream._transform = (file, encoding, callback) => {
-    if(file.isNull()) {
+    if (file.isNull()) {
       return callback(null, file);
     }
 
-    if(file.isStream()) {
+    if (file.isStream()) {
       return callback(new pluginError(pluginName, text.stream));
     }
 
-    if(file.isBuffer()) {
+    if (file.isBuffer()) {
       let relative = `${opts_.dest}${file.relative}`;
       let path = colors.bold(colors.red(relative));
       let result = `${text.action}${path}`;
@@ -69,7 +69,7 @@ module.exports = (opts_) => {
           type: 'info'
         });
 
-        if(opts_.logMessage) {
+        if (opts_.logMessage) {
           fancyLog(result);
         }
       }
