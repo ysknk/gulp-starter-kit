@@ -31,14 +31,14 @@ class Util {
    * @param {object} obj variable
    */
   setGlobalVars(name, obj) {
-    if(global[name]) {
+    if (global[name]) {
       this.log([
         'Error! Please rename global vars',
         this.colors.magenta(name)
       ].join(' '));
       process.exit(1);
     }
-    if(obj) global[name] = obj;
+    if (obj) global[name] = obj;
   }
 
   /**
@@ -52,9 +52,9 @@ class Util {
       fs.statSync(filepath);
       this.requireDir(filepath, {recurse: true});
       return true;
-    }catch(err) {
-      if(err.code === 'ENOENT') {
-        if(!fs.statSync(filepath)) {
+    } catch(err) {
+      if (err.code === 'ENOENT') {
+        if (!fs.statSync(filepath)) {
           fs.mkdirSync(filepath);
           this.log([
             'Create directory',
@@ -76,8 +76,8 @@ class Util {
     try {
       fs.statSync(filepath);
       return true
-    }catch(err) {
-      if(err.code === 'ENOENT') {
+    } catch(err) {
+      if (err.code === 'ENOENT') {
         return false;
       }
     }
@@ -90,7 +90,7 @@ class Util {
    * @param {string} body
    */
   createFile(filepath, body = '') {
-    if(!fs.existsSync(filepath)) {
+    if (!fs.existsSync(filepath)) {
       fs.writeFile(filepath, body, (error) => {});
       this.log([
         'Create file',
@@ -162,9 +162,9 @@ class Util {
    * @returns {array}
    */
   splitExtension(filename, dot = true) {
-    if(dot) {
+    if (dot) {
       return filename.split(/(?=\.[^.]+$)/);
-    }else{
+    } else {
       return filename.split(/\.(?=[^.]+$)/);
     }
   }
