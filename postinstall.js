@@ -1,6 +1,7 @@
 (() => {
   'use strict'
 
+  const fs = require('fs-extra');
   const execSync = require('child_process').execSync;
 
   let colors = {
@@ -12,6 +13,8 @@
     lightGreen: (str) => {return `\u001b[92m${str}\u001b[0m`;}
   };
   let theme_color = `lightBlue`;
+
+  let isInitialize = false;
 
   const message = {
     postInstallComplete: `postinstall complete!\n`,
@@ -34,12 +37,8 @@
     editorconfig: `.editorconfig`
   };
 
-  let fs = ``;
-  let isInitialize = false;
-
   // _src
   new Promise((resolve, reject) => {
-    fs = require('fs-extra');
     title(`base files copy. [${dir.src} => ${dir.dest}]`);
     copyFiles(dir.src, dir.dest, () => {
       isInitialize = true;
