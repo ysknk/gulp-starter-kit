@@ -45,7 +45,7 @@ export default ((win, doc) => {
       this.alignRightElem = '.js-fixed-right';
 
       this.name = {};
-      this.name.modal = 'site-modal';
+      this.name.modal = `${PREFIX}modal`;
       this.name.close = `${this.name.modal}_close`;
       this.name.container = `${this.name.modal}_container`;
       this.name.wrapper = `${this.name.modal}_wrapper`;
