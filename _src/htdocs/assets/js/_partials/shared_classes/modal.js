@@ -9,6 +9,10 @@ export default ((win, doc) => {
 
   /**
    *  Modal
+   *  <a href="javascript:void(0)" data-modal-open="" data-modal-template="#modal-template">button</a>
+   *  <script id="modal-template" type="text/template">
+   *    <p>modal content</p>
+   *  </script>
    */
   return class Modal {
 
