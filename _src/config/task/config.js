@@ -1,5 +1,8 @@
 // options -> /_app/gulpfile.babel.js/task/config.js
 
+const START_PATH = `/`;
+const FILE_NAME = ``;// default index.html
+
 module.exports = {
 
   tasks: {
@@ -31,15 +34,15 @@ module.exports = {
 
   /* serv @browserSync */
   serv: {
-    // options: {
-    //   port: 8080
-    //   notify: false,
-    //   open: 'local',// argv.no = false(ex: gulp watch --no)
-    //   startPath: '/',
-    //   server: {
-    //     baseDir: define.path.dest
-    //   }
-    // }
+    options: {
+      // port: 8080
+      // notify: false,
+      // open: 'local',// argv.no = false(ex: gulp watch --no)
+      startPath: `${START_PATH}${FILE_NAME}`,
+      // server: {
+      //   baseDir: define.path.dest
+      // }
+    }
   },
 
   /* html @pug */
@@ -49,7 +52,7 @@ module.exports = {
     // minify_options: {},
     // ex: https://github.com/yaniswang/HTMLHint/wiki/Rules
     // lint_options: {},
-    // assets_path: '/assets/',//base absolute path
+    assets_path: `${START_PATH}`,//base absolute path
   },
 
   /* css @stylus */
