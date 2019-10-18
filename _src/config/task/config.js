@@ -3,6 +3,8 @@
 const START_PATH = `/`;
 const FILE_NAME = ``;// default index.html
 
+const ASSETS_PATH = `assets/`
+
 module.exports = {
 
   tasks: {
@@ -52,7 +54,7 @@ module.exports = {
     // minify_options: {},
     // ex: https://github.com/yaniswang/HTMLHint/wiki/Rules
     // lint_options: {},
-    assets_path: `${START_PATH}assets/`,//base absolute path
+    assets_path: `${START_PATH}${ASSETS_PATH}`,//base absolute path
   },
 
   /* css @stylus */
@@ -112,7 +114,7 @@ module.exports = {
   /* ../tasks/iconfont/src/uF002-huga1.svg */
   iconfont: {
     src: [`${define.path.config}tasks/iconfont/**/*.svg`],
-    dest: `${define.path.dest}assets/font/`,
+    dest: `${define.path.dest}${ASSETS_PATH}font/`,
     options: {
       startUnicode: 0xF001,
       fontName: 'icon1',
