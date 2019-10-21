@@ -94,13 +94,13 @@ break_point(type, css = false)
   if css
     if wtab
       if type == 'pc'
-        @media screen and (min-width: (wtab + 1)px)
+        @media screen and (min-width: (wpc + 1)px)
           {block}
       if type == 'tab'
-        @media screen and (max-width: (wtab)px)
+        @media screen and (max-width: (wpc)px)
           {block}
       if type == 'sp'
-        @media screen and (max-width: (wsp)px)
+        @media screen and (max-width: (wtab - 1)px)
           {block}
     else
       if type == 'pc'
