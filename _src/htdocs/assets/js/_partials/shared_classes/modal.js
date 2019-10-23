@@ -169,9 +169,6 @@ export default ((win, doc) => {
           this.update();
         }
 
-        _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
-        opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
-
         let content = doc.getElementById(this.name.content);
         content.innerHTML = html({
           modal: this,
@@ -179,6 +176,9 @@ export default ((win, doc) => {
         });
 
         this.setPosTop();
+
+        _.isFunction(this.onBeforeOpen) && this.onBeforeOpen(this);
+        opts && _.isFunction(opts.onBeforeOpen) && opts.onBeforeOpen(this);
 
         this.imgLoadEnd(modal, () => {
           FN.anime.remove(modal);
