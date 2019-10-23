@@ -1,5 +1,6 @@
 import variable from './_partials/globals/variable';
 
+import reqAnimationFrame from './_partials/polyfills/requestAnimationFrame';
 import animationEnd from './_partials/polyfills/animationEnd';
 import closest from './_partials/polyfills/closest';
 import styles from './_partials/polyfills/styles';
