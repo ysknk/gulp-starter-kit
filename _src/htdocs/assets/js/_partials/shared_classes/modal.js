@@ -514,11 +514,14 @@ export default ((win, doc) => {
      * setPosTop
      */
     setPosTop() {
+      let modalElem = doc.getElementById(this.name.modal);
       let wrapperElem = doc.getElementById(this.name.wrapper);
       let outerElem = doc.getElementById(this.name.outer);
-      if (!wrapperElem && !outerElem) return;
 
       setTimeout(() => {
+        if (modalElem) {
+          modalElem.scrollTop = 0;
+        }
         if (wrapperElem) {
           wrapperElem.scrollTop = 0;
         }
