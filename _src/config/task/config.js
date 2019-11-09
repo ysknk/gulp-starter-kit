@@ -5,11 +5,14 @@ const FILE_NAME = ``;// default index.html
 
 const ASSETS_PATH = `assets/`
 
+let meta = require(`../page.js`);
+
 module.exports = {
 
   tasks: {
     styleguide: true,
     iconfont: true,
+    mass_production: true,
   },
 
   /* common */
@@ -123,7 +126,24 @@ module.exports = {
       prependUnicode: true,
       formats: ['ttf', 'eot', 'woff', 'woff2'],
     }
-  }
+  },
 
+  mass_production: {
+    src: `${define.path.htdocs}_partials/layouts/default.pug`,
+    dest: define.path.dest,
+
+    itemsfile: `${define.path.config}tasks/mass_production/items`,
+
+    extension: '.html',
+
+    options: {
+      pretty: true
+    },
+
+    meta,
+
+    assets_path: '/assets/',//base absolute path
+    htdocsdir: define.path.htdocs
+  }
 };
 
