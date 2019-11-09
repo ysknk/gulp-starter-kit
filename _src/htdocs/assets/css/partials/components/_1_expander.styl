@@ -1,0 +1,46 @@
+/*
+---
+name: expander
+category:
+  - components
+  - components/expander
+tag:
+  - base
+  - latest
+  - pc
+  - sp
+  - js
+  - data
+---
+
+expander styles
+
+* Base expander style.
+* Resize not compatible.
+* Use [data-expander].
+
+```html
+<div class="js-expander" id="js-expander1">
+  <div class="js-expander_outer">
+    <div class="js-expander_inner">
+      text text text text text text text text text text text text text text text text text text text text text text text text text text text
+    </div>
+  </div>
+  <div class="site-expander" data-expander="{&quot;content&quot;: &quot;#js-expander1&quot;}">
+    <span class="site-expander_fade"></span>
+    <a class="js-expander_button" href="javascript:void(0)"></a>
+  </div>
+</div>
+```
+```jade
+.js-expander#js-expander1
+  .js-expander_outer
+    .js-expander_inner
+        | text text text text text text text text text text text text text text text text text text text text text text text text text text text
+  div(class=`${p}expander` data-expander=`{"content": "#js-expander1"}`)
+    span(class=`${p}expander_fade`)
+    a.js-expander__button(href="javascript:void(0)")
+```
+*/
+// .{$p}expander
+//   $this = selector('^[1..-1]')

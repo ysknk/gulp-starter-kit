@@ -3,15 +3,14 @@
 flex-version = flex;
 @import "nib"
 
-@import "partials/utilities/_variable"
-@import "partials/utilities/_mixin"
+@import "partials/valiables/**/*"
+@import "partials/mixins/**/*"
 
 @import "partials/plugins/**/*"
 
 @import "partials/bases/_initialize"
-@import "partials/bases/_content"
 
-.{p}base
+.{$p}base
   // this = selector('^[1..-1]')
   @import "partials/components/**/*"
   @import "partials/layouts/**/*"

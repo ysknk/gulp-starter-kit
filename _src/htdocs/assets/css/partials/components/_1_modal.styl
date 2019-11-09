@@ -1,0 +1,132 @@
+/*
+---
+name: modal
+category:
+  - components
+  - components/modal
+tag:
+  - base
+  - latest
+  - pc
+  - sp
+  - js
+  - data
+---
+
+modal styles
+
+* Base modal style.
+* Use [data-modal-template].
+* Use  [data-modal-open]. -> Pass by data array.
+* Not require [data-modal-name]. -> Fade to switch content.
+
+```html
+<p><a href="javascript:void(0)" data-modal-template="#modal1" data-modal-open>link</a></p>
+
+<script id="modal1" type="text/template">
+  <p>modal1</p>
+</script>
+```
+```jade
+p: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open) link
+
+script#modal1(type="text/template")
+  modal1
+```
+ex)group
+```jade
+p.btn: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open='{"id": "test1"}' data-modal-name="group--1") btn-1
+p.btn: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open='{"id": "test2"}' data-modal-name="group--2") btn-2
+p.btn: a(href="javascript:void(0)" data-modal-template="#modal1" data-modal-open='{"id": "test3"}' data-modal-name="group--3") btn-3
+
+script#modal1(type="text/template")
+  p <%= data.id %>
+
+  | <% if(data.prev) { %>
+  .prev(onclick!="javascript:document.querySelector('<%= data.prev %>').click();") prev
+  | <% } %>
+  | <% if(data.next) { %>
+  .next(onclick!="javascript:document.querySelector('<%= data.next %>').click();") next
+  | <% } %>
+```
+*/
+#{p}modal
+  $this = selector('^[1..-1]')
+  $close_size = 1em
+
+  &_container
+    relative top 0 left 0
+
+  &_close
+    absolute top 0 right 0
+    a
+      relative top 0 left 0
+      display block
+      width $close_size
+      height @width
+      &::before,
+      &::after
+        absolute top 50% left 50%
+        content ''
+        width 100%
+        height 2px
+        margin-left -($close_size / 2)em
+        margin-top -(@height / 2)px
+        background #fff
+      &::before
+        transform rotate(45deg)
+      &::after
+        transform rotate(-45deg)
+
+  &_content
+    clear both
+    overflow hidden
+    border-radius(15px)
+    background #fff
+    // padding-top close_size
+
+  &_wrapper
+    absolute top 0 left 0
+    width 100%
+    height 100%
+    z-index 0
+
+  &_background
+    absolute top 0 left 0
+    z-index 0
+    width 100%
+    height 100%
+    background #000
+    opacity .6
+
+  &_outer
+    overflow auto
+    box-sizing border-box
+    max-width 100%
+    width ($wsp)px
+    padding-right 20px
+    padding-left @padding-right
+    height 100%
+    margin-right auto
+    margin-left @margin-right
+    &::before
+      content ''
+      display inline-block
+      width 0
+      height 100%
+      vertical-align middle
+    // &::after
+    //   content ''
+    //   display block
+    //   absolute top 0 left 0
+    //   z-index 1
+    //   width 100%
+    //   height 100%
+
+  &_inner
+    relative top 0 left 0
+    z-index 10
+    display inline-block
+    vertical-align middle
+    width 100%
+

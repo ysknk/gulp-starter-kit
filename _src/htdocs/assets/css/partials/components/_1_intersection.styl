@@ -30,12 +30,12 @@ div(style=`height:1000px;background:#0000ff;` data-intersection='{"threshold": 0
 ```
 */
 [data-intersection]
-  this = selector('^[1..-1]')
+  $this = selector('^[1..-1]')
 
   &.fadein
     &.is-intersection-init
       opacity 0
-      transition opacity trd tre
+      transition opacity $trd $tre
     &.is-intersection-in
       opacity 1
     &.is-intersection-out
