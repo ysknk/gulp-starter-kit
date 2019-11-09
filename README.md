@@ -57,7 +57,7 @@ npm i
 ### npm-scripts
 
 ```Shell
-cd _app/
+cd $(root)/_app/
 # watch target files and server open
 npm run watch
 # not browser open
@@ -78,7 +78,7 @@ npm run delete
 ### Gulp command
 
 ```Shell
-cd _app/
+cd $(root)/_app/
 # watch target files and server open
 gulp watch
 # deafult watch
@@ -115,17 +115,27 @@ gulp [html|css|js|img]:clean
 gulp --tasks
 ```
 
-#### Original task
+#### Custom task
 
-Default original tasks
+Default Custom tasks
 
 ```Shell
+cd $(root)/_app
+
 # node-aigis
 gulp styleguide
 # gulp-iconfont
 gulp iconfont
 ```
 ___* Gulp command only___
+
+##### Mock API Server
+
+```Shell
+# mock api server
+cd $(root)/_src/config
+npm run jsonserver
+```
 
 ## License
 
