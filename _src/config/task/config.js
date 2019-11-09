@@ -132,7 +132,7 @@ module.exports = {
     src: `${define.path.htdocs}_partials/layouts/default.pug`,
     dest: define.path.dest,
 
-    itemsfile: `${define.path.config}tasks/mass_production/items`,
+    itemsfile: `${define.path.config}tasks/mass_production/src/items`,
 
     extension: '.html',
 
