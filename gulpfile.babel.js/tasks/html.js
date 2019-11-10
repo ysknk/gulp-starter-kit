@@ -40,6 +40,11 @@ class Html extends TaskMaster {
       htdocsdir,
       this.task.data.options
     );
+
+    this.task.data.inheritance_options = _.merge({},
+      htdocsdir,
+      this.task.data.inheritance_options
+    );
   }
 
   /**
@@ -65,18 +70,6 @@ class Html extends TaskMaster {
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
     let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
 
-    let isPirtial = false;
-    if (isWatch) {
-      let watchPath = path.parse(watchEvent.path);
-      let taskData = this.task.data;
-      let baseDir = taskData.htdocsdir;
-      let normalizeBaseDir = path.resolve(baseDir);
-      let normalizeWatchDir = path.resolve(watchPath.dir).replace(/\\/g, '\/');
-      let checkPath = `^${normalizeBaseDir}${path.sep}_`.replace(/\\/g, '\/');
-      let exPirtial = new RegExp(checkPath, 'i');
-      isPirtial = normalizeWatchDir.match(exPirtial);
-    }
-
     stream
       .pipe($.plumber(this.errorMessage()))
 
@@ -89,18 +82,24 @@ class Html extends TaskMaster {
           let parse = path.parse(distPath);
           let filename = `${parse.name}${this.extension}`;
           let dist = path.join(path.dirname(distPath), filename);
-
-          // 比較対象をなくすことで、pirtial保存時全pugファイル書き出し
-          if (isPirtial) {
-            dist = ``;
-          }
           return dist;
         }
       })))
 
+      .pipe($.if(isWatch, $.cached(this.task.name)))
+      // .pipe($.debug({title: 'Debug before gulp-pug-inheritance'}))
+      .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
+
+      .pipe($.data((file) => {
+        return this.setCurrentData(file.relative, this.task.data);
+      }))
+
+      // .pipe($.debug({title: 'Debug after gulp-pug-inheritance'}))
       .pipe($.filter((file) => {
         return this.ignoreFilter(file);
       }))
+      // .pipe($.debug({title: 'Debug after gulp-filter'}))
+
       .pipe(pug(this.task.data.options))
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
 
@@ -183,7 +182,8 @@ class Html extends TaskMaster {
       this.task.types[0] : 'procedure';
     let src = this.getSrc();
     let ignore = this.getIgnore();
-    let mergeSrc = [...src, ...ignore];
+    // let mergeSrc = [...src, ...ignore];
+    let mergeSrc = [...src];
 
     // default task
     gulp.task(this.task.name, (done) => {

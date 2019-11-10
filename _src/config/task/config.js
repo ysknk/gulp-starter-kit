@@ -128,8 +128,9 @@ module.exports = {
     }
   },
 
+  /* mass_production */
   mass_production: {
-    src: `${define.path.htdocs}_partials/layouts/default.pug`,
+    src: `${define.path.htdocs}_layouts/default.pug`,
     dest: define.path.dest,
 
     itemsfile: `${define.path.config}tasks/mass_production/src/items`,
@@ -142,7 +143,7 @@ module.exports = {
 
     meta,
 
-    assets_path: '/assets/',//base absolute path
+    assets_path: '/assets/',//base path
     htdocsdir: define.path.htdocs
   }
 };

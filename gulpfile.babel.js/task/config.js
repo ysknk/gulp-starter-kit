@@ -63,6 +63,13 @@ module.exports = {
       pretty: true
     },
 
+    inheritance_options: {
+      // debug: true,
+      skip: 'node_modules',
+      saveInTempFile: true,
+      tempFile: `${define.path.config}.pugInheritance.json`
+    },
+
     // ex: https://github.com/kangax/html-minifier/
     minify_options: {
       empty: true,
