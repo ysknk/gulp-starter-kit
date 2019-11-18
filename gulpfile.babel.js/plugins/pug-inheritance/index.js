@@ -228,6 +228,7 @@ var GulpPugInheritance = (function() {
             var cacheKey = _this.setTempKey( tempInheritance.file );
             var baseDir = path.join( process.cwd(), _this.options.basedir, tempInheritance.file );
             if ( !fs.existsSync( baseDir ) ) {
+              // this -> _this
               if ( _this.options.debug ) {
                 gutil.log('[' + PLUGIN_NAME + '][DELETE] Delete inheritance of: "' + tempInheritance.file + '"');
               }
