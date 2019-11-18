@@ -2,6 +2,7 @@
 
 import TaskMaster from '../task/master';
 import pug from '../plugins/pug/';
+import pugInheritance from '../plugins/pug-inheritance/';
 
 /**
  * Set Const Variables
@@ -88,7 +89,7 @@ class Html extends TaskMaster {
 
       .pipe($.if(isWatch, $.cached(this.task.name)))
       // .pipe($.debug({title: 'Debug before gulp-pug-inheritance'}))
-      .pipe($.if(isWatch, $.pugInheritance(this.task.data.inheritance_options)))
+      .pipe($.if(isWatch, pugInheritance(this.task.data.inheritance_options)))
 
       .pipe($.data((file) => {
         return this.setCurrentData(file.relative, this.task.data);
