@@ -12,7 +12,7 @@ module.exports = {
   tasks: {
     styleguide: true,
     iconfont: true,
-    mass_production: true,
+    mass_production: false,
   },
 
   /* common */
