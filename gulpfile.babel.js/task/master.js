@@ -1,5 +1,7 @@
 'use strict';
 
+import colors from 'ansi-colors';
+
 /**
  * Set Const Variables
  */

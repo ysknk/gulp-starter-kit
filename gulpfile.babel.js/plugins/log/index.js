@@ -1,5 +1,8 @@
 'use strict';
 
+import fancyLog from 'fancy-log';
+import colors from 'ansi-colors';
+
 // @author ysknk
 const pluginName = 'log';
 const text = {

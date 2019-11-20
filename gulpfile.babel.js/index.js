@@ -3,8 +3,6 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-import requireDir from 'require-dir';
-
 import stream from 'stream';
 import spawn from 'cross-spawn';
 
@@ -14,8 +12,6 @@ import del from 'del';
 
 import notifier from 'node-notifier';
 
-import fancyLog from 'fancy-log';
-import colors from 'ansi-colors';
 import pluginError from 'plugin-error';
 import replaceExt from 'replace-ext';
 
@@ -90,9 +86,6 @@ const globalVars = {
   notifier,
   Transform,
 
-  requireDir,
-  fancyLog,
-  colors,
   pluginError,
   replaceExt,
 

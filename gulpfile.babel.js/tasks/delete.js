@@ -1,5 +1,8 @@
 'use strict';
 
+import fancyLog from 'fancy-log';
+import colors from 'ansi-colors';
+
 import TaskMaster from '../task/master';
 const through = require('through2');
 
