@@ -158,7 +158,7 @@ export default ((win, doc) => {
       let data = elem.getAttribute(this.dataAttr) || '';
       let parseData = null;
 
-      if (!data) return;
+      if (!data || (data && data === this.dataAttr)) return;
 
       try {
         parseData = JSON.parse(data);
