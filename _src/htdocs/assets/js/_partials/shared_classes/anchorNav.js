@@ -54,7 +54,9 @@ export default ((win, doc) => {
       let elem = current && current.elem ? current.elem : '';
       if (elem && !elem.classList.contains(this.currentClassName)) {
         elem.classList.add(this.currentClassName);
-        current.contentElem.classList.add(this.currentClassName);
+        if (current.contentElem) {
+          current.contentElem.classList.add(this.currentClassName);
+        }
       }
     }
 
@@ -71,7 +73,9 @@ export default ((win, doc) => {
         let navSelector = nav.getAttribute(this.dataAttr.nav);
         if (!current || (navSelector !== current.selector)) {
           nav.classList.remove(this.currentClassName);
-          targetData.elem.classList.remove(this.currentClassName);
+          if (targetData.elem) {
+            targetData.elem.classList.remove(this.currentClassName);
+          }
         }
       });
     }
