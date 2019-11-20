@@ -1,3 +1,15 @@
+import imageminPngquant from 'imagemin-pngquant';
+import imageminOptipng from 'imagemin-optipng';
+import imageminJpegtran from 'imagemin-jpegtran';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminGifsicle from 'imagemin-gifsicle';
+import imageminSvgo from 'imagemin-svgo';
+
+import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
+
+import nib from 'nib';
+import import_tree from 'stylus-import-tree';
+
 let meta = require(`../../${define.path.pageConfig}`);
 
 module.exports = {
@@ -116,7 +128,7 @@ module.exports = {
         meta
       },
       define: {
-        import_tree: import_tree
+        import_tree
       },
       use: [
         nib()

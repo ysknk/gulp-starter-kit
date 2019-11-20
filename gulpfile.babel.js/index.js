@@ -31,19 +31,6 @@ import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
 
-import nib from 'nib';
-import autoprefixer from 'autoprefixer-stylus';
-import import_tree from 'stylus-import-tree';
-
-import imageminPngquant from 'imagemin-pngquant';
-import imageminOptipng from 'imagemin-optipng';
-import imageminJpegtran from 'imagemin-jpegtran';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminGifsicle from 'imagemin-gifsicle';
-import imageminSvgo from 'imagemin-svgo';
-
-import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
-
 /**
  * set const variables
  */
@@ -115,19 +102,6 @@ const globalVars = {
   define,
   $,
   _,
-
-  nib,
-  autoprefixer,
-  import_tree,
-
-  imageminPngquant,
-  imageminOptipng,
-  imageminJpegtran,
-  imageminMozjpeg,
-  imageminGifsicle,
-  imageminSvgo,
-
-  licenseInfoWebpackPlugin,
 
   plugins: {
     util,
