@@ -18,7 +18,8 @@ export default ((win, doc) => {
     isObject: require('lodash/isObject'),
     isFunction: require('lodash/isFunction'),
     throttle: require('lodash/throttle'),
-    debounce: require('lodash/debounce')
+    debounce: require('lodash/debounce'),
+    orderBy: require('lodash/orderBy')
   };
 
 })(window, document);
