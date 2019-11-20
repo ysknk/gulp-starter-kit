@@ -6,6 +6,7 @@
   "scripts": {
     "prestart": "npm i",
     "start": "gulp",
+    "dev": "gulp",
     "watch": "gulp watch",
     "build": "gulp build",
     "clean": "gulp clean",
