@@ -20,7 +20,6 @@ export default ((win, doc) => {
         return new AnchorNav(opts_);
       }
 
-      // TODO callback
       this.dataAttr = {
         nav: `data-anchor-nav`
       };
