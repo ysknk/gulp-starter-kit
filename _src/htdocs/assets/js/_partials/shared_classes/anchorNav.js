@@ -54,9 +54,9 @@ export default ((win, doc) => {
      * update
      */
     update() {
-      let currentNav = this.getCurrent();
-      this.clearCurrent(currentNav);
-      this.setCurrent(currentNav);
+      let current = this.getCurrent();
+      this.clearCurrent(current);
+      this.setCurrent(current);
     }
 
     /**
