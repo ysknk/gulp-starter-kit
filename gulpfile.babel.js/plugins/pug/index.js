@@ -1,8 +1,9 @@
 'use strict';
 
-// @author ysknk
 import defaultPug from 'pug';
+import replaceExt from 'replace-ext';
 
+// @author ysknk
 const pluginName = 'pug';
 const text = {
   'stream': 'Stream not supported',

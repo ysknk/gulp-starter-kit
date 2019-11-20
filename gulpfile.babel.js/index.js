@@ -13,7 +13,6 @@ import del from 'del';
 import notifier from 'node-notifier';
 
 import pluginError from 'plugin-error';
-import replaceExt from 'replace-ext';
 
 import bs from 'browser-sync';
 import minimist from 'minimist';
@@ -87,7 +86,6 @@ const globalVars = {
   Transform,
 
   pluginError,
-  replaceExt,
 
   browserSync,
   argv,
