@@ -199,7 +199,10 @@ class Html extends TaskMaster {
     // watch task
     gulp.task(this.task.name + ':watch', () => {
       plugins.util.setIsWatch(true);
-      let watcher = gulp.watch(src, gulp.parallel(this.task.name));
+      let watcher = gulp.watch(src, {
+        atomic: 500
+      }, gulp.series(this.task.name));
+
       this.setAllWatcher(watcher, this.task.data);
       this.setDeleteWatcher(watcher, this.task.data);
     });
