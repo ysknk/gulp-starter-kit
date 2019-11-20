@@ -40,11 +40,16 @@
   // _src
   new Promise((resolve, reject) => {
     title(`base files copy. [${dir.src} => ${dir.dest}]`);
-    copyFiles(dir.src, dir.dest, () => {
-      isInitialize = true;
-
-      resolve();
-    }, resolve);
+    if (checkFile(dir.dest)) {
+        console.log(message.notCopy)
+        title(``, true);
+        resolve();
+    } else {
+      copyFiles(dir.src, dir.dest, () => {
+        isInitialize = true;
+        resolve();
+      }, resolve);
+    }
   // gitignore
   }).then(() => {
     return new Promise((resolve, reject) => {
@@ -83,6 +88,17 @@
         colors[theme_color](`  ${message}`),
         colors[theme_color](`${mark.repeat(repeat)}*/${isEnd ? '\n' : ''}`),
       ].join('\n'));
+  }
+
+  function checkFile(filepath) {
+    try {
+      fs.statSync(filepath);
+      return true
+    } catch(err) {
+      if (err.code === 'ENOENT') {
+        return false;
+      }
+    }
   }
 
   function copyFiles(src, dest, cbSuccess, cbFailure) {
