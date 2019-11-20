@@ -217,7 +217,16 @@ module.exports = class TaskMaster {
    */
   errorMessage() {
     return {
-      errorHandler: $.notify.onError("Error: <%= error.message %>")
+      errorHandler: function(error) {
+        notifier.notify({
+          title: error.plugin,
+          message: `Error: ${error.message}`,
+          sound: false,
+          wait: false,
+          timeout: 1,
+          type: 'info'
+        });
+      }
     };
   }
 

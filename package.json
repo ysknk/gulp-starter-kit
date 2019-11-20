@@ -46,7 +46,6 @@
     "gulp-imagemin": "^6.1.1",
     "gulp-load-plugins": "^1.6.0",
     "gulp-minify-html": "^1.0.6",
-    "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-pug-inheritance": "^1.0.0-rc.5",
     "gulp-rename": "^1.4.0",
