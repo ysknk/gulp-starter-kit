@@ -41,7 +41,6 @@ export default ((win, doc) => {
      */
     update() {
       let currentNav = this.getCurrentNav();
-      console.log(currentNav)
       this.clearCurrentNav(currentNav);
       this.setCurrentNav(currentNav);
     }
@@ -69,7 +68,6 @@ export default ((win, doc) => {
 
       _.forEach(navs, (nav) => {
         let targetData = this.getTargetData(nav);
-        console.log(targetData)
         let navSelector = nav.getAttribute(this.dataAttr.nav);
         if (!current || (navSelector !== current.selector)) {
           nav.classList.remove(this.currentClassName);
