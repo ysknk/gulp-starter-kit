@@ -20,6 +20,7 @@ export default ((win, doc) => {
         return new AnchorNav(opts_);
       }
 
+      // TODO callback
       this.dataAttr = {
         nav: `data-anchor-nav`
       };
@@ -37,55 +38,73 @@ export default ((win, doc) => {
     // initialize() {}
 
     /**
+     * onIn
+     *
+     * @param {object} data
+     */
+    onIn(data) {}
+
+    /**
+     * onOut
+     *
+     * @param {object} data
+     */
+    onOut(data) {}
+
+    /**
      * update
      */
     update() {
-      let currentNav = this.getCurrentNav();
-      this.clearCurrentNav(currentNav);
-      this.setCurrentNav(currentNav);
+      let currentNav = this.getCurrent();
+      this.clearCurrent(currentNav);
+      this.setCurrent(currentNav);
     }
 
     /**
-     * setCurrentNav
+     * setCurrent
      *
      * @param {object} current nav
      */
-    setCurrentNav(current) {
+    setCurrent(current) {
       let elem = current && current.elem ? current.elem : '';
       if (elem && !elem.classList.contains(this.currentClassName)) {
         elem.classList.add(this.currentClassName);
         if (current.contentElem) {
           current.contentElem.classList.add(this.currentClassName);
         }
+        this.onIn && this.onIn(current);
       }
     }
 
     /**
-     * clearCurrentNav
+     * clearCurrent
      *
      * @param {object} current nav
      */
-    clearCurrentNav(current) {
+    clearCurrent(current) {
       let navs = this.getNavs();
 
       _.forEach(navs, (nav) => {
         let targetData = this.getTargetData(nav);
         let navSelector = nav.getAttribute(this.dataAttr.nav);
         if (!current || (navSelector !== current.selector)) {
-          nav.classList.remove(this.currentClassName);
-          if (targetData.elem) {
-            targetData.elem.classList.remove(this.currentClassName);
+          if (nav.classList.contains(this.currentClassName)) {
+            nav.classList.remove(this.currentClassName);
+            if (targetData.elem) {
+              targetData.elem.classList.remove(this.currentClassName);
+            }
+            this.onOut && this.onOut(current);
           }
         }
       });
     }
 
     /**
-     * getCurrentNav
+     * getCurrent
      *
      * @returns {object} current
      */
-    getCurrentNav() {
+    getCurrent() {
       let navs = this.getNavs();
       let windowData = this.getWindowData();
       let currentNavs = [];
