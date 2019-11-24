@@ -194,8 +194,18 @@ module.exports = class TaskMaster {
    * @returns {object}
    */
   serv() {
-    return (this.task.data.serv && this.task.data.serv === 'stream') ?
-      browserSync[this.task.data.serv]() : plugins.empty();
+    return this.servName() === 'empty' ?
+      plugins.empty() : browserSync[this.servName()]({stream:true});
+  }
+
+  /**
+   * servName
+   *
+   * @returns {object}
+   */
+  servName() {
+    return plugins.util.getIsWatch() && this.task.data && this.task.data.serv ?
+      this.task.data.serv : `empty`;
   }
 
   /**

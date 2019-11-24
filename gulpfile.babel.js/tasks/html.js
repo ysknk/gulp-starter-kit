@@ -205,6 +205,12 @@ class Html extends TaskMaster {
 
       this.setAllWatcher(watcher, this.task.data);
       this.setDeleteWatcher(watcher, this.task.data);
+
+      let taskserv = (this.servName() && config[this.task.name][plugins.util.getServName()]) ?
+        (this.servName() + ':' + config[this.task.name][plugins.util.getServName()]) : plugins.util.getEmptyName();
+
+      // html only
+      gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
     });
 
     // other types task

@@ -125,6 +125,15 @@ let localConfigPath = [
   define.path.config, taskfile
 ].join('');
 
+// [{}, base, local] config merge
+plugins.util.setGlobalVars(define.ns, _.merge({},
+  require('./' + taskfile),
+  require('../' + define.path.config + taskfile)
+));
+
+/**
+ * create config file
+ */
 let configBody = 'module.exports \= \{\};';
 
 if (!plugins.util.checkFile(baseConfigPath)) {
@@ -134,12 +143,6 @@ if (!plugins.util.checkFile(baseConfigPath)) {
 if (!plugins.util.checkFile(localConfigPath)) {
   plugins.util.createFile(localConfigPath, configBody);
 }
-
-// [{}, base, local] config merge
-plugins.util.setGlobalVars(define.ns, _.merge({},
-  require('./' + taskfile),
-  require('../' + define.path.config + taskfile)
-));
 
 /**
  * read below the tasks directory
@@ -162,13 +165,13 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
 let taskMaster = require('./task/master');
 let tasks = gulp._registry._tasks;
 let defaultName = 'default';
-let emptyName = 'empty';
-let deleteName = 'delete';
-let serveName = 'serv';
+let watchName = 'watch';
+let servName = plugins.util.getServName();
+let emptyName = plugins.util.getEmptyName();
 let types = {};
 let taskmaster = new taskMaster();
-let isServ = taskmaster.isTask(serveName);
-let beforeTask = isServ ? serveName : emptyName;
+let isServ = taskmaster.isTask(servName);
+let beforeTask = isServ ? servName : emptyName;
 
 // empty
 gulp.task(emptyName, (done) => {done();});
@@ -184,7 +187,7 @@ _.forEach(tasks, (task, name) => {
 });
 
 _.forEach(types, (array, key) => {
-  if (key === `watch` || key === defaultName) {
+  if (key === watchName || key === defaultName) {
     gulp.task(key, gulp.series(beforeTask, function all() {
       let config = global[define.ns];
       plugins.util.setIsWatch(true);
@@ -192,27 +195,27 @@ _.forEach(types, (array, key) => {
       _.forEach(array, (string) => {
         let split = string.split(':');
         let taskname = split[0];
-        let serv = `${serveName}:${(config[taskname] && config[taskname][serveName] || 'reload')}`;
-        let src = config[taskname] && taskmaster.getSrc(config[taskname].src);
+        let taskconfig = config[taskname];
+        taskconfig = taskconfig && _.merge({},
+          config['common'] || {},
+          taskconfig || {}
+        );
 
-        if (taskname === serveName ||
-          taskname === emptyName ||
-          taskname === deleteName) return;
+        let src = taskconfig && taskmaster.getSrc(taskconfig.src);
 
-        if (config && config[taskname]) {
-          let watcher = gulp.watch(src, {
-            // awaitWriteFinish: true,
-            atomic: 500
-          }, gulp.series(taskname, isServ ? serv : emptyName));
+        if (!config || !taskconfig) return;
 
-          taskmaster.setAllWatcher(watcher, config[taskname]);
-          taskmaster.setDeleteWatcher(watcher, config[taskname]);
+        let watcher = gulp.watch(src, {
+          // awaitWriteFinish: true,
+          atomic: 500
+        }, gulp.series(taskname));
 
-          // html only
-          if (taskname === `html`) {
-            gulp.watch(define.path.pageConfig, gulp.series(`config:build`, isServ ? serv : emptyName));
-          }
+        taskmaster.setAllWatcher(watcher, taskconfig);
+        taskmaster.setDeleteWatcher(watcher, taskconfig);
 
+        // html only
+        if (taskname === 'html') {
+          gulp.watch(define.path.pageConfig, gulp.series(`config:build`));
         }
       });
     }));

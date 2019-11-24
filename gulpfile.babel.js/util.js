@@ -155,6 +155,24 @@ class Util {
   }
 
   /**
+   * getServName
+   *
+   * @returns {string}
+   */
+  getServName() {
+    return 'serv';
+  }
+
+  /**
+   * getEmptyName
+   *
+   * @returns {string}
+   */
+  getEmptyName() {
+    return 'empty';
+  }
+
+  /**
    * splitExtension
    *
    * @param {string} filename filename

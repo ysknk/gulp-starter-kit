@@ -49,7 +49,9 @@ module.exports = {
       mode: 'development'
     },
 
-    htdocsdir: define.path.htdocs
+    htdocsdir: define.path.htdocs,
+
+    serv: 'reload'
   },
 
   /* serv @browserSync */
@@ -59,6 +61,7 @@ module.exports = {
       notify: false,
       open: 'local',// argv.no = false(ex: gulp watch --no)
       startPath: '/',
+      reloadDelay: 100,
       server: {
         baseDir: define.path.dest
       }
