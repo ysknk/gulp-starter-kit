@@ -90,7 +90,11 @@ export default ((win, doc) => {
         if (isSetTransform) {
           perPower = data.dir ? perPower : -perPower;
           if (data.prop) {
-            elem.style[data.prop] = `${perPower}%`;
+            if (data.prop === `opacity`) {
+              elem.style[data.prop] = `${perPower / 100}`;
+            } else {
+              elem.style[data.prop] = `${perPower}%`;
+            }
           } else {
             elem.style.transform = `translate${data.move.toUpperCase()}(${perPower}%)`;
           }
