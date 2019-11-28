@@ -47,13 +47,19 @@ export default ((win, doc) => {
 
     /**
      * onIn
+     *
+     * @param {object} elem
+     * @param {object} data
      */
-    onIn() {}
+    onIn(elem, data) {}
 
     /**
      * onOut
+     *
+     * @param {object} elem
+     * @param {object} data
      */
-    onOut() {}
+    onOut(elem, data) {}
 
     /**
      * setInitializeStyle
@@ -136,7 +142,7 @@ export default ((win, doc) => {
         if (data.callback) {
           data.callback.in
             && _.isFunction(this[data.callback.in])
-            && this[data.callback.in]();
+            && this[data.callback.in](elem, data);
         }
       }
     }
@@ -155,7 +161,7 @@ export default ((win, doc) => {
         if (data.callback) {
           data.callback.out
             && _.isFunction(this[data.callback.out])
-            && this[data.callback.out]();
+            && this[data.callback.out](elem, data);
         }
       }
     }
