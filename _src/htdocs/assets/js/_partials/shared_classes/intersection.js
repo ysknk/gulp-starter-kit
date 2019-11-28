@@ -132,7 +132,12 @@ export default ((win, doc) => {
         }
         elem.classList.remove(data.classname.out);
         elem.classList.add(data.classname.in);
-        data.callback && data.callback.in && this[data.callback.in]();
+
+        if (data.callback) {
+          data.callback.in
+            && _.isFunction(this[data.callback.in])
+            && this[data.callback.in]();
+        }
       }
     }
 
@@ -143,9 +148,16 @@ export default ((win, doc) => {
      * @param {object} data
      */
     setOut(elem, data) {
-      elem.classList.remove(data.classname.in);
-      elem.classList.add(data.classname.out);
-      data.callback && data.callback.out && this[data.callback.out];
+      if (elem.classList.contains(data.classname.in)) {
+        elem.classList.remove(data.classname.in);
+        elem.classList.add(data.classname.out);
+
+        if (data.callback) {
+          data.callback.out
+            && _.isFunction(this[data.callback.out])
+            && this[data.callback.out]();
+        }
+      }
     }
 
     /**
