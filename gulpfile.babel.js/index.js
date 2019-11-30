@@ -168,6 +168,7 @@ let defaultName = 'default';
 let watchName = 'watch';
 let servName = plugins.util.getServName();
 let emptyName = plugins.util.getEmptyName();
+let taskSeparator = `:`;
 let types = {};
 let taskmaster = new taskMaster();
 let isServ = taskmaster.isTask(servName);
@@ -178,7 +179,7 @@ gulp.task(emptyName, (done) => {done();});
 
 // build, watch
 _.forEach(tasks, (task, name) => {
-  let split = name.split(':');
+  let split = name.split(taskSeparator);
   let taskname = split && split[0];
   let type = split && split.length > 1 ? split[1] : defaultName;
 
@@ -193,9 +194,9 @@ _.forEach(types, (array, key) => {
       plugins.util.setIsWatch(true);
 
       _.forEach(array, (string) => {
-        let split = string.split(':');
+        let split = string.split(taskSeparator);
         let taskname = split[0];
-        let watchTaskName = `${taskname}:${watchName}`;
+        let watchTaskName = `${taskname}${taskSeparator}${watchName}`;
 
         if (types[watchName].indexOf(watchTaskName) == -1) return;
 
