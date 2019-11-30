@@ -28,6 +28,7 @@ import tab from './_partials/shared_classes/tab';
 // import parallax from './_partials/shared_classes/parallax';
 import intersection from './_partials/shared_classes/intersection';
 // import preventDuplicateSubmit from './_partials/classes/preventDuplicateSubmit';
+// import mouseStalker from './_partials/shared_classes/mouseStalker';
 
 /**
  * common initialize
@@ -48,7 +49,7 @@ import intersection from './_partials/shared_classes/intersection';
   // ua
   FN.ua = new ua();
 
-  let html = doc.querySelector('html');
+  const html = doc.querySelector('html');
   html.classList.remove('no-js');
 
   // html class
@@ -110,6 +111,10 @@ import intersection from './_partials/shared_classes/intersection';
   // preventDuplicateSubmit
   // FN.preventDuplicateSubmit = new preventDuplicateSubmit();
 
+  // mouseStalker
+  // FN.mouseStalker = new mouseStalker();
+  // FN.mouseStalker.initialize();
+
   /**
    * event procedure
    */
@@ -133,17 +138,23 @@ import intersection from './_partials/shared_classes/intersection';
   win.addEventListener('resize', (e) => {
     FN.mediaQuery.update();
     FN.modal.update();
-    // FN.anchorNav.update();
     // FN.parallax.update();
-    FN.intersection.update();
   }, false);
 
-  win.addEventListener('scroll', (e) => {
+  win.addEventListener('resize', _.throttle((e) => {
+    // FN.anchorNav.update();
+    FN.intersection.update();
+  }, 10), false);
+
+  // win.addEventListener('scroll', (e) => {
+  // }, false);
+
+  win.addEventListener('scroll', _.throttle((e) => {
     FN.modal.update();
     // FN.anchorNav.update();
     // FN.parallax.update();
     FN.intersection.update();
-  }, false);
+  }, 10), true);
 
 })(window, document);
 

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm i",
-    "start": "gulp",
-    "dev": "gulp",
+    "start": "gulp watch",
+    "dev": "gulp watch",
     "watch": "gulp watch",
     "build": "gulp build",
     "clean": "gulp clean",

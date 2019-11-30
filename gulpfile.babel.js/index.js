@@ -195,6 +195,10 @@ _.forEach(types, (array, key) => {
       _.forEach(array, (string) => {
         let split = string.split(':');
         let taskname = split[0];
+        let watchTaskName = `${taskname}:${watchName}`;
+
+        if (types[watchName].indexOf(watchTaskName) == -1) return;
+
         let taskconfig = config[taskname];
         taskconfig = taskconfig && _.merge({},
           config['common'] || {},
@@ -205,13 +209,15 @@ _.forEach(types, (array, key) => {
 
         if (!config || !taskconfig) return;
 
-        let watcher = gulp.watch(src, {
-          // awaitWriteFinish: true,
-          atomic: 500
-        }, gulp.series(taskname));
+        if (types[watchName].indexOf(watchTaskName) > -1) {
+          let watcher = gulp.watch(src, {
+            // awaitWriteFinish: true,
+            atomic: 500
+          }, gulp.series(taskname));
 
-        taskmaster.setAllWatcher(watcher, taskconfig);
-        taskmaster.setDeleteWatcher(watcher, taskconfig);
+          taskmaster.setAllWatcher(watcher, taskconfig);
+          taskmaster.setDeleteWatcher(watcher, taskconfig);
+        }
 
         // html only
         if (taskname === 'html') {

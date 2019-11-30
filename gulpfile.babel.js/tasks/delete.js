@@ -61,6 +61,8 @@ class Delete extends TaskMaster {
           });
           fancyLog(result);
           cb();
+        } else {
+          cb();
         }
       }, function(cb) {
         this.emit('end');
