@@ -19,7 +19,7 @@ export default ((win, doc) => {
       }
 
       // this.baseElem = 'body';
-      this.baseElem = `${PREFIX}base`;
+      this.baseElem = `.${PREFIX}base`;
 
       this.targetElem = ``;
       this.elem = '.js-mousestalker';
