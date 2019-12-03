@@ -30,6 +30,7 @@ export default ((win, doc) => {
         `position: fixed;`,
         `top: 0;`,
         `left: 0;`,
+        `z-index: 10000;`,
         `transform: translate(0, 0);`,
         `transition: all 0.2s ease-out;`,
         `pointer-events: none;`
