@@ -19,8 +19,9 @@ export default ((win, doc) => {
       }
 
       // this.baseElem = 'body';
-      this.baseElem = '';
+      this.baseElem = `${PREFIX}base`;
 
+      this.targetElem = ``;
       this.elem = '.js-mousestalker';
       this.activeClassName = 'is-active';
       this.throttleTime = 30;
@@ -49,12 +50,12 @@ export default ((win, doc) => {
 
       doc.addEventListener('mousemove', _.throttle((e) => {
         if (!e.target || !e.target.closest) return;
-        let baseElem = this.baseElem ?
-          e.target.closest(this.baseElem) : doc;
+        let targetElem = this.targetElem ?
+          e.target.closest(this.targetElem) : doc;
 
         let elem = doc.querySelector(this.elem);
 
-        if (e.target === doc || !baseElem) {
+        if (e.target === doc || !targetElem) {
           this.onMouseLeave(e, elem);
         } else {
           this.onMouseEnter(e, elem);
