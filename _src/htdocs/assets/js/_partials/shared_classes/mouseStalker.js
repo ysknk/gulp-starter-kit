@@ -54,6 +54,7 @@ export default ((win, doc) => {
           e.target.closest(this.targetElem) : doc;
 
         let elem = doc.querySelector(this.elem);
+        elem.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
 
         if (e.target === doc || !targetElem) {
           this.onMouseLeave(e, elem);
@@ -91,7 +92,6 @@ export default ((win, doc) => {
     onMouseEnter(e, elem) {
       if (!elem) return;
       elem.classList.add(this.activeClassName);
-      elem.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     }
 
     /**
