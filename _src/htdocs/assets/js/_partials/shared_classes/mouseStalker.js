@@ -48,7 +48,7 @@ export default ((win, doc) => {
     initialize() {
       this.setInitializeStyle();
 
-      doc.addEventListener('mousemove', _.throttle((e) => {
+      const proc = (e) => {
         if (!e.target || !e.target.closest) return;
         let targetElem = this.targetElem ?
           e.target.closest(this.targetElem) : doc;
@@ -61,7 +61,15 @@ export default ((win, doc) => {
         } else {
           this.onMouseEnter(e, elem);
         }
+      };
+
+      doc.addEventListener('mousemove', _.throttle((e) => {
+        proc(e);
       }, this.throttleTime), false);
+
+      // doc.addEventListener('mouseup', _.throttle((e) => {
+      //   proc(e);
+      // }, this.throttleTime), false);
 
       // 画面外
       doc.addEventListener('mouseleave', _.debounce((e) => {
