@@ -112,7 +112,7 @@ export default ((win, doc) => {
      * @returns {object} x, y
      */
     getMousePos() {
-      return this.mousePos || { x:0, y:0 };
+      return this.mousePos;
     }
 
     /**
