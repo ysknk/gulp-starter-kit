@@ -58,6 +58,10 @@ export default ((win, doc) => {
         this.procedure(e);
       }, this.throttleTime), false);
 
+      doc.addEventListener('mousemove', _.debounce((e) => {
+        this.procedure(e);
+      }, this.debounceTime), false);
+
       doc.addEventListener('scroll', _.throttle((e) => {
         this.update();
       }, this.throttleTimeScroll), false);
