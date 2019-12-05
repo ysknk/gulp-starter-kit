@@ -39,9 +39,6 @@ export default ((win, doc) => {
         `pointer-events: none;`
       ].join(``);
 
-      this.mouseX = 0;
-      this.mouseY = 0;
-
       _.isObject(opts_) && _.extend(this, opts_);
 
       // this.initialize();
