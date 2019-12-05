@@ -84,6 +84,7 @@ export default ((win, doc) => {
      * @param {object} e event
      */
     procedure(e) {
+      e = e || win.event;
       if (!e.target) return;
       let targetElem = this.targetElem ?
         e.target.closest(this.targetElem) : doc;
