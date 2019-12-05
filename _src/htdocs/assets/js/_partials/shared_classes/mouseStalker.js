@@ -25,8 +25,8 @@ export default ((win, doc) => {
       this.elem = '.js-mousestalker';
       this.activeClassName = 'is-active';
       this.throttleTime = 30;
-      this.throttleTimeScroll = 100;
-      this.throttleTimeResize = 100;
+      this.throttleTimeScroll = 30;
+      this.throttleTimeResize = 30;
       this.debounceTime = this.throttleTime;
 
       this.initializeStyle = [
@@ -34,10 +34,12 @@ export default ((win, doc) => {
         `top: 0;`,
         `left: 0;`,
         `z-index: 100000;`,
-        `transform: translate(0, 0);`,
+        `transform: translate3d(0, 0, 0);`,
         `transition: all 0.2s ease-out;`,
         `pointer-events: none;`
       ].join(``);
+
+      this.isMouseSet = false;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -48,6 +50,8 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
+      let elem = doc.querySelector(this.elem);
+      this.onMouseLeave(``, elem);
       this.setInitializeStyle();
 
       doc.addEventListener('mousemove', _.throttle((e) => {
@@ -81,13 +85,14 @@ export default ((win, doc) => {
         e.target.closest(this.targetElem) : doc;
 
       let elem = doc.querySelector(this.elem);
-      elem.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      elem.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       this.setMousePos(e.clientX, e.clientY);
 
       if (e.target === doc || !targetElem) {
         this.onMouseLeave(e, elem);
       } else {
         this.onMouseEnter(e, elem);
+        this.isMouseSet = true;
       }
     }
 
@@ -95,6 +100,7 @@ export default ((win, doc) => {
      * update
      */
     update() {
+      if (!this.isMouseSet) return;
       const mousePos = this.getMousePos();
       if (!mousePos || !mousePos.x || !mousePos.y) return;
       const elem = doc.elementFromPoint(mousePos.x, mousePos.y);
@@ -112,7 +118,7 @@ export default ((win, doc) => {
      * @returns {object} x, y
      */
     getMousePos() {
-      return this.mousePos;
+      return this.mousePos || false;
     }
 
     /**
