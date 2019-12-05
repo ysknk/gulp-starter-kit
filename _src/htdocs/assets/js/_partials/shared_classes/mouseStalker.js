@@ -34,7 +34,7 @@ export default ((win, doc) => {
         `top: 0;`,
         `left: 0;`,
         `z-index: 100000;`,
-        `transform: translate3d(0, 0, 0);`,
+        `transform: translate3d(0, 0, 1px);`,
         `transition: all 0.2s ease-out;`,
         `pointer-events: none;`
       ].join(``);
@@ -89,7 +89,7 @@ export default ((win, doc) => {
         e.target.closest(this.targetElem) : doc;
 
       let elem = doc.querySelector(this.elem);
-      elem.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      elem.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 1px)`;
       this.setMousePos(e.clientX, e.clientY);
 
       if (e.target === doc || !targetElem) {
