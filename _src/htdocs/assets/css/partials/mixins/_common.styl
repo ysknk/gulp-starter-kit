@@ -96,7 +96,7 @@ break_point($type, $css = false)
         @media screen and (min-width: ($wpc + 1)px)
           {block}
       if $type == 'tab'
-        @media screen and (max-width: ($wpc)px)
+        @media screen and (min-width: ($wtab)px) and (max-width: ($wpc)px)
           {block}
       if $type == 'sp'
         @media screen and (max-width: ($wtab - 1)px)
