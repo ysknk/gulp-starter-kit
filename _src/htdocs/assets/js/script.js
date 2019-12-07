@@ -64,6 +64,10 @@ import intersection from './_partials/shared_classes/intersection';
     html.classList.add('ua-tab');
   }
 
+  // if (!detectUseStyle('position', 'sticky')) {
+  //   html.classList.add('no-sticky');
+  // }
+  
   // mediaquery
   FN.mediaQuery = new mediaQuery();
 
