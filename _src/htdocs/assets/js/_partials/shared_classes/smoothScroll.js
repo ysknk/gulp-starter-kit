@@ -24,8 +24,9 @@ export default ((win, doc) => {
       this.pageTopHash = 'top';
       this.excludeClassName = 'no-scroll';
       this.pushHistoryClassName = 'push-hisotry-scroll';
+      this.isScrollingClassName = `is-scrolling`;
       this.easing = 'easeInOutQuart';
-      this.duration = 300;
+      this.duration = 500;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -127,7 +128,7 @@ export default ((win, doc) => {
      */
     getOffsetPos(elem) {
       let pos = {x: 0, y: 0};
-      while(elem) {
+      while (elem) {
         pos.y += elem.offsetTop || 0;
         pos.x += elem.offsetLeft || 0;
         elem = elem.offsetParent;
@@ -143,19 +144,27 @@ export default ((win, doc) => {
      * @param {function} cb callback
      */
     goto(elem, setHistory, cb) {
+      let baseElem = doc.querySelector(this.baseElem);
       let elemPos = this.getOffsetPos(elem);
       let scrollPos = {
         y: win.pageYOffset,
         x: win.pageXOffset
       };
 
+      let callback = () => {
+        baseElem.classList.remove(this.isScrollingClassName);
+        _.isFunction(cb) && cb();
+        _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+      };
+
       _.isFunction(this.onBeforeScroll) && this.onBeforeScroll(this);
 
       if (scrollPos.y === elemPos.y) {
-        _.isFunction(cb) && cb();
-        _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+        callback();
         return;
       }
+
+      baseElem.classList.add(this.isScrollingClassName);
 
       FN.anime({
         targets: scrollPos,
@@ -164,8 +173,7 @@ export default ((win, doc) => {
         easing: this.easing,
         update: () => win.scroll(scrollPos.x, scrollPos.y),
         complete: () => {
-          _.isFunction(cb) && cb();
-          _.isFunction(this.onAfterScroll) && this.onAfterScroll(this);
+          callback();
         }
       });
 
