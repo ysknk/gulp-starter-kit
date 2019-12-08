@@ -24,9 +24,9 @@ export default ((win, doc) => {
       this.targetElem = ``;
       this.elem = '.js-mousestalker';
       this.activeClassName = 'is-active';
-      this.throttleTime = 30;
-      this.throttleTimeScroll = 30;
-      this.throttleTimeResize = 30;
+      this.throttleTime = 10;
+      this.throttleTimeScroll = 10;
+      this.throttleTimeResize = 10;
       this.debounceTime = this.throttleTime;
 
       this.initializeStyle = [
@@ -39,6 +39,7 @@ export default ((win, doc) => {
         `pointer-events: none;`
       ].join(``);
 
+      this.isMouseOver = false;
       this.isMouseSet = false;
 
       _.isObject(opts_) && _.extend(this, opts_);
@@ -54,28 +55,28 @@ export default ((win, doc) => {
       this.onMouseLeave(``, elem);
       this.setInitializeStyle();
 
-      doc.addEventListener('mousemove', _.throttle((e) => {
+      doc.body.addEventListener('mousemove', _.throttle((e) => {
         this.procedure(e);
       }, this.throttleTime), false);
 
-      doc.addEventListener('mousemove', _.debounce((e) => {
-        this.procedure(e);
-      }, this.debounceTime), false);
+      doc.body.addEventListener('mouseover', (e) => {
+        this.isMouseOver = true;
+      }, false);
 
-      doc.addEventListener('scroll', _.throttle((e) => {
-        this.update();
-      }, this.throttleTimeScroll), false);
-
-      doc.addEventListener('resize', _.throttle((e) => {
-        this.update();
-      }, this.throttleTimeResize), false);
-
-      // 画面外
-      doc.addEventListener('mouseleave', _.debounce((e) => {
+      doc.body.addEventListener('mouseleave', (e) => {
         if (!e.target) return;
         let elem = doc.querySelector(this.elem);
         this.onMouseLeave(e, elem);
-      }, this.debounceTime), false);
+        this.isMouseOver = false;
+      }, false);
+
+      win.addEventListener('scroll', _.throttle((e) => {
+        this.update();
+      }, this.throttleTimeScroll), false);
+
+      win.addEventListener('resize', _.throttle((e) => {
+        this.update();
+      }, this.throttleTimeResize), false);
     }
 
     /**
@@ -92,6 +93,11 @@ export default ((win, doc) => {
       let elem = doc.querySelector(this.elem);
       elem.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 1px)`;
       this.setMousePos(e.clientX, e.clientY);
+
+      if (!this.isMouseOver) {
+        this.onMouseLeave(e, elem);
+        return;
+      }
 
       if (e.target === doc || !targetElem) {
         this.onMouseLeave(e, elem);
