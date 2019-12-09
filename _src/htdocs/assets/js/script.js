@@ -142,7 +142,7 @@ import intersection from './_partials/shared_classes/intersection';
 
   win.addEventListener('resize', (e) => {
     FN.mediaQuery.update();
-    FN.modal.update();
+    // FN.modal.update();
     // FN.parallax.update();
   }, false);
 
@@ -155,7 +155,7 @@ import intersection from './_partials/shared_classes/intersection';
   // }, false);
 
   win.addEventListener('scroll', _.throttle((e) => {
-    FN.modal.update();
+    // FN.modal.update();
     // FN.anchorNav.update();
     // FN.parallax.update();
     FN.intersection.update();
