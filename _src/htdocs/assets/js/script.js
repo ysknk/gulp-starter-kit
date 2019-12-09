@@ -146,7 +146,7 @@ import intersection from './_partials/shared_classes/intersection';
     // FN.parallax.update();
   }, false);
 
-  win.addEventListener('resize', _.throttle((e) => {
+  win.addEventListener('resize', _.debounce((e) => {
     // FN.anchorNav.update();
     FN.intersection.update();
   }, 10), false);
