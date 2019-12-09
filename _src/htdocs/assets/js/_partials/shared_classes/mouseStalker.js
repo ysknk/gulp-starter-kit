@@ -25,9 +25,9 @@ export default ((win, doc) => {
       this.elem = '.js-mousestalker';
       this.activeClassName = 'is-active';
       this.throttleTime = 10;
-      this.throttleTimeScroll = 10;
-      this.throttleTimeResize = 10;
-      this.debounceTime = this.throttleTime;
+      // this.throttleTimeScroll = 10;
+      // this.throttleTimeResize = 10;
+      // this.debounceTime = this.throttleTime;
 
       this.initializeStyle = [
         `position: fixed;`,
@@ -55,28 +55,25 @@ export default ((win, doc) => {
       this.onMouseLeave(``, elem);
       this.setInitializeStyle();
 
-      doc.body.addEventListener('mousemove', _.throttle((e) => {
-        this.procedure(e);
-      }, this.throttleTime), false);
+      // doc.body.addEventListener('mousemove', _.throttle((e) => {
+      //   this.procedure(e);
+      // }, this.throttleTime), false);
 
-      doc.body.addEventListener('mouseover', (e) => {
-        this.isMouseOver = true;
-      }, false);
+      // doc.body.addEventListener('mouseover', (e) => {
+      //   this.documentIn();
+      // }, false);
 
-      doc.body.addEventListener('mouseleave', (e) => {
-        if (!e.target) return;
-        let elem = doc.querySelector(this.elem);
-        this.onMouseLeave(e, elem);
-        this.isMouseOver = false;
-      }, false);
+      // doc.body.addEventListener('mouseleave', (e) => {
+      //   this.documentOut(e);
+      // }, false);
 
-      win.addEventListener('scroll', _.throttle((e) => {
-        this.update();
-      }, this.throttleTimeScroll), false);
+      // win.addEventListener('scroll', _.throttle((e) => {
+      //   this.update();
+      // }, this.throttleTimeScroll), false);
 
-      win.addEventListener('resize', _.throttle((e) => {
-        this.update();
-      }, this.throttleTimeResize), false);
+      // win.addEventListener('resize', _.throttle((e) => {
+      //   this.update();
+      // }, this.throttleTimeResize), false);
     }
 
     /**
@@ -105,6 +102,24 @@ export default ((win, doc) => {
         this.onMouseEnter(e, elem);
         this.isMouseSet = true;
       }
+    }
+
+    /**
+     * documentIn
+     */
+    documentIn() {
+      this.isMouseOver = true;
+    }
+    /**
+     * documentOut
+     *
+     * @param {object} e event
+     */
+    documentOut(e) {
+      if (!e.target) return;
+      let elem = doc.querySelector(this.elem);
+      this.onMouseLeave(e, elem);
+      this.isMouseOver = false;
     }
 
     /**
