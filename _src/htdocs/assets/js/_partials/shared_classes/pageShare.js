@@ -126,9 +126,9 @@ export default ((win, doc) => {
       let description = this.getMetaOg(elem, 'description');
 
       return {
-        url: url,
-        title: title,
-        description: description,
+        url,
+        title,
+        description,
 
         enc: {
           url: encodeURIComponent(url),
