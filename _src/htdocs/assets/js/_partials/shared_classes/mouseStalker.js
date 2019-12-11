@@ -19,28 +19,53 @@ export default ((win, doc) => {
       }
 
       // this.baseElem = 'body';
-      this.baseElem = `.${PREFIX}base`;
+      this.baseElemSelector = `.${PREFIX}base`;
 
-      this.targetElem = ``;
-      this.elem = '.js-mousestalker';
-      this.activeClassName = 'is-active';
+      this.targetElems = {
+        'is-active': 'body'// classname: selector
+      };
+
+      this.elemSelector = '.js-mousestalker';
+      this.cursorElemSelector = `${this.parentElemSelector}__cursor`;
       this.throttleTime = 10;
-      // this.throttleTimeScroll = 10;
-      // this.throttleTimeResize = 10;
-      // this.debounceTime = this.throttleTime;
+      this.cursorRange = 0.2;
+      this.cursorDuration = 0.002;
 
-      this.initializeStyle = [
+      this.elemInitializeStyle = [
         `position: fixed;`,
         `top: 0;`,
         `left: 0;`,
         `z-index: 100000;`,
+        `width: 100vw;`,
+        `height: 100vh;`,
+        `pointer-events: none;`
+      ].join(``);
+
+      this.cursorElemInitializeStyle = [
+        `position: absolute;`,
+        `top: 0;`,
+        `left: 0;`,
         `transform: translate3d(0, 0, 1px);`,
-        `transition: all 0.2s ease-out;`,
         `pointer-events: none;`
       ].join(``);
 
       this.isMouseOver = false;
       this.isMouseSet = false;
+
+      this.mouse = {
+        x: 0,
+        y: 0
+      };
+      this.cursor = {
+        x: 0,
+        y: 0
+      };
+
+      this.animationFrame = false;
+
+      this.isEventInitialize = false;
+      this.throttleTimeScroll = this.throttleTime;
+      this.debounceTimeResize = this.throttleTime;
 
       _.isObject(opts_) && _.extend(this, opts_);
 
@@ -51,29 +76,98 @@ export default ((win, doc) => {
      * initialize
      */
     initialize() {
-      let elem = doc.querySelector(this.elem);
-      this.onMouseLeave(``, elem);
+      let elem = this.getElem(`cursorElem`);
+      _.forEach(this.targetElems, (targetElem, name) => {
+        this.onMouseLeave(``, elem, name);
+      });
       this.setInitializeStyle();
 
-      // doc.body.addEventListener('mousemove', _.throttle((e) => {
-      //   this.procedure(e);
-      // }, this.throttleTime), false);
+      if (!this.isEventInitialize) return;
 
-      // doc.body.addEventListener('mouseover', (e) => {
-      //   this.documentIn();
-      // }, false);
+      doc.body.addEventListener('mousemove', _.throttle((e) => {
+        this.procedure(e);
+      }, this.throttleTime), false);
 
-      // doc.body.addEventListener('mouseleave', (e) => {
-      //   this.documentOut(e);
-      // }, false);
+      doc.body.addEventListener('mouseover', (e) => {
+        this.documentIn();
+      }, false);
 
-      // win.addEventListener('scroll', _.throttle((e) => {
-      //   this.update();
-      // }, this.throttleTimeScroll), false);
+      doc.body.addEventListener('mouseleave', (e) => {
+        this.documentOut(e);
+      }, false);
 
-      // win.addEventListener('resize', _.throttle((e) => {
-      //   this.update();
-      // }, this.throttleTimeResize), false);
+      win.addEventListener('scroll', _.throttle((e) => {
+        this.update();
+      }, this.throttleTimeScroll), false);
+
+      win.addEventListener('resize', _.debounce((e) => {
+        this.update();
+      }, this.debounceTimeResize), false);
+    }
+
+    /**
+     * getWindowSize
+     *
+     * @returns {object} width, height
+     */
+    getWindowSize() {
+      let elem = this.getElem(`elem`);
+      return {
+        width: elem.getBoundingClientRect().width,
+        height: elem.getBoundingClientRect().height
+      };
+    }
+
+    /**
+     * start
+     */
+    start() {
+      let elem = this.getElem(`cursorElem`);
+      let threshold = 1;
+
+      this.mouse.x - this.cursor.x < threshold && this.mouse.x - this.cursor.x > - threshold
+        ? this.cursor.x = this.mouse.x
+        : this.cursor.x += (this.mouse.x - this.cursor.x) * this.cursorRange;
+
+      this.mouse.y - this.cursor.y < threshold && this.mouse.y - this.cursor.y > - threshold
+        ? this.cursor.y = this.mouse.y
+        : this.cursor.y += (this.mouse.y - this.cursor.y) * this.cursorRange;
+
+      FN.anime({
+        targets: elem,
+        translateX: this.cursor.x,
+        translateY: this.cursor.y,
+        translateZ: 0,
+        duration: this.cursorDuration
+      });
+      // FN.TweenMax.set(elem, {
+      //   x: this.cursor.x,
+      //   y: this.cursor.y,
+      //   force3D: true,
+      //   duration: this.cursorDuration
+      // });
+
+      this.requestAnimation(`animationFrame`, `start`);
+    }
+
+    /**
+     * requestAnimation
+     *
+     * @param {number} animation
+     * @param {function} func
+     */
+    requestAnimation(animation, func) {
+      this[animation] = window.requestAnimationFrame(() => {this[func]()});
+    }
+
+    /**
+     * cancelAnimation
+     *
+     * @param {number} animation
+     */
+    cancelAnimation(animation) {
+      window.cancelAnimationFrame(this[animation]);
+      this[animation] = 0;
     }
 
     /**
@@ -84,32 +178,39 @@ export default ((win, doc) => {
     procedure(e) {
       e = e || win.event;
       if (!e.target) return;
-      let targetElem = this.targetElem ?
-        e.target.closest(this.targetElem) : doc;
 
-      let elem = doc.querySelector(this.elem);
-      elem.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 1px)`;
-      this.setMousePos(e.clientX, e.clientY);
+      let elem = this.getElem(`cursorElem`);
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
 
-      if (!this.isMouseOver) {
-        this.onMouseLeave(e, elem);
-        return;
-      }
+      _.forEach(this.targetElems, (targetElem, name) => {
+        targetElem = targetElem ?
+          e.target.closest(targetElem) : doc;
 
-      if (e.target === doc || !targetElem) {
-        this.onMouseLeave(e, elem);
-      } else {
-        this.onMouseEnter(e, elem);
-        this.isMouseSet = true;
-      }
+        if (!this.isMouseOver) {
+          this.onMouseLeave(e, elem, name);
+          return;
+        }
+
+        if (e.target === doc || !targetElem) {
+          this.onMouseLeave(e, elem, name);
+        } else {
+          this.onMouseEnter(e, elem, name);
+          this.isMouseSet = true;
+        }
+      });
     }
 
     /**
      * documentIn
      */
     documentIn() {
+      if (!this.isMouseOver && !this.animationFrame) {
+        this.requestAnimation(`animationFrame`, `start`);
+      }
       this.isMouseOver = true;
     }
+
     /**
      * documentOut
      *
@@ -117,8 +218,11 @@ export default ((win, doc) => {
      */
     documentOut(e) {
       if (!e.target) return;
-      let elem = doc.querySelector(this.elem);
-      this.onMouseLeave(e, elem);
+      let elem = this.getElem(`cursorElem`);
+      _.forEach(this.targetElems, (targetElem, name) => {
+        this.onMouseLeave(e, elem, name);
+      });
+      this.cancelAnimation(`animationFrame`);
       this.isMouseOver = false;
     }
 
@@ -127,46 +231,50 @@ export default ((win, doc) => {
      */
     update() {
       if (!this.isMouseSet) return;
-      const mousePos = this.getMousePos();
-      if (!mousePos || !mousePos.x || !mousePos.y) return;
-      const elem = doc.elementFromPoint(mousePos.x, mousePos.y);
+      const elem = doc.elementFromPoint(this.mouse.x, this.mouse.y);
+
       if (!elem) return;
       this.procedure({
         target: elem,
-        clientX: mousePos.x,
-        clientY: mousePos.y
+        clientX: this.mouse.x,
+        clientY: this.mouse.y
       });
     }
 
     /**
-     * getMousePos
+     * getElem
      *
-     * @returns {object} x, y
+     * @returns {object}
      */
-    getMousePos() {
-      return this.mousePos || false;
-    }
-
-    /**
-     * setMousePos
-     *
-     * @param {number} x
-     * @param {number} y
-     * @returns {object} x, y
-     */
-    setMousePos(x, y) {
-      this.mousePos = {x, y};
+    getElem(name) {
+      if (!this[name]) {
+        this[name] = doc.querySelector(this[`${name}Selector`]);
+      }
+      return this[name];
     }
 
     /**
      * setInitializeStyle
      */
     setInitializeStyle() {
-      if (!this.initializeStyle) return;
+      if (!this.elemInitializeStyle && !this.cursorElemInitializeStyle) return;
       let headElem = doc.querySelector('head');
       let styleElem = doc.createElement('style');
-      let elemSelector = [this.baseElem, this.elem].join(` `);
-      styleElem.innerHTML = `${elemSelector} {${this.initializeStyle}}`;
+
+      let elemSelector = [
+        this.baseElemSelector,
+        this.elemSelector
+      ].join(` `);
+
+      let cursorElemSelector = [
+        this.baseElemSelector,
+        this.cursorElemSelector
+      ].join(` `);
+
+      styleElem.innerHTML = [
+        `${elemSelector} {${this.elemInitializeStyle}}`,
+        `${cursorElemSelector} {${this.cursorElemInitializeStyle}}`
+      ].join(``);
       headElem.appendChild(styleElem);
     }
 
@@ -175,10 +283,11 @@ export default ((win, doc) => {
      *
      * @param {object} e event
      * @param {object} elem
+     * @param {string} name
      */
-    onMouseEnter(e, elem) {
+    onMouseEnter(e, elem, name) {
       if (!elem) return;
-      elem.classList.add(this.activeClassName);
+      elem.classList.add(name);
     }
 
     /**
@@ -186,11 +295,11 @@ export default ((win, doc) => {
      *
      * @param {object} e event
      * @param {object} elem
+     * @param {string} name
      */
-    onMouseLeave(e, elem) {
+    onMouseLeave(e, elem, name) {
       if (!elem) return;
-      // elem.style.transform = ``;
-      elem.classList.remove(this.activeClassName);
+      elem.classList.remove(name);
     }
 
   };
