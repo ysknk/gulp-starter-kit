@@ -1,0 +1,43 @@
+/*
+---
+name: intersection
+category:
+  - components
+  - components/intersection
+tag:
+  - base
+  - latest
+  - pc
+  - sp
+  - js
+  - data
+---
+
+intersection styles
+
+* Base intersection style.
+* Use [data-intersection].
+
+```html
+<div style="height:1000px;background:#ff0000;" data-intersection="{&quot;threshold&quot;: 0.2}">hoge</div>
+<div style="height:1000px;background:#00ff00;" data-intersection="{&quot;threshold&quot;: 0.2}">huga</div>
+<div style="height:1000px;background:#0000ff;" data-intersection="{&quot;threshold&quot;: 0.2, &quot;callback&quot;: {&quot;in&quot;: &quot;onOut&quot;}}">piyo</div>
+```
+```jade
+div(style=`height:1000px;background:#ff0000;` data-intersection='{"threshold": 0.2}') hoge
+div(style=`height:1000px;background:#00ff00;` data-intersection='{"threshold": 0.2}') huga
+div(style=`height:1000px;background:#0000ff;` data-intersection='{"threshold": 0.2, "callback": {"in": "onOut"}}') piyo
+```
+*/
+[data-intersection]
+  $this = selector('^[1..-1]')
+
+  &.fadein
+    &.is-intersection-init
+      opacity 0
+      transition opacity $trd $tre
+    &.is-intersection-in
+      opacity 1
+    &.is-intersection-out
+      opacity 0
+

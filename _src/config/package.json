@@ -1,0 +1,25 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "json-server": "json-server --watch db.js -p 3003"
+  },
+  "author": "ysknk",
+  "license": "ISC",
+  "dependencies": {
+    "animejs": "^2.2.0",
+    "axios": "^0.18.0",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.10",
+    "ua-parser-js": "^0.7.17",
+    "moment-timezone": "^0.5.25"
+  },
+  "devDependencies": {
+    "gulp-iconfont": "^10.0.2",
+    "json-server": "^0.15.1",
+    "node-aigis": "^1.4.1"
+  }
+}

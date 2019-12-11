@@ -1,0 +1,33 @@
+/*
+---
+name: ellipsis
+category:
+  - components
+  - components/ellipsis
+tag:
+  - base
+  - latest
+  - pc
+  - sp
+  - js
+  - data
+---
+
+ellipsis styles
+
+* Base ellipsis style.
+* Resize not compatible.
+* Use [data-ellipsis].
+
+```html
+<p data-ellipsis>
+  text text text text text text text text text text text text text text text text text text text text text text text text text text text
+</p>
+```
+```jade
+p(data-ellipsis=`{"lineLimit": 2, "ellipsisLabel": "続きをみる"}`)
+  | text text text text text text text text text text text text text text text text text text text text text text text text text text text
+```
+*/
+// .{$p}ellipsis
+//   $this = selector('^[1..-1]')

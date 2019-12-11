@@ -1,0 +1,158 @@
+.{$p}base
+  if $init_type == 'reset'
+    @import "_reset"
+  if $init_type == 'normalize'
+    @import "_normalize"
+
+  font-family $font_family
+
+  font-size ($fpc)px
+  // font-size (($common_font_size / ($common_content_width)) * 100)vw
+  // @media (min-width: unit($common_content_width, 'px'))
+  //   font-size ($common_font_size)px !important
+
+  line-height $lh
+
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  -webkit-text-size-adjust 100%
+
+  -webkit-print-color-adjust exact
+
+  font-feature-settings 'palt' 1
+  // font-variant-ligatures no-common-ligatures
+  // font-variant-numeric slashed-zero
+
+  // background $color_main
+  color $font_color_default
+  break_word()
+
+  +break_point('pc')
+    min-width ($wpc)px
+
+    .{$p}display-none
+      &.-pc
+        display none !important
+
+  +break_point('tab')
+    width 100%
+
+    .{$p}display-none
+      &.-tab
+        display none !important
+
+  +break_point('sp')
+    min-width 320px
+    width 100%
+    img
+      width 100%
+      height auto
+
+    .{$p}display-none
+      &.-sp
+        display none !important
+
+  a
+    link_style('', '', '', '')
+    &:focus
+      outline none
+
+  a,
+  input[type="submit"],
+  button
+  label
+    rollover()
+    &:disabled
+      cursor default
+      opacity 1 !important
+
+  input,
+  textarea
+    padding 0
+    background #fff
+    appearance none
+    line-height inherit
+    border none
+    font-size inherit
+    font-family $font_family
+    outline none
+    &::-moz-focus-inner
+      border none
+    &:required
+    &:invalid
+      box-shadow none
+
+  button
+    padding 0
+    background none
+    appearance none
+    line-height inherit
+    border none
+    font-size inherit
+    font-family $font_family
+    outline none
+    &::-moz-focus-inner
+      border none
+
+  input
+    &[type="text"],
+    &[type="search"],
+    &[type="datetime"],
+    &[type="datetime-local"],
+    &[type="date"],
+    &[type="week"],
+    &[type="month"],
+    &[type="time"],
+    &[type="color"],
+    &[type="password"],
+    &[type="url"],
+    &[type="email"],
+    &[type="number"]
+      min-height 2em
+
+    &[type="date"]
+      appearance none
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button,
+      &::-webkit-clear-button
+        appearance none
+        margin 0
+      &::-webkit-calendar-picker-indicator
+        position relative
+        padding .2em
+        background none
+        font-size .5em
+
+  select
+    min-height 2em
+    appearance none
+    border-radius 0
+    background #fff url($spacer) no-repeat
+    background-position right center
+    background-size .5em
+    padding-right 1.5em
+    &::-ms-expand
+      display none
+
+  input
+    appearance none
+    border-radius 0
+    &:focus
+      outline none
+
+  select,
+  input[type="submit"],
+  button,
+  label
+    cursor pointer
+
+  img
+    vertical-align top
+    max-width 100%
+
+  picture
+    max-width 100%
+
+// responsive fontsize
+font_size_responsive('.' + $p + 'base')
+

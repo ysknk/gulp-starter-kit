@@ -1,0 +1,65 @@
+//- mixin blocks initialize
+- var blocks = {};
+mixin set(key)
+  - blocks[key] = this.block
+
+//- inline side space disable
+//- ex) +inline('li', 'hoge')
+mixin inline(tag, name, attr)
+  if name
+    <#{tag} class="#{name}"!{(attr ? ' ' + attr : '')}>
+  else
+    <#{tag}!{(attr ? ' ' + attr : '')}>
+  if block
+    block
+  </#{tag}>
+
+//- responsive img
+//- ex) +img_device_src('/common/', 'hoge')
+mixin img_device_src(path, alt)
+  img(src=`${src}pc/${path}` data-pc-src=`${src}pc/${path}` data-sp-src=`${src}sp/${path}` alt!=alt)&attributes(attributes)
+
+//- img
+//- ex) +img_src('/common/', 'hoge')
+mixin img_src(path, alt)
+  img(src=`${src}${path}` alt!=alt)&attributes(attributes)
+
+//- section
+//- ex) +section('hoge')
+mixin section(name, tag="section", indent="          ")
+  != `\n${indent}<!-- ${name}-->`
+  #{tag}(id=name class=`${p}section -${name}`)&attributes(attributes)
+    if block
+      block
+    else
+      p No content provided
+  != `\n${indent}<!-- /${name}-->`
+
+mixin title(en, ja, h="h2")
+  #{h}(class=`${p}title -${h}`)&attributes(attributes)
+    if block
+      span(class=`${p}title_inner`)
+        block
+    else
+      if en
+        span(class=`${p}title_en`)!= en
+      if ja
+        span(class=`${p}title_ja`)!= ja
+
+//- sns
+//- ex) +set_sns(['twitter', 'facebook', 'line'])
+mixin set_sns(btn, txt=title, url=og.url)
+  ul
+    - for(var i = 0; btn.length > i; i++)
+      +inline('li', btn[i])
+        if btn[i] == 'twitter'
+          a(href="https://twitter.com/share" class="twitter-share-button" data-url=url data-text=txt) Tweet
+          script.
+            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+        if btn[i] == 'facebook'
+          .fb-like(data-href=url data-layout="button" data-action="like" data-show-faces="false" data-share="false")
+
+        if btn[i] == 'line'
+          div.line-it-button(data-lang="ja" data-type="like" data-url!=url data-share="true" style="display: none;")
+          script(src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer")

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+flex-version = flex;
+@import "nib"
+
+@import "partials/valiables/**/*"
+@import "partials/mixins/**/*"
+
+@import "partials/plugins/**/*"
+
+@import "partials/bases/_initialize"
+
+.{$p}base
+  // this = selector('^[1..-1]')
+  @import "partials/components/**/*"
+  @import "partials/layouts/**/*"
+  @import "partials/pages/**/*"
