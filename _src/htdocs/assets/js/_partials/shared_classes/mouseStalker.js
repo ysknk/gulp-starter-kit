@@ -28,7 +28,7 @@ export default ((win, doc) => {
       this.elemSelector = '.js-mousestalker';
       this.cursorElemSelector = `${this.parentElemSelector}__cursor`;
       this.throttleTime = 10;
-      this.cursorRange = 0.2;
+      this.cursorRange = 0.15;
       this.cursorDuration = 0.002;
 
       this.elemInitializeStyle = [
