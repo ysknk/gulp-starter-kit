@@ -27,6 +27,16 @@ cd _app/
 npm i
 ```
 
+#### if use original src...
+
+```Shell
+git submodule add [this_repo_url] _app
+cd _app/
+rmdir /s _src
+git clone [gulp-starter-src] _src
+npm i
+```
+
 ### clone
 
 ```Shell
