@@ -31,23 +31,6 @@ export default ((win, doc) => {
       this.cursorRange = 0.15;
       this.cursorDuration = 0.002;
 
-      this.elemInitializeStyle = [
-        `position: fixed;`,
-        `top: 0;`,
-        `left: 0;`,
-        `z-index: 100000;`,
-        `width: 100vw;`,
-        `height: 100vh;`,
-        `pointer-events: none;`
-      ].join(``);
-
-      this.cursorElemInitializeStyle = [
-        `position: absolute;`,
-        `top: 0;`,
-        `left: 0;`,
-        `transform: translate3d(0, 0, 1px);`,
-        `pointer-events: none;`
-      ].join(``);
 
       this.isMouseOver = false;
       this.isMouseSet = false;
@@ -60,6 +43,27 @@ export default ((win, doc) => {
         x: 0,
         y: 0
       };
+
+      this.transformZ = 2;
+
+      this.elemInitializeStyle = [
+        `position: fixed;`,
+        `top: 0;`,
+        `left: 0;`,
+        `z-index: 100000;`,
+        `width: 100%;`,
+        `height: 100%;`,
+        `pointer-events: none;`
+      ].join(``);
+
+      this.cursorElemInitializeStyle = [
+        `position: absolute;`,
+        `z-index: 100;`,
+        `top: 0;`,
+        `left: 0;`,
+        `transform: translate3d(0, 0, ${this.transformZ}px);`,
+        `pointer-events: none;`
+      ].join(``);
 
       this.animationFrame = false;
 
@@ -137,14 +141,15 @@ export default ((win, doc) => {
         targets: elem,
         translateX: this.cursor.x,
         translateY: this.cursor.y,
-        translateZ: 0,
+        translateZ: this.transformZ,
         duration: this.cursorDuration
       });
       // FN.TweenMax.set(elem, {
       //   x: this.cursor.x,
       //   y: this.cursor.y,
-      //   force3D: true,
-      //   duration: this.cursorDuration
+      //   z: this.transformZ,
+      //   duration: this.cursorDuration,
+      //   force3D: true
       // });
 
       this.requestAnimation(`animationFrame`, `start`);
