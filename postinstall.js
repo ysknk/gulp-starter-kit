@@ -33,8 +33,7 @@
     dest: `../_src/`,
     config: `../_src/config/`,
 
-    gitignore: `.gitignore`,
-    editorconfig: `.editorconfig`
+    gitignore: `.gitignore`
   };
 
   // _src
@@ -55,12 +54,6 @@
     return new Promise((resolve, reject) => {
       title(`files copy. [${dir.gitignore} => ${dir.root}]`);
       copyFiles(dir.gitignore, `${dir.root}${dir.gitignore}`, resolve, resolve);
-    });
-  // editorconfig
-  }).then(() => {
-    return new Promise((resolve, reject) => {
-      title(`files copy. [${dir.editorconfig} => ${dir.root}]`);
-      copyFiles(dir.editorconfig, `${dir.root}${dir.editorconfig}`, resolve, resolve);
     });
   // _src install
   }).then(() => {
