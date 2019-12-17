@@ -44,6 +44,7 @@ module.exports = {
       // notify: false,
       // open: 'local',// argv.no = false(ex: gulp watch --no)
       startPath: `${START_PATH}${FILE_NAME}`,
+      // ghostMode: false,
       // server: {
       //   baseDir: define.path.dest
       // }
