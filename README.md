@@ -24,8 +24,8 @@ use submodule add or clone.
 example submodule
 ```Shell
 git submodule add https://github.com/ysknk/gulp-starter-kit _app
+git submodule add https://github.com/ysknk/gulp-starter-src .base_src
 cd _app/
-git submodule add https://github.com/ysknk/gulp-starter-src _src
 npm i
 ```
 
@@ -37,8 +37,8 @@ npm i
 ### Directory after installation
 
     [root/]
-      |-[_app/] *submodule
-      |   |-[_src/] *submodule in submodule
+      |-[_app/] *submodule or clone
+      |-[.base_src/] *submodule or clone
       |
       |-[_src/]
       |   |-[config/]
