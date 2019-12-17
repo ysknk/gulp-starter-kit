@@ -22,26 +22,18 @@ use submodule add or clone.
 ### submodule add
 
 ```Shell
-git submodule add [this_repo_url] _app
+git submodule add https://github.com/ysknk/gulp-starter-kit _app
 cd _app/
-npm i
-```
-
-#### if use original src...
-
-```Shell
-git submodule add [this_repo_url] _app
-cd _app/
-rmdir /s _src
-git clone [gulp-starter-src] _src
+git submodule add https://github.com/ysknk/gulp-starter-src _src
 npm i
 ```
 
 ### clone
 
 ```Shell
-git clone [this_repo_url] _app
+git clone https://github.com/ysknk/gulp-starter-kit _app
 cd _app/
+git clone https://github.com/ysknk/gulp-starter-src _src
 npm i
 ```
 
@@ -53,13 +45,16 @@ npm i
 ### Directory after installation
 
     [root/]
-      |-[_app/]
+      |-[_app/] *submodule
+      |   |-[_src/] *submodule in submodule
+      |
       |-[_src/]
       |   |-[config/]
       |   |   |-[task/] *task config (master_data: /gulpfile.babel.js/task/config.js)
       |   |   |-[tasks/] *original task
       |   |   |-[page.js] *pug, styl variables
       |   |-[htdocs/] *work directory
+      |
       |-[html/] *default dest directory
 
 ## Usage
