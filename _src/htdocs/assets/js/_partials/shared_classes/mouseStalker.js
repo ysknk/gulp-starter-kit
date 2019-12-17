@@ -31,7 +31,6 @@ export default ((win, doc) => {
       this.cursorRange = 0.15;
       this.cursorDuration = 0.002;
 
-
       this.isMouseOver = false;
       this.isMouseSet = false;
 
@@ -144,7 +143,7 @@ export default ((win, doc) => {
         translateZ: this.transformZ,
         duration: this.cursorDuration
       });
-      // FN.TweenMax.set(elem, {
+      // FN.gsap.set(elem, {
       //   x: this.cursor.x,
       //   y: this.cursor.y,
       //   z: this.transformZ,
