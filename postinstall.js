@@ -29,7 +29,7 @@
 
   const dir = {
     root: `../`,
-    src: `./_src/`,
+    src: `../.base_src/`,
     dest: `../_src/`,
     config: `../_src/config/`,
 
