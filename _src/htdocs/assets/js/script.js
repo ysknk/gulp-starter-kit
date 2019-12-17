@@ -9,6 +9,7 @@ import detectUseStyle from './_partials/ponifills/detectUseStyle';
 import uaParserJs from 'ua-parser-js';
 import axios from 'axios';
 import anime from 'animejs';
+// import gsap from 'gsap';
 // import cookies from 'js-cookie';
 // import moment from 'moment-timezone';
 
@@ -42,6 +43,7 @@ import intersection from './_partials/shared_classes/intersection';
   FN.uaParser = new uaParserJs();
   FN.axios = axios;
   FN.anime = anime;
+  // FN.gsap = gsap;
   // FN.cookies = cookies;
 
   // moment.tz.setDefault('Asia/Tokyo');
@@ -149,7 +151,7 @@ import intersection from './_partials/shared_classes/intersection';
   win.addEventListener('resize', _.debounce((e) => {
     // FN.anchorNav.update();
     FN.intersection.update();
-  }, 10), false);
+  }, 100), false);
 
   // win.addEventListener('scroll', (e) => {
   // }, false);
@@ -159,7 +161,7 @@ import intersection from './_partials/shared_classes/intersection';
     // FN.anchorNav.update();
     // FN.parallax.update();
     FN.intersection.update();
-  }, 10), true);
+  }, 100), true);
 
 })(window, document);
 
