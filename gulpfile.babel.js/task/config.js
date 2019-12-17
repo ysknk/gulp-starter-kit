@@ -308,7 +308,7 @@ module.exports = {
 
     plugins: [
       imageminPngquant({
-        quality: '50-100'
+        quality: [0.5, 1.0]
       }),
       imageminMozjpeg({
         quality: 85,
