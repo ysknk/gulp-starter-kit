@@ -43,7 +43,7 @@ npm i
       |
       |-[_src/]
       |   |-[config/]
-      |   |   |-[task/] *task config (master_data: /gulpfile.babel.js/task/config.js)
+      |   |   |-[task/] *overwrite task config (master_data: /gulpfile.babel.js/task/config.js)
       |   |   |-[tasks/] *original task
       |   |   |-[page.js] *pug, styl variables
       |   |-[htdocs/] *work directory
