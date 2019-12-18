@@ -97,7 +97,11 @@
   function copyFiles(src, dest, cbSuccess, cbFailure) {
     fs.copy(src, dest, {
       overwrite: false,
-      errorOnExist: true
+      errorOnExist: true,
+      filter: (path) => {
+        // console.log('path ===', path);
+        return !(path.match(/\.git$/))
+      }
     }, (err) => {
       if (err) {
         // console.error(err);
