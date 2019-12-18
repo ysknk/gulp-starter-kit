@@ -29,12 +29,13 @@ cd _app/
 npm i
 ```
 
-### Directory before installation
+### Directory before npm installation
 
     [root/]
       |-[_app/]
+      |-[.base_src/]
 
-### Directory after installation
+### Directory after npm installation
 
     [root/]
       |-[_app/] *submodule or clone
