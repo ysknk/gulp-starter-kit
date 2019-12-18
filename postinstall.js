@@ -99,8 +99,9 @@
       overwrite: false,
       errorOnExist: true,
       filter: (path) => {
-        // console.log('path ===', path);
-        return !(path.match(/\.git$/))
+        let result = !(path.match(/\.(git|DS_Store)$/i));
+        // console.log(colors[theme_color](`${result ? 'copied' : 'skipped'}:`), path);
+        return result
       }
     }, (err) => {
       if (err) {
