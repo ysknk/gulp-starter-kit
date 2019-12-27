@@ -143,12 +143,6 @@ module.exports = class TaskMaster {
    * @param {object} watcher gulp watch object
    * @param {object} conf gulp task config
    */
-  /**
-   * setDeleteWatcher
-   *
-   * @param {object} watcher gulp watch object
-   * @param {object} conf gulp task config
-   */
   setDeleteWatcher(watcher, conf) {
     let that = this;
 
