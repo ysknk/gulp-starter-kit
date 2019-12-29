@@ -226,7 +226,15 @@ module.exports = {
                 ]
               }
             }
-          }, {
+          },
+          {
+            test: /\.(txt|glsl|vs|fs|vert|frag)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'raw-loader'
+            }
+          },
+          {
             test: /(?<!\.d)\.tsx?$/,
             exclude: /node_modules/,
             use: {

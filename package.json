@@ -64,6 +64,7 @@
     "nib": "^1.1.2",
     "node-notifier": "^5.4.3",
     "pug": "^2.0.4",
+    "raw-loader": "^4.0.0",
     "replace-ext": "^1.0.0",
     "require-dir": "^1.2.0",
     "stylus-import-tree": "^0.1.10",
