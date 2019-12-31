@@ -52,9 +52,7 @@ class Js extends TaskMaster {
     if(this.isMinify()) {
       this.task.data.options.optimization = {
         minimizer: [
-          new uglifyJsPlugin({
-            uglifyOptions: this.task.data.minify_options
-          })
+          new uglifyJsPlugin(this.task.data.uglify_options)
         ]
       };
     }

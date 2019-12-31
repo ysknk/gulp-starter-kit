@@ -282,7 +282,11 @@ module.exports = {
 
     // ex: https://github.com/mishoo/UglifyJS2#minify-options
     minify_options: {
-      output: {comments: /^\**!|@preserve|@license|@cc_on/}
+      cache: true,
+      parallel: true,
+      uglifyOptions: {
+        output: {comments: /^\**!|@preserve|@license|@cc_on/}
+      }
     },
 
     // ex: http://eslint.org/docs/rules/
