@@ -1,6 +1,6 @@
 import imageminPngquant from 'imagemin-pngquant';
 import imageminOptipng from 'imagemin-optipng';
-import imageminJpegtran from 'imagemin-jpegtran';
+// import imageminJpegtran from 'imagemin-jpegtran';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminGifsicle from 'imagemin-gifsicle';
 import imageminSvgo from 'imagemin-svgo';
