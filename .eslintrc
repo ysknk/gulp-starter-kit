@@ -8,6 +8,7 @@
   },
   "globals": {
     "gulp": true,
+    "path": true,
     "plugins": true,
     "define": true,
     "fs": true,
