@@ -56,9 +56,9 @@ npm i
 
 ```Shell
 cd $(root)/_app/
-# watch target files and server open
+# watch target files & server open
 npm run watch
-# not browser open
+# watch target files
 npm run watch -- --no
 # compile all target files
 npm run build
@@ -77,11 +77,11 @@ npm run delete
 
 ```Shell
 cd $(root)/_app/
-# watch target files and server open
-gulp watch
 # deafult watch
 gulp
-# not browser open
+# watch target files & server open
+gulp watch
+# watch target files
 gulp --no
 # compile all target files
 gulp build
