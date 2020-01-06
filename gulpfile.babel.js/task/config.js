@@ -241,7 +241,7 @@ module.exports = {
               loader: 'ts-loader',
               // ex: https://www.typescriptlang.org/docs/handbook/compiler-options.html
               options: {
-                configFile: path.resolve(__dirname, `../../${define.path.config}tsconfig.json`),
+                configFile: path.resolve(__dirname, `../../${define.path.srcDir}tsconfig.json`),
                 compilerOptions: {
                   module: 'commonjs',
                   lib: ['es2019', 'dom', 'dom.iterable'],
