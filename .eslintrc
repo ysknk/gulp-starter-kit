@@ -7,6 +7,15 @@
     "node": true
   },
   "globals": {
+    "gulp": true,
+    "plugins": true,
+    "define": true,
+    "fs": true,
+    "del": true,
+    "notifier": true,
+    "Transform": true,
+    "pluginError": true,
+
     "jQuery": true,
     "$": true,
     "_": true
