@@ -16,6 +16,7 @@
     "notifier": true,
     "Transform": true,
     "pluginError": true,
+    "browserSync": true,
 
     "jQuery": true,
     "$": true,
