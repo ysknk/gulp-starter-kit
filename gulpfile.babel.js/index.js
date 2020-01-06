@@ -182,7 +182,6 @@ gulp.task(emptyName, (done) => {done();});
 // build, watch
 _.forEach(tasks, (task, name) => {
   let split = name.split(taskSeparator);
-  let taskname = split && split[0];
   let type = split && split.length > 1 ? split[1] : defaultName;
 
   if (!types[type]) types[type] = [];
