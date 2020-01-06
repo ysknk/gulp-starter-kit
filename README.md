@@ -92,9 +92,9 @@ gulp clean
 # delete dest directory
 gulp delete
 
-# build target [task]
+# build target [task] ex) gulp html
 gulp [html|css|js|img]
-# watch target [task] files and server open
+# watch target [task] files & server open ex) gulp html:watch
 gulp [html|css|js|img]:watch
 # compile all target [task] files
 gulp [html|css|js|img]:build
