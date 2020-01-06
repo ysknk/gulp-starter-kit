@@ -48,6 +48,8 @@ const define = {
   ns: '__', // namespace
 
   path: {
+    srcDir,
+
     config: `${srcDir}config/`,
     htdocs: `${srcDir}htdocs/`,
 
