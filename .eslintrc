@@ -9,6 +9,7 @@
   "globals": {
     "gulp": true,
     "path": true,
+    "argv": true,
     "plugins": true,
     "define": true,
     "fs": true,
