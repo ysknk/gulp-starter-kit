@@ -32,14 +32,14 @@ npm i
 ### Directory before npm installation
 
     [root/]
-      |-[_app/]
-      |-[.base_src/]
+      |-[_app/] *submodule or clone
+      |-[.base_src/] *clone
 
 ### Directory after npm installation
 
     [root/]
-      |-[_app/] *submodule or clone
-      |-[.base_src/] *clone
+      |-[_app/]
+      |-[.base_src/]
       |
       |-[_src/]
       |   |-[config/]
