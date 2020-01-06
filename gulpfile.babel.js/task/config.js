@@ -10,7 +10,8 @@ import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
 import nib from 'nib';
 import import_tree from 'stylus-import-tree';
 
-let meta = require(`../../${define.path.pageConfig}`);
+const meta = require(`../../${define.path.pageConfig}`);
+const eslintrc = require(`../../${define.path.srcDir}.eslintrc`);
 
 module.exports = {
   /* run flg */
@@ -290,25 +291,7 @@ module.exports = {
     },
 
     // ex: http://eslint.org/docs/rules/
-    lint_options: {
-      parser: 'babel-eslint',
-      env: {
-        'browser': true,
-        'es6': true,
-        'node': true
-      },
-      extends: 'eslint:recommended',
-      rules: {
-        'no-console': 1,
-        'no-alert': 1,
-        'default-case': 1
-      },
-      globals: [
-        'jQuery',
-        '$',
-        '_'
-      ]
-    },
+    lint_options: eslintrc,
     // lint_report_type: './node_modules/eslint/lib/formatters/codeframe',
     lint_report_type: 'compact'
   },
