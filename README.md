@@ -113,20 +113,6 @@ gulp [html|css|js|img]:clean
 gulp --tasks
 ```
 
-#### Custom task
-
-Default Custom tasks
-
-```Shell
-cd $(root)/_app
-
-# node-aigis
-gulp styleguide
-# gulp-iconfont
-gulp iconfont
-```
-___* Gulp command only___
-
 ##### Mock API Server
 
 ```Shell
