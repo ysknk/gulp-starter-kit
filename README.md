@@ -2,7 +2,7 @@ Gulp Starter Kit
 ====
 
 website build tools.  
-use submodule add or clone.  
+use submodule add or download.  
 
 ## Description
 
@@ -19,7 +19,7 @@ use submodule add or clone.
 
 ## Install
 
-### submodule add or clone
+### [_app] submodule add & [.base_src] clone
 
 example submodule
 ```Shell
@@ -32,7 +32,7 @@ npm i
 ### Directory before npm installation
 
     [root/]
-      |-[_app/] *submodule or clone
+      |-[_app/] *submodule or download
       |-[.base_src/] *clone
 
 ### Directory after npm installation
