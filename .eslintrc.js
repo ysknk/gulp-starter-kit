@@ -7,23 +7,24 @@ module.exports = {
     "es6": true,
     "node": true
   },
-  "globals": [
-    "gulp",
-    "path",
-    "argv",
-    "plugins",
-    "define",
-    "fs",
-    "del",
-    "notifier",
-    "Transform",
-    "pluginError",
-    "browserSync",
+  // writable || readonly
+  "globals": {
+    "gulp": "readonly",
+    "path": "readonly",
+    "argv": "readonly",
+    "plugins": "readonly",
+    "define": "readonly",
+    "fs": "readonly",
+    "del": "readonly",
+    "notifier": "readonly",
+    "Transform": "readonly",
+    "pluginError": "readonly",
+    "browserSync": "readonly",
 
-    "jQuery",
-    "$",
-    "_"
-  ],
+    "jQuery": "readonly",
+    "$": "readonly",
+    "_": "readonly"
+  },
   "rules": {
     "no-console": 1,
     "no-alert": 1,
