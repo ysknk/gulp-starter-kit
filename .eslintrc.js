@@ -21,9 +21,9 @@ module.exports = {
     "pluginError": "readonly",
     "browserSync": "readonly",
 
-    "jQuery": "readonly",
-    "$": "readonly",
-    "_": "readonly"
+    "jQuery": "writable",
+    "$": "writable",
+    "_": "writable"
   },
   "rules": {
     "no-console": 1,
