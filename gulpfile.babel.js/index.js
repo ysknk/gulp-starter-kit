@@ -126,15 +126,6 @@ plugins.util.setGlobalVars(define.ns, _.merge({},
 ));
 
 /**
- * create config file
- */
-let configBody = 'module.exports \= \{\};';
-
-if (!plugins.util.checkFile(define.path.taskConfigLocal)) {
-  plugins.util.createFile(define.path.taskConfigLocal, configBody);
-}
-
-/**
  * read below the tasks directory
  */
 plugins.util.setRequireDir([
