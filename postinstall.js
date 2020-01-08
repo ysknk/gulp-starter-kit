@@ -105,8 +105,7 @@
       }
     }, (err) => {
       if (err) {
-        // console.error(err);
-        console.log(message.notCopy)
+        console.error(err);
         title(``, true);
         return cbFailure && cbFailure();
       }
