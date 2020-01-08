@@ -291,7 +291,10 @@ module.exports = {
     },
 
     // ex: http://eslint.org/docs/rules/
-    lint_options: eslintrc,
+    lint_options: {
+      ...eslintrc,
+      globals: Object.keys(eslintrc.globals),
+    },
     // lint_report_type: './node_modules/eslint/lib/formatters/codeframe',
     lint_report_type: 'compact'
   },
