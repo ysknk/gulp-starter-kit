@@ -6,23 +6,23 @@ module.exports = {
     "es6": true,
     "node": true
   },
-  "globals": {
-    "gulp": true,
-    "path": true,
-    "argv": true,
-    "plugins": true,
-    "define": true,
-    "fs": true,
-    "del": true,
-    "notifier": true,
-    "Transform": true,
-    "pluginError": true,
-    "browserSync": true,
+  "globals": [
+    "gulp",
+    "path",
+    "argv",
+    "plugins",
+    "define",
+    "fs",
+    "del",
+    "notifier",
+    "Transform",
+    "pluginError",
+    "browserSync",
 
-    "jQuery": true,
-    "$": true,
-    "_": true
-  },
+    "jQuery",
+    "$",
+    "_"
+  ],
   "rules": {
     "no-console": 1,
     "no-alert": 1,
