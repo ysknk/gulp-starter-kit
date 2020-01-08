@@ -49,11 +49,14 @@ const define = {
 
   path: {
     srcDir,
+    destDir,
 
     config: `${srcDir}config/`,
     htdocs: `${srcDir}htdocs/`,
 
     pageConfig: `${srcDir}config/page.js`,
+    taskConfigGlobal: `./task/config.js`,
+    taskConfigLocal: `../${srcDir}config/task.js`,
 
     src: (ext) => {
       return [
@@ -115,22 +118,11 @@ _.forEach(globalVars, (obj, key) => {
 /**
  * set tasks variables
  */
-let taskfile = 'task/config.js';
-
-let baseConfigPath = [
-  '.',
-  gulpfile,
-  taskfile
-].join('/');
-
-let localConfigPath = [
-  define.path.config, taskfile
-].join('');
 
 // [{}, base, local] config merge
 plugins.util.setGlobalVars(define.ns, _.merge({},
-  require('./' + taskfile),
-  require('../' + define.path.config + taskfile)
+  require(define.path.taskConfigGlobal),
+  require(define.path.taskConfigLocal)
 ));
 
 /**
@@ -138,12 +130,8 @@ plugins.util.setGlobalVars(define.ns, _.merge({},
  */
 let configBody = 'module.exports \= \{\};';
 
-if (!plugins.util.checkFile(baseConfigPath)) {
-  plugins.util.createFile(baseConfigPath, configBody);
-}
-
-if (!plugins.util.checkFile(localConfigPath)) {
-  plugins.util.createFile(localConfigPath, configBody);
+if (!plugins.util.checkFile(define.path.taskConfigLocal)) {
+  plugins.util.createFile(define.path.taskConfigLocal, configBody);
 }
 
 /**

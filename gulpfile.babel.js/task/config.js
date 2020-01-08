@@ -83,7 +83,7 @@ module.exports = {
       // debug: true,
       skip: 'node_modules',
       saveInTempFile: true,
-      tempFile: `${define.path.config}.pugInheritance.json`
+      tempFile: `${define.path.srcDir}.pugInheritance.json`
     },
 
     // ex: https://github.com/kangax/html-minifier/
@@ -203,7 +203,7 @@ module.exports = {
       resolve: {
         modules: [
           path.resolve(__dirname, '../../node_modules'),
-          path.resolve(__dirname, `../../${define.path.config}node_modules`),
+          path.resolve(__dirname, `../../${define.path.srcDir}node_modules`),
           'node_modules'
         ],
         extensions: ['.json', '.jsx', '.js', '.vue', '.tsx', '.ts']

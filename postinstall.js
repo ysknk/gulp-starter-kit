@@ -31,7 +31,6 @@
     root: `../`,
     src: `../.base_src/`,
     dest: `../_src/`,
-    config: `../_src/config/`,
 
     gitignore: `.gitignore`
   };
@@ -57,8 +56,8 @@
     });
   // _src install
   }).then(() => {
-    title(`${cmd.install} [${dir.config}]`);
-    execSync(`cd ${dir.config} && ${cmd.install}`, {stdio:[0,1,2]});
+    title(`${cmd.install} [${dir.dest}]`);
+    execSync(`cd ${dir.dest} && ${cmd.install}`, {stdio:[0,1,2]});
     title(``, true);
   // build
   }).then(() => {
