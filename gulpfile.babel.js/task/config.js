@@ -11,7 +11,7 @@ import nib from 'nib';
 import import_tree from 'stylus-import-tree';
 
 const meta = require(`../../${define.path.pageConfig}`);
-const eslintrc = require(`../../${define.path.srcDir}.eslintrc`);
+const eslintrc = require(`../../${define.path.srcDir}.eslintrc.js`);
 
 module.exports = {
   /* run flg */
