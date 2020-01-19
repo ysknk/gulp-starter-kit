@@ -30,6 +30,7 @@
     "cross-spawn": "^6.0.5",
     "del": "^3.0.0",
     "fs-extra": "^5.0.0",
+    "glslify-loader": "^2.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-cached": "^1.1.1",

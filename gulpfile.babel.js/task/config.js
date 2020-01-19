@@ -231,9 +231,14 @@ module.exports = {
           {
             test: /\.(txt|glsl|vs|fs|vert|frag)$/,
             exclude: /node_modules/,
-            use: {
-              loader: 'raw-loader'
-            }
+            use: [
+              {
+                loader: 'raw-loader'
+              },
+              {
+                loader: 'glslify-loader'
+              }
+            ]
           },
           {
             test: /(?<!\.d)\.tsx?$/,
