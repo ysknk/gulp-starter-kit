@@ -97,7 +97,9 @@ module.exports = class TaskMaster {
         atomic: 500
       }, gulp.parallel(this.task.name));
       this.setAllWatcher(watcher, this.task.data);
-      this.setDeleteWatcher(watcher, this.task.data);
+      if (this.task.data.delete) {
+        this.setDeleteWatcher(watcher, this.task.data);
+      }
     });
 
     // other types task
@@ -263,6 +265,17 @@ module.exports = class TaskMaster {
    */
   isNo() {
     return argv.no || this.task.data.no || false;
+  }
+
+  /**
+   * isDel
+   * do not open the browser
+   * gulp --del
+   *
+   * @returns {boolean}
+   */
+  isDel() {
+    return argv.del || this.task.data.del || false;
   }
 
   /**

@@ -29,6 +29,7 @@ module.exports = {
   common: {
     lint: false,// true || gulp --lint
     minify: false,// true || gulp --min
+    delete: false,// true || gulp --del
 
     ignore: define.path.ignore(),
 

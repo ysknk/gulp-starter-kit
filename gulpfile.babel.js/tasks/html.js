@@ -204,7 +204,9 @@ class Html extends TaskMaster {
       }, gulp.series(this.task.name));
 
       this.setAllWatcher(watcher, this.task.data);
-      this.setDeleteWatcher(watcher, this.task.data);
+      if (this.task.data.delete) {
+        this.setDeleteWatcher(watcher, this.task.data);
+      }
 
       let taskserv = (this.servName() && config[this.task.name][plugins.util.getServName()]) ?
         (this.servName() + ':' + config[this.task.name][plugins.util.getServName()]) : plugins.util.getEmptyName();

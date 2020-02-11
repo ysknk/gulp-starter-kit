@@ -197,7 +197,9 @@ _.forEach(types, (array, key) => {
           }, gulp.series(taskname));
 
           taskmaster.setAllWatcher(watcher, taskconfig);
-          taskmaster.setDeleteWatcher(watcher, taskconfig);
+          if (taskconfig.delete) {
+            taskmaster.setDeleteWatcher(watcher, taskconfig);
+          }
         }
 
         // html only
