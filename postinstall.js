@@ -45,7 +45,10 @@
     } else {
       copyFiles(dir.src, dir.dest, () => {
         isInitialize = true;
-        resolve();
+        fs.remove(dir.src, (err) => {
+          if (err) return console.error(err)
+          resolve();
+        });
       }, resolve);
     }
   // gitignore
@@ -98,7 +101,7 @@
       overwrite: false,
       errorOnExist: true,
       filter: (path) => {
-        let result = !(path.match(/\.(git|DS_Store)$/i));
+        let result = !(path.match(/(\.git|\.DS_Store|Thumbs. db)$/i));
         // console.log(colors[theme_color](`${result ? 'copied' : 'skipped'}:`), path);
         return result
       }
