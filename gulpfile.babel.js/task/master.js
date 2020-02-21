@@ -224,9 +224,11 @@ module.exports = class TaskMaster {
   errorMessage() {
     return {
       errorHandler: function(error) {
+        const message = `Error: ${error.message}`;
+        console.log(error.plugin, message);
         notifier.notify({
           title: error.plugin,
-          message: `Error: ${error.message}`,
+          message: message,
           sound: false,
           wait: false,
           timeout: 1,
