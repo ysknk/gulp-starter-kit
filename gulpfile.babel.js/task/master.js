@@ -411,6 +411,9 @@ module.exports = class TaskMaster {
 
         data.assets_path = `${plugins.util.getReplaceDir(assets_relative_path)}/`;
         data.root_path = `${plugins.util.getReplaceDir(root_relative_path)}/`;
+        if (data.root_path === '/') {
+          data.root_path = ``
+        }
       }
     })();
 
