@@ -116,6 +116,7 @@ module.exports = {
     lint_report_type: '',
 
     meta,
+    root_path: '/',//base absolute path
     assets_path: '/assets/',//base absolute path
     path_type: 'relative'// relative | absolute
   },
