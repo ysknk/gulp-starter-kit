@@ -392,24 +392,19 @@ module.exports = class TaskMaster {
     data = _.merge({}, common, data);
     this.deleteChild(data);
 
-    // set assets, root path
+    // set root path
     (() => {
       if (!this.task || !data) return;
-      data.assets_path = data.assets_path || taskData.assets_path;
       data.root_path = data.root_path || taskData.root_path;
 
       if(taskData.path_type.match(/relative/i)) {
-        data.assets_path = taskData.dest + data.assets_path;
         data.root_path = taskData.dest + data.root_path;
-        let assets_path = path.resolve(data.assets_path);
         let root_path = path.resolve(data.root_path);
         let dirArray = filepath.split(dirMark);
         dirArray[dirArray.length - 1] = '';
         let dest_path = path.resolve(taskData.dest + dirArray.join(dirMark));
-        let assets_relative_path = path.relative(dest_path, assets_path);
         let root_relative_path = path.relative(dest_path, root_path);
 
-        data.assets_path = `${plugins.util.getReplaceDir(assets_relative_path)}/`;
         data.root_path = `${plugins.util.getReplaceDir(root_relative_path)}/`;
         if (data.root_path === '/') {
           data.root_path = ``
