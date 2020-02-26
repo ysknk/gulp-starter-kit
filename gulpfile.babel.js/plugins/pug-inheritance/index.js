@@ -81,14 +81,14 @@ var GulpPugInheritance = (function() {
     return path.replace( /\/|\\|\\\\|\-|\.|\:/g, '_' );
   };
 
-  GulpPugInheritance.prototype.getDependencies = function( file, pathToFile ) {
-    var filePath         = ( typeof file === 'object' ) ? file.path : pathToFile,
-        pugDependencies = new PugDependencies( path.relative ( process.cwd(), filePath ) ),
-        dependencies    = [],
-        fileRelative    = path.join( process.cwd(), this.options.basedir );
+  GulpPugInheritance.prototype.getDependencies = function (file, pathToFile) {
+    const filePath = (typeof file === 'object') ? file.path : pathToFile;
+    const pugDependencies = PugDependencies(path.relative(process.cwd(), filePath));
+    const dependencies = [];
+    const fileRelative = path.join(process.cwd(), this.options.basedir);
 
-    _.forEach( pugDependencies, function( dependency ){
-      dependencies.push( path.relative( fileRelative, dependency ) );
+    _.forEach(pugDependencies, (dependency) => {
+      dependencies.push(path.relative(fileRelative, dependency));
     });
     return dependencies;
   };
