@@ -11,7 +11,7 @@ import PugDependencies from 'pug-dependencies'
 
 const PLUGIN_NAME = 'gulp-pug-inheritance'
 
-var GulpPugInheritance = (function() {
+var GulpPugInheritance = (function () {
   'use strict'
 
   function GulpPugInheritance(options) {
@@ -38,7 +38,7 @@ var GulpPugInheritance = (function() {
     debug: false
   }
 
-  GulpPugInheritance.prototype.getInheritance = function(path) {
+  GulpPugInheritance.prototype.getInheritance = function (path) {
     let inheritance = null
     try {
       inheritance = new PugInheritance(path, this.options.basedir, this.options)
@@ -49,7 +49,7 @@ var GulpPugInheritance = (function() {
     return inheritance
   }
 
-  GulpPugInheritance.prototype.throwError = function(error) {
+  GulpPugInheritance.prototype.throwError = function (error) {
     let alreadyShown
 
     if (this.errors[error.message]) {
@@ -67,7 +67,7 @@ var GulpPugInheritance = (function() {
     this.stream.emit("error", err)
   }
 
-  GulpPugInheritance.prototype.getTempFile = function() {
+  GulpPugInheritance.prototype.getTempFile = function () {
     if (!fs.existsSync(this.tempFile)) {
       fs.writeFileSync(this.tempFile, JSON.stringify({}, null, 2), 'utf-8')
       this.firstRun = true
@@ -76,7 +76,7 @@ var GulpPugInheritance = (function() {
     return require(this.tempFile)
   }
 
-  GulpPugInheritance.prototype.setTempKey = function(path) {
+  GulpPugInheritance.prototype.setTempKey = function (path) {
     return path.replace(/\/|\\|\\\\|\-|\.|\:/g, '_')
   }
 
@@ -92,7 +92,7 @@ var GulpPugInheritance = (function() {
     return dependencies
   }
 
-  GulpPugInheritance.prototype.updateTempInheritance = function( dependency ) {
+  GulpPugInheritance.prototype.updateTempInheritance = function (dependency) {
     const cacheKey = this.setTempKey(dependency)
     const pathToFile = path.join(process.cwd(), this.options.basedir, path.normalize(dependency))
     if (this.tempInheritance[cacheKey]) {
@@ -107,7 +107,7 @@ var GulpPugInheritance = (function() {
     }
   }
 
-  GulpPugInheritance.prototype.updateDependencies = function(dependencies) {
+  GulpPugInheritance.prototype.updateDependencies = function (dependencies) {
     if (dependencies.length > 0) {
       _.forEach(dependencies, (dependency) => {
         this.updateTempInheritance(dependency)
@@ -115,7 +115,7 @@ var GulpPugInheritance = (function() {
     }
   }
 
-  GulpPugInheritance.prototype.setTempInheritance = function(file) {
+  GulpPugInheritance.prototype.setTempInheritance = function (file) {
     const cacheKey = this.setTempKey(file.relative)
     const inheritance = this.getInheritance(file.path)
 
@@ -131,8 +131,8 @@ var GulpPugInheritance = (function() {
     return inheritance
   }
 
-  GulpPugInheritance.prototype.resolveInheritance = function(file) {
-    const cacheKey = this.setTempKey( file.relative )
+  GulpPugInheritance.prototype.resolveInheritance = function (file) {
+    const cacheKey = this.setTempKey(file.relative)
     const date = Date.now()
     let inheritance = null
     let state = null
@@ -169,13 +169,13 @@ var GulpPugInheritance = (function() {
     return inheritance
   }
 
-  GulpPugInheritance.prototype.writeStream = function(file) {
+  GulpPugInheritance.prototype.writeStream = function (file) {
     if (file && file.contents.length) {
       this.files.push(file)
     }
   }
 
-  GulpPugInheritance.prototype.endStream = function() {
+  GulpPugInheritance.prototype.endStream = function () {
     var _this = this
     if (this.files.length) {
       if (this.options.debug) {
@@ -202,10 +202,10 @@ var GulpPugInheritance = (function() {
           vfs.src(this.filesPaths, {
             'base': this.options.basedir
           }).pipe(es.through(
-            function(f) {
+            function (f) {
               _this.stream.emit('data', f)
             },
-            function() {
+            function () {
               _this.stream.emit('end')
             }
           ))
@@ -237,7 +237,7 @@ var GulpPugInheritance = (function() {
     }
   }
 
-  GulpPugInheritance.prototype.pipeStream = function() {
+  GulpPugInheritance.prototype.pipeStream = function () {
     const _this = this
     function writeStream (file) {
       _this.writeStream(file)
@@ -252,7 +252,7 @@ var GulpPugInheritance = (function() {
   return GulpPugInheritance
 })()
 
-module.exports = function(options) {
+module.exports = function (options) {
   var gulpPugInheritance = new GulpPugInheritance(options)
   return gulpPugInheritance.pipeStream()
 }
