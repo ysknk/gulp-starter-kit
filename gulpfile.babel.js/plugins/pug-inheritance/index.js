@@ -3,7 +3,8 @@ import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
 import vfs from 'vinyl-fs'
-import gutil from 'gulp-util'
+import fancyLog from 'fancy-log'
+import pluginError from 'plugin-error'
 import difference from 'array-difference'
 import PugInheritance from 'pug-inheritance'
 import PugDependencies from 'pug-dependencies'
@@ -62,7 +63,7 @@ var GulpPugInheritance = (function() {
 
     if (alreadyShown) { return }
 
-    const err = new gutil.PluginError(PLUGIN_NAME, error)
+    const err = new pluginError(PLUGIN_NAME, error)
     this.stream.emit("error", err)
   }
 
@@ -96,7 +97,7 @@ var GulpPugInheritance = (function() {
     const pathToFile = path.join(process.cwd(), this.options.basedir, path.normalize(dependency))
     if (this.tempInheritance[cacheKey]) {
       if (this.options.debug) {
-        gutil.log(`[${PLUGIN_NAME}][Update] Get new inheritance of: "${dependency}"`)
+        fancyLog(`[${PLUGIN_NAME}][Update] Get new inheritance of: "${dependency}"`)
       }
 
       this.tempInheritance[cacheKey] = {}
@@ -162,7 +163,7 @@ var GulpPugInheritance = (function() {
     }
     if (this.options.debug) {
       const timeElapsed = (Date.now() - date)
-      gutil.log(`[${PLUGIN_NAME}][${state}] Get inheritance of: "${file.relative}" - ${timeElapsed}ms`)
+      fancyLog(`[${PLUGIN_NAME}][${state}] Get inheritance of: "${file.relative}" - ${timeElapsed}ms`)
     }
 
     return inheritance
@@ -180,9 +181,9 @@ var GulpPugInheritance = (function() {
       if (this.options.debug) {
         if (this.options.saveInTempFile === true) {
           if (this.firstRun === true) {
-            gutil.log(`[${PLUGIN_NAME}] Plugin started for the first time. Save inheritances to a tempfile`)
+            fancyLog(`[${PLUGIN_NAME}] Plugin started for the first time. Save inheritances to a tempfile`)
           } else {
-            gutil.log(`[${PLUGIN_NAME}] Plugin already started once. Get inheritances from a tempfile`)
+            fancyLog(`[${PLUGIN_NAME}] Plugin already started once. Get inheritances from a tempfile`)
           }
         }
       }
@@ -223,7 +224,7 @@ var GulpPugInheritance = (function() {
             const baseDir = path.join(process.cwd(), this.options.basedir, tempInheritance.file)
             if (!fs.existsSync(baseDir)) {
               if (this.options.debug) {
-                gutil.log(`[${PLUGIN_NAME}][DELETE] Delete inheritance of: "${tempInheritance.file}"`)
+                fancyLog(`[${PLUGIN_NAME}][DELETE] Delete inheritance of: "${tempInheritance.file}"`)
               }
               this.updateDependencies(tempInheritance.dependencies)
               this.tempInheritance[cacheKey] = undefined
