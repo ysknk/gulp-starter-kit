@@ -77,7 +77,7 @@ var GulpPugInheritance = (function() {
   }
 
   GulpPugInheritance.prototype.setTempKey = function(path) {
-    return path.replace( /\/|\\|\\\\|\-|\.|\:/g, '_' )
+    return path.replace(/\/|\\|\\\\|\-|\.|\:/g, '_')
   }
 
   GulpPugInheritance.prototype.getDependencies = function (file, pathToFile) {
