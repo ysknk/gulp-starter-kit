@@ -121,7 +121,7 @@ class GulpPugInheritance {
     this.tempInheritance[cacheKey].dependencies = this.getDependencies(file)
     this.tempInheritance[cacheKey].file = file.relative
 
-    if (this.firstRun === false) {
+    if (!this.firstRun) {
       this.updateDependencies(this.tempInheritance[cacheKey].dependencies)
     }
     return inheritance
@@ -176,7 +176,7 @@ class GulpPugInheritance {
     if (this.files.length) {
       if (this.options.debug) {
         if (this.options.saveInTempFile === true) {
-          if (this.firstRun === true) {
+          if (this.firstRun) {
             fancyLog(`[${PLUGIN_NAME}] Plugin started for the first time. Save inheritances to a tempfile`)
           } else {
             fancyLog(`[${PLUGIN_NAME}] Plugin already started once. Get inheritances from a tempfile`)
