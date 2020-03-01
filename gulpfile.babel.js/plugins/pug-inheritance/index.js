@@ -11,7 +11,7 @@ import PugDependencies from 'pug-dependencies'
 
 const PLUGIN_NAME = 'gulp-pug-inheritance'
 
-var GulpPugInheritance = (function () {
+const GulpPugInheritance = (function () {
   'use strict'
 
   function GulpPugInheritance(options) {
@@ -176,7 +176,8 @@ var GulpPugInheritance = (function () {
   }
 
   GulpPugInheritance.prototype.endStream = function () {
-    var _this = this
+    const _this = this
+
     if (this.files.length) {
       if (this.options.debug) {
         if (this.options.saveInTempFile === true) {
@@ -253,6 +254,6 @@ var GulpPugInheritance = (function () {
 })()
 
 module.exports = function (options) {
-  var gulpPugInheritance = new GulpPugInheritance(options)
+  const gulpPugInheritance = new GulpPugInheritance(options)
   return gulpPugInheritance.pipeStream()
 }
