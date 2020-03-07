@@ -83,7 +83,6 @@ class GulpPugInheritance {
     const pugDependencies = PugDependencies(path.relative(process.cwd(), filePath))
     const dependencies = []
     const fileRelative = path.join(process.cwd(), this.options.basedir)
-
     _.forEach(pugDependencies, (dependency) => {
       dependencies.push(path.relative(fileRelative, dependency))
     })
@@ -145,7 +144,7 @@ class GulpPugInheritance {
         const oldDependencies = this.tempInheritance[cacheKey].dependencies
         const diff = difference(newDependencies, oldDependencies)
 
-        if (newDependencies.length === oldDependencies.length) {
+        if (!diff.length) {
           if (this.options.debug) { state = 'CACHED' }
           inheritance = this.tempInheritance[cacheKey]
         } else {
