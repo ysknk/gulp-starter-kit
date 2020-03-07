@@ -1,15 +1,3 @@
-import imageminPngquant from 'imagemin-pngquant';
-import imageminOptipng from 'imagemin-optipng';
-// import imageminJpegtran from 'imagemin-jpegtran';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminGifsicle from 'imagemin-gifsicle';
-import imageminSvgo from 'imagemin-svgo';
-
-import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
-
-import nib from 'nib';
-import import_tree from 'stylus-import-tree';
-
 const meta = require(`../../${define.path.pageConfig}`);
 const eslintrc = require(`../../${define.path.srcDir}.eslintrc.js`);
 
@@ -281,6 +269,12 @@ module.exports = {
       },
 
       plugins: [
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+          meta: {
+            p: JSON.stringify(meta.p)
+          }
+        }),
         new licenseInfoWebpackPlugin({
           glob: '{LICENSE,license,License}*'
         })

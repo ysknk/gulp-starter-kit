@@ -17,6 +17,19 @@ import pluginError from 'plugin-error';
 import bs from 'browser-sync';
 import minimist from 'minimist';
 
+import webpack from 'webpack';
+import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
+
+import imageminPngquant from 'imagemin-pngquant';
+import imageminOptipng from 'imagemin-optipng';
+// import imageminJpegtran from 'imagemin-jpegtran';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminGifsicle from 'imagemin-gifsicle';
+import imageminSvgo from 'imagemin-svgo';
+
+import nib from 'nib';
+import import_tree from 'stylus-import-tree';
+
 import _ from 'lodash';
 
 import util from './util';
@@ -94,6 +107,19 @@ const globalVars = {
 
   browserSync,
   argv,
+
+  webpack,
+  licenseInfoWebpackPlugin,
+
+  imageminPngquant,
+  imageminOptipng,
+  // imageminJpegtran,
+  imageminMozjpeg,
+  imageminGifsicle,
+  imageminSvgo,
+
+  nib,
+  import_tree,
 
   define,
   $,
