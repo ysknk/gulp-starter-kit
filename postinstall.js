@@ -24,7 +24,7 @@
 
   const cmd = {
     install: `npm install`,
-    build: `gulp build`
+    build: `npm run build`
   };
 
   const dir = {
