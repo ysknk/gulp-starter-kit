@@ -55,7 +55,7 @@ const argv = minimist(process.argv.slice(2));
 const tasksDir = 'tasks/';
 
 const srcDir = '../_src/';
-const destDir = '../html/';
+const destDir = '../htdocs/';
 
 const define = {
   ns: '__', // namespace
