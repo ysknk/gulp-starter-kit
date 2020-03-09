@@ -39,7 +39,7 @@ npm i
 
     [root/]
       |-[_app/]
-      |-[X.base_src/] * delete after install
+      |-X[.base_src/] * delete after install
       |
       |-[_src/]
       |   |-[config/]
