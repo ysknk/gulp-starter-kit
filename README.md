@@ -48,7 +48,7 @@ npm i
       |   |   |-[page.js] *pug, styl variables
       |   |-[htdocs/] *work directory
       |
-      |-[html/] *default dest directory
+      |-[htdocs/] *default dest directory
 
 ## Usage
 
