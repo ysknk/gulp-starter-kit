@@ -78,30 +78,30 @@ npm run delete
 ```Shell
 cd $(root)/_app/
 # deafult watch
-gulp
+npx gulp
 # watch target files & server open
-gulp watch
+npx gulp watch
 # watch target files
-gulp --no
+npx gulp --no
 # compile all target files
-gulp build
+npx gulp build
 # lint all target files
-gulp lint
+npx gulp lint
 # clean all target files
-gulp clean
+npx gulp clean
 # delete dest directory
-gulp delete
+npx gulp delete
 
 # build target [task] ex) gulp html
-gulp [html|css|js|img]
-# watch target [task] files & server open ex) gulp html:watch
-gulp [html|css|js|img]:watch
+npx gulp [html|css|js|img]
+# watch target [task] files & server open ex) npx gulp html:watch
+npx gulp [html|css|js|img]:watch
 # compile all target [task] files
-gulp [html|css|js|img]:build
+npx gulp [html|css|js|img]:build
 # lint all target [task] files
-gulp [html|css|js|img]:lint
+npx gulp [html|css|js|img]:lint
 # clean all target [task] files
-gulp [html|css|js|img]:clean
+npx gulp [html|css|js|img]:clean
     .
     .
     .
@@ -110,7 +110,7 @@ gulp [html|css|js|img]:clean
 #### Check other tasks.
 
 ```Shell
-gulp --tasks
+npx gulp --tasks
 ```
 
 ##### Mock API Server
