@@ -116,7 +116,7 @@ npx gulp --tasks
 
 ```Shell
 # mock api server
-cd $(root)/_src/config
+cd $(root)/_src/
 npm run jsonserver
 ```
 
