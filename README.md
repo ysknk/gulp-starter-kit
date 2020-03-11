@@ -32,7 +32,7 @@ npm i
 
     [root/]
       |-[_app/] *submodule or download
-      |-[.base_src/] *clone
+      |-[.base_src/] *clone or download
 
 ### Directory after npm installation
 
