@@ -112,14 +112,6 @@ npx gulp [html|css|js|img]:clean
 npx gulp --tasks
 ```
 
-##### Mock API Server
-
-```Shell
-# mock api server
-cd $(root)/_src/
-npm run jsonserver
-```
-
 ## License
 
 Licensed under MIT  
