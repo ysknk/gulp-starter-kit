@@ -28,7 +28,6 @@ import imageminGifsicle from 'imagemin-gifsicle';
 import imageminSvgo from 'imagemin-svgo';
 
 import nib from 'nib';
-import import_tree from 'stylus-import-tree';
 
 import _ from 'lodash';
 
@@ -119,7 +118,6 @@ const globalVars = {
   imageminSvgo,
 
   nib,
-  import_tree,
 
   define,
   $,

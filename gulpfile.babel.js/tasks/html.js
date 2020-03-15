@@ -176,6 +176,30 @@ class Html extends TaskMaster {
   }
 
   /**
+   * watch
+   *
+   * @param {object} task
+   * @param {array} src
+   */
+  watch(task, src) {
+    plugins.util.setIsWatch(true);
+    let watcher = gulp.watch(src, {
+      atomic: 500
+    }, gulp.series(task.name));
+
+    this.setAllWatcher(watcher, task.data);
+    if (task.data.delete) {
+      this.setDeleteWatcher(watcher, task.data);
+    }
+
+    let taskserv = (this.servName() && config[task.name][plugins.util.getServName()]) ?
+      (this.servName() + ':' + config[task.name][plugins.util.getServName()]) : plugins.util.getEmptyName();
+
+    // html only
+    gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
+  }
+
+  /**
    * setTask
    */
   setTask() {
@@ -198,21 +222,7 @@ class Html extends TaskMaster {
 
     // watch task
     gulp.task(this.task.name + ':watch', () => {
-      plugins.util.setIsWatch(true);
-      let watcher = gulp.watch(src, {
-        atomic: 500
-      }, gulp.series(this.task.name));
-
-      this.setAllWatcher(watcher, this.task.data);
-      if (this.task.data.delete) {
-        this.setDeleteWatcher(watcher, this.task.data);
-      }
-
-      let taskserv = (this.servName() && config[this.task.name][plugins.util.getServName()]) ?
-        (this.servName() + ':' + config[this.task.name][plugins.util.getServName()]) : plugins.util.getEmptyName();
-
-      // html only
-      gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
+      this.watch(this.task, src)
     });
 
     // other types task

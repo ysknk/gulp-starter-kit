@@ -76,6 +76,23 @@ module.exports = class TaskMaster {
   }
 
   /**
+   * watch
+   *
+   * @param {object} task
+   * @param {array} src
+   */
+  watch(task, src) {
+    plugins.util.setIsWatch(true);
+    let watcher = gulp.watch(src, {
+      atomic: 500
+    }, gulp.series(task.name));
+    this.setAllWatcher(watcher, task.data);
+    if (task.data.delete) {
+      this.setDeleteWatcher(watcher, task.data);
+    }
+  }
+
+  /**
    * setTask
    */
   setTask() {
@@ -92,14 +109,7 @@ module.exports = class TaskMaster {
 
     // watch task
     gulp.task(this.task.name + ':watch', () => {
-      plugins.util.setIsWatch(true);
-      let watcher = gulp.watch(src, {
-        atomic: 500
-      }, gulp.parallel(this.task.name));
-      this.setAllWatcher(watcher, this.task.data);
-      if (this.task.data.delete) {
-        this.setDeleteWatcher(watcher, this.task.data);
-      }
+      this.watch(this.task, src)
     });
 
     // other types task

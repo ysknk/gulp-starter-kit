@@ -120,9 +120,6 @@ module.exports = {
       rawDefine: {
         meta
       },
-      define: {
-        import_tree
-      },
       use: [
         nib()
       ]
