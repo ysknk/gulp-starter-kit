@@ -32,7 +32,7 @@ npm i
 
     [root/]
       |-[_app/] *submodule or download
-      |-[.base_src/] *clone
+      |-[.base_src/] *clone or download
 
 ### Directory after npm installation
 
@@ -110,14 +110,6 @@ npx gulp [html|css|js|img]:clean
 
 ```Shell
 npx gulp --tasks
-```
-
-##### Mock API Server
-
-```Shell
-# mock api server
-cd $(root)/_src/config
-npm run jsonserver
 ```
 
 ## License
