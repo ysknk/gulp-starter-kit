@@ -5,7 +5,6 @@ import _ from 'lodash'
 import vfs from 'vinyl-fs'
 import fancyLog from 'fancy-log'
 import pluginError from 'plugin-error'
-import difference from 'array-difference'
 import PugInheritance from 'pug-inheritance'
 import PugDependencies from 'pug-dependencies'
 
@@ -142,7 +141,7 @@ class GulpPugInheritance {
       } else {
         const newDependencies = this.getDependencies(file)
         const oldDependencies = this.tempInheritance[cacheKey].dependencies
-        const diff = difference(newDependencies, oldDependencies)
+        const diff = _.xor(newDependencies, oldDependencies)
 
         if (!diff.length) {
           if (this.options.debug) { state = 'CACHED' }
