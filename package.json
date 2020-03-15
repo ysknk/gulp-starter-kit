@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npm i",
     "start": "npx gulp watch",
-    "dev": "npx gulp watch",
+    "dev": "npx gulp watch --no",
     "watch": "npx gulp watch",
     "build": "npx gulp build",
     "generate": "npx gulp build",
@@ -32,7 +32,6 @@
     "cross-spawn": "^6.0.5",
     "del": "^3.0.0",
     "event-stream": "^4.0.1",
-    "fs": "0.0.1-security",
     "fs-extra": "^5.0.0",
     "glslify-loader": "^2.0.0",
     "gulp": "^4.0.2",
