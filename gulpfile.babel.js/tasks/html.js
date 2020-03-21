@@ -195,8 +195,9 @@ class Html extends TaskMaster {
     let taskserv = (this.servName() && config[task.name][plugins.util.getServName()]) ?
       (this.servName() + ':' + config[task.name][plugins.util.getServName()]) : plugins.util.getEmptyName();
 
-    // html only
-    gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
+    if (task.data.isConfigBuild) {
+      gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
+    }
   }
 
   /**
@@ -216,9 +217,11 @@ class Html extends TaskMaster {
     });
 
     // config build task
-    gulp.task('config:build', (done) => {
-      this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
-    });
+    if (this.task.data.isConfigBuild) {
+      gulp.task('config:build', (done) => {
+        this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
+      });
+    }
 
     // watch task
     gulp.task(this.task.name + ':watch', () => {

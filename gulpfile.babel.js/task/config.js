@@ -63,6 +63,7 @@ module.exports = {
     src: define.path.src('pug'),
     dest: define.path.dest,
     extension: '.html',
+    isConfigBuild: true,
 
     options: {
       pretty: true

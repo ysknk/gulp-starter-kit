@@ -24,14 +24,7 @@ module.exports = class TaskMaster {
     if(!opts_) return;
     opts_ = _.merge({}, task, opts_);
 
-    this.task = {
-      name: opts_.name,
-      types: opts_.types,
-      data: config && _.merge({},
-        config['common'] || {},
-        config[opts_.name] || {}
-      )
-    };
+    this.task = this.setTaskData(opts_);
 
     if(!config ||
       !this.task.name ||
@@ -45,6 +38,23 @@ module.exports = class TaskMaster {
    * initialize
    */
   initialize() {}
+
+  /**
+   * setTaskData
+   *
+   * @param {object} opts_
+   * @returns {object}
+   */
+  setTaskData(opts_) {
+    return {
+      name: opts_.name,
+      types: opts_.types,
+      data: config && _.merge({},
+        config['common'] || {},
+        config[opts_.name] || {}
+      )
+    };
+  }
 
   /**
    * procedure
