@@ -80,7 +80,7 @@ module.exports = class TaskMaster {
         extname: this.task.data.extension
       })))
       .pipe(plugins.clean({
-        dest: `${this.task.data.dest}${this.task.data.dist}`
+        dest: this.getDest()
       }))
       .on('finish', () => {done && done();});
   }
@@ -142,6 +142,18 @@ module.exports = class TaskMaster {
   }
 
   /**
+   * getDest
+   *
+   * @param {object} conf
+   * @returns {string}
+   */
+  getDest(conf) {
+    const dest = conf ? conf.dest : this.task.data.dest;
+    const dist = conf ? conf.dist : this.task.data.dist;
+    return `${dest}${dist}`;
+  }
+
+  /**
    * getIgnore
    *
    * @param {array} ignore
@@ -185,7 +197,7 @@ module.exports = class TaskMaster {
         filePathFromSrc = filename.join('');
       }
 
-      let destFilePath = path.resolve(`${conf.dest}${conf.dist}`, filePathFromSrc);
+      let destFilePath = path.resolve(this.getDest(conf), filePathFromSrc);
       if (plugins.util.checkFile(destFilePath)) {
         del.sync(destFilePath, {force: true});
         plugins.util.log(colors.bgred('delete ' + destFilePath));
@@ -419,11 +431,11 @@ module.exports = class TaskMaster {
       data.root_path = data.root_path || taskData.root_path;
 
       if(taskData.path_type.match(/relative/i)) {
-        data.root_path = taskData.dest + taskData.dist + data.root_path;
+        data.root_path = this.getDest(taskData) + data.root_path;
         let root_path = path.resolve(data.root_path);
         let dirArray = filepath.split(dirMark);
         dirArray[dirArray.length - 1] = '';
-        let dest_path = path.resolve(taskData.dest + taskData.dist + dirArray.join(dirMark));
+        let dest_path = path.resolve(this.getDest(taskData) + dirArray.join(dirMark));
         let root_relative_path = path.relative(dest_path, root_path);
 
         data.root_path = `${plugins.util.getReplaceDir(root_relative_path)}/`;

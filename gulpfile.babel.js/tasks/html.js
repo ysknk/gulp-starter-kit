@@ -77,7 +77,7 @@ class Html extends TaskMaster {
         return this.setCurrentData(file.relative, this.task.data);
       }))
 
-      .pipe($.if(isWatch, $.changed(`${this.task.data.dest}${this.task.data.dist}`, {
+      .pipe($.if(isWatch, $.changed(this.getDest(), {
         transformPath: (distPath) => {
           let parse = path.parse(distPath);
           let filename = `${parse.name}${this.extension}`;
@@ -105,7 +105,7 @@ class Html extends TaskMaster {
       })))
       .pipe(plugins.useful(this.task.data.convert))
 
-      .pipe(gulp.dest(`${this.task.data.dest}${this.task.data.dist}`))
+      .pipe(gulp.dest(this.getDest()))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
@@ -166,7 +166,7 @@ class Html extends TaskMaster {
         path.extname = that.extension;
       })))
       .pipe(plugins.clean({
-        dest: `${this.task.data.dest}${this.task.data.dist}`
+        dest: this.getDest()
       }))
       .on('finish', () => {done && done();});
   }
