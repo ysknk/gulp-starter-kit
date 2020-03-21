@@ -69,7 +69,7 @@ class Html extends TaskMaster {
   build(stream, done, isBuild) {
     let that = this;
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
-    let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
+    // let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
 
     stream
       .pipe($.plumber(this.errorMessage()))
@@ -207,7 +207,7 @@ class Html extends TaskMaster {
     let defaultTask = this.task.types && this.task.types.length ?
       this.task.types[0] : 'procedure';
     let src = this.getSrc();
-    let ignore = this.getIgnore();
+    // let ignore = this.getIgnore();
     // let mergeSrc = [...src, ...ignore];
     let mergeSrc = [...src];
 
