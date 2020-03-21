@@ -69,7 +69,6 @@ class Html extends TaskMaster {
   build(stream, done, isBuild) {
     let that = this;
     let isWatch = isBuild ? false : plugins.util.getIsWatch();
-    // let watchEvent = isWatch ? plugins.util.getWatchEvent() : ``;
 
     stream
       .pipe($.plumber(this.errorMessage()))
@@ -88,18 +87,15 @@ class Html extends TaskMaster {
       })))
 
       .pipe($.if(isWatch, $.cached(this.task.name)))
-      // .pipe($.debug({title: 'Debug before gulp-pug-inheritance'}))
       .pipe($.if(isWatch, pugInheritance(this.task.data.inheritance_options)))
 
       .pipe($.data((file) => {
         return this.setCurrentData(file.relative, this.task.data);
       }))
 
-      // .pipe($.debug({title: 'Debug after gulp-pug-inheritance'}))
       .pipe($.filter((file) => {
         return this.ignoreFilter(file);
       }))
-      // .pipe($.debug({title: 'Debug after gulp-filter'}))
 
       .pipe(pug(this.task.data.options))
       .pipe($.if(this.isMinify(), $.minifyHtml(this.task.data.minify_options)))
