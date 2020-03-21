@@ -1,6 +1,14 @@
 const meta = require(`../../${define.path.pageConfig}`);
 const eslintrc = require(`../../${define.path.srcDir}.eslintrc.js`);
 
+const base_dir = {
+  html: `html/`,
+  css: `css/`,
+  js: `js/`,
+  img: `img/`,
+  copy: `copy/`,
+};
+
 module.exports = {
   /* run flg */
   tasks: {
@@ -19,6 +27,7 @@ module.exports = {
     minify: false,// true || gulp --min
     delete: false,// true || gulp --del
 
+    dist: ``,
     ignore: define.path.ignore(),
 
     convert: {
@@ -61,9 +70,11 @@ module.exports = {
   /* html @pug */
   html: {
     src: define.path.src('pug'),
+    // src: [`${define.path.srcDir}htdocs/${base_dir.html}**/*.pug`],
     dest: define.path.dest,
+    base_dir: base_dir.html,
     extension: '.html',
-    isConfigBuild: true,
+    is_config_build: true,
 
     options: {
       pretty: true
@@ -111,9 +122,14 @@ module.exports = {
 
   /* css @stylus */
   css: {
-    src: define.path.src('styl'),
     // src: define.path.src('styl', 'all'),
+    src: define.path.src('styl'),
     dest: define.path.dest,
+    base_dir: base_dir.css,
+
+    // src: [`${define.path.srcDir}htdocs/${base_dir.css}**/*.styl`],
+    // dist: `assets/css/`,
+
     extension: '.css',
 
     options: {
@@ -173,6 +189,11 @@ module.exports = {
     // console.log(define.path.src('js').push(define.path.src('ts')[0]))
     src: define.path.src('{js,jsx,ts,tsx,vue}'),
     dest: define.path.dest,
+    base_dir: base_dir.js,
+
+    // src: [`${define.path.srcDir}htdocs/${base_dir.js}**/*.{js,jsx,ts,tsx,vue}`],
+    // dist: `assets/js/`,
+
     // ignore: define.path.ignore('{d\.ts}'),
     extension: '.js',
     options: {
@@ -301,6 +322,10 @@ module.exports = {
   img: {
     src: define.path.src('{jpg,jpeg,png,gif,svg}'),
     dest: define.path.dest,
+    base_dir: base_dir.img,
+
+    // src: [`${define.path.srcDir}htdocs/${base_dir.img}**/*.{jpg,jpeg,png,gif,svg}`],
+    // dist: `assets/img/`,
 
     plugins: [
       imageminPngquant({
@@ -329,7 +354,9 @@ module.exports = {
   /* copy */
   copy: { // other filetype
     src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg|d.ts|ts|tsx)'),
-    dest: define.path.dest
+    // src: [`${define.path.srcDir}htdocs/${base_dir.copy}**/*.*`],
+    dest: define.path.dest,
+    base_dir: base_dir.copy,
   },
 
   /* delete */

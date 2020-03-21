@@ -40,14 +40,14 @@ class Img extends TaskMaster {
   build(stream, done) {
     stream
       .pipe($.plumber(this.errorMessage()))
-      .pipe($.if(plugins.util.getIsWatch(), $.changed(this.task.data.dest)))
+      .pipe($.if(plugins.util.getIsWatch(), $.changed(`${this.task.data.dest}${this.task.data.dist}`)))
 
       .pipe($.imagemin(this.task.data.plugins, this.task.data.options))
       .pipe($.if(this.isExtname(), $.rename({
         extname: this.task.data.extension
       })))
 
-      .pipe(gulp.dest(this.task.data.dest))
+      .pipe(gulp.dest(`${this.task.data.dest}${this.task.data.dist}`))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())

@@ -51,7 +51,7 @@ class Css extends TaskMaster {
         extname: this.task.data.extension
       })))
 
-      .pipe(gulp.dest(this.task.data.dest))
+      .pipe(gulp.dest(`${this.task.data.dest}${this.task.data.dist}`))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())

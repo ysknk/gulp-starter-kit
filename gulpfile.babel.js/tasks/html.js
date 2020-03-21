@@ -34,7 +34,7 @@ class Html extends TaskMaster {
    */
   initialize() {
     let htdocsdir = {
-      basedir: this.task.data.htdocsdir
+      basedir: `${this.task.data.htdocsdir}${this.task.data.base_dir}`
     };
 
     this.task.data.options = _.merge({},
@@ -78,7 +78,7 @@ class Html extends TaskMaster {
         return this.setCurrentData(file.relative, this.task.data);
       }))
 
-      .pipe($.if(isWatch, $.changed(this.task.data.dest, {
+      .pipe($.if(isWatch, $.changed(`${this.task.data.dest}${this.task.data.dist}`, {
         transformPath: (distPath) => {
           let parse = path.parse(distPath);
           let filename = `${parse.name}${this.extension}`;
@@ -109,7 +109,7 @@ class Html extends TaskMaster {
       })))
       .pipe(plugins.useful(this.task.data.convert))
 
-      .pipe(gulp.dest(this.task.data.dest))
+      .pipe(gulp.dest(`${this.task.data.dest}${this.task.data.dist}`))
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
@@ -170,7 +170,7 @@ class Html extends TaskMaster {
         path.extname = that.extension;
       })))
       .pipe(plugins.clean({
-        dest: this.task.data.dest
+        dest: `${this.task.data.dest}${this.task.data.dist}`
       }))
       .on('finish', () => {done && done();});
   }
@@ -195,7 +195,7 @@ class Html extends TaskMaster {
     let taskserv = (this.servName() && config[task.name][plugins.util.getServName()]) ?
       (this.servName() + ':' + config[task.name][plugins.util.getServName()]) : plugins.util.getEmptyName();
 
-    if (task.data.isConfigBuild) {
+    if (task.data.is_config_build) {
       gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
     }
   }
@@ -217,7 +217,7 @@ class Html extends TaskMaster {
     });
 
     // config build task
-    if (this.task.data.isConfigBuild) {
+    if (this.task.data.is_config_build) {
       gulp.task('config:build', (done) => {
         this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
       });
