@@ -75,6 +75,7 @@ module.exports = {
 
     dest: define.path.dest,
     base_dir: base_dir.html,
+
     extension: '.html',
     is_config_build: true,
 
