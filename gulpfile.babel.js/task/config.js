@@ -69,8 +69,10 @@ module.exports = {
 
   /* html @pug */
   html: {
-    src: define.path.src('pug'),
-    // src: [`${define.path.srcDir}htdocs/${base_dir.html}**/*.pug`],
+    // src: define.path.src('pug'),
+
+    src: [`${define.path.srcDir}htdocs/${base_dir.html}**/*.pug`],
+
     dest: define.path.dest,
     base_dir: base_dir.html,
     extension: '.html',
@@ -123,12 +125,13 @@ module.exports = {
   /* css @stylus */
   css: {
     // src: define.path.src('styl', 'all'),
-    src: define.path.src('styl'),
-    dest: define.path.dest,
     base_dir: base_dir.css,
 
-    // src: [`${define.path.srcDir}htdocs/${base_dir.css}**/*.styl`],
-    // dist: `assets/css/`,
+    // src: define.path.src('styl'),
+
+    src: [`${define.path.srcDir}htdocs/${base_dir.css}**/*.styl`],
+    dist: `assets/css/`,
+    dest: define.path.dest,
 
     extension: '.css',
 
@@ -187,12 +190,13 @@ module.exports = {
   /* js @webpack */
   js: {
     // console.log(define.path.src('js').push(define.path.src('ts')[0]))
-    src: define.path.src('{js,jsx,ts,tsx,vue}'),
-    dest: define.path.dest,
     base_dir: base_dir.js,
 
-    // src: [`${define.path.srcDir}htdocs/${base_dir.js}**/*.{js,jsx,ts,tsx,vue}`],
-    // dist: `assets/js/`,
+    // src: define.path.src('{js,jsx,ts,tsx,vue}'),
+
+    src: [`${define.path.srcDir}htdocs/${base_dir.js}**/*.{js,jsx,ts,tsx,vue}`],
+    dist: `assets/js/`,
+    dest: define.path.dest,
 
     // ignore: define.path.ignore('{d\.ts}'),
     extension: '.js',
@@ -320,12 +324,12 @@ module.exports = {
 
   /* img @imagemin */
   img: {
-    src: define.path.src('{jpg,jpeg,png,gif,svg}'),
-    dest: define.path.dest,
+    // src: define.path.src('{jpg,jpeg,png,gif,svg}'),
     base_dir: base_dir.img,
 
-    // src: [`${define.path.srcDir}htdocs/${base_dir.img}**/*.{jpg,jpeg,png,gif,svg}`],
-    // dist: `assets/img/`,
+    src: [`${define.path.srcDir}htdocs/${base_dir.img}**/*.{jpg,jpeg,png,gif,svg}`],
+    dist: `assets/img/`,
+    dest: define.path.dest,
 
     plugins: [
       imageminPngquant({
@@ -353,8 +357,10 @@ module.exports = {
 
   /* copy */
   copy: { // other filetype
-    src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg|d.ts|ts|tsx)'),
-    // src: [`${define.path.srcDir}htdocs/${base_dir.copy}**/*.*`],
+    // src: define.path.src('!(pug|styl|js|jsx|vue|tag|jpg|jpeg|png|gif|svg|d.ts|ts|tsx)'),
+
+    src: [`${define.path.srcDir}htdocs/${base_dir.copy}**/*.*`],
+
     dest: define.path.dest,
     base_dir: base_dir.copy,
   },
