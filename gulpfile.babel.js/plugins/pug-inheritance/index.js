@@ -139,7 +139,16 @@ class GulpPugInheritance {
         if (this.options.debug) { state = 'NEW' }
         inheritance = this.setTempInheritance(file)
       } else {
-        const newDependencies = this.getDependencies(file)
+        const baseDependencies = this.getDependencies(file)
+        let newDependencies = baseDependencies
+
+        _.forEach(baseDependencies, (dependency) => {
+          const key = dependency.replace(/(\/|\.)/g, '_')
+          _.forEach(this.tempInheritance[key].dependencies, (item) => {
+            newDependencies.push(item)
+          })
+        })
+
         const oldDependencies = this.tempInheritance[cacheKey].dependencies
         const diff = _.xor(newDependencies, oldDependencies)
 
