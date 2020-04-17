@@ -143,7 +143,7 @@ class GulpPugInheritance {
         let newDependencies = baseDependencies
 
         _.forEach(baseDependencies, (dependency) => {
-          const key = dependency.replace(/(\/|\.)/g, '_')
+          const key = this.setTempKey(dependency)
           _.forEach(this.tempInheritance[key].dependencies, (item) => {
             newDependencies.push(item)
           })
