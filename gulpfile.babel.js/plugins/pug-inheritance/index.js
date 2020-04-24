@@ -210,7 +210,8 @@ class GulpPugInheritance {
 
       if (this.filesPaths.length) {
           vfs.src(this.filesPaths, {
-            'base': this.options.basedir
+            base: this.options.basedir,
+            allowEmpty: true
           }).pipe(es.through(
             function (f) { _this.stream.emit('data', f) },
             function () { _this.stream.emit('end') }
