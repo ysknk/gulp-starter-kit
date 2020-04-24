@@ -213,7 +213,7 @@ _.forEach(types, (tasks, taskName) => {
         if (!taskconfig) return;
 
         let src = taskmaster.getSrc(taskconfig.data.src);
-        taskmaster.watch(taskconfig, src)
+        taskmaster.watch(taskconfig, src);
 
         if (taskconfig.data.is_config_build) {
           gulp.watch(define.path.pageConfig, gulp.series(configBuildName));
