@@ -110,13 +110,8 @@ class GulpPugInheritance {
     }
   }
 
-  setTempInheritance (file) {
-    const cacheKey = this.setTempKey(file.relative)
-    const inheritance = this.getInheritance(file.path)
-
-    const baseDependencies = this.getDependencies(file)
+  getNewDependencies (baseDependencies) {
     let newDependencies = baseDependencies
-
     _.forEach(baseDependencies, (dependency) => {
       const key = this.setTempKey(dependency)
       if (this.tempInheritance[key] && this.tempInheritance[key].dependencies) {
@@ -125,6 +120,15 @@ class GulpPugInheritance {
         })
       }
     })
+    return newDependencies
+  }
+
+  setTempInheritance (file) {
+    const cacheKey = this.setTempKey(file.relative)
+    const inheritance = this.getInheritance(file.path)
+
+    const baseDependencies = this.getDependencies(file)
+    const newDependencies = this.getNewDependencies(baseDependencies)
 
     this.tempInheritance[cacheKey] = {}
     this.tempInheritance[cacheKey] = inheritance
@@ -152,16 +156,7 @@ class GulpPugInheritance {
         inheritance = this.setTempInheritance(file)
       } else {
         const baseDependencies = this.getDependencies(file)
-        let newDependencies = baseDependencies
-
-        _.forEach(baseDependencies, (dependency) => {
-          const key = this.setTempKey(dependency)
-          if (this.tempInheritance[key] && this.tempInheritance[key].dependencies) {
-            _.forEach(this.tempInheritance[key].dependencies, (item) => {
-              newDependencies.push(item)
-            })
-          }
-        })
+        const newDependencies = this.getNewDependencies(baseDependencies)
 
         const oldDependencies = this.tempInheritance[cacheKey].dependencies
         const diff = _.xor(newDependencies, oldDependencies)
