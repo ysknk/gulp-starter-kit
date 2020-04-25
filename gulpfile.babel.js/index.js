@@ -95,6 +95,7 @@ const define = {
 const globalVars = {
   gulp,
 
+  spawn,
   fs,
   path,
   del,

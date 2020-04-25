@@ -201,6 +201,19 @@ module.exports = class TaskMaster {
       if (plugins.util.checkFile(destFilePath)) {
         del.sync(destFilePath, {force: true});
         plugins.util.log(colors.bgred('delete ' + destFilePath));
+
+        let destDirPath = destFilePath.replace(filePathFromSrc, '')
+        fs.readdir(destDirPath, function(err, files) {
+          if (err) {
+            plugins.util.log(colors.bgred('delete error ' + err));
+          } else {
+            if (!files.length) {
+              del.sync(destDirPath, {force: true});
+              plugins.util.log(colors.bgred('delete ' + destDirPath));
+            }
+          }
+        });
+
       }
     });
   }
