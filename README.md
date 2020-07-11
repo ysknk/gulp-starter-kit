@@ -65,6 +65,8 @@ npm run dev
 npm run build
 # or
 npm run generate
+# or
+npm run export
 # lint all target files
 npm run lint
 # clean all target files
