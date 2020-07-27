@@ -26,6 +26,10 @@ git submodule add https://github.com/ysknk/gulp-starter-kit.git _app
 git clone -b master https://github.com/ysknk/gulp-starter-src.git .base_src
 cd _app/
 npm i
+
+# oneline
+git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clone -b master https://github.com/ysknk/gulp-starter-src.git .base_src && cd _app/ && npm i
+
 ```
 
 ### Directory before npm installation
