@@ -103,7 +103,7 @@ npx gulp clean
 # delete dest directory
 npx gulp delete
 
-# build target [task] ex) gulp html
+# build target [task] ex) npx gulp html
 npx gulp [html|css|js|img]
 # watch target [task] files & server open ex) npx gulp html:watch
 npx gulp [html|css|js|img]:watch
