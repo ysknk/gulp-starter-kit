@@ -4,6 +4,8 @@ Gulp Starter Kit
 website build tools.  
 use submodule add or download.  
 
+> ＊Does not work alone. Require [gulp-starter-src](https://github.com/ysknk/gulp-starter-src).
+
 ## Description
 
 * Pug -> html
