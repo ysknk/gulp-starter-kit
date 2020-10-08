@@ -218,7 +218,7 @@ module.exports = {
         rules: [
           {
             test: /\.(js|jsx|json|vue)$/,
-            exclude: /node_modules/,
+            exclude: /node_modules\/(?!(dom7|ssr-window|swiper)\/).*/,
             use: {
               loader: 'babel-loader?cacheDirectory=true',
               options: {
