@@ -34,14 +34,15 @@ class GulpPugInheritance {
       skip: 'node_modules',
       saveInTempFile: false,
       tempFile: 'temp.pugInheritance.json',
-      debug: false
+      debug: true
     }
   }
 
   getInheritance (path) {
     let inheritance = null
     try {
-      inheritance = new PugInheritance(path, this.options.basedir, this.options)
+      const options = this.options
+      inheritance = new PugInheritance(path, options.basedir, options)
     } catch (error) {
       this.throwError(error)
       return
@@ -66,11 +67,12 @@ class GulpPugInheritance {
   }
 
   getTempFile () {
-    if (!fs.existsSync(this.tempFile)) {
-      fs.writeFileSync(this.tempFile, JSON.stringify({}, null, 2), 'utf-8')
+    const tempFile = this.tempFile
+    if (!fs.existsSync(tempFile)) {
+      fs.writeFileSync(tempFile, JSON.stringify({}, null, 2), 'utf-8')
       this.firstRun = true
     }
-    return require(this.tempFile)
+    return require(tempFile)
   }
 
   setTempKey (path) {
@@ -83,14 +85,28 @@ class GulpPugInheritance {
     const dependencies = []
     const fileRelative = path.join(process.cwd(), this.options.basedir)
     _.forEach(pugDependencies, (dependency) => {
-      dependencies.push(path.relative(fileRelative, dependency))
+      let relativePath = path.relative(fileRelative, dependency);
+      if (this.getExt(relativePath) === '') {
+        relativePath += this.options.extension
+      }
+      dependencies.push(relativePath)
     })
     return dependencies
+  }
+
+  getExt(path) {
+    const basename = path.split(/[\\/]/).pop()
+    const pos = basename.lastIndexOf('.')
+    if (basename === '' || pos < 1) {
+      return "";
+    }
+    return basename.slice(pos + 1)
   }
 
   updateTempInheritance (dependency) {
     const cacheKey = this.setTempKey(dependency)
     const pathToFile = path.join(process.cwd(), this.options.basedir, path.normalize(dependency))
+
     if (this.tempInheritance[cacheKey]) {
       if (this.options.debug) {
         fancyLog(`[${PLUGIN_NAME}][Update] Get new inheritance of: "${dependency}"`)
@@ -112,14 +128,18 @@ class GulpPugInheritance {
 
   getNewDependencies (baseDependencies) {
     let newDependencies = baseDependencies
+
     _.forEach(baseDependencies, (dependency) => {
       const key = this.setTempKey(dependency)
-      if (this.tempInheritance[key] && this.tempInheritance[key].dependencies) {
-        _.forEach(this.tempInheritance[key].dependencies, (item) => {
+      const tempInheritance = this.tempInheritance[key]
+
+      if (tempInheritance && tempInheritance.dependencies) {
+        _.forEach(tempInheritance.dependencies, (item) => {
           newDependencies.push(item)
         })
       }
     })
+
     return newDependencies
   }
 
@@ -136,7 +156,7 @@ class GulpPugInheritance {
     this.tempInheritance[cacheKey].file = file.relative
 
     if (!this.firstRun) {
-      this.updateDependencies(this.tempInheritance[cacheKey].dependencies)
+      this.updateDependencies(newDependencies)
     }
     return inheritance
   }
@@ -188,10 +208,11 @@ class GulpPugInheritance {
 
   endStream () {
     const _this = this
+    const options = this.options
 
     if (this.files.length) {
-      if (this.options.debug) {
-        if (this.options.saveInTempFile === true) {
+      if (options.debug) {
+        if (options.saveInTempFile === true) {
           if (this.firstRun) {
             fancyLog(`[${PLUGIN_NAME}] Plugin started for the first time. Save inheritances to a tempfile`)
           } else {
@@ -203,14 +224,14 @@ class GulpPugInheritance {
       _.forEach(this.files, (file) => {
         const inheritance = this.resolveInheritance(file)
         const fullpaths = _.map(inheritance.files, (file) => {
-          return path.join(this.options.basedir, file)
+          return path.join(options.basedir, file)
         })
         this.filesPaths = _.union(this.filesPaths, fullpaths)
       })
 
       if (this.filesPaths.length) {
           vfs.src(this.filesPaths, {
-            base: this.options.basedir,
+            base: options.basedir,
             allowEmpty: true
           }).pipe(es.through(
             function (f) { _this.stream.emit('data', f) },
@@ -223,14 +244,14 @@ class GulpPugInheritance {
       this.stream.emit('end')
     }
 
-    if (this.options.saveInTempFile === true) {
+    if (options.saveInTempFile === true) {
       if (_.size(this.tempInheritance) > 0) {
         _.forEach(this.tempInheritance, (tempInheritance) => {
           if (tempInheritance !== undefined) {
             const cacheKey = this.setTempKey(tempInheritance.file)
-            const baseDir = path.join(process.cwd(), this.options.basedir, tempInheritance.file)
+            const baseDir = path.join(process.cwd(), options.basedir, tempInheritance.file)
             if (!fs.existsSync(baseDir)) {
-              if (this.options.debug) {
+              if (options.debug) {
                 fancyLog(`[${PLUGIN_NAME}][DELETE] Delete inheritance of: "${tempInheritance.file}"`)
               }
               this.updateDependencies(tempInheritance.dependencies)
@@ -244,12 +265,11 @@ class GulpPugInheritance {
   }
 
   pipeStream () {
-    const _this = this
-    function writeStream (file) {
-      _this.writeStream(file)
+    const writeStream = (file) => {
+      this.writeStream(file)
     }
-    function endStream () {
-      _this.endStream()
+    const endStream = () => {
+      this.endStream()
     }
     this.stream = es.through(writeStream, endStream)
     return this.stream
