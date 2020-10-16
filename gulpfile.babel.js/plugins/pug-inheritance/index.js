@@ -34,7 +34,7 @@ class GulpPugInheritance {
       skip: 'node_modules',
       saveInTempFile: false,
       tempFile: 'temp.pugInheritance.json',
-      debug: true
+      debug: false
     }
   }
 
