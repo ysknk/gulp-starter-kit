@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 import named from 'vinyl-named';
 
-import uglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 /**
  * Set Const Variables
@@ -51,9 +51,8 @@ class Js extends TaskMaster {
 
     if(this.isMinify()) {
       this.task.data.options.optimization = {
-        minimizer: [
-          new uglifyJsPlugin(this.task.data.uglify_options)
-        ]
+        minimize: true,
+        minimizer: [new TerserPlugin(this.task.data.minify_options)],
       };
     }
 

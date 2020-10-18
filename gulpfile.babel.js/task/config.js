@@ -141,7 +141,7 @@ module.exports = {
       ]
     },
     autoprefixer_options: {
-      browsers: ['last 2 versions', '> 2%'],
+      overrideBrowserslist: ['last 2 version', '> 2%'],
       cascade: false
     },
 
@@ -205,6 +205,13 @@ module.exports = {
         errors: false
       },
 
+      cache: {
+        type: 'filesystem',
+        buildDependencies: {
+          config: [__filename]
+        }
+      },
+
       resolve: {
         modules: [
           path.resolve(__dirname, '../../node_modules'),
@@ -234,12 +241,19 @@ module.exports = {
             }
           },
           {
+            test: /\.(png|jpg|gif)$/,
+            type: 'asset',
+            parser: {
+              dataUrlCondition: {
+                maxSize: 4 * 1024, // 4kb
+              },
+            },
+          },
+          {
             test: /\.(txt|glsl|vs|fs|vert|frag)$/,
+            type: 'asset/source',
             exclude: /node_modules/,
             use: [
-              {
-                loader: 'raw-loader'
-              },
               {
                 loader: 'glslify-loader'
               }
@@ -291,19 +305,19 @@ module.exports = {
             p: JSON.stringify(meta.p)
           }
         }),
-        new licenseInfoWebpackPlugin({
-          glob: '{LICENSE,license,License}*'
-        })
       ]
     },
 
-    // ex: https://github.com/mishoo/UglifyJS2#minify-options
+    // ex: https://webpack.js.org/plugins/terser-webpack-plugin/
     minify_options: {
-      cache: true,
-      parallel: true,
-      uglifyOptions: {
-        output: {comments: /^\**!|@preserve|@license|@cc_on/}
-      }
+      terserOptions: {
+        cache: true,
+        parallel: 4,
+        output: {
+          comments: /@license/i,
+        },
+      },
+      extractComments: false,
     },
 
     // ex: http://eslint.org/docs/rules/

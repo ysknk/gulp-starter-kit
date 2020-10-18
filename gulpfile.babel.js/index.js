@@ -18,11 +18,9 @@ import bs from 'browser-sync';
 import minimist from 'minimist';
 
 import webpack from 'webpack';
-import licenseInfoWebpackPlugin from 'license-info-webpack-plugin';
 
 import imageminPngquant from 'imagemin-pngquant';
 import imageminOptipng from 'imagemin-optipng';
-// import imageminJpegtran from 'imagemin-jpegtran';
 import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminGifsicle from 'imagemin-gifsicle';
 import imageminSvgo from 'imagemin-svgo';
@@ -109,11 +107,9 @@ const globalVars = {
   argv,
 
   webpack,
-  licenseInfoWebpackPlugin,
 
   imageminPngquant,
   imageminOptipng,
-  // imageminJpegtran,
   imageminMozjpeg,
   imageminGifsicle,
   imageminSvgo,
