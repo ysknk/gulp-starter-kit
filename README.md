@@ -12,7 +12,7 @@ use submodule add or download.
 * Stylus(+nib) -> css
 * js(webpack+Babel) -> js
 * img(imagemin) -> img
-* other(copy) -> other
+* static
 
 ## Requirement
 
@@ -104,15 +104,15 @@ npx gulp clean
 npx gulp delete
 
 # build target [task] ex) npx gulp html
-npx gulp [html|css|js|img]
+npx gulp [html|css|js|img|static]
 # watch target [task] files & server open ex) npx gulp html:watch
-npx gulp [html|css|js|img]:watch
+npx gulp [html|css|js|img|static]:watch
 # compile all target [task] files
-npx gulp [html|css|js|img]:build
+npx gulp [html|css|js|img|static]:build
 # lint all target [task] files
-npx gulp [html|css|js|img]:lint
+npx gulp [html|css|js|img|static]:lint
 # clean all target [task] files
-npx gulp [html|css|js|img]:clean
+npx gulp [html|css|js|img|static]:clean
     .
     .
     .
