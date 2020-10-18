@@ -10,7 +10,7 @@ use submodule add or download.
 
 * Pug -> html
 * Stylus(+nib) -> css
-* js(webpack+Babel) -> js
+* webpack(+Babel) -> js
 * img(imagemin) -> img
 * static
 
