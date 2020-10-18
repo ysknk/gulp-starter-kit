@@ -64,12 +64,8 @@ cd $(root)/_app/
 # watch target files & server open
 npm run watch
 # watch target files
-npm run watch -- --no
-# or
 npm run dev
 # compile all target files
-npm run build
-# or
 npm run generate
 # lint all target files
 npm run lint
