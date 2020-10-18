@@ -10,7 +10,6 @@
     "watch": "npx gulp watch",
     "build": "npx gulp build",
     "generate": "npx gulp build",
-    "export": "npx gulp build",
     "clean": "npx gulp clean",
     "lint": "npx gulp lint",
     "delete": "npx gulp delete",
