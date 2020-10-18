@@ -7,14 +7,14 @@ import TaskMaster from '../task/master';
  */
 const config = global[define.ns];
 const task = {
-  name: 'copy',
+  name: 'static',
   types: ['build', 'clean']// **:watch function [0] || 'procedure'
 };
 
 /**
- * Copy
+ * Static
  */
-class Copy extends TaskMaster {
+class Static extends TaskMaster {
 
   /**
    * constructor
@@ -61,5 +61,5 @@ class Copy extends TaskMaster {
 
 }
 
-module.exports = new Copy(task);
+module.exports = new Static(task);
 
