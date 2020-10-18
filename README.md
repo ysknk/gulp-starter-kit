@@ -49,7 +49,7 @@ git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clon
       |-[_src/]
       |   |-[config/]
       |   |   |-[task.js] *overwrite task config (master_data: /gulpfile.babel.js/task/config.js)
-      |   |   |-[page.js] *pug, styl variables
+      |   |   |-[page.js] *variables
       |   |   |-[tasks/] *original task
       |   |-[htdocs/] *work directory
       |
