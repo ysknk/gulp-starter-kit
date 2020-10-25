@@ -37,7 +37,7 @@ git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clon
 ### Directory before npm installation
 
     [root/]
-      |-[_app/] *submodule or download
+      |-[_app/] *submodule add or download
       |-[.base_src/] *clone or download
 
 ### Directory after npm installation
@@ -61,6 +61,7 @@ git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clon
 
 ```Shell
 cd $(root)/_app/
+
 # watch target files & server open
 npm run watch
 # watch target files
@@ -78,24 +79,10 @@ npm run delete
     .
 ```
 
-### Gulp command
+### Other gulp task
 
 ```Shell
 cd $(root)/_app/
-# deafult watch
-npx gulp
-# watch target files & server open
-npx gulp watch
-# watch target files
-npx gulp --no
-# compile all target files
-npx gulp build
-# lint all target files
-npx gulp lint
-# clean all target files
-npx gulp clean
-# delete dest directory
-npx gulp delete
 
 # build target [task] ex) npx gulp html
 npx gulp [html|css|js|img|static]
@@ -112,7 +99,7 @@ npx gulp [html|css|js|img|static]:clean
     .
 ```
 
-#### Check other tasks.
+#### Check all tasks.
 
 ```Shell
 npx gulp --tasks
