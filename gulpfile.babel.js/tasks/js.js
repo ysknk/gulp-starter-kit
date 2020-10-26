@@ -57,7 +57,9 @@ class Js extends TaskMaster {
     }
 
     stream
-      .pipe($.plumber(this.errorMessage()))
+      // NOTE: not work in webpack5
+      // .pipe($.plumber(this.errorMessage()))
+      .pipe($.plumber({errorHandler: () => {}}))
 
       .pipe(named((path) => {
         return path.relative.replace(/\.[^\.]+$/, '');
