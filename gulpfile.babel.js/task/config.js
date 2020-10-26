@@ -202,7 +202,8 @@ module.exports = {
         assets: false,
         builtAt: false,
         entrypoints: false,
-        errors: false
+        // errors: false
+        errors: true
       },
 
       cache: {
