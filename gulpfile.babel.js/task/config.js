@@ -70,7 +70,7 @@ module.exports = {
   /* html @pug */
   html: {
     // src: define.path.src('pug'),
-    src: [`${define.path.srcDir}htdocs/${base_dir.html}**/*.pug`],
+    src: [`${define.path.srcDir}htdocs/${base_dir.html}**/*.{pug,html,svg}`],
     dest: define.path.dest,
     base_dir: base_dir.html,
 
@@ -124,7 +124,7 @@ module.exports = {
   /* css @stylus */
   css: {
     // src: define.path.src('styl'),
-    src: [`${define.path.srcDir}htdocs/${base_dir.css}**/*.styl`],
+    src: [`${define.path.srcDir}htdocs/${base_dir.css}**/*.{styl,css}`],
     dist: `assets/css/`,
     dest: define.path.dest,
     base_dir: base_dir.css,
