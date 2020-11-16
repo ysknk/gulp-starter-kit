@@ -29,9 +29,11 @@ git clone -b master https://github.com/ysknk/gulp-starter-src.git .base_src
 cd _app/
 npm i
 
-# oneline
+# oneline: minimum package
 git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clone -b master https://github.com/ysknk/gulp-starter-src.git .base_src && cd _app/ && npm i
 
+# oneline: full package
+git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clone -b feature/ysknk https://github.com/ysknk/gulp-starter-src.git .base_src && cd _app/ && npm i
 ```
 
 ### Directory before npm installation
