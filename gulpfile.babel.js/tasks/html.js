@@ -221,7 +221,7 @@ class Html extends TaskMaster {
 
     // watch task
     gulp.task(this.task.name + ':watch', () => {
-      this.watch(this.task, src)
+      this.watch(this.task, src);
     });
 
     // other types task
