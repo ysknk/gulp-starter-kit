@@ -303,7 +303,11 @@ module.exports = {
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
           meta: {
-            p: JSON.stringify(meta.p)
+            p: {
+              s: JSON.stringify(meta.p.s),
+              l: JSON.stringify(meta.p.l),
+              c: JSON.stringify(meta.p.c)
+            }
           }
         }),
       ]
