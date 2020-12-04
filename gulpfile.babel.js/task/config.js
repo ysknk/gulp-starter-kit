@@ -222,6 +222,8 @@ module.exports = {
         extensions: ['.json', '.jsx', '.js', '.vue', '.tsx', '.ts']
       },
 
+      target: ["web", "es5"],
+
       module: {
         rules: [
           {
