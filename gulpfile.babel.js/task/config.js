@@ -318,8 +318,8 @@ module.exports = {
     // ex: https://webpack.js.org/plugins/terser-webpack-plugin/
     minify_options: {
       terserOptions: {
-        cache: true,
-        parallel: 4,
+        // cache: true,
+        // parallel: 4,
         output: {
           comments: /@license/i,
         },
