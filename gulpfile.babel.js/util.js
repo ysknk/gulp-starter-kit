@@ -13,6 +13,13 @@ class Util {
     this.requireDir = requireDir;
     this.fancyLog = fancyLog;
     this.colors = colors;
+
+    this.taskName = {
+      default: `default`,
+      watch: `watch`,
+      serv: `serv`,
+      empty: `empty`
+    };
   }
 
   /**
@@ -75,7 +82,7 @@ class Util {
   checkFile(filepath) {
     try {
       fs.statSync(filepath);
-      return true
+      return true;
     } catch(err) {
       if (err.code === 'ENOENT') {
         return false;
@@ -146,33 +153,6 @@ class Util {
   }
 
   /**
-   * getParam
-   *
-   * @returns {array}
-   */
-  getParam() {
-    return (process.argv && process.argv.slice(2)) || [];
-  }
-
-  /**
-   * getServName
-   *
-   * @returns {string}
-   */
-  getServName() {
-    return 'serv';
-  }
-
-  /**
-   * getEmptyName
-   *
-   * @returns {string}
-   */
-  getEmptyName() {
-    return 'empty';
-  }
-
-  /**
    * splitExtension
    *
    * @param {string} filename filename
@@ -180,11 +160,11 @@ class Util {
    * @returns {array}
    */
   splitExtension(filename, dot = true) {
-    if (dot) {
-      return filename.split(/(?=\.[^.]+$)/);
-    } else {
-      return filename.split(/\.(?=[^.]+$)/);
-    }
+    const exp = new RegExp(dot
+      ? `(?=\.[^.]+$)`
+      : `\.(?=[^.]+$)`
+    );
+    return filename.split(exp);
   }
 
   /**
