@@ -3,7 +3,7 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-import stream from 'stream';
+import { Transform } from 'stream';
 import spawn from 'cross-spawn';
 
 import fs from 'fs-extra';
@@ -39,8 +39,6 @@ import useful from './plugins/useful/';
 /**
  * set const variables
  */
-const {Transform} = stream;
-
 const browserSync = bs.create();
 
 const gulpfile = 'gulpfile.babel.js';
@@ -164,26 +162,23 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
  * set all common tasks
  * gulp, gulp build, gulp watch...
  */
-let taskMaster = require('./task/master');
-let gulpTasks = gulp._registry._tasks;
-let defaultName = 'default';
-let watchName = 'watch';
-let configBuildName = `config:build`
-let servName = plugins.util.getServName();
-let emptyName = plugins.util.getEmptyName();
-let taskSeparator = `:`;
-let types = {};
-let taskmaster = new taskMaster();
-let isServ = taskmaster.isTask(servName);
-let beforeTask = isServ ? servName : emptyName;
+const taskMaster = require('./task/master');
+const gulpTasks = gulp._registry._tasks;
+const taskName = plugins.util.taskName;
+const configBuildName = `config:build`
+const taskSeparator = `:`;
+const types = {};
+const taskmaster = new taskMaster();
+const isServ = taskmaster.isTask(taskName.serv);
+const beforeTask = isServ ? taskName.serv : taskName.empty;
 
 // empty
-gulp.task(emptyName, (done) => {done();});
+gulp.task(taskName.empty, (done) => {done();});
 
 // task type sepalate ex: build, watch
 _.forEach(gulpTasks, (task) => {
   let split = task.displayName.split(taskSeparator);
-  let type = split && split.length > 1 ? split[1] : defaultName;
+  let type = split && split.length > 1 ? split[1] : taskName.default;
 
   if (!types[type]) types[type] = [];
   types[type].push(task.displayName);
@@ -191,7 +186,8 @@ _.forEach(gulpTasks, (task) => {
 
 // task set
 _.forEach(types, (tasks, taskName) => {
-  if (taskName === watchName || taskName === defaultName) {
+  if (taskName === taskName.watch
+    || taskName === taskName.default) {
     // gulp watch || gulp
     gulp.task(taskName, gulp.series(beforeTask, function all() {
       plugins.util.setIsWatch(true);
@@ -199,9 +195,9 @@ _.forEach(types, (tasks, taskName) => {
       _.forEach(tasks, (task) => {
         let split = task.split(taskSeparator);
         let taskname = split[0];
-        let watchTaskName = `${taskname}${taskSeparator}${watchName}`;
+        let watchTaskName = `${taskname}${taskSeparator}${taskName.watch}`;
 
-        if (types[watchName].indexOf(watchTaskName) == -1) return;
+        if (types[taskName.watch].indexOf(watchTaskName) == -1) return;
 
         let taskconfig = taskmaster.setTaskData({
           name: taskname
