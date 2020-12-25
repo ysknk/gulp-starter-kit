@@ -49,6 +49,8 @@ module.exports = (opts_) => {
         sound: false,
         wait: false,
         timeout: 1,
+        actions: `Close`,
+        closeLabel: ``,
         type: 'info'
       });
 
