@@ -60,10 +60,22 @@ module.exports = {
       notify: false,
       open: 'local',// argv.no = false(ex: gulp watch --no)
       startPath: '/',
+      // ghostMode: false,
       reloadDelay: 100,
       server: {
         baseDir: define.path.dest
-      }
+      },
+      // rewriteRules: [{
+      //   match: /<!--#include virtual="(.+)" -->/g,
+      //   // match: /<\?php include DOCUMENT_ROOT \. "(.+)"; \?>/g,
+      //   fn: function (req, res, match, filename) {
+      //     const filePath = path.resolve(__dirname, `../${define.path.dest}${filename}`);
+      //     if (!fs.existsSync(filePath)) {
+      //       return `<span style="color: red">${filename} could not be found</span>`;
+      //     }
+      //     return fs.readFileSync(filePath);
+      //   }
+      // }],
     }
   },
 
