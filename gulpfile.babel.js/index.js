@@ -164,21 +164,21 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
  */
 const taskMaster = require('./task/master');
 const gulpTasks = gulp._registry._tasks;
-const taskName = plugins.util.taskName;
+const uTaskName = plugins.util.taskName;
 const configBuildName = `config:build`
 const taskSeparator = `:`;
 const types = {};
 const taskmaster = new taskMaster();
-const isServ = taskmaster.isTask(taskName.serv);
-const beforeTask = isServ ? taskName.serv : taskName.empty;
+const isServ = taskmaster.isTask(uTaskName.serv);
+const beforeTask = isServ ? uTaskName.serv : uTaskName.empty;
 
 // empty
-gulp.task(taskName.empty, (done) => {done();});
+gulp.task(uTaskName.empty, (done) => {done();});
 
 // task type sepalate ex: build, watch
 _.forEach(gulpTasks, (task) => {
   let split = task.displayName.split(taskSeparator);
-  let type = split && split.length > 1 ? split[1] : taskName.default;
+  let type = split && split.length > 1 ? split[1] : uTaskName.default;
 
   if (!types[type]) types[type] = [];
   types[type].push(task.displayName);
@@ -186,8 +186,8 @@ _.forEach(gulpTasks, (task) => {
 
 // task set
 _.forEach(types, (tasks, taskName) => {
-  if (taskName === taskName.watch
-    || taskName === taskName.default) {
+  if (taskName === uTaskName.watch
+    || taskName === uTaskName.default) {
     // gulp watch || gulp
     gulp.task(taskName, gulp.series(beforeTask, function all() {
       plugins.util.setIsWatch(true);
@@ -195,9 +195,9 @@ _.forEach(types, (tasks, taskName) => {
       _.forEach(tasks, (task) => {
         let split = task.split(taskSeparator);
         let taskname = split[0];
-        let watchTaskName = `${taskname}${taskSeparator}${taskName.watch}`;
+        let watchTaskName = `${taskname}${taskSeparator}${uTaskName.watch}`;
 
-        if (types[taskName.watch].indexOf(watchTaskName) == -1) return;
+        if (types[uTaskName.watch].indexOf(watchTaskName) == -1) return;
 
         let taskconfig = taskmaster.setTaskData({
           name: taskname
