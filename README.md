@@ -38,7 +38,8 @@ git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clon
 
 ### while using it  
 Push to the repository you manage.  
-If you want to clone a new one, use `git clone --recursive ${your repository url}` to download submodules as well.  
+If you want to clone a new one,  
+use `git clone --recursive ${your repository url}` to download submodules as well.  
 
 ### Directory before npm installation
 
