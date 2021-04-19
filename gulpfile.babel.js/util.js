@@ -1,9 +1,10 @@
 'use strict';
 
-import requireDir from 'require-dir';
-import fancyLog from 'fancy-log';
-import colors from 'ansi-colors';
+import fs from 'fs-extra';
 import os from 'os';
+import colors from 'ansi-colors';
+import fancyLog from 'fancy-log';
+import requireDir from 'require-dir';
 
 /**
  * Util
@@ -83,8 +84,8 @@ class Util {
     try {
       fs.statSync(filepath);
       return true;
-    } catch(err) {
-      if (err.code === 'ENOENT') {
+    } catch(error) {
+      if (error.code === 'ENOENT') {
         return false;
       }
     }
@@ -97,7 +98,7 @@ class Util {
    * @param {string} body
    */
   createFile(filepath, body = '') {
-    if (!fs.existsSync(filepath)) {
+    if (!fs.statSync(filepath)) {
       fs.writeFile(filepath, body, (error) => {});
       this.log([
         'Create file',
