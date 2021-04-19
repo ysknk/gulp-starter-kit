@@ -36,56 +36,22 @@ import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
 
+import vars from './vars';
+
 /**
  * set const variables
  */
-const browserSync = bs.create();
+const define = util.checkFile(vars.path.varsLocal)
+  ? _.merge({}, vars, require(`../${vars.path.varsLocal}`))
+  : vars;
 
-const gulpfile = 'gulpfile.babel.js';
+const browserSync = bs.create();
 
 const $ = gulpLoadPlugins();
 
 const argv = minimist(process.argv.slice(2));
 
-const tasksDir = 'tasks/';
-
-const srcDir = '../_src/';
-const destDir = '../htdocs/';
-
-const define = {
-  ns: '__', // namespace
-
-  path: {
-    srcDir,
-    destDir,
-
-    config: `${srcDir}config/`,
-    htdocs: `${srcDir}htdocs/`,
-
-    pageConfig: `${srcDir}config/page.js`,
-    taskConfigGlobal: `./task/config.js`,
-    taskConfigLocal: `../${srcDir}config/task.js`,
-
-    src: (ext) => {
-      return [
-        `${srcDir}htdocs/**/*.${ext}`
-      ];
-    },
-    ignore: (ext) => {
-      ext = ext ? `.${ext}` : '';
-      let src = [
-        'htdocs/**/_*',
-        'htdocs/**/_**/**/*'
-      ].map((val) => {
-        return `${srcDir}${val}${ext}`;
-      });
-      src.push(`${srcDir}config/**/*`);
-
-      return src;
-    },
-    dest: destDir
-  }
-};
+const gulpfile = 'gulpfile.babel.js';
 
 // please not overwrite variables
 const globalVars = {
@@ -150,19 +116,19 @@ plugins.util.setGlobalVars(define.ns, _.merge({},
 plugins.util.setRequireDir([
   plugins.util.getReplaceDir(process.cwd()),
   gulpfile,
-  tasksDir
+  define.path.tasksDir
 ].join('/'));
 
 plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
   define.path.config,
-  tasksDir
+  define.path.tasksDir
 ].join('')) + '/'));
 
 /**
  * set all common tasks
  * gulp, gulp build, gulp watch...
  */
-const taskMaster = require('./task/master');
+const taskMaster = require(define.path.taskMaster);
 const gulpTasks = gulp._registry._tasks;
 const uTaskName = plugins.util.taskName;
 const configBuildName = `config:build`
@@ -177,8 +143,8 @@ gulp.task(uTaskName.empty, (done) => {done();});
 
 // task type sepalate ex: build, watch
 _.forEach(gulpTasks, (task) => {
-  let split = task.displayName.split(taskSeparator);
-  let type = split && split.length > 1 ? split[1] : uTaskName.default;
+  const split = task.displayName.split(taskSeparator);
+  const type = split && split.length > 1 ? split[1] : uTaskName.default;
 
   if (!types[type]) types[type] = [];
   types[type].push(task.displayName);
@@ -193,19 +159,19 @@ _.forEach(types, (tasks, taskName) => {
       plugins.util.setIsWatch(true);
 
       _.forEach(tasks, (task) => {
-        let split = task.split(taskSeparator);
-        let taskname = split[0];
-        let watchTaskName = `${taskname}${taskSeparator}${uTaskName.watch}`;
+        const split = task.split(taskSeparator);
+        const taskname = split[0];
+        const watchTaskName = `${taskname}${taskSeparator}${uTaskName.watch}`;
 
         if (types[uTaskName.watch].indexOf(watchTaskName) == -1) return;
 
-        let taskconfig = taskmaster.setTaskData({
+        const taskconfig = taskmaster.setTaskData({
           name: taskname
         });
 
         if (!taskconfig) return;
 
-        let src = taskmaster.getSrc(taskconfig.data.src);
+        const src = taskmaster.getSrc(taskconfig.data.src);
         taskmaster.watch(taskconfig, src);
 
         if (taskconfig.data.is_config_build) {
