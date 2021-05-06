@@ -14,9 +14,9 @@ const task = {
 };
 
 /**
- * Html
+ * HTML
  */
-class Html extends TaskMaster {
+class HTML extends TaskMaster {
 
   /**
    * constructor
@@ -234,5 +234,5 @@ class Html extends TaskMaster {
   }
 }
 
-module.exports = new Html(task);
+module.exports = new HTML(task);
 
