@@ -39,7 +39,7 @@ const path = {
   taskMaster:  './task/master',
   taskConfigGlobal: `./task/${define.config}.js`,
   taskConfigLocal: `${root}${srcDir}${define.config}/task.js`,
-  varsLocal: `${root}gulp.vars.js`,// merge with this file
+  varsLocal: `${root}gulpfile.vars.js`,// merge with this file
 
   src,
   ignore,
