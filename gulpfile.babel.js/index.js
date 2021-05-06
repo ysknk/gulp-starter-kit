@@ -30,13 +30,12 @@ import nib from 'nib';
 import _ from 'lodash';
 
 import util from './util';
+import vars from './vars';
 
 import clean from './plugins/clean/';
 import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
-
-import vars from './vars';
 
 /**
  * set const variables
