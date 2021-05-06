@@ -12,9 +12,9 @@ const task = {
 };
 
 /**
- * Css
+ * CSS
  */
-class Css extends TaskMaster {
+class CSS extends TaskMaster {
 
   /**
    * constructor
@@ -92,5 +92,5 @@ class Css extends TaskMaster {
 
 }
 
-module.exports = new Css(task);
+module.exports = new CSS(task);
 
