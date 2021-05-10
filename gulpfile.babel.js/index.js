@@ -17,16 +17,6 @@ import pluginError from 'plugin-error';
 import bs from 'browser-sync';
 import minimist from 'minimist';
 
-import webpack from 'webpack';
-
-import imageminPngquant from 'imagemin-pngquant';
-import imageminOptipng from 'imagemin-optipng';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminGifsicle from 'imagemin-gifsicle';
-import imageminSvgo from 'imagemin-svgo';
-
-import nib from 'nib';
-
 import _ from 'lodash';
 
 import util from './util';
@@ -36,6 +26,19 @@ import clean from './plugins/clean/';
 import empty from './plugins/empty/';
 import log from './plugins/log/';
 import useful from './plugins/useful/';
+
+// @use img
+import imageminPngquant from 'imagemin-pngquant';
+import imageminOptipng from 'imagemin-optipng';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminGifsicle from 'imagemin-gifsicle';
+import imageminSvgo from 'imagemin-svgo';
+
+// @use css
+import nib from 'nib';
+
+// @use js
+import webpack from 'webpack';
 
 /**
  * set const variables
@@ -69,16 +72,6 @@ const globalVars = {
   browserSync,
   argv,
 
-  webpack,
-
-  imageminPngquant,
-  imageminOptipng,
-  imageminMozjpeg,
-  imageminGifsicle,
-  imageminSvgo,
-
-  nib,
-
   define,
   $,
   _,
@@ -89,7 +82,17 @@ const globalVars = {
     empty,
     log,
     useful
-  }
+  },
+
+  imageminPngquant,
+  imageminOptipng,
+  imageminMozjpeg,
+  imageminGifsicle,
+  imageminSvgo,
+
+  nib,
+
+  webpack,
 };
 
 /**
