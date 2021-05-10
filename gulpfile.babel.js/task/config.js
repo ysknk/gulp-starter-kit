@@ -1,5 +1,8 @@
-const meta = require(`../../${define.path.pageConfig}`);
+// @use js
 const eslintrc = require(`../../${define.path.srcDir}.eslintrc.js`);
+
+// @use common
+const meta = require(`../../${define.path.pageConfig}`);
 
 const base_dir = {
   html: `html/`,
