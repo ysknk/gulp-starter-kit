@@ -93,7 +93,7 @@ module.exports = class TaskMaster {
    */
   watch(task, src) {
     plugins.util.setIsWatch(true);
-    let watcher = gulp.watch(src, {
+    const watcher = gulp.watch(src, {
       atomic: 500
     }, gulp.series(task.name));
     this.setAllWatcher(watcher, task.data);
@@ -106,11 +106,11 @@ module.exports = class TaskMaster {
    * setTask
    */
   setTask() {
-    let defaultTask = this.task.types && this.task.types.length ?
+    const defaultTask = this.task.types && this.task.types.length ?
       this.task.types[0] : 'procedure';
-    let src = this.getSrc();
-    let ignore = this.getIgnore();
-    let mergeSrc = [...src, ...ignore];
+    const src = this.getSrc();
+    const ignore = this.getIgnore();
+    const mergeSrc = [...src, ...ignore];
 
     // default task
     gulp.task(this.task.name, (done) => {
@@ -160,7 +160,7 @@ module.exports = class TaskMaster {
    * @returns {array} ignore
    */
   getIgnore(ignore) {
-    let data = ignore || (this.task && this.task.data.ignore) || [];
+    const data = ignore || (this.task && this.task.data.ignore) || [];
 
     if(data.length) {
       return _.map(data, (val) => {
@@ -178,7 +178,7 @@ module.exports = class TaskMaster {
    * @param {object} conf gulp task config
    */
   setDeleteWatcher(watcher, conf) {
-    let that = this;
+    const that = this;
 
     watcher.on('unlink', (filepath) => {
       let filePathFromSrc = path.relative(path.resolve(define.path.htdocs), filepath);
@@ -191,18 +191,18 @@ module.exports = class TaskMaster {
         extname = data.extension || conf.extension;
       }
 
-      let filename = plugins.util.splitExtension(filePathFromSrc);
+      const filename = plugins.util.splitExtension(filePathFromSrc);
       if (extname && filename[1] != extname) {
         filename[1] = extname;
         filePathFromSrc = filename.join('');
       }
 
-      let destFilePath = path.resolve(this.getDest(conf), filePathFromSrc);
+      const destFilePath = path.resolve(this.getDest(conf), filePathFromSrc);
       if (plugins.util.isFileExists(destFilePath)) {
         del.sync(destFilePath, {force: true});
         plugins.util.log(colors.bgred('delete ' + destFilePath));
 
-        let destDirPath = destFilePath.replace(filePathFromSrc, '')
+        const destDirPath = destFilePath.replace(filePathFromSrc, '')
         fs.readdir(destDirPath, function(err, files) {
           if (err) {
             plugins.util.log(colors.bgred('delete error ' + err));
@@ -381,17 +381,16 @@ module.exports = class TaskMaster {
    * @returns {object} page data
    */
   setCurrentData(filepath, taskData) {
-    let meta = require(`../../${define.path.pageConfig}`);
+    const meta = require(`../../${define.path.pageConfig}`);
     delete require.cache[require.resolve(`../../${define.path.pageConfig}`)]
 
     filepath = plugins.util.getReplaceDir(filepath);
 
+    const dirMark = '/';
+    const fileMark = '$';
+    const section = filepath.split('/');
+
     let data = {};
-
-    let dirMark = '/';
-    let fileMark = '$';
-
-    let section = filepath.split('/');
     let isSet = false;
 
     let common = {};
@@ -403,8 +402,8 @@ module.exports = class TaskMaster {
 
     _.forEach(section, (name, i) => {
       let confname = '';
-      let filesplit = name.split(/(.*)(?:\.([^.]+$))/);
-      let isDirectory = filesplit[0];
+      const filesplit = name.split(/(.*)(?:\.([^.]+$))/);
+      const isDirectory = filesplit[0];
 
       confname = isDirectory ?
         dirMark + filesplit[0] : fileMark + filesplit[1];
