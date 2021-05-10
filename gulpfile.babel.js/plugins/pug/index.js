@@ -14,9 +14,9 @@ module.exports = (opts_) => {
   opts_ = _.merge({}, opts_);
   opts_.data = _.merge(opts_.data || {}, opts_.locals || {});
 
-  let pug = opts_.pug || opts_.jade || defaultPug;
+  const pug = opts_.pug || opts_.jade || defaultPug;
 
-  let transformStream = new Transform({
+  const transformStream = new Transform({
     highWaterMark: 256,
     objectMode: true
   });
