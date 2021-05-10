@@ -5,7 +5,7 @@ const pluginName = 'empty';
 
 module.exports = (opts_) => {
   let transformStream = new Transform({
-    highWaterMark: 256,
+    highWaterMark: 64,
     objectMode: true
   });
 
