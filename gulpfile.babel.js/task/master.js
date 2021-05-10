@@ -198,7 +198,7 @@ module.exports = class TaskMaster {
       }
 
       let destFilePath = path.resolve(this.getDest(conf), filePathFromSrc);
-      if (plugins.util.checkFile(destFilePath)) {
+      if (plugins.util.isFileExists(destFilePath)) {
         del.sync(destFilePath, {force: true});
         plugins.util.log(colors.bgred('delete ' + destFilePath));
 
