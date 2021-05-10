@@ -56,36 +56,35 @@ class Util {
    * @returns {boolean}
    */
   setRequireDir(filepath) {
-    try {
-      fs.statSync(filepath);
-      this.requireDir(filepath, {recurse: true});
-      return true;
-    } catch(err) {
-      if (err.code === 'ENOENT') {
-        if (!fs.statSync(filepath)) {
-          fs.mkdirSync(filepath);
-          this.log([
-            'Create directory',
-            this.colors.magenta(filepath)
-          ].join(' '));
-        }
-        return false;
+    this.isFileExists(filepath,
+      () => {
+        this.requireDir(filepath, {recurse: true});
+      },
+      () => {
+        fs.mkdirSync(filepath);
+        this.log([
+          'Create directory',
+          this.colors.magenta(filepath)
+        ].join(' '));
       }
-    }
+    );
   }
 
   /**
-   * checkFile
+   * isFileExists.
    *
    * @param {string} filepath
-   * @returns {boolean}
+   * @param {function} onSuccess
+   * @param {function} onFailure
    */
-  checkFile(filepath) {
+  isFileExists(filepath, onSuccess, onFailure) {
     try {
       fs.statSync(filepath);
+      onSuccess && onSuccess();
       return true;
     } catch(error) {
       if (error.code === 'ENOENT') {
+        onFailure && onFailure();
         return false;
       }
     }
@@ -98,7 +97,7 @@ class Util {
    * @param {string} body
    */
   createFile(filepath, body = '') {
-    if (!fs.statSync(filepath)) {
+    if (!this.isFileExists(filepath)) {
       fs.writeFile(filepath, body, (error) => {});
       this.log([
         'Create file',
