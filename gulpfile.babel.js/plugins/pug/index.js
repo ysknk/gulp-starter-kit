@@ -37,13 +37,13 @@ module.exports = (opts_) => {
     }
 
     if (file.isBuffer()) {
-      let data = _.merge({}, opts_.data, file.data || {});
+      const data = _.merge({}, opts_.data, file.data || {});
       opts_.filename = file.path;
       file.path = replaceExt(file.path, opts_.client ? '.js' : '.html');
 
       try {
+        const contents = String(file.contents);
         let compiled;
-        let contents = String(file.contents);
 
         if (opts_.client) {
           compiled = pug.compileClient(contents, opts_);
