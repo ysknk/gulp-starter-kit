@@ -40,7 +40,7 @@ import useful from './plugins/useful/';
 /**
  * set const variables
  */
-const define = util.checkFile(vars.path.varsLocal)
+const define = util.isFileExists(vars.path.varsLocal)
   ? _.merge({}, vars, require(`../${vars.path.varsLocal}`))
   : vars;
 
