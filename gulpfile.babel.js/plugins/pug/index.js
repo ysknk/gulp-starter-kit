@@ -17,7 +17,7 @@ module.exports = (opts_) => {
   let pug = opts_.pug || opts_.jade || defaultPug;
 
   let transformStream = new Transform({
-    highWaterMark: 512,
+    highWaterMark: 256,
     objectMode: true
   });
 
