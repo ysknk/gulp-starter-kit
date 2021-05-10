@@ -49,7 +49,7 @@ class Delete extends TaskMaster {
 
     stream
       .pipe(through.obj(function(file, enc, cb) {
-        if (plugins.util.checkFile(src)) {
+        if (plugins.util.isFileExists(src)) {
           del.sync(src, {force: true});
           notifier.notify({
             title: that.task.name,
