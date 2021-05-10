@@ -23,12 +23,12 @@ module.exports = (opts_) => {
   });
 
   /**
-   * checkFile
+   * isFileExists
    *
    * @param {string} filepath
    * @returns {boolean}
    */
-  function checkFile(filepath) {
+  function isFileExists(filepath) {
     try {
       fs.statSync(filepath);
       return true
@@ -59,7 +59,7 @@ module.exports = (opts_) => {
       let path = colors.bold(colors.red(relative));
       let result = `${text.action}${path}`;
 
-      if (checkFile(relative)) {
+      if (isFileExists(relative)) {
         del.sync(relative, {force: true});
 
         notifier.notify({
