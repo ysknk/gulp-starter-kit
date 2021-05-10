@@ -94,7 +94,7 @@ module.exports = class TaskMaster {
   watch(task, src) {
     plugins.util.setIsWatch(true);
     const watcher = gulp.watch(src, {
-      atomic: 500
+      atomic: true
     }, gulp.series(task.name));
     this.setAllWatcher(watcher, task.data);
     if (task.data.delete) {
