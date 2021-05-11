@@ -180,7 +180,7 @@ class HTML extends TaskMaster {
   watch(task, src) {
     plugins.util.setIsWatch(true);
     let watcher = gulp.watch(src, {
-      atomic: 500
+      atomic: true
     }, gulp.series(task.name));
 
     this.setAllWatcher(watcher, task.data);
@@ -188,11 +188,11 @@ class HTML extends TaskMaster {
       this.setDeleteWatcher(watcher, task.data);
     }
 
-    let taskserv = (this.servName() && config[task.name][plugins.util.taskName.serv]) ?
-      (this.servName() + ':' + config[task.name][plugins.util.taskName.serv]) : plugins.util.taskName.empty;
+    let taskserv = (this.servName() && config[task.name][define.task.name.serv]) ?
+      `${this.servName()}${define.task.separator}${config[task.name][define.task.name.serv]}` : define.task.name.empty;
 
     if (task.data.is_config_build) {
-      gulp.watch(define.path.pageConfig, gulp.series(`config:build`, taskserv));
+      gulp.watch(define.path.pageConfig, gulp.series(`${define.task.name.config}{define.task.separator}${define.task.name.build}`, taskserv));
     }
   }
 
@@ -200,12 +200,10 @@ class HTML extends TaskMaster {
    * setTask
    */
   setTask() {
-    let defaultTask = this.task.types && this.task.types.length ?
+    const defaultTask = this.task.types && this.task.types.length ?
       this.task.types[0] : 'procedure';
-    let src = this.getSrc();
-    // let ignore = this.getIgnore();
-    // let mergeSrc = [...src, ...ignore];
-    let mergeSrc = [...src];
+    const src = this.getSrc();
+    const mergeSrc = [...src];
 
     // default task
     gulp.task(this.task.name, (done) => {
@@ -214,20 +212,20 @@ class HTML extends TaskMaster {
 
     // config build task
     if (this.task.data.is_config_build) {
-      gulp.task('config:build', (done) => {
+      gulp.task(`${define.task.name.config}{define.task.separator}${define.task.name.build}`, (done) => {
         this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
       });
     }
 
     // watch task
-    gulp.task(this.task.name + ':watch', () => {
+    gulp.task(`${this.task.name}${define.task.separator}${define.task.name.watch}`, () => {
       this.watch(this.task, src);
     });
 
     // other types task
-    _.forEach(this.task.types, (type, i) => {
+    _.forEach(this.task.types, (type) => {
       if(!this[type]) return;
-      gulp.task(this.task.name + ':' + type, (done) => {
+      gulp.task(`${this.task.name}${define.task.separator}${type}`, (done) => {
         this[type](gulp.src(mergeSrc, {allowEmpty: true}), done);
       });
     });
