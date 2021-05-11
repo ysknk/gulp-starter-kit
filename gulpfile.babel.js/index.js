@@ -133,7 +133,7 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
 const taskMaster = require(define.path.taskMaster);
 const gulpTasks = gulp._registry._tasks;
 const uTaskName = define.task.name;
-const configBuildName = `${define.task.name.config}${define.task.separator}${uTaskName.build}`
+const configBuildName = `${uTaskName.config}${define.task.separator}${uTaskName.build}`
 const types = {};
 const taskmaster = new taskMaster();
 const isServ = taskmaster.isTask(uTaskName.serv);
