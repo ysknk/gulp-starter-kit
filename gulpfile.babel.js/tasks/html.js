@@ -212,7 +212,7 @@ class HTML extends TaskMaster {
 
     // config build task
     if (this.task.data.is_config_build) {
-      gulp.task(`${define.task.name.config}{define.task.separator}${define.task.name.build}`, (done) => {
+      gulp.task(`${define.task.name.config}${define.task.separator}${define.task.name.build}`, (done) => {
         this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
       });
     }
