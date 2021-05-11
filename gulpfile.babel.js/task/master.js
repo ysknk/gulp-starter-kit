@@ -164,7 +164,7 @@ module.exports = class TaskMaster {
 
     if(data.length) {
       return _.map(data, (val) => {
-        return '!' + (plugins.util.isWin() ?
+        return '!' + (plugins.util.isWindows() ?
           val : path.resolve(val));
       });
     }
