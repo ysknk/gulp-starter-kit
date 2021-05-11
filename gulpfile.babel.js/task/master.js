@@ -118,14 +118,14 @@ module.exports = class TaskMaster {
     });
 
     // watch task
-    gulp.task(this.task.name + ':watch', () => {
+    gulp.task(`${this.task.name}${define.task.separator}${define.task.name.watch}`, () => {
       this.watch(this.task, src)
     });
 
     // other types task
     _.forEach(this.task.types, (type, i) => {
       if(!this[type]) return;
-      gulp.task(this.task.name + ':' + type, (done) => {
+      gulp.task(`${this.task.name}${define.task.separator}${type}`, (done) => {
         this[type](gulp.src(mergeSrc, {allowEmpty: true}), done);
       });
     });
