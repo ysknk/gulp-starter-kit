@@ -1,4 +1,4 @@
-const define = {
+const definePath = {
   config: 'config',
   htdocs: 'htdocs'
 };
@@ -6,24 +6,24 @@ const define = {
 const root = '../';
 
 const srcDir = `${root}_src/`;
-const destDir = `${root}${define.htdocs}/`;
+const destDir = `${root}${definePath.htdocs}/`;
 const tasksDir = 'tasks/';
 
 const src = (ext) => {
   return [
-    `${srcDir}${define.htdocs}/**/*.${ext}`
+    `${srcDir}${definePath.htdocs}/**/*.${ext}`
   ];
 };
 
 const ignore = (ext) => {
   ext = ext ? `.${ext}` : '';
   let src = [
-    `${define.htdocs}/**/_*`,
-    `${define.htdocs}/**/_**/**/*`
+    `${definePath.htdocs}/**/_*`,
+    `${definePath.htdocs}/**/_**/**/*`
   ].map((val) => {
     return `${srcDir}${val}${ext}`;
   });
-  src.push(`${srcDir}${define.config}/**/*`);
+  src.push(`${srcDir}${definePath.config}/**/*`);
   return src;
 };
 
@@ -32,21 +32,35 @@ const path = {
   destDir,
   tasksDir,
 
-  config: `${srcDir}${define.config}/`,
-  htdocs: `${srcDir}${define.htdocs}/`,
+  config: `${srcDir}${definePath.config}/`,
+  htdocs: `${srcDir}${definePath.htdocs}/`,
 
-  pageConfig: `${srcDir}${define.config}/page.js`,
+  pageConfig: `${srcDir}${definePath.config}/page.js`,
   taskMaster:  './task/master',
-  taskConfigGlobal: `./task/${define.config}.js`,
-  taskConfigLocal: `${root}${srcDir}${define.config}/task.js`,
+  taskConfigGlobal: `./task/config.js`,
+  taskConfigLocal: `${root}${srcDir}${definePath.config}/task.js`,
   varsLocal: `${root}gulpfile.vars.js`,// merge with this file
 
   src,
   ignore,
   dest: destDir
-}
+};
+
+const task = {
+  separator: ':',
+  name: {
+    default: `default`,
+    build: `build`,
+    watch: `watch`,
+
+    config: `config`,
+    serv: `serv`,
+    empty: `empty`
+  }
+};
 
 module.exports = {
   ns: '__', // namespace
+  task,
   path
 };
