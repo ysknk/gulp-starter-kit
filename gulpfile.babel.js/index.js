@@ -132,20 +132,20 @@ plugins.util.setRequireDir(plugins.util.getReplaceDir(path.resolve([
  */
 const taskMaster = require(define.path.taskMaster);
 const gulpTasks = gulp._registry._tasks;
-const uTaskName = define.task.name;
-const configBuildName = `${uTaskName.config}${define.task.separator}${uTaskName.build}`
+const dTaskName = define.task.name;
+const configBuildName = `${dTaskName.config}${define.task.separator}${dTaskName.build}`
 const types = {};
 const taskmaster = new taskMaster();
-const isServ = taskmaster.isTask(uTaskName.serv);
-const beforeTask = isServ ? uTaskName.serv : uTaskName.empty;
+const isServ = taskmaster.isTask(dTaskName.serv);
+const beforeTask = isServ ? dTaskName.serv : dTaskName.empty;
 
 // empty
-gulp.task(uTaskName.empty, (done) => {done();});
+gulp.task(dTaskName.empty, (done) => {done();});
 
 // task type sepalate ex: build, watch
 _.forEach(gulpTasks, (task) => {
   const split = task.displayName.split(define.task.separator);
-  const type = split && split.length > 1 ? split[1] : uTaskName.default;
+  const type = split && split.length > 1 ? split[1] : dTaskName.default;
 
   if (!types[type]) types[type] = [];
   types[type].push(task.displayName);
@@ -153,8 +153,8 @@ _.forEach(gulpTasks, (task) => {
 
 // task set
 _.forEach(types, (tasks, taskName) => {
-  if (taskName === uTaskName.watch
-    || taskName === uTaskName.default) {
+  if (taskName === dTaskName.watch
+    || taskName === dTaskName.default) {
     // gulp watch || gulp
     gulp.task(taskName, gulp.series(beforeTask, function all() {
       plugins.util.setIsWatch(true);
@@ -162,9 +162,9 @@ _.forEach(types, (tasks, taskName) => {
       _.forEach(tasks, (task) => {
         const split = task.split(define.task.separator);
         const taskname = split[0];
-        const watchTaskName = `${taskname}${define.task.separator}${uTaskName.watch}`;
+        const watchTaskName = `${taskname}${define.task.separator}${dTaskName.watch}`;
 
-        if (types[uTaskName.watch].indexOf(watchTaskName) == -1) return;
+        if (types[dTaskName.watch].indexOf(watchTaskName) == -1) return;
 
         const taskconfig = taskmaster.setTaskData({
           name: taskname
