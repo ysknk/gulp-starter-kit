@@ -14,13 +14,6 @@ class Util {
     this.requireDir = requireDir;
     this.fancyLog = fancyLog;
     this.colors = colors;
-
-    this.taskName = {
-      default: `default`,
-      watch: `watch`,
-      serv: `serv`,
-      empty: `empty`
-    };
   }
 
   /**
