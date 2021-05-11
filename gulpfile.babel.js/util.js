@@ -161,11 +161,11 @@ class Util {
   }
 
   /**
-   * isWin
+   * isWindows
    *
    * @returns {boolean}
    */
-  isWin() {
+  isWindows() {
     return os.platform().match(/^win/) ? true : false;
   }
 
