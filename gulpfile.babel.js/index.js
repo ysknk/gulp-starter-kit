@@ -138,6 +138,8 @@ const types = {};
 const taskmaster = new taskMaster();
 const isServ = taskmaster.isTask(dTaskName.serv);
 const beforeTask = isServ ? dTaskName.serv : dTaskName.empty;
+// const isInitDelete = taskmaster.isInitDelete();
+// const initDeleteTask = isInitDelete ? dTaskName.delete : dTaskName.empty;
 
 // empty
 gulp.task(dTaskName.empty, (done) => {done();});
@@ -156,6 +158,7 @@ _.forEach(types, (tasks, taskName) => {
   if (taskName === dTaskName.watch
     || taskName === dTaskName.default) {
     // gulp watch || gulp
+    // gulp.task(taskName, gulp.series(initDeleteTask, beforeTask, function all() {
     gulp.task(taskName, gulp.series(beforeTask, function all() {
       plugins.util.setIsWatch(true);
 
@@ -184,7 +187,10 @@ _.forEach(types, (tasks, taskName) => {
   }else{
     // gulp build
     const includeTasks = tasks.filter(task => task != configBuildName);
-    gulp.task(taskName, gulp.parallel.apply(gulp, includeTasks));
+    gulp.task(taskName, gulp.series(
+      // initDeleteTask,
+      gulp.parallel.apply(gulp, includeTasks)
+    ));
   }
 });
 
