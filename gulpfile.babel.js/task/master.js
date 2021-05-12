@@ -93,10 +93,11 @@ module.exports = class TaskMaster {
    */
   watch(task, src) {
     plugins.util.setIsWatch(true);
+
     const watcher = gulp.watch(src, {
       atomic: true
     }, gulp.series(task.name));
-    this.setAllWatcher(watcher, task.data);
+
     if (task.data.delete) {
       this.setDeleteWatcher(watcher, task.data);
     }
@@ -219,18 +220,6 @@ module.exports = class TaskMaster {
   }
 
   /**
-   * setAllWatcher
-   *
-   * @param {object} watcher gulp watch object
-   * @param {object} conf gulp task config
-   */
-  setAllWatcher(watcher, conf) {
-    watcher.on('all', (event, path) => {
-      plugins.util.setWatchEvent({event, path});
-    });
-  }
-
-  /**
    * serv
    *
    * @returns {object}
@@ -315,17 +304,6 @@ module.exports = class TaskMaster {
    */
   isNo() {
     return argv.no || this.task.data.no || false;
-  }
-
-  /**
-   * isDel
-   * do not open the browser
-   * gulp --del
-   *
-   * @returns {boolean}
-   */
-  isDel() {
-    return argv.del || this.task.data.del || false;
   }
 
   /**
