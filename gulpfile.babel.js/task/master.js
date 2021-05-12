@@ -327,6 +327,17 @@ module.exports = class TaskMaster {
   }
 
   /**
+   * isDel
+   * initial file delete
+   * gulp --del
+   *
+   * @returns {boolean}
+   */
+  isDel() {
+    return argv.del || this.task.data.del || false;
+  }
+
+  /**
    * isTask
    *
    * @param {string} name=this.task.name task name
