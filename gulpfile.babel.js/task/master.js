@@ -285,6 +285,16 @@ module.exports = class TaskMaster {
     return argv.lint || this.task.data.lint || false;
   }
 
+  // /**
+  //  * isInitDelete
+  //  * gulp watch --del or initDel true
+  //  *
+  //  * @returns {boolean}
+  //  */
+  // isInitDelete() {
+  //   return argv.del || config.tasks.initDelete || false;
+  // }
+
   /**
    * isExtname
    * file extension
@@ -324,17 +334,6 @@ module.exports = class TaskMaster {
     }else{
       return false;
     }
-  }
-
-  /**
-   * isDel
-   * initial file delete
-   * gulp --del
-   *
-   * @returns {boolean}
-   */
-  isDel() {
-    return argv.del || this.task.data.del || false;
   }
 
   /**
