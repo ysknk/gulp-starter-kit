@@ -21,6 +21,7 @@ module.exports = {
     img: true,
     static: true,
     delete: true,
+    // initDelete: false,
     serv: true
   },
 
