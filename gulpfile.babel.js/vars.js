@@ -55,7 +55,9 @@ const task = {
 
     config: `config`,
     serv: `serv`,
-    empty: `empty`
+    empty: `empty`,
+    // delete: `delete`,
+    // initDelete: `initDelete`,
   }
 };
 
