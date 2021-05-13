@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp",
+    "gulp": "gulp --max_old_space_size=4096",
     "prestart": "npm i",
     "start": "gulp watch",
     "dev": "gulp watch --no",
