@@ -162,7 +162,7 @@ _.forEach(types, (tasks, taskName) => {
     gulp.task(taskName, gulp.series(beforeTask, function all() {
       plugins.util.setIsWatch(true);
 
-      _.forEach(tasks, (task) => {
+      tasks.forEach((task) => {
         const split = task.split(define.task.separator);
         const taskname = split[0];
         const watchTaskName = `${taskname}${define.task.separator}${dTaskName.watch}`;
