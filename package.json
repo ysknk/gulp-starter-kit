@@ -59,7 +59,7 @@
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-pngquant": "^9.0.2",
-    "imagemin-svgo": "^9.0.0",
+    "imagemin-svgo": "^7.1.0",
     "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "nib": "^1.1.2",
