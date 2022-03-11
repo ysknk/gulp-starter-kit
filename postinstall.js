@@ -101,7 +101,7 @@
       overwrite: false,
       errorOnExist: true,
       filter: (path) => {
-        let result = !(path.match(/(\.git|\.DS_Store|Thumbs.db)$/i));
+        const result = !(path.match(/(\.git|\.DS_Store|Thumbs.db)$/i));
         // console.log(colors[theme_color](`${result ? 'copied' : 'skipped'}:`), path);
         return result
       }
