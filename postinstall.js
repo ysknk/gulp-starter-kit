@@ -4,7 +4,7 @@
   const fs = require('fs-extra');
   const execSync = require('child_process').execSync;
 
-  let colors = {
+  const colors = {
     red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
     magenta: (str) => {return `\u001b[35m${str}\u001b[0m`;},
     cyan: (str) => {return `\u001b[36m${str}\u001b[0m`;},
@@ -12,7 +12,7 @@
     lightBlue: (str) => {return `\u001b[96m${str}\u001b[0m`;},
     lightGreen: (str) => {return `\u001b[92m${str}\u001b[0m`;}
   };
-  let theme_color = `lightBlue`;
+  const theme_color = `lightBlue`;
 
   let isInitialize = false;
 
