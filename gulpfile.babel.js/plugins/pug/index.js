@@ -52,7 +52,8 @@ module.exports = (opts_) => {
         }
         file.contents = new Buffer.from(compiled);
       } catch(e) {
-        return callback(new pluginError(pluginName, e));
+        console.error(e)
+        // return callback(new pluginError(pluginName, e));
       }
 
       callback(null, file);
