@@ -53,6 +53,14 @@ module.exports = (opts_) => {
         file.contents = new Buffer.from(compiled);
       } catch(e) {
         console.error(e)
+        notifier.notify({
+          title: pluginName,
+          message: e.message,
+          sound: false,
+          wait: false,
+          timeout: 1,
+          type: 'info'
+        });
         // return callback(new pluginError(pluginName, e));
       }
 
