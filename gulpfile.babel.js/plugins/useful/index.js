@@ -36,7 +36,7 @@ module.exports = (opts_) => {
   }
 
   let transformStream = new Transform({
-    highWaterMark: 256,
+    highWaterMark: 512,
     objectMode: true
   });
 
