@@ -16,7 +16,7 @@ use submodule add or download.
 
 ## Requirement
 
-* Node.js(@test v16.17.0)
+* Node.js(@test v20.17.0)
 
 ## Install
 
