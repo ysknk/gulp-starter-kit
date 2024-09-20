@@ -72,7 +72,9 @@ class GulpPugInheritance {
       fs.writeFileSync(tempFile, JSON.stringify({}, null, 2), 'utf-8')
       this.firstRun = true
     }
-    return require(tempFile)
+    const data = fs.readFileSync(tempFile, 'utf-8')
+    // return require(tempFile)
+    return JSON.parse(data) || {}
   }
 
   setTempKey (path) {
@@ -276,7 +278,7 @@ class GulpPugInheritance {
   }
 }
 
-module.exports = function (options) {
+export default function (options) {
   const gulpPugInheritance = new GulpPugInheritance(options)
   return gulpPugInheritance.pipeStream()
 }
