@@ -4,7 +4,6 @@ import { execSync } from 'child_process'
 (() => {
   'use strict'
 
-
   const colors = {
     red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
     magenta: (str) => {return `\u001b[35m${str}\u001b[0m`;},
