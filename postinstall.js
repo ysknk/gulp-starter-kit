@@ -1,8 +1,9 @@
+import fs from 'fs-extra';
+import { execSync } from 'child_process'
+
 (() => {
   'use strict'
 
-  const fs = require('fs-extra');
-  const execSync = require('child_process').execSync;
 
   const colors = {
     red: (str) => {return `\u001b[31m${str}\u001b[0m`;},
