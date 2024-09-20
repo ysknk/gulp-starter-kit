@@ -24,16 +24,13 @@ use submodule add or download.
 
 example submodule
 ```Shell
-git submodule add https://github.com/ysknk/gulp-starter-kit.git _app
-git clone -b master https://github.com/ysknk/gulp-starter-src.git .base_src
+git submodule add -b gulp5 https://github.com/ysknk/gulp-starter-kit.git _app
+git clone -b gulp5 https://github.com/ysknk/gulp-starter-src.git .base_src
 cd _app/
 npm i
 
-# oneline: minimum package
-git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clone -b master https://github.com/ysknk/gulp-starter-src.git .base_src && cd _app/ && npm i
-
-# oneline: full package
-git submodule add https://github.com/ysknk/gulp-starter-kit.git _app && git clone -b feature/ysknk https://github.com/ysknk/gulp-starter-src.git .base_src && cd _app/ && npm i
+# oneline
+git submodule add -b gulp5 https://github.com/ysknk/gulp-starter-kit.git _app && git clone -b gulp5 https://github.com/ysknk/gulp-starter-src.git .base_src && cd _app/ && npm i
 ```
 
 ### while using it  
