@@ -378,7 +378,10 @@ export default {
       imageminOptipng(),
       imageminSvgo({
         plugins: [
-          { removeViewBox: false }
+          {
+            name: "preset-default",
+            params: { overrides: { removeViewBox: false, removeUselessDefs: false } },
+          }
         ]
       })
     ],
