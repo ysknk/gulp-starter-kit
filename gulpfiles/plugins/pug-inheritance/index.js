@@ -23,9 +23,7 @@ class GulpPugInheritance {
 
     if (this.options.saveInTempFile === true) {
       this.tempFile = path.join(process.cwd(), this.options.tempFile)
-      this.tempInheritance = (async () => {
-        return await this.getTempFile()
-      })
+      this.tempInheritance = this.getTempFile()
     }
   }
 
@@ -68,15 +66,15 @@ class GulpPugInheritance {
     this.stream.emit("error", err)
   }
 
-  async getTempFile () {
+  getTempFile () {
     const tempFile = this.tempFile
     if (!fs.existsSync(tempFile)) {
       fs.writeFileSync(tempFile, JSON.stringify({}, null, 2), 'utf-8')
       this.firstRun = true
     }
-    const metaFileImport = await import(tempFile);
-    return metaFileImport.default
+    const data = fs.readFileSync(tempFile, 'utf-8')
     // return require(tempFile)
+    return JSON.parse(data) || {}
   }
 
   setTempKey (path) {
