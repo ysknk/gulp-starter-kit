@@ -106,6 +106,7 @@ class HTML extends TaskMaster {
       .pipe(plugins.useful(this.task.data.convert))
 
       .pipe(gulp.dest(this.getDest()))
+      .on('finish', () => {done && done();})
 
       .pipe($.size(this.sizeOptions()))
       .pipe(plugins.log())
@@ -113,7 +114,6 @@ class HTML extends TaskMaster {
       .pipe($.if(this.isLint(), $.htmlhint(this.task.data.lint_options)))
       .pipe($.if(this.isLint(), $.htmlhint.reporter(this.task.data.lint_report_type || path)))
 
-      .on('finish', () => {done && done();})
       .pipe(this.serv());
   }
 
