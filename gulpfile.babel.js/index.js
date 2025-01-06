@@ -134,6 +134,7 @@ const taskMaster = require(define.path.taskMaster);
 const gulpTasks = gulp._registry._tasks;
 const dTaskName = define.task.name;
 const configBuildName = `${dTaskName.config}${define.task.separator}${dTaskName.build}`
+const configsBuildName = `${dTaskName.config}s${define.task.separator}${dTaskName.build}`
 const types = {};
 const taskmaster = new taskMaster();
 const isServ = taskmaster.isTask(dTaskName.serv);
@@ -177,6 +178,10 @@ _.forEach(types, (tasks, taskName) => {
 
         const src = taskmaster.getSrc(taskconfig.data.src);
         taskmaster.watch(taskconfig, src);
+
+        if (taskconfig.data.conf_files && taskconfig.data.conf_files.length) {
+          gulp.watch(taskconfig.data.conf_files, gulp.series(configsBuildName));
+        }
 
         if (taskconfig.data.is_config_build) {
           gulp.watch(define.path.pageConfig, gulp.series(configBuildName));
