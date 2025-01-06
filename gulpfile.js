@@ -202,6 +202,7 @@ async function main () {
   const gulpTasks = gulp._registry._tasks;
   const dTaskName = define.task.name;
   const configBuildName = `${dTaskName.config}${define.task.separator}${dTaskName.build}`
+  const configsBuildName = `${dTaskName.config}s${define.task.separator}${dTaskName.build}`
   const types = {};
   const taskmaster = new taskMaster.default();
   const isServ = taskmaster.isTask(dTaskName.serv);
@@ -245,6 +246,10 @@ async function main () {
 
           const src = taskmaster.getSrc(taskconfig.data.src);
           taskmaster.watch(taskconfig, src);
+
+          if (taskconfig.data.conf_files && taskconfig.data.conf_files.length) {
+            gulp.watch(taskconfig.data.conf_files, gulp.series(configsBuildName));
+          }
 
           if (taskconfig.data.is_config_build) {
             gulp.watch(define.path.pageConfig, gulp.series(configBuildName));
