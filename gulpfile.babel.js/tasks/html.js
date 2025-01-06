@@ -87,7 +87,7 @@ class HTML extends TaskMaster {
       })))
 
       .pipe($.if(isWatch, $.cached(this.task.name)))
-      .pipe($.if(isWatch, pugInheritance(this.task.data.inheritance_options)))
+      .pipe($.if(isWatch && this.task.data.is_inheritance, pugInheritance(this.task.data.inheritance_options)))
 
       .pipe($.data((file) => {
         return this.setCurrentData(file.relative, this.task.data);
