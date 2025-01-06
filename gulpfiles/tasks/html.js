@@ -104,7 +104,7 @@ class HTML extends TaskMaster {
       })))
 
       .pipe($.if(isWatch, $.cached(this.task.name)))
-      .pipe($.if(isWatch, plugins.pugInheritance(this.task.data.inheritance_options)))
+      .pipe($.if(isWatch && this.task.data.is_inheritance, pugInheritance(this.task.data.inheritance_options)))
 
       .pipe($.data(async (file) => {
         // console.log(4)
