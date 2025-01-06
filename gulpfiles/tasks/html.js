@@ -235,6 +235,13 @@ class HTML extends TaskMaster {
       this[defaultTask](gulp.src(mergeSrc, {allowEmpty: true}), done);
     });
 
+    // configs build task
+    if (this.task.data.conf_files.length) {
+      gulp.task(`${define.task.name.config}s${define.task.separator}${define.task.name.build}`, (done) => {
+        this.configBuild(gulp.src(mergeSrc, {allowEmpty: true}), done);
+      });
+    }
+
     // config build task
     if (this.task.data.is_config_build) {
       gulp.task(`${define.task.name.config}${define.task.separator}${define.task.name.build}`, (done) => {
