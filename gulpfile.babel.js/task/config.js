@@ -96,7 +96,7 @@ module.exports = {
     options: {
       pretty: true
     },
-
+    is_inheritance: true,
     inheritance_options: {
       // debug: true,
       skip: 'node_modules',
