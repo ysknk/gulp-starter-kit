@@ -79,7 +79,13 @@ export default {
       //   match: /<!--#include virtual="(.+)" -->/g,
       //   // match: /<\?php include DOCUMENT_ROOT \. "(.+)"; \?>/g,
       //   fn: function (req, res, match, filename) {
-      //     const filePath = path.resolve(__dirname, `../${define.path.dest}${filename}`);
+      //     let filePath = path.resolve(__dirname, `../${define.path.dest}${filename}`);
+      //     // console.log(req.url, filename)
+      //     if (filename.match(/^\.+\//)) {
+      //       // console.log(`../${define.path.dest}` + filename.replace(/\.\.\//g, '').replace(/\.\//g, ''))
+      //       filePath = path.resolve(__dirname, `../${define.path.dest}` + filename.replace(/\.\.\//g, '').replace(/\.\//g, ''))
+      //     }
+      //     // console.log('filePath:', filePath)
       //     if (!fs.existsSync(filePath)) {
       //       return `<span style="color: red">${filename} could not be found</span>`;
       //     }
