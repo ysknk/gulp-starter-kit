@@ -80,7 +80,7 @@ class JS extends TaskMaster {
       .pipe(gulp.dest(this.getDest()))
 
       .pipe($.size(this.sizeOptions()))
-      .pipe(plugins.log())
+      .pipe($.if(plugins.util.getIsWatch(), plugins.log()))
 
       .on('finish', () => {done && done();})
       .pipe(this.serv());
