@@ -130,7 +130,7 @@ class HTML extends TaskMaster {
       .on('finish', () => {done && done();})
 
       .pipe($.size(this.sizeOptions()))
-      .pipe(plugins.log())
+      .pipe($.if(isWatch, plugins.log()))
 
       .pipe($.if(this.isLint(), $.htmlhint(this.task.data.lint_options)))
       .pipe($.if(this.isLint(), $.htmlhint.reporter(this.task.data.lint_report_type || path)))
