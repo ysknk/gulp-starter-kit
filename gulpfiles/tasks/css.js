@@ -54,7 +54,7 @@ class CSS extends TaskMaster {
       .pipe(gulp.dest(this.getDest()))
 
       .pipe($.size(this.sizeOptions()))
-      .pipe(plugins.log())
+      .pipe($.if(plugins.util.getIsWatch(), plugins.log()))
 
       .pipe($.if(this.isLint(), $.csslint(this.task.data.lint_options)))
       .pipe($.if(this.isLint(), $.csslint.formatter(this.task.data.lint_report_type || '')))
