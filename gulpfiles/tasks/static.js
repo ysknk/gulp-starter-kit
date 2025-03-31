@@ -50,7 +50,6 @@ class Static extends TaskMaster {
 
       .pipe(gulp.dest(this.getDest()))
       .on('finish', () => {done && done();})
-
       // .pipe(this.serv());
   }
 
