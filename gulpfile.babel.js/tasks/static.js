@@ -46,11 +46,11 @@ class Static extends TaskMaster {
       })))
 
       .pipe(gulp.dest(this.getDest()))
+      .on('finish', () => {done && done();})
 
       .pipe($.size(this.sizeOptions()))
       .pipe($.if(plugins.util.getIsWatch(), plugins.log()))
 
-      .on('finish', () => {done && done();})
       .pipe(this.serv());
   }
 
